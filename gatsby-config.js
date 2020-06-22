@@ -1,34 +1,59 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: 'Vietnam Coracle',
+    description: 'Independent travel guides to Vietnam',
+    author: 'Tom Divers <vietnamcoracle@gmail.com>',
   },
   plugins: [
-    `gatsby-plugin-react-helmet`,
+    'gatsby-plugin-postcss',
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
+    // {
+    //   resolve: 'gatsby-plugin-manifest',
+    //   options: {
+    //     name: 'vietnamcoracle-static',
+    //     short_name: 'starter',
+    //     start_url: '/',
+    //     background_color: '#663399',
+    //     theme_color: '#663399',
+    //     display: 'minimal-ui',
+    //     icon: 'src/assets/logo.jpg', // This path is relative to the root of the site.
+    //   },
+    // },
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: 'gatsby-plugin-prefetch-google-fonts',
       options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
+        fonts: [
+          {
+            family: 'Baskervville',
+            subsets: ['latin', 'vietnamese'],
+            variants: ['400', '400i'],
+          },
+        ],
       },
     },
-    `gatsby-transformer-sharp`,
-    `gatsby-plugin-sharp`,
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: 'gatsby-plugin-remote-images',
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
-        start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
-        display: `minimal-ui`,
-        icon: `src/images/gatsby-icon.png`, // This path is relative to the root of the site.
+        nodeType: 'wordpress__POST',
+        imagePath: 'thumbnail',
       },
     },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
+    {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        fieldName: 'wpContent',
+        typeName: 'WPGraphQL',
+        url: 'https://www.vietnamcoracle.com/graphql',
+      },
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'assets',
+        path: `${__dirname}/src/assets`,
+      },
+    },
   ],
-}
+};

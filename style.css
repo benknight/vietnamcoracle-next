@@ -1,0 +1,8 @@
+@tailwind base;
+
+body {
+  @apply font-serif;
+}
+
+@tailwind components;
+@tailwind utilities;

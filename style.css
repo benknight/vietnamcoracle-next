@@ -1,8 +1,59 @@
 @tailwind base;
 
 body {
-  @apply font-serif;
+  @apply text-gray-800;
 }
 
 @tailwind components;
+
+.link {
+  @apply text-blue-700;
+}
+
+.link:hover {
+  @apply underline;
+}
+
+.backdrop-blur {
+  @apply bg-gray-900;
+}
+
+@supports ((-webkit-backdrop-filter: blur(100px)) or (backdrop-filter: blur(100px))) {
+  .backdrop-blur {
+    @apply bg-black bg-opacity-25;
+    -webkit-backdrop-filter: blur(100px);
+    backdrop-filter: blur(100px);
+  }
+}
+
+.slider-text span {
+}
+
+.slider-text h1 {
+  @apply mb-1;
+  font-size: 150%;
+}
+
+.slider-text h2 {
+  @apply mb-1;
+  font-size: 125%;
+}
+
+.slider-text h3 {
+  font-size: 110%;
+}
+
+.slider-text h4 {
+  font-size: 100%;
+}
+
+.slider-text h5 {
+  font-size: 90%;
+}
+
+.slider-text h6 {
+  @apply mb-1;
+  font-size: 80%;
+}
+
 @tailwind utilities;

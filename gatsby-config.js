@@ -34,25 +34,54 @@ module.exports = {
       },
     },
     {
-      resolve: 'gatsby-plugin-remote-images',
-      options: {
-        nodeType: 'wordpress__POST',
-        imagePath: 'thumbnail',
-      },
-    },
-    {
-      resolve: 'gatsby-source-graphql',
-      options: {
-        fieldName: 'wpContent',
-        typeName: 'WPGraphQL',
-        url: 'https://www.vietnamcoracle.com/graphql',
-      },
-    },
-    {
       resolve: 'gatsby-source-filesystem',
       options: {
         name: 'assets',
         path: `${__dirname}/src/assets`,
+      },
+    },
+    {
+      resolve: 'gatsby-source-wordpress-experimental',
+      options: {
+        develop: {
+          hardCacheMediaFiles: true,
+        },
+        html: {
+          useGatsbyImage: false,
+        },
+        schema: {
+          perPage: 8,
+        },
+        type: {
+          // Limit the number of nodes downloaded, useful for debugging:
+          // __all: {
+          //   limit: 10,
+          // },
+          Comment: {
+            exclude: true,
+          },
+          Menu: {
+            exclude: true,
+          },
+          MenuItem: {
+            exclude: true,
+          },
+          PostFormat: {
+            exclude: true,
+          },
+          Tag: {
+            exclude: true,
+          },
+          User: {
+            exclude: true,
+          },
+          UserRole: {
+            exclude: true,
+          },
+        },
+        url: 'https://www.vietnamcoracle.com/graphql',
+        verbose: true,
+        writeQueriesToDisk: true,
       },
     },
   ],

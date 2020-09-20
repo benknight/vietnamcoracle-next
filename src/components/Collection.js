@@ -2,17 +2,29 @@ import cx from 'classnames';
 import { graphql } from 'gatsby';
 import React from 'react';
 
-export default function Collection({ item }) {
+export default function Collection({ data }) {
+  let posts;
+  switch (data.type) {
+    case 'category':
+      posts = data.category.posts.nodes;
+      break;
+    case 'manual':
+      posts = data.posts;
+      break;
+    default:
+      posts = [];
+      break;
+  }
   return (
     <section className="my-2 md:my-8">
       <h3 className="px-4 lg:px-8 text-lg sm:text-xl md:text-2xl lg:text-3xl font-display">
-        {item.title}
+        {data.title}
       </h3>
       <ol className="flex py-2 overflow-x-auto">
-        {item.category.posts.nodes.map((post, index) => (
+        {posts.map((post, index) => (
           <li
             className={cx('px-1 flex flex-shrink-0', {
-              'pr-4 lg:pr-8': index === item.category.posts.length - 1,
+              'pr-4 lg:pr-8': index === posts.length - 1,
               'pl-4 lg:pl-8': index === 0,
             })}
             title={post.slug}
@@ -61,22 +73,33 @@ export default function Collection({ item }) {
 }
 
 export const query = graphql`
-  fragment CollectionComponentData on WpComponent_Collections_items {
+  fragment CollectionComponentPostData on WpPost {
+    link
+    slug
     title
+    thumbnails {
+      thumbnailSquare {
+        altText
+        srcSet
+        sizes
+      }
+    }
+  }
+  fragment CollectionComponentData on WpComponent_Collections_items {
+    direction
+    orderby
+    title
+    type
     category {
       posts {
         nodes {
-          link
-          slug
-          title
-          thumbnails {
-            thumbnailSquare {
-              altText
-              srcSet
-              sizes
-            }
-          }
+          ...CollectionComponentPostData
         }
+      }
+    }
+    posts {
+      ... on WpPost {
+        ...CollectionComponentPostData
       }
     }
   }

@@ -26,7 +26,7 @@ const Index = ({ data }) => {
       </header>
       <Slider data={data.home.slider} />
       {data.home.collections.items.map(item => (
-        <Collection item={item} />
+        <Collection key={item.title} data={item} />
       ))}
       <section className="my-2 md:my-8">
         <h3 className="px-4 lg:px-8 text-lg sm:text-xl md:text-2xl lg:text-3xl font-display">

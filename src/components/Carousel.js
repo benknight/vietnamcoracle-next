@@ -72,8 +72,8 @@ export default function Carousel({ className, children, ...props }) {
         return (
           <div
             className="
-          py-2 w-full flex justify-center items-center
-          absolute bottom-0 left-0 cursor-default">
+              py-2 w-full flex justify-center items-center
+              absolute bottom-0 left-0 cursor-default">
             {buttons}
           </div>
         );

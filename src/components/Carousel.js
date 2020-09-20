@@ -9,29 +9,32 @@ export default function Carousel({ className, children, ...props }) {
   React.useEffect(() => {
     const slides = ref.current.querySelectorAll(':scope > a');
     setSlideCount(slides.length);
-    const listener = () => {
-      const observer = new IntersectionObserver(
-        entries => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting) {
-              let index = 0;
-              let child = entry.target;
-              while ((child = child.previousSibling)) index++;
-              setCursor(index);
-              // console.log('setCursor', index);
-            }
-          });
-        },
-        { root: ref.current, threshold: 1.0 },
-      );
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            let index = 0;
+            let child = entry.target;
+            while ((child = child.previousSibling)) index++;
+            setCursor(index);
+            // console.log('setCursor', index);
+          }
+        });
+      },
+      {
+        root: ref.current,
+        threshold: 0.5,
+      },
+    );
+    const observeSlides = () => {
       slides.forEach(node => {
         observer.observe(node);
       });
     };
     if (window.document.readyState === 'complete') {
-      listener();
+      observeSlides();
     } else {
-      window.addEventListener('load', listener);
+      window.addEventListener('load', observeSlides);
     }
   }, []);
 
@@ -48,7 +51,7 @@ export default function Carousel({ className, children, ...props }) {
         for (let i = 0; i < slideCount; i++) {
           buttons.push(
             <button
-              className="p-1"
+              className="pointer-only p-1"
               key={i}
               onClick={() => {
                 const slides = ref.current.querySelectorAll(':scope > a');
@@ -81,5 +84,10 @@ export default function Carousel({ className, children, ...props }) {
 
 export function CarouselSlide({ component, ...props }) {
   const Component = component;
-  return <Component {...props} style={{ scrollSnapAlign: 'start' }} />;
+  return (
+    <Component
+      {...props}
+      style={{ scrollSnapAlign: 'center', scrollSnapStop: 'always' }}
+    />
+  );
 }

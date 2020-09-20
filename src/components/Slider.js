@@ -4,7 +4,6 @@ import React from 'react';
 import Carousel, { CarouselSlide } from '../components/Carousel';
 
 export default function Slider({ data }) {
-  console.log(data);
   return (
     <Carousel className="mb-8">
       {data.posts.map(post => (

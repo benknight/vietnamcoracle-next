@@ -65,4 +65,8 @@
       pointer-events: none;
     }
   }
+
+  .section-heading {
+    @apply px-4 lg:px-8 text-lg sm:text-xl md:text-2xl lg:text-3xl font-display;
+  }
 }

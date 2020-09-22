@@ -1,32 +1,18 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 
-export default function Browse() {
+export default function Browse({ data }) {
   const data = useStaticQuery(graphql`
     {
-      allWpCategory(
-        filter: {
-          slug: {
-            in: [
-              "motorbike-guides"
-              "destinations"
-              "hotel-reviews"
-              "food-and-drink"
-            ]
-          }
-        }
-      ) {
-        nodes {
-          name
-          wpChildren {
-            nodes {
-              name
-              posts {
-                nodes {
-                  title
-                  link
-                }
-              }
+      wpComponent(slug: { eq: "nav" }) {
+        nav {
+          items {
+            link {
+              text
+              url
+            }
+            image {
+              srcSet
             }
           }
         }

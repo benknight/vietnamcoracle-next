@@ -8,7 +8,7 @@ import Map from '../components/Map';
 import Nav from '../components/Nav';
 import Slider from '../components/Slider';
 import Subscribe from '../components/Subscribe';
-import Slider from '../components/Support';
+import Support from '../components/Support';
 
 const Index = ({ data }) => {
   return (
@@ -17,7 +17,7 @@ const Index = ({ data }) => {
       <Header />
       <Slider data={data.home.slider} />
       {data.home.collections.items.map(item => (
-        <section className="my-2 md:my-8">
+        <section className="my-2 md:my-8" key={item.title}>
           <h3 className="section-heading">{item.title}</h3>
           <Collection key={item.title} data={item} />
         </section>
@@ -27,7 +27,7 @@ const Index = ({ data }) => {
         <Browse />
       </section>
       <section className="mt-8 mb-12">
-        <Map data={data.map} />
+        <Map data={data.home.map} />
       </section>
       <section className="mb-12">
         <About />

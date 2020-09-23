@@ -1,10 +1,10 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
-import Block from './Block;';
+import Block from './Block';
 
-export default function About() {
+export default function Support() {
   const {
-    about: { block: data },
+    support: { block },
   } = useStaticQuery(graphql`
     {
       support: wpComponent(slug: { eq: "support" }) {

@@ -1,13 +1,13 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
-import Block from './Block;';
+import Block from './Block';
 
-export default function About() {
+export default function Subscribe() {
   const {
-    about: { block },
+    subscribe: { block },
   } = useStaticQuery(graphql`
     {
-      subscribe: wpComponent(slug: { eq: "about" }) {
+      subscribe: wpComponent(slug: { eq: "subscribe" }) {
         block {
           ...BlockComponentData
         }

@@ -1,14 +1,14 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 
-export default function Browse({ data }) {
+export default function Browse() {
   const data = useStaticQuery(graphql`
     {
       wpComponent(slug: { eq: "nav" }) {
         nav {
           items {
             link {
-              text
+              title
               url
             }
             image {
@@ -19,5 +19,6 @@ export default function Browse({ data }) {
       }
     }
   `);
+  // TODO
   return <div />;
 }

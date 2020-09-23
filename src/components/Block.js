@@ -2,7 +2,7 @@ import { graphql } from 'gatsby';
 import React from 'react';
 
 export const query = graphql`
-  fragment BlockComponentData on WpComponent {
+  fragment BlockComponentData on WpComponent_Block {
     description
     title
     image {

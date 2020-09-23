@@ -67,6 +67,24 @@
   }
 
   .section-heading {
-    @apply px-4 lg:px-8 text-lg sm:text-xl md:text-2xl lg:text-3xl font-display;
+    @apply px-4 text-lg font-display;
+  }
+
+  @screen sm {
+    .section-heading {
+      @apply text-xl;
+    }
+  }
+
+  @screen md {
+    .section-heading {
+      @apply text-2xl;
+    }
+  }
+
+  @screen lg {
+    .section-heading {
+      @apply px-8 text-3xl;
+    }
   }
 }

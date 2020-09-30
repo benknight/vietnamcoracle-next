@@ -5,21 +5,27 @@ import Carousel, { CarouselSlide } from '../components/Carousel';
 
 export default function Slider({ data }) {
   return (
-    <Carousel className="mb-8">
+    <Carousel className="slider text-gray-900">
       {data.posts.map(post => (
         <CarouselSlide
-          className="block relative w-full flex-shrink-0"
+          className="block relative w-full h-full flex-shrink-0"
           component="a"
           href={post.link}
           key={post.link}>
-          <img alt={post.slide.title} srcSet={post.slide.image.srcSet} />
+          <img
+            alt={post.slide.title}
+            className="w-full h-full object-cover"
+            srcSet={post.slide.image.srcSet}
+          />
           <div
             className={cx(
-              'w-full h-full pb-8 absolute top-0 left-0 flex',
+              'w-full h-full pb-8 md:py-16 absolute top-0 left-0 flex',
               getClassNameFromSlidePosition(post.slide.position),
             )}>
             <div
-              className="slider-text flex-auto font-serif p-4 text-2xl sm:text-4xl md:text-5xl"
+              className="
+                slider-text lg:px-8 p-4
+                font-serif text-2xl sm:text-4xl md:text-5xl"
               dangerouslySetInnerHTML={{ __html: post.slide.words }}
               style={{ lineHeight: '1.1' }}
             />

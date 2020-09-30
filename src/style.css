@@ -4,7 +4,13 @@
 
 @layer base {
   body {
-    @apply text-gray-700;
+    @apply text-gray-900;
+  }
+
+  @screen dark {
+    body {
+      @apply text-gray-200 bg-gray-900;
+    }
   }
 }
 
@@ -17,18 +23,16 @@
     @apply underline;
   }
 
-  .backdrop-blur {
-    @apply bg-gray-900;
-  }
-
-  @supports (
-    (-webkit-backdrop-filter: blur(100px)) or
-    (backdrop-filter: blur(100px))
-  ) {
+  @responsive {
     .backdrop-blur {
-      @apply bg-black bg-opacity-25;
       -webkit-backdrop-filter: blur(25px);
       backdrop-filter: blur(25px);
+    }
+  }
+
+  @screen lg {
+    .slider {
+      height: 62vh;
     }
   }
 
@@ -86,5 +90,13 @@
     .section-heading {
       @apply px-8 text-3xl;
     }
+  }
+
+  .browse-link {
+    --gradient-from-color: rgba(0, 0, 0, 0.1);
+    --gradient-color-stops:
+      var(--gradient-from-color),
+      var(--gradient-to-color, rgba(255, 255, 255, 0));
+    text-shadow: 1px 1px 1px black;
   }
 }

@@ -2,11 +2,13 @@ import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 
 export default function Browse() {
-  const data = useStaticQuery(graphql`
+  const {
+    data: { nav },
+  } = useStaticQuery(graphql`
     {
-      wpComponent(slug: { eq: "nav" }) {
+      data: wpComponent(slug: { eq: "category-nav" }) {
         nav {
-          items {
+          links {
             link {
               title
               url
@@ -19,6 +21,31 @@ export default function Browse() {
       }
     }
   `);
-  // TODO
-  return <div />;
+  return (
+    <nav>
+      <ul className="grid gap-4 lg:gap-5 sm:grid-cols-2">
+        {nav.links.map(({ link, image }) => (
+          <li
+            className="relative overflow-hidden rounded md:rounded-lg"
+            key={link.url}>
+            <img
+              alt=""
+              className="block w-full h-32 object-cover"
+              srcSet={image.srcSet}
+            />
+            <a
+              className="
+                browse-link
+                flex items-center justify-center
+                absolute top-0 left-0 w-full h-full
+                text-white text-2xl lg:text-3xl text-center font-medium
+                bg-gradient-to-t from-black-75 via-transparent"
+              href={link.url}>
+              {link.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
 }

@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import { graphql } from 'gatsby';
+import _shuffle from 'lodash/shuffle';
 import React from 'react';
 
 export default function Collection({ data }) {
@@ -15,12 +16,30 @@ export default function Collection({ data }) {
       posts = [];
       break;
   }
+  switch (data.orderby) {
+    case 'date':
+      posts.sort((a, b) =>
+        data.direction === 'asc'
+          ? new Date(a.date) - new Date(b.date)
+          : new Date(b.date) - new Date(a.date),
+      );
+      break;
+    case 'alpha':
+      posts.sort((a, b) =>
+        data.direction === 'asc' ? a.title - b.title : b.title - a.title,
+      );
+      break;
+    case 'random':
+    default:
+      posts = _shuffle(posts);
+      break;
+  }
   return (
-    <ol className="flex py-2 overflow-x-auto">
+    <ol className="flex py-3 overflow-x-auto">
       {posts.map((post, index) => (
         <li
           className={cx('px-1 flex flex-shrink-0', {
-            'pr-4 lg:pr-8': index === posts.length - 1,
+            'pr-4 lg:pr-0': index === posts.length - 1,
             'pl-4 lg:pl-8': index === 0,
           })}
           title={post.slug}
@@ -28,7 +47,7 @@ export default function Collection({ data }) {
           <a
             className="
               relative overflow-hidden
-              flex flex-col w-32 sm:w-40 md:w-48 lg:w-56
+              flex flex-col w-32 sm:w-40 md:w-48
               rounded md:rounded-lg shadow"
             href={`https://www.vietnamcoracle.com${post.link}`}>
             <img
@@ -40,22 +59,20 @@ export default function Collection({ data }) {
             />
             <img
               alt={post.thumbnails.thumbnailSquare.altText}
-              className="relative block w-full h-24 sm:h-32 md:h-40 lg:h-48 object-cover"
+              className="relative block w-full h-24 sm:h-32 md:h-40 object-cover"
               loading="lazy"
               sizes={post.thumbnails.thumbnailSquare.sizes}
               srcSet={post.thumbnails.thumbnailSquare.srcSet}
             />
             <div
               className="
-                backdrop-blur relative
+                backdrop-blur relative bg-gray-800 bg-opacity-25
                 p-2 sm:p-3 flex-auto flex items-center
                 text-white font-medium rounded-b md:rounded-b-lg">
               <h3
                 className={cx('sm:text-sm leading-tight font-sans', {
-                  'text-xs sm:text-sm md:text-base lg:text-lg':
-                    post.title.length > 40,
-                  'text-sm sm:text-base md:text-lg lg:text-xl':
-                    post.title.length <= 40,
+                  'text-xs sm:text-sm md:text-base': post.title.length > 40,
+                  'text-sm sm:text-base md:text-lg': post.title.length <= 40,
                 })}>
                 {post.title}
               </h3>
@@ -69,6 +86,7 @@ export default function Collection({ data }) {
 
 export const query = graphql`
   fragment CollectionComponentPostData on WpPost {
+    date
     link
     slug
     title

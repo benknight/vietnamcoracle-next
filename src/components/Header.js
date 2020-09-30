@@ -21,9 +21,9 @@ export default function Header() {
     }
   `);
   return (
-    <header className="mt-6 mb-10 px-3 text-center">
+    <header className="mt-24 lg:mt-12 mb-10 px-3 text-center">
       <Image className="rounded-full" fixed={data.logo.childImageSharp.fixed} />
-      <h1 className="text-4xl lg:text-5xl text-gray-800 font-display antialiased">
+      <h1 className="text-4xl lg:text-5xl text-gray-800 dark:text-gray-200 font-display antialiased">
         {data.site.siteMetadata.title}
       </h1>
       <h2 className="text-gray-600 text-xxs sm:text-xs uppercase tracking-widest font-serif">

@@ -20,12 +20,12 @@ export default function Block(props) {
 }
 
 export function BlockTitle(props) {
-  return <h3 className="text-xl sm:text-2xl mb-3">{props.children}</h3>;
+  return <h3 className="text-xl lg:text-2xl mb-3">{props.children}</h3>;
 }
 
 export function BlockContent(props) {
   return (
-    <div className="mx-auto mb-8 px-4 text-sm sm:text-base md:text-sm xl:text-base max-w-sm font-sans">
+    <div className="mx-auto mb-8 px-6 text-sm max-w-sm font-serif">
       {props.children}
     </div>
   );

@@ -4,5 +4,20 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 
-// You can delete this file if you're not using it
+import { create } from 'jss';
+import React from 'react';
+import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import './src/style.css';
+
+const jss = create({
+  ...jssPreset(),
+  // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.
+  insertionPoint: document.getElementById('jss-insertion-point'),
+});
+
+export const wrapRootElement = ({ element }) => {
+  return <StylesProvider jss={jss}>{element}</StylesProvider>;
+};
+
+// TODO: Handle this intelligently
+export const shouldUpdateScroll = () => false;

@@ -60,12 +60,6 @@ module.exports = {
           Comment: {
             exclude: true,
           },
-          Menu: {
-            exclude: true,
-          },
-          MenuItem: {
-            exclude: true,
-          },
           PostFormat: {
             exclude: true,
           },

@@ -3,7 +3,7 @@ import React from 'react';
 import Layout from '../components/Layout';
 
 const Index = ({ data }) => {
-  return <Layout data={data.component} showBrowse />;
+  return <Layout data={data.component} />;
 };
 
 export const query = graphql`

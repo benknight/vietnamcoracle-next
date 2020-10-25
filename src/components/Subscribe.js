@@ -25,7 +25,20 @@ export default function Subscribe() {
       </div>
       <BlockTitle>{block.title}</BlockTitle>
       <BlockContent>
-        <p>{block.description} </p>
+        <p>{block.description}</p>
+        <form className="flex justify-center max-w-xs mt-4 mx-auto">
+          <input
+            className="
+              flex-auto h-8 mr-2 p-2 text-sm font-sans
+              border dark:border-none bg-white dark:bg-opacity-25 rounded"
+            type="email"
+          />
+          <button
+            className="h-8 px-4 text-sm text-white bg-blue-500 rounded"
+            type="submit">
+            Subscribe
+          </button>
+        </form>
       </BlockContent>
     </Block>
   );

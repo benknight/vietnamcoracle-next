@@ -3,12 +3,12 @@ import React from 'react';
 import Layout from '../components/Layout';
 
 const FoodDrink = ({ data }) => {
-  return <Layout data={data.home} />;
+  return <Layout data={data.component} />;
 };
 
 export const query = graphql`
   {
-    home: wpComponent(slug: { eq: "food-drink" }) {
+    component: wpComponent(slug: { eq: "food-drink" }) {
       ...LayoutComponentData
     }
   }

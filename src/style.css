@@ -4,7 +4,7 @@
 
 @layer base {
   body {
-    @apply text-gray-900;
+    @apply text-gray-800 overscroll-x-none;
   }
 
   @screen dark {
@@ -25,8 +25,8 @@
 
   @responsive {
     .backdrop-blur {
-      -webkit-backdrop-filter: blur(25px);
-      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(100px);
+      backdrop-filter: blur(100px);
     }
   }
 
@@ -70,33 +70,30 @@
     }
   }
 
-  .section-heading {
-    @apply px-4 text-lg font-display;
-  }
-
-  @screen sm {
-    .section-heading {
-      @apply text-xl;
-    }
-  }
-
-  @screen md {
-    .section-heading {
-      @apply text-2xl;
-    }
-  }
-
-  @screen lg {
-    .section-heading {
-      @apply px-8 text-3xl;
-    }
-  }
-
   .browse-link {
     --gradient-from-color: rgba(0, 0, 0, 0.1);
     --gradient-color-stops:
       var(--gradient-from-color),
       var(--gradient-to-color, rgba(255, 255, 255, 0));
-    text-shadow: 1px 1px 1px black;
+  }
+}
+
+@layer utilities {
+  @responsive {
+    .text-shadow {
+      text-shadow: 0 2px 4px rgba(0,0,0,0.10);
+    }
+
+    .text-shadow-md {
+      text-shadow: 0 4px 8px rgba(0,0,0,0.12), 0 2px 4px rgba(0,0,0,0.08);
+    }
+
+    .text-shadow-lg {
+      text-shadow: 0 15px 30px rgba(0,0,0,0.11), 0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .text-shadow-none {
+      text-shadow: none;
+    }
   }
 }

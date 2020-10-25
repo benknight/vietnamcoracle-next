@@ -1,4 +1,4 @@
-import { graphql, useStaticQuery } from 'gatsby';
+import { graphql, useStaticQuery, Link } from 'gatsby';
 import React from 'react';
 
 export default function Browse() {
@@ -33,16 +33,16 @@ export default function Browse() {
               className="block w-full h-32 object-cover"
               srcSet={image.srcSet}
             />
-            <a
+            <Link
               className="
-                browse-link
+                browse-link text-shadow
                 flex items-center justify-center
                 absolute top-0 left-0 w-full h-full
-                text-white text-2xl lg:text-3xl text-center font-medium
+                text-white text-2xl lg:text-3xl text-center font-medium font-serif
                 bg-gradient-to-t from-black-75 via-transparent"
-              href={link.url}>
+              to={link.url}>
               {link.title}
-            </a>
+            </Link>
           </li>
         ))}
       </ul>

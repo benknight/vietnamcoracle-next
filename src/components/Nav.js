@@ -1,27 +1,13 @@
 import cx from 'classnames';
+import _defer from 'lodash/defer';
 import { graphql, useStaticQuery, Link } from 'gatsby';
-import Image from 'gatsby-image';
 import React from 'react';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/SearchRounded';
+import { getThemeFromPathname } from '../config/themes';
 
 export default function Nav() {
+  const scrollAnchor = React.useRef();
   const data = useStaticQuery(graphql`
     {
-      logo: file(relativePath: { eq: "logo.jpg" }) {
-        childImageSharp {
-          fixed(width: 48, height: 48) {
-            ...GatsbyImageSharpFixed
-          }
-        }
-      }
-      site {
-        siteMetadata {
-          title
-          description
-        }
-      }
       nav: wpComponent(slug: { eq: "category-nav" }) {
         nav {
           links {
@@ -34,69 +20,59 @@ export default function Nav() {
       }
     }
   `);
-  const [isScrolled, setIsScolled] = React.useState(false);
-  React.useEffect(() => {
-    const listener = () => {
-      if (window.scrollY > 0) {
-        setIsScolled(true);
-      } else {
-        setIsScolled(false);
-      }
-    };
-    window.addEventListener('scroll', listener);
-    return () => window.removeEventListener('scroll', listener);
-  }, []);
   return (
-    <nav
-      className={cx(
-        'nav fixed top-0 z-10',
-        'w-full h-16 px-3 flex items-center',
-        'text-gray-700 md:text-white md:bg-gradient-to-b from-black-25 dark:from-black-75',
-        {
-          'md:backdrop-blur bg-gradient-to-b': isScrolled,
-        },
-      )}>
-      <div className="hidden flex-auto md:flex items-center">
-        <div className="h-16 inline-flex items-center pl-4 pr-4">
-          <Image
-            className="rounded-full"
-            fixed={data.logo.childImageSharp.fixed}
-          />
-        </div>
-        <Link activeClassName="font-bold" className="mx-3 text-sm" to="/">
-          Home
-        </Link>
-        {data.nav.nav.links.map(item => (
-          <Link
-            activeClassName="font-bold"
-            className="mx-3 text-sm"
-            to={item.link.url}>
-            {item.link.title}
-          </Link>
-        ))}
-      </div>
-      <div className="md:hidden flex-auto flex items-center">
-        <div
-          className={cx('h-12 inline-flex items-center px-4 rounded-full', {
-            'bg-white dark:bg-white shadow': isScrolled,
-          })}>
-          <MenuIcon />
-          <div className="flex-auto">
-            <button className="pl-4 inline-flex text-sm">
-              Browse by category <ArrowDropDownIcon />
-            </button>
-          </div>
-        </div>
-      </div>
-      <div
+    <>
+      <div ref={scrollAnchor} />
+      <nav
         className={cx(
-          'w-12 h-12 inline-flex items-center justify-center rounded-full',
-          {
-            'bg-white shadow md:bg-transparent md:shadow-none': isScrolled,
-          },
+          'nav sticky top-0 z-20',
+          'flex justify-center w-full h-16',
+          'bg-white dark:bg-gray-900 shadow-lg',
         )}>
-        <SearchIcon />
-      </div>
-    </nav>
+        <div
+          className="flex lg:justify-center flex-auto px-16 max-w-screen-lg text-xs border-t border-gray-300 dark:border-gray-700 font-serif uppercase tracking-widest"
+          style={{ marginTop: '-1px' }}>
+          {data.nav.nav.links.map(item => {
+            const theme = getThemeFromPathname(item.link.url);
+            const to = item.link.url.match(/\/$/)
+              ? item.link.url
+              : item.link.url + '/';
+            return (
+              <Link
+                getProps={({ isCurrent }) => ({
+                  className: cx(
+                    'flex items-center text-sm',
+                    `from-${theme}-200 to-${theme}-200`,
+                    `dark:from-${theme}-800 dark:to-${theme}-900`,
+                    {
+                      'px-5 font-bold bg-gradient-to-b dark:shadow': isCurrent,
+                      'px-6': !isCurrent,
+                    },
+                  ),
+                  children: (
+                    <span
+                      className={cx(
+                        'text-shadow border-b',
+                        isCurrent
+                          ? 'border-black dark:border-white'
+                          : 'border-transparent',
+                      )}>
+                      {item.link.title}
+                    </span>
+                  ),
+                })}
+                onClick={() => {
+                  const { offsetTop } = scrollAnchor.current;
+                  if (window.scrollY > offsetTop)
+                    window.scroll({ top: offsetTop, behavior: 'smooth' });
+                }}
+                key={item.link.url}
+                to={to}
+              />
+            );
+          })}
+        </div>
+      </nav>
+    </>
   );
 }

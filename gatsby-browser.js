@@ -7,6 +7,7 @@
 import { create } from 'jss';
 import React from 'react';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import Layout from './src/components/Layout';
 import './src/style.css';
 
 const jss = create({
@@ -21,3 +22,7 @@ export const wrapRootElement = ({ element }) => {
 
 // TODO: Handle this intelligently
 export const shouldUpdateScroll = () => false;
+
+export const wrapPageElement = ({ element, props }) => {
+  return <Layout {...props}>{element}</Layout>;
+};

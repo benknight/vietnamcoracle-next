@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import { graphql, useStaticQuery, Link } from 'gatsby';
 import Image from 'gatsby-image';
+import _debounce from 'lodash/debounce';
 import Tooltip from '@material-ui/core/Tooltip';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import SearchIcon from '@material-ui/icons/Search';
@@ -36,10 +37,12 @@ export default function Header() {
     }
   `);
   React.useEffect(() => {
-    const onScroll = event =>
+    const listener = _debounce(event => {
       setShowMini(window.scrollY >= ref.current.getBoundingClientRect().height);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    }, 10);
+    listener();
+    window.addEventListener('scroll', listener);
+    return () => window.removeEventListener('scroll', listener);
   }, []);
   return (
     <header className="pt-8 pb-10 px-3 text-center" ref={ref}>
@@ -61,7 +64,7 @@ export default function Header() {
             'absolute top-0 left-0',
             'flex items-center h-16 px-4',
             'bg-white dark:bg-gray-900',
-            'transform transition-transform duration-200',
+            'transform transition-transform duration-200 ease-out',
             { '-translate-x-16': !showMini },
           )}>
           <Link className="inline-flex mr-4" to="/">

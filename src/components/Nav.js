@@ -64,7 +64,7 @@ export default function Nav() {
                 onClick={() => {
                   const { offsetTop } = scrollAnchor.current;
                   if (window.scrollY > offsetTop)
-                    window.scroll({ top: offsetTop, behavior: 'smooth' });
+                    window.scroll({ top: offsetTop });
                 }}
                 key={item.link.url}
                 to={to}

@@ -35,7 +35,7 @@ export default function Browse() {
             />
             <Link
               className="
-                browse-link text-shadow
+                browse-link text-shadow-md
                 flex items-center justify-center
                 absolute top-0 left-0 w-full h-full
                 text-white text-2xl lg:text-3xl text-center font-medium font-serif

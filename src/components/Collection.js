@@ -1,11 +1,12 @@
 import cx from 'classnames';
+import { gql } from 'graphql-request';
 import _shuffle from 'lodash/shuffle';
 import React from 'react';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import useCarousel from '../lib/useCarousel';
 
-export default function Collection({ data }) {
+const Collection = ({ data }) => {
   const {
     getLeftNavProps,
     getRightNavProps,
@@ -110,10 +111,10 @@ export default function Collection({ data }) {
       </ol>
     </div>
   );
-}
+};
 
-export const query = graphql`
-  fragment CollectionComponentPostData on WpPost {
+Collection.fragments = gql`
+  fragment CollectionComponentPostData on Post {
     date
     link
     slug
@@ -126,7 +127,7 @@ export const query = graphql`
       }
     }
   }
-  fragment CollectionComponentData on WpComponent_Collections_items {
+  fragment CollectionComponentData on Component_Collections_items {
     direction
     orderby
     type
@@ -138,9 +139,11 @@ export const query = graphql`
       }
     }
     posts {
-      ... on WpPost {
+      ... on Post {
         ...CollectionComponentPostData
       }
     }
   }
 `;
+
+export default Collection;

@@ -1,9 +1,21 @@
 import cx from 'classnames';
-import { graphql } from 'gatsby';
+import { gql } from 'graphql-request';
 import React from 'react';
 import Carousel, { CarouselSlide } from '../components/Carousel';
 
-export default function Slider({ data }) {
+function getClassNameFromSlidePosition(position) {
+  const [align, justify] = position.split('-');
+  return cx({
+    'items-start': align === 'top',
+    'items-center': align === 'center',
+    'items-end': align === 'bottom',
+    'justify-start': justify === 'left',
+    'justify-center': justify === 'center',
+    'justify-end': justify === 'right',
+  });
+}
+
+const Slider = ({ data }) => {
   return (
     <Carousel className="slider text-gray-900">
       {data.posts.map(post => (
@@ -34,12 +46,12 @@ export default function Slider({ data }) {
       ))}
     </Carousel>
   );
-}
+};
 
-export const query = graphql`
-  fragment SliderComponentData on WpComponent_Slider {
+Slider.fragments = gql`
+  fragment SliderComponentData on Component_Slider {
     posts {
-      ... on WpPost {
+      ... on Post {
         link
         title
         slide {
@@ -55,14 +67,4 @@ export const query = graphql`
   }
 `;
 
-function getClassNameFromSlidePosition(position) {
-  const [align, justify] = position.split('-');
-  return cx({
-    'items-start': align === 'top',
-    'items-center': align === 'center',
-    'items-end': align === 'bottom',
-    'justify-start': justify === 'left',
-    'justify-center': justify === 'center',
-    'justify-end': justify === 'right',
-  });
-}
+export default Slider;

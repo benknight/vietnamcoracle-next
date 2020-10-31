@@ -54,11 +54,6 @@ typings/
 # dotenv environment variable files
 .env*
 
-# gatsby files
-.cache/
-.wordpress-cache
-public
-
 # Mac files
 .DS_Store
 
@@ -69,3 +64,6 @@ yarn-error.log
 
 # Yarn Integrity file
 .yarn-integrity
+
+# Next
+.next

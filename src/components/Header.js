@@ -1,41 +1,17 @@
 import cx from 'classnames';
-import { graphql, useStaticQuery, Link } from 'gatsby';
-import Image from 'gatsby-image';
 import _debounce from 'lodash/debounce';
+import Image from 'next/image';
+import Link from 'next/link';
+import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import SearchIcon from '@material-ui/icons/Search';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
-import React from 'react';
 
 export default function Header() {
   const ref = React.useRef();
   const [showMini, setShowMini] = React.useState(false);
-  const data = useStaticQuery(graphql`
-    {
-      logoLg: file(relativePath: { eq: "logo.jpg" }) {
-        childImageSharp {
-          fixed(width: 120, height: 120, cropFocus: CENTER) {
-            ...GatsbyImageSharpFixed
-          }
-        }
-      }
-      logoSm: file(relativePath: { eq: "logo.jpg" }) {
-        childImageSharp {
-          fixed(width: 42, height: 42, cropFocus: CENTER, fit: COVER) {
-            ...GatsbyImageSharpFixed
-          }
-        }
-      }
-      site {
-        siteMetadata {
-          title
-          description
-        }
-      }
-    }
-  `);
   React.useEffect(() => {
     const listener = _debounce(event => {
       setShowMini(window.scrollY >= ref.current.getBoundingClientRect().height);
@@ -46,17 +22,22 @@ export default function Header() {
   }, []);
   return (
     <header className="pt-8 pb-10 px-3 text-center" ref={ref}>
-      <Link className="inline-flex" to="/">
-        <Image
-          className="rounded-full"
-          fixed={data.logoLg.childImageSharp.fixed}
-        />
+      <Link href="/">
+        <a className="inline-flex">
+          <Image
+            className="rounded-full"
+            height={120}
+            loading="eager"
+            src="/logo.jpg"
+            width={120}
+          />
+        </a>
       </Link>
       <h1 className="text-4xl text-gray-800 dark:text-gray-200 font-display antialiased">
-        {data.site.siteMetadata.title}
+        Vietnam Coracle
       </h1>
       <h2 className="text-gray-600 text-xxs sm:text-xs uppercase tracking-widest font-serif">
-        {data.site.siteMetadata.description}
+        Independent travel guides to Vietnam
       </h2>
       <div className="fixed top-0 left-0 z-30 w-full">
         <div
@@ -67,11 +48,16 @@ export default function Header() {
             'transform transition-transform duration-200 ease-out',
             { '-translate-x-16': !showMini },
           )}>
-          <Link className="inline-flex mr-4" to="/">
-            <Image
-              className="rounded-full"
-              fixed={data.logoSm.childImageSharp.fixed}
-            />
+          <Link href="/">
+            <a className="inline-flex mr-4">
+              <Image
+                className="rounded-full"
+                height={42}
+                loading="eager"
+                src="/logo.jpg"
+                width={42}
+              />
+            </a>
           </Link>
           <div className="relative">
             <div className="absolute top-0 left-0 bottom-0 flex items-center px-3 pointer-events-none">

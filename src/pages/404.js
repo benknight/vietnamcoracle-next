@@ -1,3 +1,5 @@
 import React from 'react';
 
-export default () => <div>Page not found</div>;
+export default function NotFound() {
+  return <div>Page not found</div>;
+}

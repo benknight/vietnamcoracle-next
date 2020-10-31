@@ -1,19 +1,7 @@
-import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import Block, { BlockContent, BlockTitle } from './Block';
 
-export default function Support() {
-  const {
-    support: { block },
-  } = useStaticQuery(graphql`
-    {
-      support: wpComponent(slug: { eq: "support" }) {
-        block {
-          ...BlockComponentData
-        }
-      }
-    }
-  `);
+export default function Support({ data: block }) {
   return (
     <Block>
       <BlockTitle>{block.title}</BlockTitle>

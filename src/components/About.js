@@ -1,19 +1,7 @@
-import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import Block, { BlockContent, BlockTitle } from './Block';
 
-export default function About() {
-  const {
-    about: { block },
-  } = useStaticQuery(graphql`
-    {
-      about: wpComponent(slug: { eq: "about" }) {
-        block {
-          ...BlockComponentData
-        }
-      }
-    }
-  `);
+export default function About({ data: block }) {
   return (
     <Block>
       <a className="block w-40 h-40 mx-auto my-6" href={block.link.url}>

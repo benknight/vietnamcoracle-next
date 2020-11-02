@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "vietnamcoracle-js",
+  "name": "vietnamcoracle-next",
   "author": "Benjamin Knight <ben@benknight.me>",
   "scripts": {
     "build": "next build",

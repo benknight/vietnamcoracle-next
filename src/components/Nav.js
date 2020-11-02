@@ -44,20 +44,15 @@ export default function Nav() {
             const theme = getThemeFromPathname(link.url);
             const to = link.url.match(/\/$/) ? link.url : link.url + '/';
             return (
-              <Link href={to} key={to} scroll={false}>
+              <Link href={to} key={to} scroll={false} shallow>
                 <a
-                  className={cx('flex items-center text-sm', {
-                    'px-5 font-bold bg-gradient-to-b dark:shadow': isCurrent,
-                    'px-6': !isCurrent,
-                    'from-purple-200 to-purple-200 dark:from-purple-800 dark:to-purple-900':
-                      theme === 'purple',
-                    'from-red-200 to-red-200 dark:from-red-800 dark:to-red-900':
-                      theme === 'red',
-                    'from-yellow-200 to-yellow-200 dark:from-yellow-800 dark:to-yellow-900':
-                      theme === 'yellow',
-                    'from-green-200 to-green-200 dark:from-green-800 dark:to-green-900':
-                      theme === 'green',
-                  })}
+                  className={cx(
+                    `flex items-center text-sm from-${theme}-200 to-${theme}-200 dark:from-${theme}-800 dark:to-${theme}-900`,
+                    {
+                      'px-5 font-bold bg-gradient-to-b dark:shadow': isCurrent,
+                      'px-6': !isCurrent,
+                    },
+                  )}
                   key={link.url}
                   onClick={() => {
                     const { offsetTop } = scrollAnchor.current;

@@ -13,13 +13,7 @@ const Map = ({ data }) => {
     <div className="lg:rounded-lg">
       <div
         className={cx(
-          `relative p-8 text-center font-display dark:bg-opacity-50 dark:text-white dark:border dark:border-black lg:rounded-t-lg`,
-          {
-            'bg-purple-200 dark:bg-purple-900': theme === 'purple',
-            'bg-red-200 dark:bg-red-900': theme === 'red',
-            'bg-yellow-200 dark:bg-yellow-900': theme === 'yellow',
-            'bg-green-200 dark:bg-green-900': theme === 'green',
-          },
+          `relative p-8 text-center font-display dark:bg-opacity-50 dark:text-white dark:border dark:border-black lg:rounded-t-lg bg-${theme}-200 dark:bg-${theme}-900`,
         )}>
         <h3 className="text-2xl sm:text-3xl">{data.title}</h3>
         <p className="mt-2 mb-4 sm:px-16 text-sm sm:text-base font-serif">

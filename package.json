@@ -6,8 +6,7 @@
     "build": "next build",
     "develop": "next dev",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "next start",
-    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1"
+    "start": "next start"
   },
   "dependencies": {
     "@material-ui/core": "^4.11.0",

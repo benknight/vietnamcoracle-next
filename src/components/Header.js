@@ -2,6 +2,7 @@ import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -20,9 +21,10 @@ export default function Header() {
     window.addEventListener('scroll', listener);
     return () => window.removeEventListener('scroll', listener);
   }, []);
+  const router = useRouter();
   return (
     <header className="pt-8 pb-10 px-3 text-center" ref={ref}>
-      <Link href="/">
+      <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
         <a className="inline-flex">
           <Image
             className="rounded-full"
@@ -48,7 +50,7 @@ export default function Header() {
             'transform transition-transform duration-200 ease-out',
             { '-translate-x-16': !showMini },
           )}>
-          <Link href="/">
+          <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
             <a className="inline-flex mr-4">
               <Image
                 className="rounded-full"

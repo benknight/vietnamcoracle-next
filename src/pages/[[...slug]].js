@@ -1,25 +1,25 @@
 import { request, gql } from 'graphql-request';
+import _camelCase from 'lodash/camelCase';
+import { useRouter } from 'next/router';
 import React from 'react';
 import About from '../components/About';
 import Block from '../components/Block';
 import Browse from '../components/Browse';
 import Collection from '../components/Collection';
 import Map from '../components/Map';
+import Nav from '../components/Nav';
 import Slider from '../components/Slider';
 import Subscribe from '../components/Subscribe';
 import Support from '../components/Support';
 
-const Page = ({
-  data: {
-    about,
-    component: { collections, map, slider },
-    subscribe,
-    support,
-  },
-  showBrowse,
-}) => {
+const Page = ({ data, showBrowse }) => {
+  const router = useRouter();
+  const { collections, map, slider } = data[
+    router.asPath === '/' ? 'home' : _camelCase(router.asPath.replace('/', ''))
+  ];
   return (
     <>
+      <Nav />
       <Slider data={slider} />
       <div className="lg:flex">
         <div className="lg:w-2/3">
@@ -54,13 +54,13 @@ const Page = ({
               className="flex-auto"
               style={{ position: 'sticky', bottom: 0 }}>
               <section className="mb-20">
-                <About data={about.block} />
+                <About data={data.about.block} />
               </section>
               <section className="mb-20">
-                <Support data={support.block} />
+                <Support data={data.support.block} />
               </section>
               <section className="mb-12">
-                <Subscribe data={subscribe.block} />
+                <Subscribe data={data.subscribe.block} />
               </section>
             </div>
           </div>
@@ -83,45 +83,51 @@ export function getStaticPaths() {
   };
 }
 
-const componentIDs = {
-  destinations: 'cG9zdDozODUxNw==',
-  home: 'cG9zdDozNjExNQ==',
-  'food-drink': 'cG9zdDozODc2NA==',
-  'motorbike-guides': 'cG9zdDozODUxMQ==',
-  'hotel-reviews': 'cG9zdDozODQ2OQ==',
-};
-
-export async function getStaticProps({ params, preview = false }) {
+export async function getStaticProps({ preview = false }) {
   const query = gql`
-    query Page($slug: ID!) {
+    {
       about: component(id: "cG9zdDozNjExOA==") {
-        block {
-          ...BlockComponentData
-        }
+        ...Block
       }
-      component: component(id: $slug) {
-        collections {
-          items {
-            title
-            ...CollectionComponentData
-          }
-        }
-        map {
-          ...MapComponentData
-        }
-        slider {
-          ...SliderComponentData
-        }
+      foodDrink: component(id: "cG9zdDozODc2NA==") {
+        ...Page
+      }
+      home: component(id: "cG9zdDozNjExNQ==") {
+        ...Page
+      }
+      hotelReviews: component(id: "cG9zdDozODQ2OQ==") {
+        ...Page
+      }
+      destinations: component(id: "cG9zdDozODUxNw==") {
+        ...Page
+      }
+      motorbikeGuides: component(id: "cG9zdDozODUxMQ==") {
+        ...Page
       }
       subscribe: component(id: "cG9zdDozNzcwNQ==") {
-        block {
-          ...BlockComponentData
-        }
+        ...Block
       }
       support: component(id: "cG9zdDozNzY4Nw==") {
-        block {
-          ...BlockComponentData
+        ...Block
+      }
+    }
+    fragment Page on Component {
+      collections {
+        items {
+          title
+          ...CollectionComponentData
         }
+      }
+      map {
+        ...MapComponentData
+      }
+      slider {
+        ...SliderComponentData
+      }
+    }
+    fragment Block on Component {
+      block {
+        ...BlockComponentData
       }
     }
     ${Block.fragments}
@@ -129,9 +135,7 @@ export async function getStaticProps({ params, preview = false }) {
     ${Map.fragments}
     ${Slider.fragments}
   `;
-  const data = await request(process.env.WORDPRESS_API_URL, query, {
-    slug: componentIDs[params.slug || 'home'],
-  });
+  const data = await request(process.env.WORDPRESS_API_URL, query);
   return {
     props: { data, preview },
   };

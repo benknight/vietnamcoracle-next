@@ -1,5 +1,7 @@
-const { colors } = require('tailwindcss/defaultTheme');
+const _flatten = require('lodash/flatten');
+// const { colors } = require('tailwindcss/defaultTheme');
 const { default: gray } = require('@material-ui/core/colors/grey');
+const { themes } = require('./src/config/themes');
 
 module.exports = {
   future: {
@@ -7,7 +9,21 @@ module.exports = {
     removeDeprecatedGapUtilities: true,
   },
   plugins: [],
-  purge: ['./src/**/*.js'],
+  purge: {
+    content: ['./src/**/*.js'],
+    options: {
+      whitelist: _flatten(
+        Object.values(themes).map(theme => [
+          `bg-${theme}-200`,
+          `from-${theme}-200`,
+          `to-${theme}-200`,
+          `dark:bg-${theme}-900`,
+          `dark:from-${theme}-800`,
+          `dark:to-${theme}-900`,
+        ]),
+      ),
+    },
+  },
   theme: {
     extend: {
       colors: {
@@ -25,7 +41,8 @@ module.exports = {
         xxs: '0.625rem',
       },
       screens: {
-        dark: { raw: '(prefers-color-scheme: dark)' }, // => @media (prefers-color-scheme: dark) { ... }
+        // => @media (prefers-color-scheme: dark) { ... }
+        dark: { raw: '(prefers-color-scheme: dark)' },
       },
       width: {
         '1/7': '14.2857143%',

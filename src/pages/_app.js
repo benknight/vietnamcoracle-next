@@ -2,7 +2,7 @@
 import { create } from 'jss';
 import React from 'react';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
-import Layout from '../components/Layout';
+import Header from '../components/Header';
 import '../style.css';
 
 function MyApp({ Component, pageProps }) {
@@ -16,9 +16,8 @@ function MyApp({ Component, pageProps }) {
   });
   return (
     <StylesProvider jss={jss}>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <Header />
+      <Component {...pageProps} />
     </StylesProvider>
   );
 }

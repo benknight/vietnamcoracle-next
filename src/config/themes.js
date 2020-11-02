@@ -1,20 +1,26 @@
-export const defaultTheme = 'blue';
-
 const themes = {
-  '/motorbike-guides': 'purple',
-  '/hotel-reviews': 'red',
-  '/food-drink': 'yellow',
-  '/destinations': 'green',
+  default: 'blue',
+  motorbikeGuides: 'purple',
+  hotelReviews: 'red',
+  foodDrink: 'yellow',
+  destinations: 'green',
 };
 
-export function getThemeFromPathname(pathname) {
-  let theme = defaultTheme;
-  Object.keys(themes).forEach(key => {
+const pathToTheme = {
+  '/motorbike-guides': themes.motorbikeGuides,
+  '/hotel-reviews': themes.hotelReviews,
+  '/food-drink': themes.foodDrink,
+  '/destinations': themes.destinations,
+};
+
+exports.getThemeFromPathname = pathname => {
+  let theme = themes.default;
+  Object.keys(pathToTheme).forEach(key => {
     if (pathname.startsWith(key)) {
-      theme = themes[key];
+      theme = pathToTheme[key];
     }
   });
   return theme;
-}
+};
 
-export default themes;
+exports.themes = themes;

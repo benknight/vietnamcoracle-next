@@ -18,6 +18,7 @@
     "graphql-request": "^3.3.0",
     "lodash": "latest",
     "next": "latest",
+    "node-vibrant": "3.1.5",
     "react": "latest",
     "react-dom": "latest",
     "react-helmet": "latest"

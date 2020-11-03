@@ -4,19 +4,20 @@ import { useRouter } from 'next/router';
 import React from 'react';
 import About from '../components/About';
 import Block from '../components/Block';
-import Browse from '../components/Browse';
+// import Browse from '../components/Browse';
 import Collection from '../components/Collection';
 import Map from '../components/Map';
 import Nav from '../components/Nav';
 import Slider from '../components/Slider';
 import Subscribe from '../components/Subscribe';
 import Support from '../components/Support';
+import getSwatches from '../lib/getSwatches';
 
-const Page = ({ data, showBrowse }) => {
+const Page = ({ data, swatches }) => {
   const router = useRouter();
-  const { collections, map, slider } = data[
-    router.asPath === '/' ? 'home' : _camelCase(router.asPath.replace('/', ''))
-  ];
+  const componentName =
+    router.asPath === '/' ? 'home' : _camelCase(router.asPath.replace('/', ''));
+  const { collections, map, slider } = data[componentName];
   return (
     <>
       <Nav />
@@ -28,10 +29,10 @@ const Page = ({ data, showBrowse }) => {
               <h3 className="px-4 lg:px-12 font-display text-lg sm:text-xl md:text-2xl">
                 {item.title}
               </h3>
-              <Collection key={item.title} data={item} />
+              <Collection key={item.title} data={item} swatches={swatches} />
             </section>
           ))}
-          {showBrowse && (
+          {/* {componentName === 'home' && (
             <section className="my-2 md:my-10">
               <h3 className="px-4 lg:px-12 font-display text-lg sm:text-xl md:text-2xl">
                 Browse by category
@@ -40,7 +41,7 @@ const Page = ({ data, showBrowse }) => {
                 <Browse />
               </div>
             </section>
-          )}
+          )} */}
           <section className="mt-8 lg:mb-8 lg:pl-12">
             <Map data={map} />
           </section>
@@ -136,8 +137,9 @@ export async function getStaticProps({ preview = false }) {
     ${Slider.fragments}
   `;
   const data = await request(process.env.WORDPRESS_API_URL, query);
+  const swatches = await getSwatches();
   return {
-    props: { data, preview },
+    props: { data, preview, swatches },
   };
 }
 

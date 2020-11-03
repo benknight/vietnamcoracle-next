@@ -68,3 +68,6 @@ yarn-error.log
 # Next
 .next
 out
+
+# Project
+swatches.json

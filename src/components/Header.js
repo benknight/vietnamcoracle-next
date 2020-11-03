@@ -29,6 +29,7 @@ export default function Header() {
           <Image
             className="rounded-full"
             height={120}
+            lazy="false"
             loading="eager"
             src="/logo.jpg"
             width={120}

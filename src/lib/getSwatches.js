@@ -4,7 +4,12 @@ import _mapValues from 'lodash/mapValues';
 import vibrant from 'node-vibrant';
 import path from 'path';
 
-const pathToSwatches = path.join(process.cwd(), 'src/json/swatches.json');
+const pathToJSON = path.join(process.cwd(), 'src/json');
+const pathToSwatches = path.join(pathToJSON, 'swatches.json');
+
+if (!fs.existsSync(pathToJSON)) {
+  fs.mkdirSync(pathToJSON);
+}
 
 export default async function getSwatches() {
   let swatches;

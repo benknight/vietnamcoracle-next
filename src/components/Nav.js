@@ -3,22 +3,37 @@ import _defer from 'lodash/defer';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import React from 'react';
+import HotelIcon from '@material-ui/icons/Hotel';
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
+import MotorcycleIcon from '@material-ui/icons/Motorcycle';
+import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
+import LocalCafeOutlinedIcon from '@material-ui/icons/LocalCafeOutlined';
+import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
 import { getThemeFromPathname } from '../config/themes';
 
 const links = [
   {
+    icon: <MotorcycleIcon />,
+    iconAlt: <MotorcycleIcon />,
     title: 'Motorbike guides',
     url: '/motorbike-guides',
   },
   {
+    icon: <HotelIcon />,
+    iconAlt: <HotelOutlinedIcon />,
     title: 'Hotel reviews',
     url: '/hotel-reviews',
   },
   {
+    icon: <LocalCafeIcon />,
+    iconAlt: <LocalCafeOutlinedIcon />,
     title: 'Food & Drink',
     url: '/food-drink',
   },
   {
+    icon: <LocationOnIcon />,
+    iconAlt: <LocationOnOutlinedIcon />,
     title: 'Destinations',
     url: '/destinations',
   },
@@ -47,10 +62,9 @@ export default function Nav() {
               <Link href={to} key={to} scroll={false} shallow>
                 <a
                   className={cx(
-                    `flex items-center text-sm from-${theme}-200 to-${theme}-200 dark:from-${theme}-800 dark:to-${theme}-900`,
+                    `flex items-center px-4 text-sm from-${theme}-200 to-${theme}-200 dark:from-${theme}-800 dark:to-${theme}-900`,
                     {
-                      'px-5 font-bold bg-gradient-to-b dark:shadow': isCurrent,
-                      'px-6': !isCurrent,
+                      'bg-gradient-to-b dark:shadow': isCurrent,
                     },
                   )}
                   key={link.url}
@@ -59,7 +73,10 @@ export default function Nav() {
                     if (window.scrollY > offsetTop)
                       window.scroll({ top: offsetTop });
                   }}>
-                  <span
+                  <div className="mr-2">
+                    {isCurrent ? link.icon : link.iconAlt}
+                  </div>
+                  <div
                     className={cx(
                       'text-shadow border-b',
                       isCurrent
@@ -67,7 +84,7 @@ export default function Nav() {
                         : 'border-transparent',
                     )}>
                     {link.title}
-                  </span>
+                  </div>
                 </a>
               </Link>
             );

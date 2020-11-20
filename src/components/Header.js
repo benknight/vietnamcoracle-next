@@ -13,15 +13,18 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 export default function Header() {
   const ref = React.useRef();
   const [showMini, setShowMini] = React.useState(false);
+
   React.useEffect(() => {
-    const listener = _debounce(event => {
+    const listener = _debounce(() => {
       setShowMini(window.scrollY >= ref.current.getBoundingClientRect().height);
     }, 10);
     listener();
     window.addEventListener('scroll', listener);
     return () => window.removeEventListener('scroll', listener);
   }, []);
+
   const router = useRouter();
+
   return (
     <header className="pt-8 pb-10 px-3 text-center" ref={ref}>
       <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
@@ -67,7 +70,7 @@ export default function Header() {
               <SearchIcon classes={{ root: 'w-6 h-6' }} />
             </div>
             <input
-              className="h-10 pl-10 w-40 focus:w-64 pr-3 border dark:bg-black dark:bg-opacity-25 dark:border-gray-800 rounded-full outline-none dark:focus:border-gray-600"
+              className="h-10 pl-10 w-40 focus:w-full pr-3 border dark:bg-black dark:bg-opacity-25 dark:border-gray-800 rounded-full outline-none dark:focus:border-gray-600"
               type="search"
             />
           </div>

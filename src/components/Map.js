@@ -27,9 +27,11 @@ const Map = ({ data }) => {
           href={`https://www.google.com/maps/d/viewer?mid=${data.mid}`}>
           <Image
             alt=""
-            className="block w-8 h-8 mr-1"
+            className="block mr-1"
+            height="32"
+            layout="fixed"
             src="/google-maps-logo.svg"
-            unsized
+            width="32"
           />
           Open in Google Maps
           <LaunchIcon className="ml-2" />

@@ -74,11 +74,11 @@ const Page = ({ data, swatches }) => {
 export function getStaticPaths() {
   return {
     paths: [
-      { params: { slug: [] } },
-      { params: { slug: ['motorbike-guides'] } },
-      { params: { slug: ['hotel-reviews'] } },
-      { params: { slug: ['food-drink'] } },
-      { params: { slug: ['destinations'] } },
+      { params: { browse: [] } },
+      { params: { browse: ['motorbike-browses'] } },
+      { params: { browse: ['hotel-reviews'] } },
+      { params: { browse: ['food-drink'] } },
+      { params: { browse: ['destinations'] } },
     ],
     fallback: false,
   };

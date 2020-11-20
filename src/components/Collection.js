@@ -84,13 +84,13 @@ const Collection = ({ data, swatches }) => {
                 key={post.slug}>
                 <a
                   className="
-                relative overflow-hidden
-                flex flex-col w-40 sm:w-40 md:w-48
+                    relative overflow-hidden
+                    flex flex-col w-40 sm:w-40 md:w-48 lg:w-56
                 rounded"
                   href={`https://www.vietnamcoracle.com${post.link}`}>
                   <img
                     alt={post.thumbnails.thumbnailSquare.altText}
-                    className="relative block w-full h-32 sm:h-32 md:h-40 object-cover"
+                    className="relative block w-full h-32 sm:h-32 md:h-40 lg:h-48 object-cover"
                     loading="lazy"
                     sizes={post.thumbnails.thumbnailSquare.sizes}
                     srcSet={post.thumbnails.thumbnailSquare.srcSet}

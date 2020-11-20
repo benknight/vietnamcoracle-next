@@ -74,7 +74,7 @@ export function getStaticPaths() {
   return {
     paths: [
       { params: { browse: [] } },
-      { params: { browse: ['motorbike-browses'] } },
+      { params: { browse: ['motorbike-guides'] } },
       { params: { browse: ['hotel-reviews'] } },
       { params: { browse: ['food-drink'] } },
       { params: { browse: ['destinations'] } },

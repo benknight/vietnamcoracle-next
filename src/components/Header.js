@@ -13,6 +13,7 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 export default function Header() {
   const ref = useRef();
   const [showMini, setShowMini] = useState(false);
+  const [searchFocused, setSearchFocused] = useState(false);
 
   useEffect(() => {
     const listener = _debounce(() => {
@@ -39,7 +40,7 @@ export default function Header() {
           />
         </a>
       </Link>
-      <h1 className="text-4xl text-gray-800 dark:text-gray-200 font-display antialiased">
+      <h1 className="text-4xl mb-2 text-gray-800 dark:text-gray-200 font-display antialiased">
         Vietnam Coracle
       </h1>
       <h2 className="text-gray-600 text-xxs sm:text-xs uppercase tracking-widest font-serif">
@@ -49,7 +50,7 @@ export default function Header() {
         <div
           className={cx(
             'absolute top-0 left-0',
-            'flex items-center h-16 px-4',
+            'flex items-center h-16 pl-4',
             'bg-white dark:bg-gray-900',
             'transform transition-transform duration-200 ease-out',
             { '-translate-x-16': !showMini },
@@ -70,10 +71,18 @@ export default function Header() {
               <SearchIcon classes={{ root: 'w-6 h-6' }} />
             </div>
             <input
-              className="h-10 pl-10 w-40 focus:w-full pr-3 border dark:bg-black dark:bg-opacity-25 dark:border-gray-800 rounded-full outline-none dark:focus:border-gray-600"
+              className="h-10 pl-10 w-32 focus:w-96 pr-3 border dark:bg-black dark:bg-opacity-25 dark:border-gray-800 rounded-full outline-none dark:focus:border-gray-600"
+              onBlur={() => setSearchFocused(false)}
+              onFocus={() => setSearchFocused(true)}
               type="search"
             />
           </div>
+          <div
+            className={cx(
+              'absolute right-0 transform translate-x-full w-16 h-full bg-gradient-to-r from-white dark:from-gray-900 to-transparent',
+              { hidden: !searchFocused },
+            )}
+          />
         </div>
         <div className="absolute top-0 right-0 flex items-center h-16 px-4 bg-white dark:bg-gray-900 text-gray-400">
           <a href="https://www.facebook.com/vietnamcoracle">
@@ -81,7 +90,7 @@ export default function Header() {
               title="Facebook"
               aria-label="Vietnam Coracle on Facebook"
               arrow>
-              <FacebookIcon classes={{ root: 'w-10 h-10' }} />
+              <FacebookIcon classes={{ root: 'w-8 h-8' }} />
             </Tooltip>
           </a>
           <a className="ml-2" href="https://www.facebook.com/vietnamcoracle">
@@ -89,7 +98,7 @@ export default function Header() {
               title="Twitter"
               aria-label="Vietnam Coracle on Twitter"
               arrow>
-              <TwitterIcon classes={{ root: 'w-10 h-10' }} />
+              <TwitterIcon classes={{ root: 'w-8 h-8' }} />
             </Tooltip>
           </a>
           <a className="ml-2" href="https://www.facebook.com/vietnamcoracle">
@@ -97,7 +106,7 @@ export default function Header() {
               title="YouTube"
               aria-label="Vietnam Coracle on YouTube"
               arrow>
-              <YouTubeIcon classes={{ root: 'w-10 h-10' }} />
+              <YouTubeIcon classes={{ root: 'w-8 h-8' }} />
             </Tooltip>
           </a>
         </div>

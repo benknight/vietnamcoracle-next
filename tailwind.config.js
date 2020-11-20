@@ -38,7 +38,7 @@ module.exports = {
         // serif: ['Times New Romain', 'Times', 'serif'],
       },
       fontSize: {
-        xxs: '0.625rem',
+        xxs: '0.6875rem',
       },
       screens: {
         // => @media (prefers-color-scheme: dark) { ... }

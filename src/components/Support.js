@@ -12,10 +12,10 @@ export default function Support({ data: block }) {
           </a>
         </p>
       </BlockContent>
-      <a href={block.link.url}>
+      <a className="block w-48 mx-auto" href={block.link.url}>
         <img
           alt=""
-          className="w-48 mx-auto"
+          className="w-full"
           srcSet={block.image.srcSet}
           title={block.link.title}
         />

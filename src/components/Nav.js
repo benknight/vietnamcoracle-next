@@ -3,16 +3,23 @@ import _defer from 'lodash/defer';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef } from 'react';
+import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import HotelIcon from '@material-ui/icons/Hotel';
-import LocalCafeIcon from '@material-ui/icons/LocalCafe';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import MotorcycleIcon from '@material-ui/icons/Motorcycle';
 import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
+import LocalCafeIcon from '@material-ui/icons/LocalCafe';
 import LocalCafeOutlinedIcon from '@material-ui/icons/LocalCafeOutlined';
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import MotorcycleIcon from '@material-ui/icons/Motorcycle';
 import { getThemeFromPathname } from '../config/themes';
 
 const links = [
+  {
+    icon: <HomeOutlinedIcon />,
+    iconAlt: <HomeOutlinedIcon />,
+    title: 'Home',
+    url: '/',
+  },
   {
     icon: <MotorcycleIcon />,
     iconAlt: <MotorcycleIcon />,
@@ -52,21 +59,21 @@ export default function Nav() {
           'bg-white dark:bg-gray-900 shadow-lg',
         )}>
         <div
-          className="flex lg:justify-center flex-auto px-16 max-w-screen-lg text-xs border-t border-gray-300 dark:border-gray-700 font-serif uppercase tracking-widest"
+          className="flex lg:justify-center flex-auto px-16 max-w-screen-lg text-xxs border-t border-gray-300 dark:border-gray-700 font-serif uppercase tracking-widest"
           style={{ marginTop: '-1px' }}>
           {links.map(link => {
-            const isCurrent = router.asPath.startsWith(link.url);
+            const path = router.asPath;
+            const isCurrent = path === link.url;
             const theme = getThemeFromPathname(link.url);
             const to = link.url.match(/\/$/) ? link.url : link.url + '/';
             return (
               <Link href={to} key={to} scroll={false} shallow>
                 <a
-                  className={cx(
-                    `flex items-center px-4 text-sm from-${theme}-200 to-${theme}-200 dark:from-${theme}-800 dark:to-${theme}-900`,
-                    {
-                      'bg-gradient-to-b dark:shadow': isCurrent,
-                    },
-                  )}
+                  className={cx('flex items-center px-4', {
+                    'bg-gradient-to-b dark:shadow': isCurrent,
+                    [`from-${theme}-200 to-${theme}-200 dark:from-${theme}-800 dark:to-${theme}-900`]:
+                      link.url !== '/',
+                  })}
                   key={link.url}
                   onClick={() => {
                     const { offsetTop } = scrollAnchor.current;

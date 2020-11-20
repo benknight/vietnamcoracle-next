@@ -1,7 +1,6 @@
 import { request, gql } from 'graphql-request';
 import _camelCase from 'lodash/camelCase';
 import { useRouter } from 'next/router';
-import React from 'react';
 import About from '../components/About';
 import Block from '../components/Block';
 // import Browse from '../components/Browse';

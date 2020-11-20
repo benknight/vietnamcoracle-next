@@ -1,6 +1,5 @@
 import cx from 'classnames';
 import { gql } from 'graphql-request';
-import React from 'react';
 import Carousel, { CarouselSlide } from '../components/Carousel';
 
 function getClassNameFromSlidePosition(position) {

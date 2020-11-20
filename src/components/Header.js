@@ -3,7 +3,7 @@ import _debounce from 'lodash/debounce';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Tooltip from '@material-ui/core/Tooltip';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import SearchIcon from '@material-ui/icons/Search';
@@ -11,10 +11,10 @@ import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 
 export default function Header() {
-  const ref = React.useRef();
-  const [showMini, setShowMini] = React.useState(false);
+  const ref = useRef();
+  const [showMini, setShowMini] = useState(false);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const listener = _debounce(() => {
       setShowMini(window.scrollY >= ref.current.getBoundingClientRect().height);
     }, 10);

@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import { gql } from 'graphql-request';
 import _shuffle from 'lodash/shuffle';
-import React from 'react';
+import { useMemo } from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
@@ -15,7 +15,7 @@ const Collection = ({ data, swatches }) => {
     scrollAreaRef,
     scrollPosition,
   } = useCarousel({ offsetLeft: 64 });
-  const posts = React.useMemo(() => {
+  const posts = useMemo(() => {
     let posts;
     switch (data.type) {
       case 'category':

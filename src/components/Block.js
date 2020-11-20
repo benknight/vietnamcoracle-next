@@ -1,5 +1,4 @@
 import { gql } from 'graphql-request';
-import React from 'react';
 
 export const BlockTitle = props => (
   <h3 className="text-xl lg:text-2xl mb-3">{props.children}</h3>

@@ -1,12 +1,12 @@
 import cx from 'classnames';
-import React from 'react';
+import { useRef, useState, useEffect } from 'react';
 
 export default function Carousel({ className, children, ...props }) {
-  const ref = React.useRef();
-  const [slideCount, setSlideCount] = React.useState(null);
-  const [cursor, setCursor] = React.useState(0);
+  const ref = useRef();
+  const [slideCount, setSlideCount] = useState(null);
+  const [cursor, setCursor] = useState(0);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const slides = ref.current.querySelectorAll(':scope > a');
     setSlideCount(slides.length);
     const observer = new IntersectionObserver(

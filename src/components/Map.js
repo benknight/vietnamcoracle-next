@@ -2,7 +2,6 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import React from 'react';
 import LaunchIcon from '@material-ui/icons/Launch';
 import { getThemeFromPathname } from '../config/themes';
 

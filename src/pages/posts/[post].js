@@ -1,6 +1,5 @@
 import { request, gql } from 'graphql-request';
 import { useRouter } from 'next/router';
-import React from 'react';
 
 const Post = ({ data: { post } }) => {
   const router = useRouter();

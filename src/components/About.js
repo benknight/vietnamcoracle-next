@@ -1,4 +1,3 @@
-import React from 'react';
 import Block, { BlockContent, BlockTitle } from './Block';
 
 export default function About({ data: block }) {

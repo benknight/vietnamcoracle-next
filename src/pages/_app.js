@@ -1,6 +1,5 @@
 // import App from 'next/app'
 import { create } from 'jss';
-import React from 'react';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import '../style.css';

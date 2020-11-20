@@ -1,14 +1,14 @@
 // https://gist.github.com/benknight/3bbf8dbcbb0dfef9adc611be74538f67
-import React from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 
 export default function useCarousel() {
-  const scrollArea = React.useRef();
-  const [isTouchDevice, setIsTouchDevice] = React.useState(null);
-  const [scrollBy, setScrollBy] = React.useState(null);
-  const [scrollPosition, setScrollPosition] = React.useState(null);
-  const [showNav, setShowNav] = React.useState(null);
+  const scrollArea = useRef();
+  const [isTouchDevice, setIsTouchDevice] = useState(null);
+  const [scrollBy, setScrollBy] = useState(null);
+  const [scrollPosition, setScrollPosition] = useState(null);
+  const [showNav, setShowNav] = useState(null);
 
-  const navigate = React.useCallback(
+  const navigate = useCallback(
     delta => {
       const { scrollLeft } = scrollArea.current;
       scrollArea.current.scroll({
@@ -19,7 +19,7 @@ export default function useCarousel() {
     [scrollBy],
   );
 
-  React.useEffect(() => {
+  useEffect(() => {
     const scrollAreaNode = scrollArea.current;
 
     const calculateScrollPosition = () => {
@@ -75,7 +75,7 @@ export default function useCarousel() {
     return detachListeners;
   }, [isTouchDevice, navigate]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     const mql = window.matchMedia('(pointer: fine)');
     const handleMql = ({ matches }) => {
       setIsTouchDevice(!matches);

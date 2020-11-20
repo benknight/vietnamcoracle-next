@@ -2,7 +2,7 @@ import cx from 'classnames';
 import _defer from 'lodash/defer';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import React from 'react';
+import { useRef } from 'react';
 import HotelIcon from '@material-ui/icons/Hotel';
 import LocalCafeIcon from '@material-ui/icons/LocalCafe';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
@@ -41,7 +41,7 @@ const links = [
 
 export default function Nav() {
   const router = useRouter();
-  const scrollAnchor = React.useRef();
+  const scrollAnchor = useRef();
   return (
     <>
       <div ref={scrollAnchor} />

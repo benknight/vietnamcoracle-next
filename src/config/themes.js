@@ -1,9 +1,9 @@
 const themes = {
   default: 'blue',
-  motorbikeGuides: 'purple',
+  motorbikeGuides: 'green',
   hotelReviews: 'red',
   foodDrink: 'yellow',
-  destinations: 'green',
+  destinations: 'purple',
 };
 
 const pathToTheme = {

@@ -15,9 +15,7 @@ export default function Subscribe({ data: block }) {
         <p>{block.description}</p>
         <form className="flex justify-center max-w-xs mt-4 mx-auto">
           <input
-            className="
-              flex-auto h-8 mr-2 p-2 text-sm font-sans
-              border dark:border-none bg-white dark:bg-opacity-25 rounded"
+            className="form-field flex-auto h-8 mr-2 p-2 text-sm rounded"
             type="email"
           />
           <button

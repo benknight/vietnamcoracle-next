@@ -12,11 +12,13 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 
 export default function Header() {
   const ref = useRef();
+  const [scrolled, setScolled] = useState(false);
   const [showMini, setShowMini] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
 
   useEffect(() => {
     const listener = _debounce(() => {
+      setScolled(window.scrollY > 0);
       setShowMini(window.scrollY >= ref.current.getBoundingClientRect().height);
     }, 10);
     listener();
@@ -27,7 +29,7 @@ export default function Header() {
   const router = useRouter();
 
   return (
-    <header className="pt-8 pb-10 px-3 text-center" ref={ref}>
+    <header className="pt-24 lg:pt-8 pb-10 px-3 text-center" ref={ref}>
       <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
         <a className="inline-flex">
           <Image
@@ -46,14 +48,20 @@ export default function Header() {
       <h2 className="text-gray-600 text-xxs sm:text-xs uppercase tracking-widest font-serif">
         Independent travel guides to Vietnam
       </h2>
-      <div className="fixed top-0 left-0 z-30 w-full">
+      <div
+        className={cx('fixed top-0 left-0 z-30 h-16 lg:h-auto w-full', {
+          'bg-white dark:bg-gray-900 shadow-lg': scrolled,
+        })}>
         <div
           className={cx(
-            'absolute top-0 left-0',
-            'flex items-center h-16 pl-4',
-            'bg-white dark:bg-gray-900',
+            'z-10 absolute top-0 left-0',
+            'flex items-center h-16 px-4',
             'transform transition-transform duration-200 ease-out',
-            { '-translate-x-16': !showMini },
+            {
+              '-translate-x-16': !showMini,
+              'right-0 lg:w-96': searchFocused,
+              '-right-16': !showMini && searchFocused,
+            },
           )}>
           <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
             <a className="inline-flex mr-4">
@@ -66,25 +74,19 @@ export default function Header() {
               />
             </a>
           </Link>
-          <div className="relative">
+          <div className="relative flex-auto w-40">
             <div className="absolute top-0 left-0 bottom-0 flex items-center px-3 pointer-events-none">
               <SearchIcon classes={{ root: 'w-6 h-6' }} />
             </div>
             <input
-              className="h-10 pl-10 w-32 focus:w-96 pr-3 border dark:bg-black dark:bg-opacity-25 dark:border-gray-800 rounded-full outline-none dark:focus:border-gray-600"
+              className="form-field w-full h-10 pr-3 pl-10 rounded-full"
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}
               type="search"
             />
           </div>
-          <div
-            className={cx(
-              'absolute right-0 transform translate-x-full w-16 h-full bg-gradient-to-r from-white dark:from-gray-900 to-transparent',
-              { hidden: !searchFocused },
-            )}
-          />
         </div>
-        <div className="absolute top-0 right-0 flex items-center h-16 px-4 bg-white dark:bg-gray-900 text-gray-400">
+        <div className="absolute top-0 right-0 flex items-center h-16 px-4 text-gray-400">
           <a href="https://www.facebook.com/vietnamcoracle">
             <Tooltip
               title="Facebook"

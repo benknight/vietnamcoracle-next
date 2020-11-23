@@ -2,10 +2,10 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import _shuffle from 'lodash/shuffle';
 import { useMemo } from 'react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import useCarousel from '../lib/useCarousel';
+import PostCard from './PostCard';
 
 const Collection = ({ data, swatches }) => {
   const {
@@ -48,76 +48,37 @@ const Collection = ({ data, swatches }) => {
     }
     return posts;
   }, [data]);
-  const isDark = useMediaQuery('(prefers-color-scheme: dark)');
   return (
     <div className="relative my-3">
       {!isTouchDevice && scrollPosition && scrollPosition !== 'start' && (
         <button
-          className="absolute z-10 left-0 h-full bg-black bg-opacity-50 text-white"
+          className="absolute z-10 left-0 h-full bg-black bg-opacity-75 text-white"
           {...getLeftNavProps()}>
           <ChevronLeft classes={{ root: 'w-10 h-10' }} />
         </button>
       )}
       {!isTouchDevice && scrollPosition && scrollPosition !== 'end' && (
         <button
-          className="absolute z-10 right-0 h-full bg-black bg-opacity-50 text-white"
+          className="absolute z-10 right-0 h-full bg-black bg-opacity-50 dark:bg-opacity-75 text-white"
           {...getRightNavProps()}>
           <ChevronRight classes={{ root: 'w-10 h-10' }} />
         </button>
       )}
       <div className="overflow-hidden">
         <ol
-          className="flex pb-8 -mb-8 lg:pl-12 overflow-y-auto"
+          className="flex pb-8 -mb-8 pl-4 lg:pl-12 overflow-y-auto"
           ref={scrollAreaRef}>
-          {posts.map((post, index) => {
-            const swatch =
-              swatches[post.thumbnails.thumbnailSquare.id][
-                isDark ? 'DarkMuted' : 'DarkMuted'
-              ];
-            return (
-              <li
-                className={cx(
-                  'flex flex-shrink-0',
-                  index < posts.length - 1 ? 'pr-2' : 'lg:pr-12',
-                )}
-                title={post.slug}
-                key={post.slug}>
-                <a
-                  className="
-                    relative overflow-hidden
-                    flex flex-col w-40 sm:w-40 md:w-48 lg:w-56
-                rounded"
-                  href={`https://www.vietnamcoracle.com${post.link}`}>
-                  <img
-                    alt={post.thumbnails.thumbnailSquare.altText}
-                    className="relative block w-full h-32 sm:h-32 md:h-40 lg:h-48 object-cover"
-                    loading="lazy"
-                    sizes={post.thumbnails.thumbnailSquare.sizes}
-                    srcSet={post.thumbnails.thumbnailSquare.srcSet}
-                  />
-                  <div
-                    className="
-                  relative bg-gray-800 bg-opacity-25
-                  p-2 sm:p-3 flex-auto flex items-center
-                  font-medium rounded-b"
-                    style={{
-                      backgroundColor: swatch.hex,
-                      color: swatch.titleTextColor,
-                    }}>
-                    <h3
-                      className={cx('sm:text-sm leading-tight font-serif', {
-                        'text-xs sm:text-sm md:text-base':
-                          post.title.length > 40,
-                        'text-sm sm:text-base md:text-lg':
-                          post.title.length <= 40,
-                      })}>
-                      {post.title}
-                    </h3>
-                  </div>
-                </a>
-              </li>
-            );
-          })}
+          {posts.map((post, index) => (
+            <li
+              className={cx(
+                'flex flex-shrink-0',
+                index < posts.length - 1 ? 'pr-2' : 'pr-4 lg:pr-12',
+              )}
+              title={post.slug}
+              key={post.slug}>
+              <PostCard post={post} />
+            </li>
+          ))}
         </ol>
       </div>
     </div>
@@ -126,18 +87,7 @@ const Collection = ({ data, swatches }) => {
 
 Collection.fragments = gql`
   fragment CollectionComponentPostData on Post {
-    date
-    link
     slug
-    title
-    thumbnails {
-      thumbnailSquare {
-        altText
-        id
-        srcSet
-        sizes
-      }
-    }
   }
   fragment CollectionComponentData on Component_Collections_items {
     direction
@@ -147,6 +97,7 @@ Collection.fragments = gql`
       posts {
         nodes {
           ...CollectionComponentPostData
+          ...PostCardPostData
         }
       }
     }
@@ -156,6 +107,7 @@ Collection.fragments = gql`
       }
     }
   }
+  ${PostCard.fragments}
 `;
 
 export default Collection;

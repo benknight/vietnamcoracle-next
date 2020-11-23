@@ -11,7 +11,7 @@ if (!fs.existsSync(pathToJSON)) {
   fs.mkdirSync(pathToJSON);
 }
 
-export default async function getSwatches() {
+export default async function getSwatches(thumbnails) {
   let swatches;
   try {
     swatches = JSON.parse(fs.readFileSync(pathToSwatches));

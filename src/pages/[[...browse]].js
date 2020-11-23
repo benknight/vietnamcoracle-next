@@ -1,51 +1,48 @@
 import { request, gql } from 'graphql-request';
-import _camelCase from 'lodash/camelCase';
+import _ from 'lodash';
 import { useRouter } from 'next/router';
 import About from '../components/About';
 import Block from '../components/Block';
-// import Browse from '../components/Browse';
 import Collection from '../components/Collection';
 import Map from '../components/Map';
 import Nav from '../components/Nav';
 import Slider from '../components/Slider';
 import Subscribe from '../components/Subscribe';
 import Support from '../components/Support';
-import getSwatches from '../lib/getSwatches';
 
-const Page = ({ data, swatches }) => {
+const Browse = ({ data, swatches }) => {
   const router = useRouter();
   const componentName =
-    router.asPath === '/' ? 'home' : _camelCase(router.asPath.replace('/', ''));
-  const { collections, map, slider } = data[componentName];
+    router.asPath === '/'
+      ? 'home'
+      : _.camelCase(router.asPath.replace('/', ''));
+  const { collections, map, slider, title } = data[componentName];
   return (
     <>
       <Nav />
-      <Slider data={slider} />
+      {/* <Slider data={slider} /> */}
       <div className="lg:flex">
         <div className="lg:w-2/3">
+          {router.asPath !== '/' && (
+            <section className="my-2 md:my-10">
+              <h1 className="page-wrap font-display text-2xl md:text-4xl">
+                {title}
+              </h1>
+            </section>
+          )}
           {collections.items.map(item => (
             <section className="my-2 md:my-10" key={item.title}>
-              <h3 className="px-4 lg:px-12 font-display text-lg sm:text-xl md:text-2xl">
+              <h3 className="page-wrap font-display text-lg sm:text-xl md:text-2xl">
                 {item.title}
               </h3>
               <Collection key={item.title} data={item} swatches={swatches} />
             </section>
           ))}
-          {/* {componentName === 'home' && (
-            <section className="my-2 md:my-10">
-              <h3 className="px-4 lg:px-12 font-display text-lg sm:text-xl md:text-2xl">
-                Browse by category
-              </h3>
-              <div className="my-3 px-4 lg:pl-12 lg:pr-0">
-                <Browse />
-              </div>
-            </section>
-          )} */}
           <section className="mt-8 lg:mb-8 lg:pl-12">
             <Map data={map} />
           </section>
         </div>
-        <div className="lg:w-1/3">
+        <div className="lg:w-1/3 pb-12 lg:pb-0">
           <div
             className="
               lg:h-full lg:px-6 py-12 lg:pb-0
@@ -124,6 +121,7 @@ export async function getStaticProps({ preview = false }) {
       slider {
         ...SliderComponentData
       }
+      title
     }
     fragment Block on Component {
       block {
@@ -136,10 +134,10 @@ export async function getStaticProps({ preview = false }) {
     ${Slider.fragments}
   `;
   const data = await request(process.env.WORDPRESS_API_URL, query);
-  const swatches = await getSwatches();
+  // TODO: processImages(data);
   return {
-    props: { data, preview, swatches },
+    props: { data, preview },
   };
 }
 
-export default Page;
+export default Browse;

@@ -1,0 +1,1 @@
+[ ] Unify blurImages.js and generateSwatches.js into a single function `processImages(data)` that takes a GQL data response, traverse and pick nodes with __typename "MediaItem", then generate swatches and blur for those images, requiring certain fields to be present on the node (probably id and sourceUrl).

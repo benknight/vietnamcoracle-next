@@ -4,6 +4,7 @@ const { default: gray } = require('@material-ui/core/colors/grey');
 const { themes } = require('./src/config/themes');
 
 module.exports = {
+  darkMode: 'media',
   future: {
     purgeLayersByDefault: true,
     removeDeprecatedGapUtilities: true,
@@ -31,6 +32,7 @@ module.exports = {
         'black-75': 'rgba(0, 0, 0, 0.75)',
         gray: {
           ...gray,
+          950: 'hsl(0deg 0% 10%)',
         },
       },
       fontFamily: {
@@ -38,11 +40,8 @@ module.exports = {
         // serif: ['Times New Romain', 'Times', 'serif'],
       },
       fontSize: {
+        xxxs: '10px',
         xxs: '0.6875rem',
-      },
-      screens: {
-        // => @media (prefers-color-scheme: dark) { ... }
-        dark: { raw: '(prefers-color-scheme: dark)' },
       },
       width: {
         '1/7': '14.2857143%',

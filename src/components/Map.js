@@ -38,7 +38,7 @@ const Map = ({ data }) => {
       </div>
       <iframe
         className="shadow"
-        height="600"
+        height="480"
         src={`https://www.google.com/maps/d/u/0/embed?mid=${data.mid}`}
         title={data.title}
         width="100%"></iframe>

@@ -4,13 +4,7 @@
 
 @layer base {
   body {
-    @apply text-gray-800 overscroll-x-none;
-  }
-
-  @screen dark {
-    body {
-      @apply text-gray-200 bg-gray-900;
-    }
+    @apply text-gray-800 overscroll-x-none dark:text-gray-200 dark:bg-gray-900;
   }
 }
 
@@ -21,6 +15,10 @@
 
   .link:hover {
     @apply underline;
+  }
+
+  .form-field {
+    @apply border border-gray-300 dark:border-gray-800 dark:focus:border-gray-600 dark:bg-gray-950 outline-none font-sans;
   }
 
   @responsive {
@@ -75,6 +73,14 @@
     --gradient-color-stops:
       var(--gradient-from-color),
       var(--gradient-to-color, rgba(255, 255, 255, 0));
+  }
+
+  .page-wrap {
+    @apply px-4 lg:px-12;
+  }
+
+  .page-heading {
+    @apply font-display text-2xl md:text-4xl;
   }
 }
 

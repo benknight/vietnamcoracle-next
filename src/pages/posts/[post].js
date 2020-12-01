@@ -22,7 +22,7 @@ const Post = ({ data }) => {
           <div dangerouslySetInnerHTML={{ __html: data?.post.content }} />
         </div>
       </LayoutMain>
-      {<SidebarDefault data={data} />}
+      <SidebarDefault data={data} />
     </Layout>
   );
 };

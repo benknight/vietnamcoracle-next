@@ -3,11 +3,11 @@ import { gql } from 'graphql-request';
 import _get from 'lodash/get';
 import Image from 'next/image';
 import Link from 'next/link';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+// import useMediaQuery from '@material-ui/core/useMediaQuery';
 import swatches from '../json/swatches.json';
 
 function PostCard({ post, size = 'small' }) {
-  const isDark = useMediaQuery('(prefers-color-scheme: dark)');
+  // const isDark = useMediaQuery('(prefers-color-scheme: dark)');
   const swatchKey = 'DarkMuted';
   const swatch = _get(
     swatches,
@@ -40,7 +40,7 @@ function PostCard({ post, size = 'small' }) {
         <div
           className={cx(
             'relative flex-auto flex',
-            'text-white bg-gray-900  font-medium rounded-b',
+            'text-white bg-gray-900 font-medium rounded-b',
             {
               'p-2 sm:p-3 items-center': size === 'small',
               'p-3 sm:px-5 sm:py-6': size === 'medium',

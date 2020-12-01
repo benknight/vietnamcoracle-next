@@ -1,5 +1,6 @@
 import { request, gql } from 'graphql-request';
 import _ from 'lodash';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
@@ -16,30 +17,49 @@ const Browse = ({ category, page }) => {
   return (
     <>
       {router.asPath === '/' && (
-        <div
-          className="w-full bg-black mb-8"
-          style={{ paddingBottom: '36.2318%' }}></div>
+        <>
+          <div className="hidden md:block">
+            <Image
+              alt=""
+              height="580"
+              loading="eager"
+              src="/slider-wide.jpg"
+              width="1600"
+            />
+          </div>
+          <div className="block md:hidden">
+            <Image
+              alt=""
+              height="1024"
+              loading="eager"
+              src="/slider-square.jpg"
+              width="1024"
+            />
+          </div>
+        </>
       )}
-
       <Layout>
         <LayoutMain>
           {router.asPath !== '/' && (
-            <section className="page-wrap lg:pr-0 sm:flex items-center my-2 md:my-10 lg:mt-16">
-              <h1 className="font-display text-2xl md:text-4xl">
+            <section className="page-wrap lg:pr-0 sm:flex items-center my-8 md:my-10 md:mt-12 lg:mt-16">
+              <h1 className="font-display text-2xl md:text-3xl lg:text-4xl">
                 {category ? (
                   <>
-                    <span className="opacity-50">
-                      <Link href={`/${slug}`}>{title}</Link> &gt;{' '}
+                    <span className="inline-block opacity-50 leading-normal">
+                      <Link href={`/${slug}`}>{title}</Link>
+                      &nbsp;&gt;&nbsp;
                     </span>
-                    {category.name}
+                    <span className="inline-block leading-normal">
+                      {category.name}
+                    </span>
                   </>
                 ) : (
                   title
                 )}
               </h1>
               {collections.topLevelCategory && (
-                <div className="relative flex items-center justify-between w-full sm:w-auto h-10 my-4 p-3 sm:ml-4 sm:my-0 form-field tracking-wide leading-none whitespace-nowrap">
-                  Browse categories… <ArrowDropDownIcon />
+                <div className="form-field relative flex items-center justify-between w-full sm:w-auto h-10 my-4 p-3 sm:ml-4 sm:my-0 rounded text-sm text-gray-600 dark:text-gray-500 tracking-wide leading-none whitespace-nowrap">
+                  Browse categories… <ArrowDropDownIcon className="ml-2" />
                   <select
                     className="absolute inset-0 opacity-0 cursor-pointer w-full"
                     onChange={event =>
@@ -68,7 +88,7 @@ const Browse = ({ category, page }) => {
           ) : (
             collections.items.map(item => (
               <section className="my-2 md:my-10" key={item.title}>
-                <h3 className="page-wrap font-display text-lg sm:text-xl md:text-2xl">
+                <h3 className="page-wrap font-display text-xl md:text-2xl">
                   {item.title}
                 </h3>
                 <Collection key={item.title} data={item} />

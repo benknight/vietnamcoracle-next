@@ -79,7 +79,7 @@ export default function Nav() {
               <Link href={to} key={to} scroll={false}>
                 <a
                   className={cx(
-                    'w-1/5 lg:w-auto sm:p-4 lg:py-0 flex flex-col lg:flex-row items-center justify-center text-center',
+                    'w-1/5 lg:w-auto sm:p-4 lg:py-0 lg:px-3 xl:px-4 flex flex-col lg:flex-row items-center justify-center text-center',
                     {
                       'bg-gradient-to-b dark:shadow lg:text-gray-800 lg:dark:text-white': isCurrent,
                       ['lg:from-blue-200 lg:to-blue-200 lg:dark:from-blue-700 lg:dark:to-blue-900']:

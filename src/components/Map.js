@@ -2,7 +2,9 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import LaunchIcon from '@material-ui/icons/Launch';
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 import { getThemeFromPathname } from '../config/themes';
 
 const Map = ({ data }) => {
@@ -43,12 +45,26 @@ const Map = ({ data }) => {
           <LaunchIcon className="ml-2" />
         </a>
       </div>
-      <iframe
-        className="shadow w-full"
-        height="600"
-        src={`https://www.google.com/maps/d/u/0/embed?mid=${data.mid}`}
-        title={data.title}
-        width="800"></iframe>
+      <div className="relative">
+        <div
+          className="
+            absolute inset-x-0 top-0
+            flex items-center px-4
+            bg-gray-100 dark:text-white dark:bg-gray-950
+            pointer-events-none"
+          style={{ height: '54px' }}>
+          <div className="flex-auto">
+            <MenuOpenIcon fontSize="large" />
+          </div>
+          <FullscreenIcon fontSize="large" />
+        </div>
+        <iframe
+          className="shadow w-full"
+          height="800"
+          src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=6`}
+          title={data.title}
+          width="800"></iframe>
+      </div>
     </div>
   );
 };

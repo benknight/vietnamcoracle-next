@@ -23,7 +23,7 @@ function PostCard({ post, size = 'small' }) {
         })}>
         <div
           className={cx('relative block w-full bg-opacity-10', {
-            'h-32 md:h-48': size === 'small',
+            'h-40 md:h-48': size === 'small',
             'h-48 lg:h-72': size === 'medium',
           })}
           style={{
@@ -42,8 +42,8 @@ function PostCard({ post, size = 'small' }) {
             'relative flex-auto flex',
             'text-white bg-gray-900 font-medium rounded-b',
             {
-              'p-2 sm:p-3 items-center': size === 'small',
-              'p-3 sm:px-5 sm:py-6': size === 'medium',
+              'p-3 items-center': size === 'small',
+              'px-4 py-5 sm:px-5 sm:py-6': size === 'medium',
             },
           )}>
           <Image
@@ -56,17 +56,17 @@ function PostCard({ post, size = 'small' }) {
           <div className="relative font-serif">
             <h3
               className={cx('leading-tight', {
-                'text-xs sm:text-sm md:text-base':
+                'text-sm md:text-base':
                   post.title.length > 40 && size === 'small',
-                'text-sm sm:text-base md:text-lg':
+                'text-base md:text-lg':
                   post.title.length <= 40 && size === 'small',
-                'text-sm sm:text-base lg:text-2xl': size === 'medium',
+                'text-xl sm:text-2xl': size === 'medium',
               })}>
               {post.title}
             </h3>
             {size === 'medium' && (
               <div
-                className="mt-1 text-sm opacity-75"
+                className="mt-2 text-xs sm:text-sm opacity-75"
                 dangerouslySetInnerHTML={{ __html: post.excerpt }}
               />
             )}

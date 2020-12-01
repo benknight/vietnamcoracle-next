@@ -29,7 +29,9 @@ export default function Header() {
   const router = useRouter();
 
   return (
-    <header className="pt-24 lg:pt-8 pb-10 px-3 text-center" ref={ref}>
+    <header
+      className="pt-24 pb-12 sm:pt-20 sm:pb-16 px-3 lg:py-8 text-center bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 lg:bg-none"
+      ref={ref}>
       <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
         <a className="inline-flex">
           <Image
@@ -74,19 +76,19 @@ export default function Header() {
               />
             </a>
           </Link>
-          <div className="relative flex-auto w-40">
+          <div className="relative flex-auto w-40 lg:w-12 xl:w-44">
             <div className="absolute top-0 left-0 bottom-0 flex items-center px-3 pointer-events-none">
               <SearchIcon classes={{ root: 'w-6 h-6' }} />
             </div>
             <input
-              className="form-field w-full h-10 pr-3 pl-10 rounded-full"
+              className="form-field w-full h-10 pl-10 rounded-full"
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}
               type="search"
             />
           </div>
         </div>
-        <div className="absolute top-0 right-0 flex items-center h-16 px-4 text-gray-400">
+        <div className="absolute top-0 right-0 flex items-center h-16 px-4 lg:px-2 xl:px-4 text-gray-400">
           <a href="https://www.facebook.com/vietnamcoracle">
             <Tooltip
               title="Facebook"

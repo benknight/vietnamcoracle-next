@@ -76,7 +76,7 @@ const Collection = ({ data, swatches }) => {
               )}
               title={post.slug}
               key={post.slug}>
-              <div className="flex w-40 sm:w-40 md:w-56">
+              <div className="flex w-48 md:w-56">
                 <PostCard post={post} />
               </div>
             </li>

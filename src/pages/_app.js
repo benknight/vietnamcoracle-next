@@ -2,6 +2,7 @@
 import { create } from 'jss';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
+import Nav from '../components/Nav';
 import '../style.css';
 
 function MyApp({ Component, pageProps }) {
@@ -16,6 +17,7 @@ function MyApp({ Component, pageProps }) {
   return (
     <StylesProvider jss={jss}>
       <Header />
+      <Nav />
       <Component {...pageProps} />
     </StylesProvider>
   );

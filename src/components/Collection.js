@@ -76,7 +76,9 @@ const Collection = ({ data, swatches }) => {
               )}
               title={post.slug}
               key={post.slug}>
-              <PostCard post={post} />
+              <div className="flex w-40 sm:w-40 md:w-56">
+                <PostCard post={post} />
+              </div>
             </li>
           ))}
         </ol>
@@ -88,6 +90,7 @@ const Collection = ({ data, swatches }) => {
 Collection.fragments = gql`
   fragment CollectionComponentPostData on Post {
     slug
+    ...PostCardPostData
   }
   fragment CollectionComponentData on Component_Collections_items {
     direction
@@ -97,7 +100,6 @@ Collection.fragments = gql`
       posts {
         nodes {
           ...CollectionComponentPostData
-          ...PostCardPostData
         }
       }
     }

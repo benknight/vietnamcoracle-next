@@ -12,7 +12,14 @@ const Map = ({ data }) => {
     <div className="lg:rounded-lg">
       <div
         className={cx(
-          `relative p-8 text-center font-display dark:bg-opacity-50 dark:text-white dark:border dark:border-black lg:rounded-t-lg bg-${theme}-200 dark:bg-${theme}-900`,
+          `relative p-8 text-center dark:bg-opacity-50 dark:text-white dark:border dark:border-black lg:rounded-t-lg font-display`,
+          {
+            [`bg-blue-200 dark:bg-blue-900`]: theme === 'blue',
+            [`bg-green-200 dark:bg-green-900`]: theme === 'green',
+            [`bg-red-200 dark:bg-red-900`]: theme === 'red',
+            [`bg-yellow-200 dark:bg-yellow-900`]: theme === 'yellow',
+            [`bg-purple-200 dark:bg-purple-900`]: theme === 'purple',
+          },
         )}>
         <h3 className="text-2xl sm:text-3xl">{data.title}</h3>
         <p className="mt-2 mb-4 sm:px-16 text-sm sm:text-base font-serif">
@@ -37,11 +44,11 @@ const Map = ({ data }) => {
         </a>
       </div>
       <iframe
-        className="shadow"
-        height="480"
+        className="shadow w-full"
+        height="600"
         src={`https://www.google.com/maps/d/u/0/embed?mid=${data.mid}`}
         title={data.title}
-        width="100%"></iframe>
+        width="800"></iframe>
     </div>
   );
 };

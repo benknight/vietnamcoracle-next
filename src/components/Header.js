@@ -42,7 +42,7 @@ export default function Header() {
           />
         </a>
       </Link>
-      <h1 className="text-4xl mb-2 text-gray-800 dark:text-gray-200 font-display antialiased">
+      <h1 className="text-4xl mb-2 text-gray-800 dark:text-gray-200 font-display">
         Vietnam Coracle
       </h1>
       <h2 className="text-gray-600 text-xxs sm:text-xs uppercase tracking-widest font-serif">

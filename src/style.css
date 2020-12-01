@@ -18,7 +18,7 @@
   }
 
   .form-field {
-    @apply border border-gray-300 dark:border-gray-800 dark:focus:border-gray-600 dark:bg-gray-950 outline-none font-sans;
+    @apply border border-gray-300 dark:border-gray-800 dark:focus:border-gray-600 bg-gray-100 dark:bg-gray-950 outline-none font-sans;
   }
 
   @responsive {

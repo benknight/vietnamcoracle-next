@@ -12,18 +12,7 @@ module.exports = {
   plugins: [],
   purge: {
     content: ['./src/**/*.js'],
-    options: {
-      whitelist: _flatten(
-        Object.values(themes).map(theme => [
-          `bg-${theme}-200`,
-          `from-${theme}-200`,
-          `to-${theme}-200`,
-          `dark:bg-${theme}-900`,
-          `dark:from-${theme}-800`,
-          `dark:to-${theme}-900`,
-        ]),
-      ),
-    },
+    options: {},
   },
   theme: {
     extend: {

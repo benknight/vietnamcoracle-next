@@ -4,6 +4,7 @@
   "author": "Benjamin Knight <ben@benknight.me>",
   "scripts": {
     "build": "next build",
+    "build:style": "postcss src/style.css -o output.css",
     "develop": "next dev",
     "export": "next export",
     "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
@@ -13,6 +14,7 @@
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "@prettier/plugin-php": "^0.16.0",
+    "autoprefixer": "^10.0.4",
     "classnames": "latest",
     "graphql": "latest",
     "graphql-request": "^3.3.0",
@@ -20,6 +22,7 @@
     "lodash": "latest",
     "next": "^10.0.2",
     "node-vibrant": "3.1.5",
+    "postcss-cli": "^8.3.0",
     "react": "latest",
     "react-dom": "latest",
     "react-helmet": "latest"

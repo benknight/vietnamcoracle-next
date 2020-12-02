@@ -59,7 +59,7 @@ const Map = ({ data }) => {
           <FullscreenIcon fontSize="large" />
         </div>
         <iframe
-          className="shadow w-full"
+          className="w-full"
           height="800"
           src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=6`}
           title={data.title}

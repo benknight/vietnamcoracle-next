@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ['www.vietnamcoracle.com'],
+    domains: ['www.staging23.vietnamcoracle.com', 'res.cloudinary.com'],
   },
 };

@@ -16,14 +16,7 @@ function PostCard({ post, size = 'small' }) {
   );
   return (
     <Link href={`/posts/${post.slug}`}>
-      <a
-        className={cx(
-          'post-card relative overflow-hidden flex flex-col w-full shadow',
-          {
-            rounded: size === 'small',
-            'rounded-lg': size === 'medium',
-          },
-        )}>
+      <a className="post-card relative overflow-hidden flex flex-col w-full shadow rounded-lg">
         <div
           className={cx('relative block w-full bg-opacity-10', {
             'h-40 md:h-48': size === 'small',
@@ -34,9 +27,9 @@ function PostCard({ post, size = 'small' }) {
           }}>
           <Image
             alt={post.thumbnails.thumbnailSquare.altText}
-            className="object-cover"
             layout="fill"
             loading="lazy"
+            objectFit="cover"
             src={post.thumbnails.thumbnailSquare.sourceUrl}
           />
         </div>
@@ -63,13 +56,13 @@ function PostCard({ post, size = 'small' }) {
                   post.title.length > 40 && size === 'small',
                 'text-base md:text-lg':
                   post.title.length <= 40 && size === 'small',
-                'text-xl sm:text-2xl': size === 'medium',
+                'text-xl sm:text-2xl md:text-xl lg:text-2xl': size === 'medium',
               })}>
               {post.title}
             </h3>
             {size === 'medium' && (
               <div
-                className="mt-2 text-xs sm:text-sm opacity-75"
+                className="mt-2 text-xs sm:text-sm md:text-xs lg:text-sm opacity-75"
                 dangerouslySetInnerHTML={{ __html: post.excerpt }}
               />
             )}

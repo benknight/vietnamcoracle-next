@@ -1,7 +1,6 @@
 const _flatten = require('lodash/flatten');
 // const { colors } = require('tailwindcss/defaultTheme');
-const { default: gray } = require('@material-ui/core/colors/grey');
-const { themes } = require('./src/config/themes');
+const colors = require('tailwindcss/colors');
 
 module.exports = {
   darkMode: 'media',
@@ -20,9 +19,10 @@ module.exports = {
         'black-25': 'rgba(0, 0, 0, 0.25)',
         'black-75': 'rgba(0, 0, 0, 0.75)',
         gray: {
-          ...gray,
-          950: 'hsl(0deg 0% 10%)',
+          ...colors.gray,
+          950: 'hsl(0deg 0% 5%)',
         },
+        'lp-blue': '#297CBB',
       },
       fontFamily: {
         display: ['Baskervville', 'sans-serif'],

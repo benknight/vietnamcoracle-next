@@ -1,15 +1,21 @@
+import Image from 'next/image';
 import Block, { BlockContent, BlockTitle } from './Block';
 
 export default function About({ data: block }) {
   return (
     <Block>
-      <a className="block w-40 h-40 mx-auto my-6" href={block.link.url}>
-        <img
-          alt=""
-          className="h-full rounded-full object-cover"
-          srcSet={block.image.srcSet}
-        />
-      </a>
+      <div className="my-6 flex justify-center">
+        <a href={block.link.url}>
+          <Image
+            alt=""
+            className="h-full rounded-full object-cover"
+            height="160"
+            layout="fixed"
+            src={block.image.sourceUrl}
+            width="160"
+          />
+        </a>
+      </div>
       <BlockTitle>{block.title}</BlockTitle>
       <BlockContent>
         <p>

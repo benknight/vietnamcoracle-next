@@ -1,13 +1,17 @@
+import Image from 'next/image';
 import Block, { BlockContent, BlockTitle } from './Block';
 
 export default function Subscribe({ data: block }) {
   return (
     <Block>
-      <div className="block w-24 h-24 mx-auto mb-4" href={block.link.url}>
-        <img
+      <div className="flex justify-center mb-4" href={block.link.url}>
+        <Image
           alt=""
           className="h-full rounded-full object-cover"
-          srcSet={block.image.srcSet}
+          height="96"
+          layout="fixed"
+          src={block.image.sourceUrl}
+          width="96"
         />
       </div>
       <BlockTitle>{block.title}</BlockTitle>

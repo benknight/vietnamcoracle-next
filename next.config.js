@@ -5,4 +5,11 @@ module.exports = {
     // loader: 'cloudinary',
     // path: 'https://res.cloudinary.com/dfmev5psi/',
   },
+  webpack(config) {
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: ['@svgr/webpack'],
+    });
+    return config;
+  },
 };

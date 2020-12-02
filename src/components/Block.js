@@ -19,7 +19,7 @@ Block.fragments = gql`
     description
     title
     image {
-      srcSet
+      sourceUrl
     }
     link {
       title

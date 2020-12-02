@@ -87,7 +87,7 @@ const Browse = ({ category, page }) => {
             </div>
           ) : (
             collections.items.map(item => (
-              <section className="my-2 md:my-10" key={item.title}>
+              <section className="my-5 md:my-10" key={item.title}>
                 <h3 className="page-wrap font-display text-xl md:text-2xl">
                   {item.title}
                 </h3>

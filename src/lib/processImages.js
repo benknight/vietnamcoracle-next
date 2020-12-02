@@ -23,31 +23,6 @@ export default async function processImages(data) {
   if (!thumbnails) return;
   thumbnails = thumbnails.map(match => JSON.parse(match));
 
-  // Generate swatches
-  let swatches;
-  try {
-    swatches = JSON.parse(fs.readFileSync(pathToSwatches));
-  } catch (error) {
-    swatches = {};
-  }
-  const swatchesQueue = thumbnails.filter(thumbnail => !swatches[thumbnail.id]);
-  for (let i = 0; i < swatchesQueue.length; i++) {
-    const progress = `[${i + 1}/${swatchesQueue.length}]`;
-    const image = swatchesQueue[i];
-    const { id } = image;
-    const sourceUrl = image.processImagesSourceUrl || image.sourceUrl;
-    console.log(
-      `${progress} Generating color swatches for thumbnail ${sourceUrl}...`,
-    );
-    const palette = await vibrant.from(sourceUrl).getPalette();
-    swatches[id] = _.mapValues(palette, swatch => ({
-      bodyTextColor: swatch.getBodyTextColor(),
-      hex: swatch.getHex(),
-      titleTextColor: swatch.getTitleTextColor(),
-    }));
-  }
-  fs.writeFileSync(pathToSwatches, JSON.stringify(swatches));
-
   // Generate blurred images
   const imagesQueues = thumbnails.filter(
     thumbnail => !fs.existsSync(getPathToImage(thumbnail.slug)),
@@ -70,4 +45,30 @@ export default async function processImages(data) {
       return;
     }
   }
+
+  // Generate swatches
+  let swatches;
+  try {
+    swatches = JSON.parse(fs.readFileSync(pathToSwatches));
+  } catch (error) {
+    swatches = {};
+  }
+  const swatchesQueue = thumbnails.filter(thumbnail => !swatches[thumbnail.id]);
+  for (let i = 0; i < swatchesQueue.length; i++) {
+    const progress = `[${i + 1}/${swatchesQueue.length}]`;
+    const image = swatchesQueue[i];
+    const { id, slug } = image;
+    const sourceUrl = image.processImagesSourceUrl || image.sourceUrl;
+    console.log(
+      `${progress} Generating color swatches for thumbnail ${sourceUrl}...`,
+    );
+    const pathToImage = path.join(process.cwd(), `public/fx/${slug}.jpg`);
+    const palette = await vibrant.from(pathToImage).getPalette();
+    swatches[id] = _.mapValues(palette, swatch => ({
+      bodyTextColor: swatch.getBodyTextColor(),
+      hex: swatch.getHex(),
+      titleTextColor: swatch.getTitleTextColor(),
+    }));
+  }
+  fs.writeFileSync(pathToSwatches, JSON.stringify(swatches));
 }

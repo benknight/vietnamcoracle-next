@@ -17,14 +17,17 @@ function PostCard({ post, size = 'small' }) {
   return (
     <Link href={`/posts/${post.slug}`}>
       <a
-        className={cx('relative overflow-hidden flex flex-col w-full shadow', {
-          rounded: size === 'small',
-          'rounded-lg': size === 'medium',
-        })}>
+        className={cx(
+          'post-card relative overflow-hidden flex flex-col w-full shadow',
+          {
+            rounded: size === 'small',
+            'rounded-lg': size === 'medium',
+          },
+        )}>
         <div
           className={cx('relative block w-full bg-opacity-10', {
             'h-40 md:h-48': size === 'small',
-            'h-48 lg:h-72': size === 'medium',
+            'h-60 md:h-72': size === 'medium',
           })}
           style={{
             backgroundColor: swatch.hex,
@@ -53,7 +56,7 @@ function PostCard({ post, size = 'small' }) {
             loading="lazy"
             src={`/fx/${post.thumbnails.thumbnailSquare.slug}.jpg`}
           />
-          <div className="relative font-serif">
+          <div className="relative font-serif antialiased">
             <h3
               className={cx('leading-tight', {
                 'text-sm md:text-base':

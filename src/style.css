@@ -82,6 +82,10 @@
   .page-heading {
     @apply font-display text-2xl md:text-4xl;
   }
+
+  .post-card p a {
+    @apply font-semibold;
+  }
 }
 
 @layer utilities {

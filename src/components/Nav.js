@@ -6,11 +6,10 @@ import { cloneElement, useRef } from 'react';
 import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
 import HotelIcon from '@material-ui/icons/Hotel';
 import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
-import LocalCafeIcon from '@material-ui/icons/LocalCafe';
-import LocalCafeOutlinedIcon from '@material-ui/icons/LocalCafeOutlined';
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-import LocationOnOutlinedIcon from '@material-ui/icons/LocationOnOutlined';
+import RestaurantIcon from '@material-ui/icons/Restaurant';
 import MotorcycleIcon from '@material-ui/icons/Motorcycle';
+import WorkIcon from '@material-ui/icons/Work';
+import WorkOutlinedIcon from '@material-ui/icons/WorkOutlined';
 import { getThemeFromPathname } from '../config/themes';
 
 const links = [
@@ -25,7 +24,7 @@ const links = [
     icon: <MotorcycleIcon />,
     iconAlt: <MotorcycleIcon />,
     title: 'Motorbike guides',
-    titleShort: 'Guides',
+    titleShort: 'Motorbike',
     url: '/motorbike-guides',
   },
   {
@@ -36,18 +35,18 @@ const links = [
     url: '/hotel-reviews',
   },
   {
-    icon: <LocalCafeIcon />,
-    iconAlt: <LocalCafeOutlinedIcon />,
+    icon: <WorkIcon />,
+    iconAlt: <WorkOutlinedIcon />,
+    title: 'Destinations',
+    titleShort: 'Travel',
+    url: '/destinations',
+  },
+  {
+    icon: <RestaurantIcon />,
+    iconAlt: <RestaurantIcon />,
     title: 'Food & Drink',
     titleShort: 'Food',
     url: '/food-drink',
-  },
-  {
-    icon: <LocationOnIcon />,
-    iconAlt: <LocationOnOutlinedIcon />,
-    title: 'Destinations',
-    titleShort: 'Places',
-    url: '/destinations',
   },
 ];
 

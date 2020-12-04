@@ -59,7 +59,8 @@ const Browse = ({ category, page }) => {
               </h1>
               {collections.topLevelCategory && (
                 <div className="form-field relative flex items-center justify-between w-full sm:w-auto h-10 my-4 p-3 sm:ml-4 sm:my-0 rounded text-sm text-gray-600 dark:text-gray-500 tracking-wide leading-none whitespace-nowrap">
-                  Browse categories… <ArrowDropDownIcon className="ml-2" />
+                  Browse {title.toLowerCase()}…
+                  <ArrowDropDownIcon className="ml-2" />
                   <select
                     className="absolute inset-0 opacity-0 cursor-pointer w-full"
                     onChange={event =>
@@ -67,7 +68,7 @@ const Browse = ({ category, page }) => {
                     }
                     value={category?.slug ?? 'default'}>
                     <option disabled value="default">
-                      Browse categories…
+                      Browse {title.toLowerCase()}…
                     </option>
                     {collections.topLevelCategory.children.nodes.map(node => (
                       <option key={node.slug} value={node.slug}>
@@ -88,9 +89,14 @@ const Browse = ({ category, page }) => {
           ) : (
             collections.items.map(item => (
               <section className="my-5 md:my-10" key={item.title}>
-                <h3 className="page-wrap font-display text-xl md:text-2xl">
-                  {item.title}
-                </h3>
+                <div className="page-wrap flex items-baseline justify-between md:justify-start">
+                  <h3 className="font-display text-xl md:text-2xl">
+                    {item.title}
+                  </h3>
+                  <Link href={`/browse/${item.slug}`}>
+                    <a className="link ml-4 text-sm">View all</a>
+                  </Link>
+                </div>
                 <Collection key={item.title} data={item} />
               </section>
             ))
@@ -241,6 +247,7 @@ export async function getStaticProps({ params, preview = false }) {
 
   return {
     props: { category, page, preview },
+    revalidate: 1,
   };
 }
 

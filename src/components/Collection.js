@@ -7,7 +7,7 @@ import ChevronRight from '@material-ui/icons/ChevronRight';
 import useCarousel from '../lib/useCarousel';
 import PostCard from './PostCard';
 
-const Collection = ({ data, swatches }) => {
+const Collection = ({ data }) => {
   const {
     getLeftNavProps,
     getRightNavProps,

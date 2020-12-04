@@ -11,7 +11,7 @@ const Map = ({ data }) => {
   const router = useRouter();
   const theme = getThemeFromPathname(router.asPath);
   return (
-    <div className="lg:rounded-lg">
+    <div className="lg:rounded-lg overflow-hidden">
       <div
         className={cx(
           `relative p-8 text-center bg-opacity-50 dark:text-white dark:border dark:border-black lg:rounded-t-lg font-display`,
@@ -68,7 +68,7 @@ const Map = ({ data }) => {
           <div style={{ marginBottom: '-14px' }}>
             <iframe
               className="w-full"
-              height="800"
+              height="600"
               src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=6`}
               title={data.title}
               width="800"></iframe>

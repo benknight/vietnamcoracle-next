@@ -59,7 +59,7 @@ const Browse = ({ category, page }) => {
               </h1>
               {collections.topLevelCategory && (
                 <div className="form-field relative flex items-center justify-between w-full sm:w-auto h-10 my-4 p-3 sm:ml-4 sm:my-0 rounded text-sm text-gray-600 dark:text-gray-500 tracking-wide leading-none whitespace-nowrap">
-                  Browse {title.toLowerCase()}…
+                  Browse subcategories…
                   <ArrowDropDownIcon className="ml-2" />
                   <select
                     className="absolute inset-0 opacity-0 cursor-pointer w-full"
@@ -68,7 +68,7 @@ const Browse = ({ category, page }) => {
                     }
                     value={category?.slug ?? 'default'}>
                     <option disabled value="default">
-                      Browse {title.toLowerCase()}…
+                      Browse subcategories…
                     </option>
                     {collections.topLevelCategory.children.nodes.map(node => (
                       <option key={node.slug} value={node.slug}>
@@ -247,7 +247,7 @@ export async function getStaticProps({ params, preview = false }) {
 
   return {
     props: { category, page, preview },
-    revalidate: 1,
+    revalidate: 5,
   };
 }
 

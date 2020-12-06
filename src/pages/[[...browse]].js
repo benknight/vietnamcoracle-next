@@ -230,7 +230,7 @@ export async function getStaticProps({ params, preview = false }) {
     pageID: componentIDs[params.browse?.[0] ?? 'home'],
   });
 
-  if (process.env.VERCEL) {
+  if (!process.env.VERCEL) {
     await processImages(page);
   }
 
@@ -244,7 +244,7 @@ export async function getStaticProps({ params, preview = false }) {
         slug: params.browse[1],
       },
     ));
-    if (process.env.VERCEL) {
+    if (!process.env.VERCEL) {
       await processImages(category);
     }
   }

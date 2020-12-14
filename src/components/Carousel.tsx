@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { useRef, useState, useEffect } from 'react';
 
 export default function Carousel({ className, children, ...props }) {
-  const ref = useRef();
+  const ref = useRef<HTMLDivElement>();
   const [slideCount, setSlideCount] = useState(null);
   const [cursor, setCursor] = useState(0);
 
@@ -15,7 +15,7 @@ export default function Carousel({ className, children, ...props }) {
           if (entry.isIntersecting) {
             let index = 0;
             let child = entry.target;
-            while ((child = child.previousSibling)) index++;
+            while ((child = child.previousSibling as HTMLElement)) index++;
             setCursor(index);
             // console.log('setCursor', index);
           }

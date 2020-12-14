@@ -1,7 +1,11 @@
 import Image from 'next/image';
-import Block, { BlockContent, BlockTitle } from './Block';
+import Block, { BlockContent, BlockTitle, BlockType } from './Block';
 
-export default function Support({ data: block }) {
+interface Props {
+  data: BlockType;
+}
+
+export default function Support({ data: block }: Props) {
   return (
     <Block>
       <BlockTitle>{block.title}</BlockTitle>

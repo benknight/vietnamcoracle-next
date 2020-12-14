@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import { gql } from 'graphql-request';
 import _shuffle from 'lodash/shuffle';
-import { useMemo } from 'react';
+import { useMemo, RefObject } from 'react';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
 import useCarousel from '../lib/useCarousel';
@@ -14,7 +14,7 @@ const Collection = ({ data }) => {
     isTouchDevice,
     scrollAreaRef,
     scrollPosition,
-  } = useCarousel({ offsetLeft: 64 });
+  } = useCarousel();
   const posts = useMemo(() => {
     let posts;
     switch (data.type) {
@@ -32,8 +32,8 @@ const Collection = ({ data }) => {
       case 'date':
         posts.sort((a, b) =>
           data.direction === 'asc'
-            ? new Date(a.date) - new Date(b.date)
-            : new Date(b.date) - new Date(a.date),
+            ? new Date(a.date).getTime() - new Date(b.date).getTime()
+            : new Date(b.date).getTime() - new Date(a.date).getTime(),
         );
         break;
       case 'alpha':
@@ -67,7 +67,7 @@ const Collection = ({ data }) => {
       <div className="overflow-hidden">
         <ol
           className="flex pb-8 -mb-8 pl-4 lg:pl-12 overflow-y-auto"
-          ref={scrollAreaRef}>
+          ref={scrollAreaRef as RefObject<HTMLOListElement>}>
           {posts.map((post, index) => (
             <li
               className={cx(

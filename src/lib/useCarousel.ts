@@ -2,7 +2,7 @@
 import { useRef, useState, useCallback, useEffect } from 'react';
 
 export default function useCarousel() {
-  const scrollArea = useRef();
+  const scrollArea = useRef<HTMLElement>();
   const [isTouchDevice, setIsTouchDevice] = useState(null);
   const [scrollBy, setScrollBy] = useState(null);
   const [scrollPosition, setScrollPosition] = useState(null);

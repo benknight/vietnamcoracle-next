@@ -1,5 +1,6 @@
 import { request, gql } from 'graphql-request';
 import _ from 'lodash';
+import { GetStaticPaths, GetStaticProps } from 'next';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -111,7 +112,7 @@ const Browse = ({ category, page }) => {
   );
 };
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const query = gql`
     {
       destinations: category(id: "destinations", idType: SLUG) {
@@ -138,7 +139,7 @@ export async function getStaticPaths() {
     }
   `;
   const data = await request(process.env.WORDPRESS_API_URL, query);
-  const result = {
+  return {
     paths: [
       { params: { browse: [] } },
 
@@ -164,22 +165,16 @@ export async function getStaticPaths() {
     ],
     fallback: false,
   };
-  return result;
-}
-
-const componentIDs = {
-  'food-drink': 'cG9zdDozODc2NA==',
-  home: 'cG9zdDozNjExNQ==',
-  'hotel-reviews': 'cG9zdDozODQ2OQ==',
-  destinations: 'cG9zdDozODUxNw==',
-  'motorbike-guides': 'cG9zdDozODUxMQ==',
 };
 
-export async function getStaticProps({ params, preview = false }) {
+export const getStaticProps: GetStaticProps = async ({
+  params,
+  preview = false,
+}) => {
   const pageQuery = gql`
-    query Browse($pageID: ID!) {
+    query Browse($slug: ID!) {
       ...SidebarDefaultData
-      component: component(id: $pageID) {
+      component: component(id: $slug, idType: SLUG) {
         ...Page
       }
     }
@@ -227,7 +222,7 @@ export async function getStaticProps({ params, preview = false }) {
   `;
 
   const page = await request(process.env.WORDPRESS_API_URL, pageQuery, {
-    pageID: componentIDs[params.browse?.[0] ?? 'home'],
+    slug: params.browse?.[0] ?? 'home',
   });
 
   if (!process.env.VERCEL) {
@@ -253,6 +248,6 @@ export async function getStaticProps({ params, preview = false }) {
     props: { category, page, preview },
     revalidate: 1,
   };
-}
+};
 
 export default Browse;

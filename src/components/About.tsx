@@ -1,7 +1,11 @@
 import Image from 'next/image';
-import Block, { BlockContent, BlockTitle } from './Block';
+import Block, { BlockContent, BlockTitle, BlockType } from './Block';
 
-export default function About({ data: block }) {
+interface Props {
+  data: BlockType;
+}
+
+export default function About({ data: block }: Props) {
   return (
     <Block>
       <div className="my-6 flex justify-center">

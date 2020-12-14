@@ -13,15 +13,16 @@ export default function Browse({ links }) {
               className="block w-full h-32 object-cover"
               srcSet={image.srcSet}
             />
-            <Link
-              className="
+            <Link href={link.url}>
+              <a
+                className="
                 browse-link text-shadow-md
                 flex items-center justify-center
                 absolute top-0 left-0 w-full h-full
                 text-white text-2xl lg:text-3xl text-center font-medium font-serif
-                bg-gradient-to-t from-black-75 via-transparent"
-              to={link.url}>
-              {link.title}
+                bg-gradient-to-t from-black-75 via-transparent">
+                {link.title}
+              </a>
             </Link>
           </li>
         ))}

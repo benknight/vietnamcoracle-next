@@ -6,7 +6,30 @@ import Link from 'next/link';
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
 import swatches from '../json/swatches.json';
 
-function PostCard({ post, size = 'small' }) {
+const fragments = gql`
+  fragment PostCardPostData on Post {
+    excerpt
+    slug
+    title
+    thumbnails {
+      thumbnailSquare {
+        __typename
+        altText
+        id
+        sourceUrl(size: LARGE)
+        processImagesSourceUrl: sourceUrl(size: THUMBNAIL)
+        slug
+      }
+    }
+  }
+`;
+
+interface Props {
+  post: any;
+  size?: 'small' | 'medium';
+}
+
+function PostCard({ post, size = 'small' }: Props) {
   // const isDark = useMediaQuery('(prefers-color-scheme: dark)');
   const swatchKey = 'DarkMuted';
   const swatch = _get(
@@ -73,22 +96,6 @@ function PostCard({ post, size = 'small' }) {
   );
 }
 
-PostCard.fragments = gql`
-  fragment PostCardPostData on Post {
-    excerpt
-    slug
-    title
-    thumbnails {
-      thumbnailSquare {
-        __typename
-        altText
-        id
-        sourceUrl(size: LARGE)
-        processImagesSourceUrl: sourceUrl(size: THUMBNAIL)
-        slug
-      }
-    }
-  }
-`;
+PostCard.fragments = fragments;
 
 export default PostCard;

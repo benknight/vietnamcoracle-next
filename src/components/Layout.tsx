@@ -1,3 +1,4 @@
+// @ts-ignore
 import LonelyPlanetLogo from '../../public/lp-logo.svg';
 
 const Layout = ({ children }) => <div className="lg:flex">{children}</div>;

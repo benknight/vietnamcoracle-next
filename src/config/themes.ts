@@ -13,7 +13,7 @@ const pathToTheme = {
   '/destinations': themes.destinations,
 };
 
-exports.getThemeFromPathname = pathname => {
+export const getThemeFromPathname = (pathname: string): string => {
   let theme = themes.default;
   Object.keys(pathToTheme).forEach(key => {
     if (pathname.startsWith(key)) {
@@ -23,4 +23,4 @@ exports.getThemeFromPathname = pathname => {
   return theme;
 };
 
-exports.themes = themes;
+export default themes;

@@ -1,11 +1,11 @@
-// import App from 'next/app'
+import type { AppProps } from 'next/app'
 import { create } from 'jss';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import '../style.css';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   const jss = create({
     ...jssPreset(),
     // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.

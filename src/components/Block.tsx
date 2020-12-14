@@ -4,6 +4,18 @@ export const BlockTitle = props => (
   <h3 className="text-xl lg:text-2xl mb-3">{props.children}</h3>
 );
 
+export type BlockType = {
+  description: string;
+  title: string;
+  image: {
+    sourceUrl: string;
+  };
+  link: {
+    title: string;
+    url: string;
+  };
+};
+
 export const BlockContent = props => (
   <div className="mx-auto mb-8 px-6 text-sm max-w-sm font-serif">
     {props.children}

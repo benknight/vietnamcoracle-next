@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import { gql } from 'graphql-request';
-import Carousel, { CarouselSlide } from '../components/Carousel';
+import Carousel, { CarouselSlide } from './Carousel';
 
-function getClassNameFromSlidePosition(position) {
+function getClassNameFromSlidePosition(position: string): string {
   const [align, justify] = position.split('-');
   return cx({
     'items-start': align === 'top',

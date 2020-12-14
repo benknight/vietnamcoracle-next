@@ -52,7 +52,7 @@ const links = [
 
 export default function Nav() {
   const router = useRouter();
-  const scrollAnchor = useRef();
+  const scrollAnchor = useRef<HTMLDivElement>();
   return (
     <>
       <div ref={scrollAnchor} />

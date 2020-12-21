@@ -53,7 +53,7 @@ function PostCard({ post, size = 'small' }: Props) {
             layout="fill"
             loading="lazy"
             objectFit="cover"
-            src={post.thumbnails.thumbnailSquare.sourceUrl}
+            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.thumbnails.thumbnailSquare.sourceUrl}`}
           />
         </div>
         <div

@@ -1,6 +1,6 @@
 module.exports = {
   images: {
-    domains: ['www.vietnamcoracle.com'],
+    domains: ['www.vietnamcoracle.com', 'res.cloudinary.com'],
   },
   webpack(config) {
     config.module.rules.push({

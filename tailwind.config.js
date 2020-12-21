@@ -1,4 +1,3 @@
-const _flatten = require('lodash/flatten');
 // const { colors } = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
@@ -10,7 +9,7 @@ module.exports = {
   },
   plugins: [],
   purge: {
-    content: ['./src/**/*.js'],
+    content: ['./src/**/*.{js,jsx,ts,tsx}'],
     options: {},
   },
   theme: {

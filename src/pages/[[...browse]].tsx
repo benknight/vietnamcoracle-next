@@ -10,7 +10,6 @@ import Layout, { LayoutMain } from '../components/Layout';
 import Map from '../components/Map';
 import PostCard from '../components/PostCard';
 import SidebarDefault from '../components/SidebarDefault';
-import processImages from '../lib/processImages';
 
 const Browse = ({ category, page }) => {
   const router = useRouter();
@@ -225,10 +224,6 @@ export const getStaticProps: GetStaticProps = async ({
     slug: params.browse?.[0] ?? 'home',
   });
 
-  if (!process.env.VERCEL) {
-    await processImages(page);
-  }
-
   let category = null;
 
   if (params.browse?.[1]) {
@@ -239,9 +234,6 @@ export const getStaticProps: GetStaticProps = async ({
         slug: params.browse[1],
       },
     ));
-    if (!process.env.VERCEL) {
-      await processImages(category);
-    }
   }
 
   return {

@@ -17,7 +17,7 @@ const fragments = gql`
         altText
         id
         sourceUrl(size: LARGE)
-        processImagesSourceUrl: sourceUrl(size: THUMBNAIL)
+        sourceUrlFx: sourceUrl(size: MEDIUM)
         slug
       }
     }
@@ -69,8 +69,9 @@ function PostCard({ post, size = 'small' }: Props) {
             alt=""
             className="object-bottom object-cover opacity-50"
             layout="fill"
-            loading="lazy"
-            src={`/fx/${post.thumbnails.thumbnailSquare.slug}.jpg`}
+            loading="eager"
+            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/t_post_card/${post.thumbnails.thumbnailSquare.sourceUrlFx}`}
+            unoptimized
           />
           <div className="relative font-serif antialiased">
             <h3

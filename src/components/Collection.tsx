@@ -66,7 +66,7 @@ const Collection = ({ data }) => {
       )}
       <div className="overflow-hidden">
         <ol
-          className="flex pb-8 -mb-8 pl-4 lg:pl-12 overflow-y-auto overscroll-y-none"
+          className="flex pb-8 -mb-8 pl-4 lg:pl-12 overflow-y-auto"
           ref={scrollAreaRef as RefObject<HTMLOListElement>}>
           {posts.map((post, index) => (
             <li

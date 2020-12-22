@@ -96,6 +96,11 @@
     @apply font-display text-2xl md:text-4xl;
   }
 
+  /* Fix blurry downscaled images in Chrome (macOS) */
+  .post-card img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+
   .post-card p a {
     @apply font-semibold;
   }

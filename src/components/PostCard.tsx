@@ -54,6 +54,7 @@ function PostCard({ post, size = 'small' }: Props) {
             loading="lazy"
             objectFit="cover"
             src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.thumbnails.thumbnailSquare.sourceUrl}`}
+            style={{ imageRendering: '-webkit-optimize-contrast' }}
           />
         </div>
         <div

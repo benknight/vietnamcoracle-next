@@ -39,7 +39,13 @@ function PostCard({ post, size = 'small' }: Props) {
   );
   return (
     <Link href={`/posts/${post.slug}`}>
-      <a className="post-card relative overflow-hidden flex flex-col w-full shadow rounded-lg">
+      <a
+        className={cx(
+          'post-card relative overflow-hidden flex flex-col w-full shadow rounded-lg',
+          {
+            'w-44 md:w-56': size === 'small',
+          },
+        )}>
         <div
           className={cx('relative block w-full bg-opacity-10', {
             'h-40 md:h-48': size === 'small',
@@ -50,10 +56,18 @@ function PostCard({ post, size = 'small' }: Props) {
           }}>
           <Image
             alt={post.thumbnails.thumbnailSquare.altText}
-            layout="fill"
             loading="lazy"
             objectFit="cover"
             src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.thumbnails.thumbnailSquare.sourceUrl}`}
+            {...(size === 'small'
+              ? {
+                  height: '192',
+                  layout: 'fixed',
+                  width: '224',
+                }
+              : {
+                  layout: 'fill',
+                })}
           />
         </div>
         <div

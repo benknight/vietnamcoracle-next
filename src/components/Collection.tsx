@@ -76,9 +76,7 @@ const Collection = ({ data }) => {
               )}
               title={post.slug}
               key={post.slug}>
-              <div className="flex w-44 md:w-56">
-                <PostCard post={post} />
-              </div>
+              <PostCard post={post} />
             </li>
           ))}
         </ol>

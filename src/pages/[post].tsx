@@ -1,8 +1,8 @@
 import { request, gql } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
-import Layout, { LayoutMain } from '../../components/Layout';
-import SidebarDefault from '../../components/SidebarDefault';
+import Layout, { LayoutMain } from '../components/Layout';
+import SidebarDefault from '../components/SidebarDefault';
 
 const Post = ({ data }) => {
   const router = useRouter();

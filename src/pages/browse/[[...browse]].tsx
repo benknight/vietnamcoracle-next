@@ -8,17 +8,17 @@ import { useRouter } from 'next/router';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MapIcon from '@material-ui/icons/Map';
 // @ts-ignore
-import LonelyPlanetLogo from '../../public/lp-logo.svg';
-import Collection from '../components/Collection';
-import Layout, { LayoutMain } from '../components/Layout';
-import Map from '../components/Map';
-import PostCard from '../components/PostCard';
-import SidebarDefault from '../components/SidebarDefault';
+import LonelyPlanetLogo from '../../../public/lp-logo.svg';
+import Collection from '../../components/Collection';
+import Layout, { LayoutMain } from '../../components/Layout';
+import Map from '../../components/Map';
+import PostCard from '../../components/PostCard';
+import SidebarDefault from '../../components/SidebarDefault';
 
 const Browse = ({ category, page }) => {
   const router = useRouter();
   const { collections, cover, map, slug, title } = page.component;
-  const isHome = router.asPath === '/';
+  const isHome = !router.query.browse;
   return (
     <>
       <Head>
@@ -130,9 +130,11 @@ const Browse = ({ category, page }) => {
                   <h3 className="font-display text-xl md:text-2xl lg:text-3xl">
                     {item.title}
                   </h3>
-                  <Link href={`/browse/${item.slug}`}>
-                    <a className="link ml-4 text-sm">View all</a>
-                  </Link>
+                  {item.category && (
+                    <Link href={`/browse/${slug}/${item.category.slug}`}>
+                      <a className="link ml-4 text-sm">View all</a>
+                    </Link>
+                  )}
                 </div>
                 <Collection key={item.title} data={item} />
               </section>
@@ -263,6 +265,9 @@ export const getStaticProps: GetStaticProps = async ({
       collections {
         items {
           title
+          category {
+            slug
+          }
           ...CollectionComponentData
         }
         topLevelCategory {

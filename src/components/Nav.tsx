@@ -24,28 +24,28 @@ const links = [
     iconAlt: <MotorcycleIcon />,
     title: 'Motorbike guides',
     titleShort: 'Motorbike',
-    url: '/motorbike-guides',
+    url: '/browse/motorbike-guides',
   },
   {
     icon: <HotelIcon />,
     iconAlt: <HotelOutlinedIcon />,
     title: 'Hotel reviews',
     titleShort: 'Hotels',
-    url: '/hotel-reviews',
+    url: '/browse/hotel-reviews',
   },
   {
     icon: <WorkIcon />,
     iconAlt: <WorkOutlineIcon />,
     title: 'Destinations',
     titleShort: 'Travel',
-    url: '/destinations',
+    url: '/browse/destinations',
   },
   {
     icon: <RestaurantIcon />,
     iconAlt: <RestaurantIcon />,
     title: 'Food & Drink',
     titleShort: 'Food',
-    url: '/food-drink',
+    url: '/browse/food-drink',
   },
 ];
 

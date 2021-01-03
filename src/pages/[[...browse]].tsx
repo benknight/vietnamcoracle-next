@@ -190,14 +190,22 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
+const componentIDs = {
+  'food-drink': 'cG9zdDozODc2NA==',
+  home: 'cG9zdDozNjExNQ==',
+  'hotel-reviews': 'cG9zdDozODQ2OQ==',
+  destinations: 'cG9zdDozODUxNw==',
+  'motorbike-guides': 'cG9zdDozODUxMQ==',
+};
+
 export const getStaticProps: GetStaticProps = async ({
   params,
   preview = false,
 }) => {
   const pageQuery = gql`
-    query Browse($slug: ID!) {
+    query Browse($id: ID!) {
       ...SidebarDefaultData
-      component: component(id: $slug, idType: SLUG) {
+      component: component(id: $id) {
         ...BrowsePage
       }
     }
@@ -250,7 +258,7 @@ export const getStaticProps: GetStaticProps = async ({
   `;
 
   const page = await request(process.env.WORDPRESS_API_URL, pageQuery, {
-    slug: params.browse?.[0] ?? 'home',
+    id: componentIDs[params.browse?.[0] ?? 'home'],
   });
 
   let category = null;

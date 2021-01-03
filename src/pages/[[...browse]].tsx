@@ -6,6 +6,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MapIcon from '@material-ui/icons/Map';
+// @ts-ignore
+import LonelyPlanetLogo from '../../public/lp-logo.svg';
 import Collection from '../components/Collection';
 import Layout, { LayoutMain } from '../components/Layout';
 import Map from '../components/Map';
@@ -131,6 +133,33 @@ const Browse = ({ category, page }) => {
         </LayoutMain>
         <SidebarDefault data={page} />
       </Layout>
+      <div className="block lg:mt-16 mb-16 mx-auto text-center">
+        <div className="uppercase text-xxs tracking-widest">Recommended by</div>
+        <a
+          className="inline-block relative my-4 text-lp-blue dark:text-gray-500"
+          href="https://www.lonelyplanet.com/vietnam/a/nar-gr/planning-tips/357846"
+          target="_blank"
+          rel="nofollow noopener">
+          <LonelyPlanetLogo
+            className="mx-auto"
+            viewBox="0 0 400 198"
+            width="300"
+            height="75"
+          />
+        </a>
+        <div className="px-16 text-sm md:text-base font-serif italic text-gray-500 dark:text-gray-200">
+          “Excellent independent travel advice from a long-term resident”
+        </div>
+      </div>
+      <section className="mb-40 lg:mb-12">
+        <ul className="px-8 flex flex-wrap justify-center uppercase text-xxs tracking-widest">
+          {page.footerMenu?.menuItems?.nodes.map(item => (
+            <Link href={item.url}>
+              <a className="m-3 opacity-75 hover:opacity-100">{item.label}</a>
+            </Link>
+          ))}
+        </ul>
+      </section>
     </>
   );
 };
@@ -207,6 +236,14 @@ export const getStaticProps: GetStaticProps = async ({
       ...SidebarDefaultData
       component: component(id: $id) {
         ...BrowsePage
+      }
+      footerMenu: menu(id: "dGVybTo0MDk=") {
+        menuItems {
+          nodes {
+            url
+            label
+          }
+        }
       }
     }
     fragment BrowsePage on Component {

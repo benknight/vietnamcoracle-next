@@ -71,7 +71,7 @@ function PostCard({ flex = false, post }: Props) {
             className="object-bottom object-cover opacity-50"
             layout="fill"
             loading="eager"
-            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/t_post_card/${post.thumbnails.thumbnailSquare.sourceUrlFx}`}
+            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${post.thumbnails.thumbnailSquare.sourceUrlFx}`}
             unoptimized
           />
           <div className="relative font-serif antialiased">

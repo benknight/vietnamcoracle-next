@@ -95,7 +95,7 @@ Collection.fragments = gql`
     orderby
     type
     category {
-      posts {
+      posts(first: 10) {
         nodes {
           ...CollectionComponentPostData
         }

@@ -48,7 +48,10 @@ function PostCard({ flex = false, post }: Props) {
           },
         )}>
         <div
-          className="relative block w-full h-40 md:h-72 bg-opacity-10"
+          className={cx('relative block w-full md:h-72 bg-opacity-10', {
+            'h-52': flex,
+            'h-40': !flex,
+          })}
           style={{
             backgroundColor: swatch.hex,
           }}>
@@ -62,7 +65,7 @@ function PostCard({ flex = false, post }: Props) {
         </div>
         <div
           className="
-            relative p-3 md:px-4 md:py-5 md:h-48
+            relative p-3 md:px-4 md:py-5
             flex-auto flex items-center md:items-start
             text-white bg-gray-900
             font-medium rounded-b">
@@ -77,13 +80,17 @@ function PostCard({ flex = false, post }: Props) {
           <div className="relative font-serif antialiased">
             <h3
               className={cx('leading-tight md:text-xl lg:text-2xl', {
-                'text-sm': post.title.length > 40,
-                'text-base': post.title.length <= 40,
+                'text-xl': flex,
+                'text-sm': !flex && post.title.length > 40,
+                'text-base': !flex && post.title.length <= 40,
               })}>
               {post.title}
             </h3>
             <div
-              className="post-card-excerpt mt-2 text-xs sm:text-sm md:text-xs lg:text-sm opacity-75"
+              className={cx(
+                'post-card-excerpt mt-2 text-xs sm:text-sm md:text-xs lg:text-sm opacity-75',
+                { 'hidden md:line-clamp': !flex },
+              )}
               dangerouslySetInnerHTML={{ __html: post.excerpt }}
             />
           </div>

@@ -11,6 +11,7 @@ export default function useCarousel() {
   const navigate = useCallback(
     delta => {
       const { scrollLeft } = scrollArea.current;
+      console.log('left', scrollLeft + scrollBy * delta);
       scrollArea.current.scroll({
         behavior: 'smooth',
         left: scrollLeft + scrollBy * delta,
@@ -40,7 +41,11 @@ export default function useCarousel() {
     // Calculate scrollBy offset
     const calculateScrollBy = () => {
       if (!scrollAreaNode) return;
-      const { width: containerWidth } = scrollAreaNode.getBoundingClientRect();
+      const computedStyle = getComputedStyle(scrollAreaNode);
+      const containerWidth =
+        scrollAreaNode.clientWidth -
+        parseFloat(computedStyle['padding-right']) -
+        parseFloat(computedStyle['padding-left']);
       setShowNav(scrollAreaNode.scrollWidth > containerWidth);
       const childNode = scrollAreaNode.querySelector(':scope > *');
       if (!childNode) return;

@@ -9,8 +9,7 @@ import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
 import MotorcycleIcon from '@material-ui/icons/Motorcycle';
 import WorkIcon from '@material-ui/icons/Work';
-import WorkOutlinedIcon from '@material-ui/icons/WorkOutlined';
-import { getThemeFromPathname } from '../config/themes';
+import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 
 const links = [
   {
@@ -36,7 +35,7 @@ const links = [
   },
   {
     icon: <WorkIcon />,
-    iconAlt: <WorkOutlinedIcon />,
+    iconAlt: <WorkOutlineIcon />,
     title: 'Destinations',
     titleShort: 'Travel',
     url: '/destinations',
@@ -60,7 +59,7 @@ export default function Nav() {
         className="
           fixed bottom-0 lg:sticky lg:bottom-auto lg:top-0 z-20
           flex justify-center w-full h-16
-          bg-white dark:bg-gray-900 shadow-lg">
+          bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow">
         <div
           className="
             flex lg:justify-center flex-auto
@@ -72,7 +71,6 @@ export default function Nav() {
             const path = router.asPath;
             const isCurrent =
               link.url === '/' ? path === '/' : path.startsWith(link.url);
-            const theme = getThemeFromPathname(link.url);
             const to = link.url.match(/\/$/) ? link.url : link.url + '/';
             return (
               <Link href={to} key={to} scroll={false}>
@@ -80,22 +78,7 @@ export default function Nav() {
                   className={cx(
                     'w-1/5 lg:w-auto sm:p-4 lg:py-0 lg:px-3 xl:px-4 flex flex-col lg:flex-row items-center justify-center text-center',
                     {
-                      'bg-gradient-to-b dark:shadow lg:text-gray-800 lg:dark:text-white': isCurrent,
-                      ['lg:from-blue-200 lg:to-blue-200 lg:dark:from-blue-700 lg:dark:to-blue-900']:
-                        link.url !== '/' && theme === 'blue',
-                      ['lg:from-green-200 lg:to-green-200 lg:dark:from-green-700 lg:dark:to-green-900']:
-                        link.url !== '/' && theme === 'green',
-                      ['lg:from-red-200 lg:to-red-200 lg:dark:from-red-700 lg:dark:to-red-900']:
-                        link.url !== '/' && theme === 'red',
-                      ['lg:from-yellow-200 lg:to-yellow-200 lg:dark:from-yellow-700 lg:dark:to-yellow-900']:
-                        link.url !== '/' && theme === 'yellow',
-                      ['lg:from-purple-200 lg:to-purple-200 lg:dark:from-purple-700 lg:dark:to-purple-900']:
-                        link.url !== '/' && theme === 'purple',
-                      ['text-blue-500']: isCurrent && theme === 'blue',
-                      ['text-green-500']: isCurrent && theme === 'green',
-                      ['text-red-500']: isCurrent && theme === 'red',
-                      ['text-yellow-500']: isCurrent && theme === 'yellow',
-                      ['text-purple-500']: isCurrent && theme === 'purple',
+                      'bg-gradient-to-b dark:shadow text-blue-500 dark:text-blue-400': isCurrent,
                     },
                   )}
                   key={link.url}
@@ -106,18 +89,18 @@ export default function Nav() {
                   }}>
                   <div className="lg:mr-2">
                     {cloneElement(isCurrent ? link.icon : link.iconAlt, {
-                      className: 'w-6 h-6',
+                      className: 'w-6 h-6 mb-1',
                     })}
                   </div>
                   <div
                     className={cx(
                       'w-full mt-1 lg:mt-0 text-shadow lg:border-b break-words',
                       isCurrent
-                        ? 'border-black dark:border-white'
+                        ? 'border-blue-500 dark:border-blue-400'
                         : 'border-transparent',
                     )}>
-                    <div className="sm:hidden">{link.titleShort}</div>
-                    <div className="hidden sm:block">{link.title}</div>
+                    <div className="lg:hidden">{link.titleShort}</div>
+                    <div className="hidden lg:block">{link.title}</div>
                   </div>
                 </a>
               </Link>

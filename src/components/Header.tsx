@@ -30,7 +30,7 @@ export default function Header() {
 
   return (
     <header
-      className="pt-24 pb-12 sm:pt-20 sm:pb-16 px-3 lg:py-8 text-center bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 lg:bg-none"
+      className="pt-24 pb-12 sm:pt-20 sm:pb-16 px-3 lg:py-12 text-center bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 lg:bg-none"
       ref={ref}>
       <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
         <a className="inline-flex">
@@ -46,7 +46,7 @@ export default function Header() {
       <h1 className="text-4xl mb-2 text-gray-800 dark:text-gray-200 font-display">
         Vietnam Coracle
       </h1>
-      <h2 className="text-gray-600 text-xxs sm:text-xs uppercase tracking-widest font-serif">
+      <h2 className="text-gray-600 text-xxs uppercase tracking-widest font-serif">
         Independent travel guides to Vietnam
       </h2>
       <div

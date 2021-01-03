@@ -49,17 +49,17 @@ const Collection = ({ data }) => {
     return posts;
   }, [data]);
   return (
-    <div className="relative my-3">
+    <div className="relative my-3 lg:my-4 rounded-r-lg overflow-hidden">
       {!isTouchDevice && scrollPosition && scrollPosition !== 'start' && (
         <button
-          className="absolute z-10 left-0 h-full bg-black bg-opacity-75 text-white"
+          className="absolute z-10 left-2 top-1/2 transform -translate-y-1/2 w-16 h-16 rounded-full bg-black bg-opacity-75 text-white"
           {...getLeftNavProps()}>
           <ChevronLeft classes={{ root: 'w-10 h-10' }} />
         </button>
       )}
       {!isTouchDevice && scrollPosition && scrollPosition !== 'end' && (
         <button
-          className="absolute z-10 right-0 h-full bg-black bg-opacity-50 dark:bg-opacity-75 text-white"
+          className="absolute z-10 top-1/2 right-2 transform -translate-y-1/2 w-16 h-16 rounded-full bg-black bg-opacity-75 text-white"
           {...getRightNavProps()}>
           <ChevronRight classes={{ root: 'w-10 h-10' }} />
         </button>
@@ -72,7 +72,7 @@ const Collection = ({ data }) => {
             <li
               className={cx(
                 'flex flex-shrink-0',
-                index < posts.length - 1 ? 'pr-2' : 'pr-4 lg:pr-12',
+                index < posts.length - 1 && 'pr-2 md:pr-3',
               )}
               title={post.slug}
               key={post.slug}>

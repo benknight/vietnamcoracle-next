@@ -12,7 +12,7 @@ export default function Support({ data: block }: Props) {
       <BlockContent>
         <p>
           {block.description}{' '}
-          <a className="link" href={block.link.url}>
+          <a className="link whitespace-nowrap" href={block.link.url}>
             Read more ›
           </a>
         </p>

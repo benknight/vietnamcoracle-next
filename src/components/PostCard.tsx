@@ -25,12 +25,13 @@ const fragments = gql`
 `;
 
 interface Props {
+  flex?: boolean;
   post: any;
-  size?: 'small' | 'medium';
 }
 
-function PostCard({ post, size = 'small' }: Props) {
+function PostCard({ flex = false, post }: Props) {
   // const isDark = useMediaQuery('(prefers-color-scheme: dark)');
+  // TODO: Swatches need to be generated on build
   const swatchKey = 'DarkMuted';
   const swatch = _get(
     swatches,
@@ -41,44 +42,30 @@ function PostCard({ post, size = 'small' }: Props) {
     <Link href={`/posts/${post.slug}`}>
       <a
         className={cx(
-          'post-card relative overflow-hidden flex flex-col w-full shadow rounded-lg',
+          'relative overflow-hidden flex flex-col shadow rounded-lg',
           {
-            'w-44 md:w-56': size === 'small',
+            'w-44 md:w-96': !flex,
           },
         )}>
         <div
-          className={cx('relative block w-full bg-opacity-10', {
-            'h-40 md:h-48': size === 'small',
-            'h-60 md:h-72': size === 'medium',
-          })}
+          className="relative block w-full h-40 md:h-72 bg-opacity-10"
           style={{
             backgroundColor: swatch.hex,
           }}>
           <Image
             alt={post.thumbnails.thumbnailSquare.altText}
+            layout="fill"
             loading="lazy"
             objectFit="cover"
             src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.thumbnails.thumbnailSquare.sourceUrl}`}
-            {...(size === 'small'
-              ? {
-                  height: '192',
-                  layout: 'fixed',
-                  width: '224',
-                }
-              : {
-                  layout: 'fill',
-                })}
           />
         </div>
         <div
-          className={cx(
-            'relative flex-auto flex',
-            'text-white bg-gray-900 font-medium rounded-b',
-            {
-              'p-3 items-center': size === 'small',
-              'px-4 py-5 sm:px-5 sm:py-6': size === 'medium',
-            },
-          )}>
+          className="
+            relative p-3 md:px-4 md:py-5 md:h-48
+            flex-auto flex items-center md:items-start
+            text-white bg-gray-900
+            font-medium rounded-b">
           <Image
             alt=""
             className="object-bottom object-cover opacity-50"
@@ -89,21 +76,16 @@ function PostCard({ post, size = 'small' }: Props) {
           />
           <div className="relative font-serif antialiased">
             <h3
-              className={cx('leading-tight', {
-                'text-sm md:text-base':
-                  post.title.length > 40 && size === 'small',
-                'text-base md:text-lg':
-                  post.title.length <= 40 && size === 'small',
-                'text-xl sm:text-2xl md:text-xl lg:text-2xl': size === 'medium',
+              className={cx('leading-tight md:text-xl lg:text-2xl', {
+                'text-sm': post.title.length > 40,
+                'text-base': post.title.length <= 40,
               })}>
               {post.title}
             </h3>
-            {size === 'medium' && (
-              <div
-                className="mt-2 text-xs sm:text-sm md:text-xs lg:text-sm opacity-75"
-                dangerouslySetInnerHTML={{ __html: post.excerpt }}
-              />
-            )}
+            <div
+              className="post-card-excerpt mt-2 text-xs sm:text-sm md:text-xs lg:text-sm opacity-75"
+              dangerouslySetInnerHTML={{ __html: post.excerpt }}
+            />
           </div>
         </div>
       </a>

@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
+import MapIcon from '@material-ui/icons/Map';
 import Collection from '../components/Collection';
 import Layout, { LayoutMain } from '../components/Layout';
 import Map from '../components/Map';
@@ -13,10 +14,11 @@ import SidebarDefault from '../components/SidebarDefault';
 
 const Browse = ({ category, page }) => {
   const router = useRouter();
-  const { collections, map, slug, title } = page.component;
+  const { collections, cover, map, slug, title } = page.component;
+  const isHome = router.asPath === '/';
   return (
     <>
-      {router.asPath === '/' && (
+      {isHome && (
         <>
           <div className="hidden md:block">
             <Image
@@ -38,11 +40,19 @@ const Browse = ({ category, page }) => {
           </div>
         </>
       )}
-      <Layout>
-        <LayoutMain>
-          {router.asPath !== '/' && (
-            <section className="page-wrap lg:pr-0 sm:flex items-center my-8 md:my-10 md:mt-12 lg:mt-16">
-              <h1 className="font-display text-2xl md:text-3xl lg:text-4xl">
+      {!isHome && (
+        <section className="relative text-gray-100 bg-gray-300 dark:bg-gray-950">
+          {cover?.image?.sourceUrl && (
+            <Image
+              className="absolute inset-0 opacity-90"
+              layout="fill"
+              objectFit="cover"
+              src={cover.image.sourceUrl}
+            />
+          )}
+          <div className="page-wrap relative sm:flex items-end pb-5 md:pb-8 pt-32 md:pt-48 lg:pt-56 bg-gradient-to-t from-gray-900 via-black-25 to-transparent">
+            <div className="flex-auto flex flex-wrap items-center md:items-end justify-between">
+              <h1 className="font-display text-2xl md:text-3xl lg:text-4xl sm:mr-4">
                 {category ? (
                   <>
                     <span className="inline-block opacity-50 leading-normal">
@@ -57,40 +67,54 @@ const Browse = ({ category, page }) => {
                   title
                 )}
               </h1>
+              {!category && (
+                <a
+                  className="mt-2 md:order-1 inline-flex items-center text-sm hover:underline"
+                  href="#map">
+                  <MapIcon className="mr-2" />
+                  Jump to map
+                </a>
+              )}
               {collections.topLevelCategory && (
-                <div className="form-field relative flex items-center justify-between w-full sm:w-auto h-10 my-4 p-3 sm:ml-4 sm:my-0 rounded text-sm text-gray-600 dark:text-gray-500 tracking-wide leading-none whitespace-nowrap">
-                  Browse subcategories…
-                  <ArrowDropDownIcon className="ml-2" />
-                  <select
-                    className="absolute inset-0 opacity-0 cursor-pointer w-full"
-                    onChange={event =>
-                      router.push(`/${slug}/${event.target.value}`)
-                    }
-                    value={category?.slug ?? 'default'}>
-                    <option disabled value="default">
-                      Browse subcategories…
-                    </option>
-                    {collections.topLevelCategory.children.nodes.map(node => (
-                      <option key={node.slug} value={node.slug}>
-                        {node.name}
+                <div className="flex-auto">
+                  <div className="relative inline-flex items-center justify-between w-full sm:w-auto h-10 mt-3 p-3 rounded text-sm text-gray-100 border border-white bg-transparent tracking-wide leading-none whitespace-nowrap">
+                    Browse subcategories…
+                    <ArrowDropDownIcon className="ml-2" />
+                    <select
+                      className="absolute inset-0 opacity-0 cursor-pointer w-full"
+                      onChange={event =>
+                        router.push(`/${slug}/${event.target.value}`)
+                      }
+                      value={category?.slug ?? 'default'}>
+                      <option disabled value="default">
+                        Browse subcategories…
                       </option>
-                    ))}
-                  </select>
+                      {collections.topLevelCategory.children.nodes.map(node => (
+                        <option key={node.slug} value={node.slug}>
+                          {node.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
               )}
-            </section>
-          )}
+            </div>
+          </div>
+        </section>
+      )}
+      <Layout>
+        <LayoutMain>
           {category ? (
-            <div className="page-wrap lg:pr-0 grid gap-4 lg:gap-6 md:grid-cols-2">
+            <div className="page-wrap pt-6 lg:pr-0 grid gap-4 lg:gap-6 md:grid-cols-2">
               {category.posts.nodes.map(post => (
-                <PostCard key={post.slug} post={post} size="medium" />
+                <PostCard key={post.slug} post={post} flex />
               ))}
             </div>
           ) : (
             collections.items.map(item => (
               <section className="my-5 md:my-10" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
-                  <h3 className="font-display text-xl md:text-2xl">
+                  <h3 className="font-display text-xl md:text-2xl lg:text-3xl">
                     {item.title}
                   </h3>
                   <Link href={`/browse/${item.slug}`}>
@@ -174,10 +198,12 @@ export const getStaticProps: GetStaticProps = async ({
     query Browse($slug: ID!) {
       ...SidebarDefaultData
       component: component(id: $slug, idType: SLUG) {
-        ...Page
+        ...BrowsePage
       }
     }
-    fragment Page on Component {
+    fragment BrowsePage on Component {
+      slug
+      title
       collections {
         items {
           title
@@ -192,11 +218,14 @@ export const getStaticProps: GetStaticProps = async ({
           }
         }
       }
+      cover {
+        image {
+          sourceUrl
+        }
+      }
       map {
         ...MapComponentData
       }
-      slug
-      title
     }
     ${SidebarDefault.fragments}
     ${Collection.fragments}

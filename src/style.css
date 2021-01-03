@@ -32,7 +32,7 @@
 
 @layer components {
   .link {
-    @apply text-blue-600;
+    @apply text-blue-600 dark:text-blue-400;
   }
 
   .link:hover {
@@ -104,8 +104,21 @@
     @apply font-display text-2xl md:text-4xl;
   }
 
-  .post-card p a {
-    @apply font-semibold;
+  .post-card-excerpt {
+    @apply hidden;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  @screen md {
+    .post-card-excerpt {
+      display: -webkit-box;
+    }
+  }
+
+  .post-card-excerpt a {
+    @apply hidden;
   }
 }
 

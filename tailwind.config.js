@@ -1,4 +1,3 @@
-// const { colors } = require('tailwindcss/defaultTheme');
 const colors = require('tailwindcss/colors');
 
 module.exports = {
@@ -15,6 +14,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        amber: colors.amber,
         'black-25': 'rgba(0, 0, 0, 0.25)',
         'black-75': 'rgba(0, 0, 0, 0.75)',
         gray: {
@@ -46,5 +46,13 @@ module.exports = {
   },
   variants: {
     width: ['responsive', 'focus'],
+    backgroundOpacity: [
+      'responsive',
+      'dark',
+      'group-hover',
+      'focus-within',
+      'hover',
+      'focus',
+    ],
   },
 };

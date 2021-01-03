@@ -1,6 +1,7 @@
 import { request, gql } from 'graphql-request';
 import _ from 'lodash';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -20,6 +21,16 @@ const Browse = ({ category, page }) => {
   const isHome = router.asPath === '/';
   return (
     <>
+      <Head>
+        <title>
+          {isHome
+            ? 'Vietnam Coracle'
+            : category
+            ? `${title} > ${category.name}`
+            : title}
+          {!isHome ? ' – Vietnam Coracle' : ''}
+        </title>
+      </Head>
       {isHome && (
         <>
           <div className="hidden md:block">

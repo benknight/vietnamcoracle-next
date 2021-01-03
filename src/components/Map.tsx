@@ -61,7 +61,7 @@ const Map = ({ data }) => {
             <iframe
               className="absolute inset-0 w-full h-full"
               height="650"
-              src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=5`}
+              src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=5&hl=en`}
               title={data.title}
               width="800"></iframe>
           </div>

@@ -40,7 +40,7 @@
   }
 
   .form-field {
-    @apply border border-gray-300 dark:border-gray-800 dark:focus:border-gray-600 bg-gray-100 dark:bg-gray-950 outline-none font-sans;
+    @apply border border-gray-300 dark:border-gray-800 dark:focus:border-gray-600 dark:hover:border-gray-600 bg-gray-100 dark:bg-gray-950 outline-none font-sans;
   }
 
   @responsive {
@@ -104,19 +104,6 @@
     @apply font-display text-2xl md:text-4xl;
   }
 
-  .post-card-excerpt {
-    @apply hidden;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-
-  @screen md {
-    .post-card-excerpt {
-      display: -webkit-box;
-    }
-  }
-
   .post-card-excerpt a {
     @apply hidden;
   }
@@ -139,6 +126,15 @@
 
     .text-shadow-none {
       text-shadow: none;
+    }
+  }
+
+  @responsive {
+    .line-clamp {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
   }
 }

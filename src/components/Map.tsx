@@ -2,27 +2,24 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import FullscreenIcon from '@material-ui/icons/Fullscreen';
+// import FullscreenIcon from '@material-ui/icons/Fullscreen';
 import LaunchIcon from '@material-ui/icons/Launch';
-import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+// import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 
 const Map = ({ data }) => {
   const router = useRouter();
+  const { browse } = router.query;
   return (
     <div className="lg:rounded-lg overflow-hidden">
       <div
         className={cx(
           'relative p-8 text-center dark:bg-opacity-10 dark:text-white lg:rounded-t-lg font-display',
           {
-            'bg-blue-300 dark:bg-blue-500': router.asPath === '/',
-            'bg-amber-400': router.asPath.startsWith('/hotel-reviews'),
-            'text-white bg-green-600': router.asPath.startsWith(
-              '/motorbike-guides',
-            ),
-            'text-white bg-yellow-900': router.asPath.startsWith(
-              '/destinations',
-            ),
-            'bg-yellow-200': router.asPath.startsWith('/food-drink'),
+            'bg-blue-300 dark:bg-blue-500': !browse,
+            'bg-amber-400': browse?.[0] === 'hotel-reviews',
+            'text-white bg-green-600': browse?.[0] === 'motorbike-guides',
+            'text-white bg-yellow-900': browse?.[0] === 'destinations',
+            'bg-yellow-200': browse?.[0] === 'food-and-drink',
           },
         )}>
         <h3

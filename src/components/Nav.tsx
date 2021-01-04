@@ -45,7 +45,7 @@ const links = [
     iconAlt: <RestaurantIcon />,
     title: 'Food & Drink',
     titleShort: 'Food',
-    url: '/browse/food-drink',
+    url: '/browse/food-and-drink',
   },
 ];
 
@@ -70,7 +70,9 @@ export default function Nav() {
           {links.map(link => {
             const path = router.asPath;
             const isCurrent =
-              link.url === '/' ? path === '/' : path.startsWith(link.url);
+              link.url === '/'
+                ? path === '/browse' || path === '/'
+                : path.startsWith(link.url);
             const to = link.url.match(/\/$/) ? link.url : link.url + '/';
             return (
               <Link href={to} key={to} scroll={false}>

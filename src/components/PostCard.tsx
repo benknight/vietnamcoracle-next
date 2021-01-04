@@ -39,15 +39,15 @@ function PostCard({ flex = false, post }: Props) {
     {},
   );
   return (
-    <Link href={`/posts/${post.slug}`}>
-      <a
-        className={cx(
-          'relative overflow-hidden flex flex-col shadow rounded-lg',
-          {
-            'w-44 md:w-96': !flex,
-          },
-        )}>
-        <div
+    <div
+      className={cx(
+        'relative overflow-hidden flex flex-col shadow rounded-lg',
+        {
+          'w-44 md:w-96': !flex,
+        },
+      )}>
+      <Link href={`/posts/${post.slug}`}>
+        <a
           className={cx('relative block w-full md:h-72 bg-opacity-10', {
             'h-52': flex,
             'h-40': !flex,
@@ -62,41 +62,44 @@ function PostCard({ flex = false, post }: Props) {
             objectFit="cover"
             src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.thumbnails.thumbnailSquare.sourceUrl}`}
           />
-        </div>
-        <div
-          className="
+        </a>
+      </Link>
+      <div
+        className="
             relative p-3 md:px-4 md:py-5
             flex-auto flex items-center md:items-start
             text-white bg-gray-900
             font-medium rounded-b">
-          <Image
-            alt=""
-            className="object-bottom object-cover opacity-50"
-            layout="fill"
-            loading="eager"
-            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${post.thumbnails.thumbnailSquare.sourceUrlFx}`}
-            unoptimized
-          />
-          <div className="relative font-serif antialiased">
-            <h3
-              className={cx('leading-tight md:text-xl lg:text-2xl', {
-                'text-xl': flex,
-                'text-sm': !flex && post.title.length > 40,
-                'text-base': !flex && post.title.length <= 40,
-              })}>
-              {post.title}
-            </h3>
-            <div
-              className={cx(
-                'post-card-excerpt mt-2 text-xs sm:text-sm md:text-xs lg:text-sm opacity-75',
-                { 'hidden md:line-clamp': !flex },
-              )}
-              dangerouslySetInnerHTML={{ __html: post.excerpt }}
-            />
-          </div>
+        <Image
+          alt=""
+          className="object-bottom object-cover opacity-50"
+          layout="fill"
+          loading="eager"
+          src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${post.thumbnails.thumbnailSquare.sourceUrlFx}`}
+          unoptimized
+        />
+        <div className="relative font-serif antialiased">
+          <Link href={`/posts/${post.slug}`}>
+            <a>
+              <h3
+                className={cx('leading-tight md:text-xl lg:text-2xl', {
+                  'text-xl': flex,
+                  'text-sm': !flex && post.title.length > 40,
+                  'text-base': !flex && post.title.length <= 40,
+                })}>
+                {post.title}
+              </h3>
+            </a>
+          </Link>
+          <div
+            className={cx(
+              'post-card-excerpt mt-2 text-xs sm:text-sm md:text-xs lg:text-sm opacity-75',
+              { 'hidden md:line-clamp': !flex },
+            )}
+            dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>
         </div>
-      </a>
-    </Link>
+      </div>
+    </div>
   );
 }
 

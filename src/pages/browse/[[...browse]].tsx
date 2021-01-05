@@ -13,8 +13,9 @@ import Layout, { LayoutMain } from '../../components/Layout';
 import Map from '../../components/Map';
 import PostCard from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
+import getAPIClient from '../../lib/getAPIClient';
 
-const Browse = ({ data }) => {
+const Browse = ({ data, preview }) => {
   const router = useRouter();
   const isHome = !router.query.browse;
   const { category, component } = data;
@@ -211,6 +212,7 @@ const componentIds = {
 export const getStaticProps: GetStaticProps = async ({
   params,
   preview = false,
+  previewData,
 }) => {
   const query = gql`
     query Browse(
@@ -234,7 +236,7 @@ export const getStaticProps: GetStaticProps = async ({
         }
         ...CategoryMetaData
       }
-      component(id: $componentId) @include(if: $hasComponent) {
+      component(id: $componentId, idType: ID) @include(if: $hasComponent) {
         slug
         title
         collections {
@@ -278,10 +280,17 @@ export const getStaticProps: GetStaticProps = async ({
     ${SidebarDefault.fragments}
   `;
 
-  const componentId = componentIds[params.browse?.[0] ?? 'home'] || '';
+  let componentId = componentIds[params.browse?.[0] ?? 'home'] || '';
+
+  if (preview && previewData.component?.id === componentId) {
+    componentId = previewData.component.previewRevisionId;
+  }
+
   const categorySlug = params.browse?.[params.browse.length - 1] ?? '';
 
-  const data = await request(process.env.WORDPRESS_API_URL, query, {
+  const client = getAPIClient();
+
+  const data = await client.request(query, {
     categorySlug,
     componentId,
     hasCategory: Boolean(categorySlug),

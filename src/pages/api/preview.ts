@@ -1,54 +1,50 @@
-import { request, gql } from 'graphql-request';
+import { gql } from 'graphql-request';
+import getAPIClient from '../../lib/getAPIClient';
 
 export default async function preview(req, res) {
-  const { secret, id, slug } = req.query;
+  const { secret, slug } = req.query;
 
   // Check the secret and next parameters
   // This secret should only be known by this API route
   if (
     !process.env.WORDPRESS_PREVIEW_SECRET ||
     secret !== process.env.WORDPRESS_PREVIEW_SECRET ||
-    (!id && !slug)
+    !slug
   ) {
-    return res.status(401).json({ message: 'Invalid token' });
+    return res.status(401).json({ message: 'Invalid request' });
   }
 
-  // Fetch WordPress to check if the provided `id` or `slug` exists
-  const post = await request(
-    process.env.WORDPRESS_API_URL,
+  const client = getAPIClient();
+
+  const result = await client.request(
     gql`
-      query PreviewPost($id: ID!, $idType: PostIdType!) {
-        post(id: $id, idType: $idType) {
-          databaseId
+      query PreviewComponent($id: ID!) {
+        component(id: $id, idType: SLUG) {
+          id
+          previewRevisionId
           slug
-          status
         }
       }
     `,
     {
-      variables: {
-        id: id || slug,
-        idType: id ? 'DATABASE_ID' : 'SLUG',
-      },
+      id: slug,
     },
   );
 
+  const { component } = result;
+
   // If the post doesn't exist prevent preview mode from being enabled
-  if (!post) {
-    return res.status(401).json({ message: 'Post not found' });
+  if (!component?.previewRevisionId) {
+    return res.status(401).json({ message: 'No preview revision found' });
   }
 
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({
-    post: {
-      id: post.databaseId,
-      slug: post.slug,
-      status: post.status,
-    },
+    component,
   });
 
   // Redirect to the path from the fetched post
   // We don't redirect to `req.query.slug` as that might lead to open redirect vulnerabilities
-  res.writeHead(307, { Location: `/posts/${post.slug || post.databaseId}` });
+  res.writeHead(307, { Location: `/browse/${component.slug}` });
   res.end();
 }

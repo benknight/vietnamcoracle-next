@@ -48,7 +48,7 @@ const Slider = ({ data }) => {
 };
 
 Slider.fragments = gql`
-  fragment SliderComponentData on Component_Slider {
+  fragment SliderComponentData on CategoryPage_Slider {
     posts {
       ... on Post {
         link

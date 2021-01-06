@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { request, gql } from 'graphql-request';
 import _ from 'lodash';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -18,19 +19,17 @@ import getAPIClient from '../../lib/getAPIClient';
 const Browse = ({ data, preview }) => {
   const router = useRouter();
   const isHome = !router.query.browse;
-  const { category, component } = data;
-  const topLevelCategory =
-    category?.parentId === null
-      ? category
-      : category?.ancestors.nodes.find(c => c.parentId === null);
+  const { category, subcategory } = data;
+  const coverImgSrc =
+    subcategory?.meta.cover?.sourceUrl || category.meta.cover?.sourceUrl;
   return (
     <>
       <Head>
         <title>
           {isHome
             ? 'Vietnam Coracle'
-            : topLevelCategory.id !== category.id
-            ? `${topLevelCategory.name} > ${category.name}`
+            : subcategory
+            ? `${category.name} > ${subcategory.name}`
             : category.name}
           {!isHome ? ' – Vietnam Coracle' : ''}
         </title>
@@ -57,65 +56,70 @@ const Browse = ({ data, preview }) => {
           </div>
         </>
       )}
-      {!isHome && component && (
-        <section className="relative text-gray-100 bg-gray-300 dark:bg-gray-950">
-          {component.cover?.image?.sourceUrl && (
-            <Image
-              className="absolute inset-0 opacity-90"
-              layout="fill"
-              objectFit="cover"
-              src={component.cover.image.sourceUrl}
-            />
+      {!isHome && (
+        <section className="relative">
+          {coverImgSrc && (
+            <>
+              <div className="absolute inset-0 bg-gray-300 dark:bg-gray-950 opacity-90">
+                <Image layout="fill" objectFit="cover" src={coverImgSrc} />
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-black-25 to-transparent"></div>
+            </>
           )}
-          <div className="page-wrap relative sm:flex items-end pb-5 md:pb-8 pt-32 md:pt-48 lg:pt-56 bg-gradient-to-t from-gray-900 via-black-25 to-transparent">
+          <div
+            className={cx('page-wrap relative flex items-end pt-5 lg:pt-7', {
+              'text-gray-100 h-60 lg:h-72 pb-5 lg:pb-7': Boolean(coverImgSrc),
+            })}>
             <div className="flex-auto flex flex-wrap items-center justify-between">
-              <h1 className="font-display text-2xl md:text-3xl lg:text-4xl sm:mr-6">
-                {topLevelCategory.id !== category.id ? (
+              <h1 className="text-2xl md:text-3xl lg:text-4xl sm:mr-6 font-display leading-tight">
+                {subcategory ? (
                   <>
                     <span className="inline-block opacity-70 leading-normal">
-                      <Link href={`/browse/${topLevelCategory.slug}`}>
-                        {topLevelCategory.name}
+                      <Link href={`/browse/${category.slug}`}>
+                        {category.name}
                       </Link>
                       &nbsp;&gt;&nbsp;
                     </span>
                     <span className="inline-block leading-normal">
-                      {category.name}
+                      {subcategory.name}
                     </span>
                   </>
                 ) : (
                   category.name
                 )}
               </h1>
-              {component?.map &&
-                (isHome || topLevelCategory.id === category.id) && (
-                  <a
-                    className="mt-2 md:order-1 inline-flex items-center text-sm hover:underline"
-                    href="#map">
-                    <MapIcon className="mr-2" />
-                    Jump to map
-                  </a>
-                )}
-              {component && (
-                <div className="flex-auto">
-                  <div className="relative inline-flex items-center justify-between w-full sm:w-auto h-10 mt-3 md:mt-0 p-3 rounded text-sm text-gray-100 border border-white bg-transparent tracking-wide leading-none whitespace-nowrap">
+              {category.meta.page?.map && !subcategory && (
+                <a
+                  className="my-2 md:order-1 inline-flex items-center text-sm hover:underline"
+                  href="#map">
+                  <MapIcon className="mr-2" />
+                  Jump to map
+                </a>
+              )}
+              {category.children.nodes.length > 0 && (
+                <div className="flex-auto w-full md:w-auto">
+                  <div className="relative inline-flex items-center justify-between w-full md:w-auto h-10 mt-3 md:mt-0 p-3 rounded text-sm border bg-transparent tracking-wide leading-none whitespace-nowrap">
                     Browse subcategories…
                     <ArrowDropDownIcon className="ml-2" />
                     <select
                       className="absolute inset-0 opacity-0 cursor-pointer w-full"
                       onChange={event => router.push(event.target.value)}
                       value={
-                        category?.uri.replace('category', 'browse') ?? 'default'
+                        subcategory.uri.replace('category', 'browse') ??
+                        'default'
                       }>
                       <option disabled value="default">
                         Browse subcategories…
                       </option>
-                      {topLevelCategory.children.nodes.map(node => (
-                        <option
-                          key={node.uri}
-                          value={node.uri.replace('category', 'browse')}>
-                          {node.name}
-                        </option>
-                      ))}
+                      {category.children.nodes
+                        .filter(node => node.posts.nodes.length > 0)
+                        .map(node => (
+                          <option
+                            key={node.uri}
+                            value={node.uri.replace('category', 'browse')}>
+                            {node.name}
+                          </option>
+                        ))}
                     </select>
                   </div>
                 </div>
@@ -126,8 +130,8 @@ const Browse = ({ data, preview }) => {
       )}
       <Layout>
         <LayoutMain>
-          {component && (isHome || topLevelCategory.id === category.id) ? (
-            component.collections.items.map(item => (
+          {category.meta?.page && !subcategory ? (
+            category.meta.page.collections?.items.map(item => (
               <section className="my-5 md:my-10" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
                   <h3 className="font-display text-xl md:text-2xl lg:text-3xl">
@@ -144,22 +148,15 @@ const Browse = ({ data, preview }) => {
               </section>
             ))
           ) : (
-            <>
-              {!component && (
-                <h3 className="mt-8 page-wrap font-display text-xl md:text-2xl lg:text-3xl">
-                  {category.name}
-                </h3>
-              )}
-              <div className="page-wrap pt-6 lg:pr-0 grid gap-4 lg:gap-6 md:grid-cols-2">
-                {category.posts.nodes.map(post => (
-                  <PostCard key={post.slug} post={post} flex />
-                ))}
-              </div>
-            </>
+            <div className="page-wrap pt-8 lg:pr-0 grid gap-4 lg:gap-6 md:grid-cols-2">
+              {(subcategory || category).posts.nodes.map(post => (
+                <PostCard key={post.slug} post={post} flex />
+              ))}
+            </div>
           )}
-          {component?.map && (
+          {category.meta.page?.map && (
             <section className="mt-8 lg:mb-8 lg:pl-12">
-              <Map data={component.map} />
+              <Map data={category.meta.page.map} />
             </section>
           )}
         </LayoutMain>
@@ -201,14 +198,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-const componentIds = {
-  'food-and-drink': 'cG9zdDozODc2NA==',
-  home: 'cG9zdDozNjExNQ==',
-  'hotel-reviews': 'cG9zdDozODQ2OQ==',
-  destinations: 'cG9zdDozODUxNw==',
-  'motorbike-guides': 'cG9zdDozODUxMQ==',
-};
-
 export const getStaticProps: GetStaticProps = async ({
   params,
   preview = false,
@@ -217,15 +206,45 @@ export const getStaticProps: GetStaticProps = async ({
   const query = gql`
     query Browse(
       $categorySlug: ID!
-      $componentId: ID!
-      $hasCategory: Boolean!
-      $hasComponent: Boolean!
+      $hasSubcategory: Boolean!
+      $subcategorySlug: ID!
       $skipPosts: Boolean!
     ) {
-      category(id: $categorySlug, idType: SLUG) @include(if: $hasCategory) {
-        ancestors(first: 1000) {
+      category(id: $categorySlug, idType: SLUG) {
+        name
+        slug
+        uri
+        children(first: 1000) {
           nodes {
-            ...CategoryMetaData
+            name
+            uri
+            posts {
+              nodes {
+                id
+              }
+            }
+          }
+        }
+        meta {
+          cover {
+            sourceUrl
+          }
+          page {
+            ... on CategoryPage {
+              collections {
+                items {
+                  title
+                  category {
+                    slug
+                    uri
+                  }
+                  ...CollectionComponentData
+                }
+              }
+              map {
+                ...MapComponentData
+              }
+            }
           }
         }
         posts(first: 1000) @skip(if: $skipPosts) {
@@ -234,45 +253,25 @@ export const getStaticProps: GetStaticProps = async ({
             ...PostCardPostData
           }
         }
-        ...CategoryMetaData
       }
-      component(id: $componentId, idType: ID) @include(if: $hasComponent) {
-        slug
-        title
-        collections {
-          items {
-            title
-            category {
-              slug
-              uri
-            }
-            ...CollectionComponentData
-          }
-        }
-        cover {
-          image {
+      subcategory: category(id: $subcategorySlug, idType: SLUG)
+        @include(if: $hasSubcategory) {
+        name
+        uri
+        meta {
+          cover {
             sourceUrl
           }
         }
-        map {
-          ...MapComponentData
+        posts(first: 1000) {
+          nodes {
+            slug
+            ...PostCardPostData
+          }
         }
       }
       ...FooterData
       ...SidebarDefaultData
-    }
-    fragment CategoryMetaData on Category {
-      id
-      name
-      parentId
-      slug
-      uri
-      children(first: 1000) {
-        nodes {
-          name
-          uri
-        }
-      }
     }
     ${Collection.fragments}
     ${Footer.fragments}
@@ -280,22 +279,19 @@ export const getStaticProps: GetStaticProps = async ({
     ${SidebarDefault.fragments}
   `;
 
-  let componentId = componentIds[params.browse?.[0] ?? 'home'] || '';
-
-  if (preview && previewData.component?.id === componentId) {
-    componentId = previewData.component.previewRevisionId;
-  }
-
-  const categorySlug = params.browse?.[params.browse.length - 1] ?? '';
-
-  const client = getAPIClient();
-
-  const data = await client.request(query, {
+  const categorySlug = params.browse?.[0] ?? 'features-guides';
+  const subcategorySlug = params.browse?.[1] ?? '';
+  const data = await getAPIClient().request(query, {
     categorySlug,
-    componentId,
-    hasCategory: Boolean(categorySlug),
-    hasComponent: Boolean(componentId),
-    skipPosts: Boolean(componentId) && params.browse?.length === 1,
+    hasSubcategory: Boolean(subcategorySlug),
+    subcategorySlug,
+    skipPosts: [
+      'home',
+      'motorbike-guides',
+      'food-and-drink',
+      'hotel-reviews',
+      'destinations',
+    ].includes(categorySlug), // TODO: Alternatively query for which categorys have pages?
   });
 
   return {

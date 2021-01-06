@@ -90,7 +90,7 @@ Collection.fragments = gql`
     slug
     ...PostCardPostData
   }
-  fragment CollectionComponentData on Component_Collections_items {
+  fragment CollectionComponentData on CategoryPage_Collections_items {
     direction
     orderby
     type

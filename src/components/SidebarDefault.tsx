@@ -21,17 +21,17 @@ const SidebarDefault = ({ data: { about, subscribe, support } }) => (
 
 SidebarDefault.fragments = gql`
   fragment SidebarDefaultData on RootQuery {
-    about: component(id: "cG9zdDozNjExOA==") {
+    about: block(id: "cG9zdDozNjExOA==") {
       ...Block
     }
-    subscribe: component(id: "cG9zdDozNzcwNQ==") {
+    subscribe: block(id: "cG9zdDozNzcwNQ==") {
       ...Block
     }
-    support: component(id: "cG9zdDozNzY4Nw==") {
+    support: block(id: "cG9zdDozNzY4Nw==") {
       ...Block
     }
   }
-  fragment Block on Component {
+  fragment Block on Block {
     block {
       ...BlockComponentData
     }

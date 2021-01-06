@@ -27,7 +27,7 @@ const Block = props => (
 );
 
 Block.fragments = gql`
-  fragment BlockComponentData on Component_Block {
+  fragment BlockComponentData on Block_Block {
     description
     title
     image {

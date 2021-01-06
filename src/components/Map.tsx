@@ -69,7 +69,7 @@ const Map = ({ data }) => {
 };
 
 Map.fragments = gql`
-  fragment MapComponentData on Component_Map {
+  fragment MapComponentData on CategoryPage_Map {
     description
     title
     mid

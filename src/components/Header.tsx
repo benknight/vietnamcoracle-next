@@ -10,7 +10,11 @@ import SearchIcon from '@material-ui/icons/Search';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 
-export default function Header() {
+interface Props {
+  preview?: boolean;
+}
+
+export default function Header({ preview = false }: Props) {
   const ref = useRef<HTMLElement>();
   const [scrolled, setScolled] = useState(false);
   const [showMini, setShowMini] = useState(false);
@@ -30,7 +34,10 @@ export default function Header() {
 
   return (
     <header
-      className="pt-24 pb-12 sm:pt-20 sm:pb-16 px-3 lg:py-12 text-center bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 lg:bg-none"
+      className={cx(
+        'pt-24 pb-12 sm:pt-20 sm:pb-16 px-3 lg:py-12 text-center bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 lg:bg-none',
+        { 'mt-8': preview },
+      )}
       ref={ref}>
       <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
         <a className="inline-flex">
@@ -50,8 +57,10 @@ export default function Header() {
         Independent travel guides to Vietnam
       </h2>
       <div
-        className={cx('fixed top-0 left-0 z-30 h-16 lg:h-auto w-full', {
+        className={cx('fixed left-0 z-30 h-16 lg:h-auto w-full', {
           'bg-white dark:bg-gray-900 shadow-lg': scrolled,
+          'top-0': !preview,
+          'top-8': preview,
         })}>
         <div
           className={cx(

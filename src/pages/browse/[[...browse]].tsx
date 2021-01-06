@@ -16,17 +16,17 @@ import PostCard from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
 import getAPIClient from '../../lib/getAPIClient';
 
-const Browse = ({ data, preview }) => {
+const Browse = ({ data }) => {
   const router = useRouter();
   const isHome = !router.query.browse;
-  const { category, subcategory } = data;
+  const { category, categoryPage, subcategory } = data;
   const coverImgSrc =
-    subcategory?.meta.cover?.sourceUrl || category.meta.cover?.sourceUrl;
+    subcategory?.meta.cover?.sourceUrl || category?.meta.cover?.sourceUrl;
   return (
     <>
       <Head>
         <title>
-          {isHome
+          {!category
             ? 'Vietnam Coracle'
             : subcategory
             ? `${category.name} > ${subcategory.name}`
@@ -88,7 +88,7 @@ const Browse = ({ data, preview }) => {
                   category.name
                 )}
               </h1>
-              {category.meta.page?.map && !subcategory && (
+              {categoryPage?.map && !subcategory && (
                 <a
                   className="my-2 md:order-1 inline-flex items-center text-sm hover:underline"
                   href="#map">
@@ -130,8 +130,8 @@ const Browse = ({ data, preview }) => {
       )}
       <Layout>
         <LayoutMain>
-          {category.meta?.page && !subcategory ? (
-            category.meta.page.collections?.items.map(item => (
+          {categoryPage && !subcategory ? (
+            categoryPage.collections?.items.map(item => (
               <section className="my-5 md:my-10" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
                   <h3 className="font-display text-xl md:text-2xl lg:text-3xl">
@@ -154,9 +154,9 @@ const Browse = ({ data, preview }) => {
               ))}
             </div>
           )}
-          {category.meta.page?.map && (
+          {categoryPage?.map && (
             <section className="mt-8 lg:mb-8 lg:pl-12">
-              <Map data={category.meta.page.map} />
+              <Map data={categoryPage.map} />
             </section>
           )}
         </LayoutMain>
@@ -201,14 +201,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 export const getStaticProps: GetStaticProps = async ({
   params,
   preview = false,
-  previewData,
 }) => {
   const query = gql`
     query Browse(
+      $categoryPageSlug: ID!
       $categorySlug: ID!
       $hasSubcategory: Boolean!
-      $subcategorySlug: ID!
       $skipPosts: Boolean!
+      $subcategorySlug: ID!
     ) {
       category(id: $categorySlug, idType: SLUG) {
         name
@@ -229,29 +229,27 @@ export const getStaticProps: GetStaticProps = async ({
           cover {
             sourceUrl
           }
-          page {
-            ... on CategoryPage {
-              collections {
-                items {
-                  title
-                  category {
-                    slug
-                    uri
-                  }
-                  ...CollectionComponentData
-                }
-              }
-              map {
-                ...MapComponentData
-              }
-            }
-          }
         }
         posts(first: 1000) @skip(if: $skipPosts) {
           nodes {
             slug
             ...PostCardPostData
           }
+        }
+      }
+      categoryPage(id: $categoryPageSlug, idType: SLUG) {
+        collections {
+          items {
+            title
+            category {
+              slug
+              uri
+            }
+            ...CollectionComponentData
+          }
+        }
+        map {
+          ...MapComponentData
         }
       }
       subcategory: category(id: $subcategorySlug, idType: SLUG)
@@ -279,12 +277,12 @@ export const getStaticProps: GetStaticProps = async ({
     ${SidebarDefault.fragments}
   `;
 
-  const categorySlug = params.browse?.[0] ?? 'features-guides';
+  const categorySlug = params.browse?.[0] ?? '';
   const subcategorySlug = params.browse?.[1] ?? '';
   const data = await getAPIClient().request(query, {
+    categoryPageSlug: categorySlug || 'home',
     categorySlug,
     hasSubcategory: Boolean(subcategorySlug),
-    subcategorySlug,
     skipPosts: [
       'home',
       'motorbike-guides',
@@ -292,10 +290,11 @@ export const getStaticProps: GetStaticProps = async ({
       'hotel-reviews',
       'destinations',
     ].includes(categorySlug), // TODO: Alternatively query for which categorys have pages?
+    subcategorySlug,
   });
 
   return {
-    props: { data, preview },
+    props: { data },
     revalidate: 1,
   };
 };

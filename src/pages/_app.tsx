@@ -1,4 +1,5 @@
-import type { AppProps } from 'next/app'
+import type { AppProps } from 'next/app';
+import Link from 'next/link';
 import { create } from 'jss';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
@@ -16,8 +17,17 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
   return (
     <StylesProvider jss={jss}>
-      <Header />
-      <Nav />
+      {pageProps.preview && (
+        <div className="z-50 fixed flex items-center justify-center h-8 top-0 left-0 w-full bg-blue-400 dark:bg-blue-900 text-white shadow">
+          <Link href="/api/exit-preview">
+            <a className="text-xs hover:underline">
+              Preview mode enabled. Click here to exit.
+            </a>
+          </Link>
+        </div>
+      )}
+      <Header preview={pageProps.preview} />
+      <Nav preview={pageProps.preview} />
       <Component {...pageProps} />
     </StylesProvider>
   );

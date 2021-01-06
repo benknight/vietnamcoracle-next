@@ -49,17 +49,24 @@ const links = [
   },
 ];
 
-export default function Nav() {
+interface Props {
+  preview?: boolean;
+}
+
+export default function Nav({ preview = false }: Props) {
   const router = useRouter();
   const scrollAnchor = useRef<HTMLDivElement>();
   return (
     <>
       <div ref={scrollAnchor} />
       <nav
-        className="
-          fixed bottom-0 lg:sticky lg:bottom-auto lg:top-0 z-20
-          flex justify-center w-full h-16
-          bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow">
+        className={cx(
+          'fixed bottom-0 lg:sticky lg:bottom-auto lg:top-0 z-20 flex justify-center w-full h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow',
+          {
+            'lg:top-0': !preview,
+            'lg:top-8': preview,
+          },
+        )}>
         <div
           className="
             flex lg:justify-center flex-auto

@@ -118,6 +118,17 @@
   .post-card-excerpt a {
     @apply hidden;
   }
+
+  .map-container {
+    margin-bottom: -14px;
+    height: 80vh;
+  }
+
+  @screen lg {
+    .map-container {
+      height: 600px;
+    }
+  }
 }
 
 @layer utilities {

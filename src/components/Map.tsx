@@ -52,9 +52,7 @@ const Map = ({ data }) => {
       </div>
       <div className="relative">
         <div className="overflow-hidden">
-          <div
-            className="relative w-full"
-            style={{ height: '650px', marginBottom: '-14px' }}>
+          <div className="map-container">
             <iframe
               className="absolute inset-0 w-full h-full"
               height="650"

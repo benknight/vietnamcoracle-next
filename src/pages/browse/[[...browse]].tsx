@@ -105,7 +105,7 @@ const Browse = ({ data, preview }) => {
                       className="absolute inset-0 opacity-0 cursor-pointer w-full"
                       onChange={event => router.push(event.target.value)}
                       value={
-                        subcategory.uri.replace('category', 'browse') ??
+                        subcategory?.uri.replace('category', 'browse') ??
                         'default'
                       }>
                       <option disabled value="default">

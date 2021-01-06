@@ -69,7 +69,7 @@ export default function Nav({ preview = false }: Props) {
         )}>
         <div
           className="
-            flex lg:justify-center flex-auto
+            flex justify-center flex-auto
             px-1 lg:px-16 max-w-screen-lg
             text-xxxs sm:text-xxs font-serif uppercase tracking-widest leading-tight
             border-t border-gray-300 dark:border-gray-700"
@@ -85,7 +85,7 @@ export default function Nav({ preview = false }: Props) {
               <Link href={to} key={to} scroll={false}>
                 <a
                   className={cx(
-                    'w-1/5 lg:w-auto sm:p-4 lg:py-0 lg:px-3 xl:px-4 flex flex-col lg:flex-row items-center justify-center text-center',
+                    'w-1/5 md:w-28 lg:w-auto sm:p-4 lg:py-0 lg:px-3 xl:px-4 flex flex-col lg:flex-row items-center justify-center text-center',
                     {
                       'bg-gradient-to-b dark:shadow text-blue-500 dark:text-blue-400': isCurrent,
                     },

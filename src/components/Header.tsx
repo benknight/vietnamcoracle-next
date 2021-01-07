@@ -22,8 +22,13 @@ export default function Header({ preview = false }: Props) {
 
   useEffect(() => {
     const listener = _debounce(() => {
+      // NOTE: To avoid complexity the following breakpoint value is hardcoded
+      // https://tailwindcss.com/docs/configuration#referencing-in-java-script
+      const { matches: isLarge } = window.matchMedia('(min-width: 1024px)');
+      const thresholdHeight =
+        (isLarge ? 1 : 0.75) * ref.current.getBoundingClientRect().height;
       setScolled(window.scrollY > 0);
-      setShowMini(window.scrollY >= ref.current.getBoundingClientRect().height);
+      setShowMini(window.scrollY >= thresholdHeight);
     }, 10);
     listener();
     window.addEventListener('scroll', listener);

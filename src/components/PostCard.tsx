@@ -46,12 +46,13 @@ function PostCard({ flex = false, post }: Props) {
           'w-44 md:w-96': !flex,
         },
       )}>
-      <Link href={`/posts/${post.slug}`}>
+      <Link href={`/${post.slug}`}>
         <a
           className={cx('relative block w-full md:h-72 bg-opacity-10', {
             'h-52': flex,
             'h-40': !flex,
           })}
+          onClick={event => event.preventDefault()}
           style={{
             backgroundColor: swatch.hex,
           }}>
@@ -79,8 +80,8 @@ function PostCard({ flex = false, post }: Props) {
           unoptimized
         />
         <div className="relative font-serif antialiased">
-          <Link href={`/posts/${post.slug}`}>
-            <a>
+          <Link href={`/${post.slug}`}>
+            <a onClick={event => event.preventDefault()}>
               <h3
                 className={cx('leading-tight md:text-xl lg:text-2xl', {
                   'text-xl': flex,

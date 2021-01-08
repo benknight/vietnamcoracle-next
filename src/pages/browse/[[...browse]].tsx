@@ -234,7 +234,7 @@ export const getStaticProps: GetStaticProps = async ({
       $hasCategoryPage: Boolean!
       $hasSubcategory: Boolean!
       $preview: Boolean!
-      $skipPosts: Boolean!
+      $skipCategoryPosts: Boolean!
       $subcategorySlug: ID!
     ) {
       category(id: $categorySlug, idType: SLUG) {
@@ -248,6 +248,12 @@ export const getStaticProps: GetStaticProps = async ({
                 id
               }
             }
+          }
+        }
+        posts(first: 1000) @skip(if: $skipCategoryPosts) {
+          nodes {
+            slug
+            ...PostCardPostData
           }
         }
         ...CategoryData
@@ -271,6 +277,12 @@ export const getStaticProps: GetStaticProps = async ({
       subcategory: category(id: $subcategorySlug, idType: SLUG)
         @include(if: $hasSubcategory) {
         ...CategoryData
+        posts(first: 1000) {
+          nodes {
+            slug
+            ...PostCardPostData
+          }
+        }
       }
       ...FooterData
       ...SidebarDefaultData
@@ -294,12 +306,6 @@ export const getStaticProps: GetStaticProps = async ({
           }
         }
       }
-      posts(first: 1000) @skip(if: $skipPosts) {
-        nodes {
-          slug
-          ...PostCardPostData
-        }
-      }
     }
     ${Collection.fragments}
     ${Footer.fragments}
@@ -316,13 +322,15 @@ export const getStaticProps: GetStaticProps = async ({
     hasCategoryPage: Boolean(categoryPageId),
     hasSubcategory: Boolean(subcategorySlug),
     preview,
-    skipPosts: [
-      'home',
-      'motorbike-guides',
-      'food-and-drink',
-      'hotel-reviews',
-      'destinations',
-    ].includes(categorySlug), // TODO: Alternatively query for which categorys have pages?
+    skipCategoryPosts:
+      Boolean(subcategorySlug) ||
+      [
+        'home',
+        'motorbike-guides',
+        'food-and-drink',
+        'hotel-reviews',
+        'destinations',
+      ].includes(categorySlug), // TODO: Alternatively query for which categorys have pages?
     subcategorySlug,
   });
 

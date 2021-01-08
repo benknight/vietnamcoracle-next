@@ -198,15 +198,26 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
+// TODO: It's not possible to previews via the `asPreview` argument with slugs or uri's as IDs, hence this mapping.
+// Tracking issue: https://github.com/wp-graphql/wp-graphql/issues/1673
+const catPageIds = {
+  'food-and-drink': 'cG9zdDozODc2NA==',
+  home: 'cG9zdDozNjExNQ==',
+  'hotel-reviews': 'cG9zdDozODQ2OQ==',
+  destinations: 'cG9zdDozODUxNw==',
+  'motorbike-guides': 'cG9zdDozODUxMQ==',
+};
+
 export const getStaticProps: GetStaticProps = async ({
   params,
   preview = false,
 }) => {
   const query = gql`
     query Browse(
-      $categoryPageSlug: ID!
+      $categoryPageId: ID!
       $categorySlug: ID!
       $hasSubcategory: Boolean!
+      $preview: Boolean!
       $skipPosts: Boolean!
       $subcategorySlug: ID!
     ) {
@@ -237,7 +248,7 @@ export const getStaticProps: GetStaticProps = async ({
           }
         }
       }
-      categoryPage(id: $categoryPageSlug, idType: SLUG) {
+      categoryPage(id: $categoryPageId, asPreview: $preview) {
         collections {
           items {
             title
@@ -280,9 +291,10 @@ export const getStaticProps: GetStaticProps = async ({
   const categorySlug = params.browse?.[0] ?? '';
   const subcategorySlug = params.browse?.[1] ?? '';
   const data = await getAPIClient().request(query, {
-    categoryPageSlug: categorySlug || 'home',
+    categoryPageId: catPageIds[categorySlug || 'home'],
     categorySlug,
     hasSubcategory: Boolean(subcategorySlug),
+    preview,
     skipPosts: [
       'home',
       'motorbike-guides',
@@ -294,7 +306,7 @@ export const getStaticProps: GetStaticProps = async ({
   });
 
   return {
-    props: { data },
+    props: { data, preview },
     revalidate: 1,
   };
 };

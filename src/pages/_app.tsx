@@ -1,12 +1,15 @@
 import type { AppProps } from 'next/app';
-import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { create } from 'jss';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import '../style.css';
 
+const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
+
 function MyApp({ Component, pageProps }: AppProps) {
+  const { preview } = pageProps;
   const jss = create({
     ...jssPreset(),
     // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.
@@ -17,17 +20,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
   return (
     <StylesProvider jss={jss}>
-      {pageProps.preview && (
-        <div className="z-50 fixed flex items-center justify-center h-8 top-0 left-0 w-full bg-blue-400 dark:bg-blue-900 text-white shadow">
-          <Link href="/api/exit-preview">
-            <a className="text-xs hover:underline">
-              Preview mode enabled. Click here to exit.
-            </a>
-          </Link>
-        </div>
-      )}
-      <Header preview={pageProps.preview} />
-      <Nav preview={pageProps.preview} />
+      {preview && <PreviewAlert />}
+      <Header preview={preview} />
+      <Nav preview={preview} />
       <Component {...pageProps} />
     </StylesProvider>
   );

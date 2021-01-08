@@ -216,6 +216,7 @@ export const getStaticProps: GetStaticProps = async ({
     query Browse(
       $categoryPageId: ID!
       $categorySlug: ID!
+      $hasCategoryPage: Boolean!
       $hasSubcategory: Boolean!
       $preview: Boolean!
       $skipPosts: Boolean!
@@ -248,7 +249,8 @@ export const getStaticProps: GetStaticProps = async ({
           }
         }
       }
-      categoryPage(id: $categoryPageId, asPreview: $preview) {
+      categoryPage(id: $categoryPageId, asPreview: $preview)
+        @include(if: $hasCategoryPage) {
         collections {
           items {
             title
@@ -289,10 +291,12 @@ export const getStaticProps: GetStaticProps = async ({
   `;
 
   const categorySlug = params.browse?.[0] ?? '';
+  const categoryPageId = catPageIds[categorySlug || 'home'] || '';
   const subcategorySlug = params.browse?.[1] ?? '';
   const data = await getAPIClient().request(query, {
-    categoryPageId: catPageIds[categorySlug || 'home'],
+    categoryPageId,
     categorySlug,
+    hasCategoryPage: Boolean(categoryPageId),
     hasSubcategory: Boolean(subcategorySlug),
     preview,
     skipPosts: [

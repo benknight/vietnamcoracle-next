@@ -20,8 +20,9 @@ const Browse = ({ data }) => {
   const router = useRouter();
   const isHome = !router.query.browse;
   const { category, categoryPage, subcategory } = data;
-  const coverImgSrc =
-    subcategory?.meta.cover?.sourceUrl || category?.meta.cover?.sourceUrl;
+  const coverImgSm = subcategory?.cover.small || category?.cover.small;
+  const coverImgLg = subcategory?.cover.large || category?.cover.large;
+  const showCoverImg = coverImgSm && coverImgLg; // We are strict about requiring both small and large versions
   return (
     <>
       <Head>
@@ -58,17 +59,31 @@ const Browse = ({ data }) => {
       )}
       {!isHome && (
         <section className="relative">
-          {coverImgSrc && (
-            <>
-              <div className="absolute inset-0 bg-gray-300 dark:bg-gray-950 opacity-90">
-                <Image layout="fill" objectFit="cover" src={coverImgSrc} />
+          {showCoverImg && (
+            <div className="bg-gray-300 dark:bg-gray-950 opacity-90">
+              <div className="block lg:hidden">
+                <Image
+                  alt=""
+                  height={coverImgSm.mediaDetails.height}
+                  src={coverImgSm.sourceUrl}
+                  width={coverImgSm.mediaDetails.width}
+                />
+              </div>
+              <div className="hidden lg:block">
+                <Image
+                  alt=""
+                  height={coverImgLg.mediaDetails.height}
+                  layout="responsive"
+                  src={coverImgLg.sourceUrl}
+                  width={coverImgLg.mediaDetails.width}
+                />
               </div>
               <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-black-25 to-transparent"></div>
-            </>
+            </div>
           )}
           <div
-            className={cx('page-wrap relative flex items-end pt-5 lg:pt-7', {
-              'text-gray-100 h-60 lg:h-72 pb-5 lg:pb-7': Boolean(coverImgSrc),
+            className={cx('page-wrap flex items-end pt-5 lg:pt-7', {
+              'absolute inset-0 text-gray-100 pb-5 lg:pb-7': showCoverImg,
             })}>
             <div className="flex-auto flex flex-wrap items-center justify-between">
               <h1 className="text-2xl md:text-3xl lg:text-4xl sm:mr-6 font-display leading-tight">
@@ -223,9 +238,7 @@ export const getStaticProps: GetStaticProps = async ({
       $subcategorySlug: ID!
     ) {
       category(id: $categorySlug, idType: SLUG) {
-        name
         slug
-        uri
         children(first: 1000) {
           nodes {
             name
@@ -237,17 +250,7 @@ export const getStaticProps: GetStaticProps = async ({
             }
           }
         }
-        meta {
-          cover {
-            sourceUrl
-          }
-        }
-        posts(first: 1000) @skip(if: $skipPosts) {
-          nodes {
-            slug
-            ...PostCardPostData
-          }
-        }
+        ...CategoryData
       }
       categoryPage(id: $categoryPageId, asPreview: $preview)
         @include(if: $hasCategoryPage) {
@@ -267,22 +270,36 @@ export const getStaticProps: GetStaticProps = async ({
       }
       subcategory: category(id: $subcategorySlug, idType: SLUG)
         @include(if: $hasSubcategory) {
-        name
-        uri
-        meta {
-          cover {
-            sourceUrl
-          }
-        }
-        posts(first: 1000) {
-          nodes {
-            slug
-            ...PostCardPostData
-          }
-        }
+        ...CategoryData
       }
       ...FooterData
       ...SidebarDefaultData
+    }
+    fragment CategoryData on Category {
+      name
+      uri
+      cover {
+        small {
+          sourceUrl
+          mediaDetails {
+            height
+            width
+          }
+        }
+        large {
+          sourceUrl
+          mediaDetails {
+            height
+            width
+          }
+        }
+      }
+      posts(first: 1000) @skip(if: $skipPosts) {
+        nodes {
+          slug
+          ...PostCardPostData
+        }
+      }
     }
     ${Collection.fragments}
     ${Footer.fragments}

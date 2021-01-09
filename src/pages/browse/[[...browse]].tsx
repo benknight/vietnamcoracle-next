@@ -163,14 +163,14 @@ const Browse = ({ data }) => {
               </section>
             ))
           ) : (
-            <div className="page-wrap pt-8 lg:pr-0 grid gap-4 lg:gap-6 md:grid-cols-2">
+            <div className="page-wrap pt-8 lg:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
               {(subcategory || category).posts.nodes.map(post => (
                 <PostCard key={post.slug} post={post} flex />
               ))}
             </div>
           )}
           {categoryPage?.map && (
-            <section className="mt-8 lg:mb-8 lg:pl-12">
+            <section className="mt-8 lg:mb-8 lg:pl-4 xl:pl-12">
               <Map data={categoryPage.map} />
             </section>
           )}

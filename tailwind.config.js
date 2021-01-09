@@ -25,14 +25,10 @@ module.exports = {
       },
       fontFamily: {
         display: ['Baskervville', 'sans-serif'],
-        // serif: ['Times New Romain', 'Times', 'serif'],
       },
       fontSize: {
         xxxs: '10px',
         xxs: '0.6875rem',
-      },
-      screens: {
-        lg: '1025px',
       },
     },
   },

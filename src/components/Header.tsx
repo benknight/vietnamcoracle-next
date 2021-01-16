@@ -79,22 +79,28 @@ export default function Header({ preview = false }: Props) {
             },
           )}>
           <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-            <a className="inline-flex mr-4">
+            <a className="inline-flex mr-4 md:mr-2">
               <Image
                 className="rounded-full"
-                height={42}
+                height={48}
                 loading="eager"
                 src="/logo.jpg"
-                width={42}
+                width={48}
               />
             </a>
           </Link>
-          <div className="relative flex-auto w-40 lg:w-12 xl:w-44">
-            <div className="absolute top-0 left-0 bottom-0 flex items-center px-3 pointer-events-none">
-              <SearchIcon classes={{ root: 'w-6 h-6' }} />
+          <div
+            className={cx('relative flex-auto w-40 xl:w-44', {
+              'lg:w-10': showMini,
+            })}>
+            <div className="absolute top-0 left-0 bottom-0 w-10 flex items-center justify-center pointer-events-none">
+              <SearchIcon classes={{ root: 'w-6 h-6 lg:w-5 lg:h-5' }} />
             </div>
             <input
-              className="form-field w-full h-10 pl-10 rounded-full"
+              className={cx(
+                'form-field w-full h-10 pl-8 pr-1 rounded-full bg-white dark:bg-gray-900',
+                { 'pr-2': searchFocused },
+              )}
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}
               type="search"

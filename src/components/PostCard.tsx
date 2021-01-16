@@ -43,12 +43,12 @@ function PostCard({ flex = false, post }: Props) {
       className={cx(
         'relative overflow-hidden flex flex-col shadow rounded-lg',
         {
-          'w-44 md:w-96': !flex,
+          'w-44 md:w-80 xl:w-96': !flex,
         },
       )}>
       <Link href={`/${post.slug}`}>
         <a
-          className={cx('relative block w-full md:h-72 bg-opacity-10', {
+          className={cx('relative block w-full md:h-60 xl:h-72 bg-opacity-10', {
             'h-52': flex,
             'h-40': !flex,
           })}

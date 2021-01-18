@@ -9,6 +9,7 @@ module.exports = {
   plugins: [],
   purge: {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
+    layers: ['utilities'],
     options: {},
   },
   theme: {

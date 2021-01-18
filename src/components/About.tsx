@@ -8,7 +8,7 @@ interface Props {
 export default function About({ data: block }: Props) {
   return (
     <Block>
-      <div className="my-6 flex justify-center">
+      <div className="mt-4 mb-6 flex justify-center">
         <a href={block.link.url}>
           <Image
             alt=""

@@ -5,8 +5,8 @@ import LonelyPlanetLogo from '../../public/lp-logo.svg';
 
 export default function Footer({ data }) {
   return (
-    <>
-      <div className="block lg:mt-16 mb-16 mx-auto text-center">
+    <footer className="mx-auto max-w-screen-2xl bg-white dark:bg-gray-900">
+      <div className="block lg:pt-16 pb-16 mx-auto text-center">
         <div className="uppercase text-xxs tracking-widest">Recommended by</div>
         <a
           className="inline-block relative my-4 text-lp-blue dark:text-gray-500"
@@ -22,7 +22,7 @@ export default function Footer({ data }) {
           “Excellent independent travel advice from a long-term resident”
         </div>
       </div>
-      <section className="mb-32 lg:mb-12">
+      <section className="pb-32 lg:pb-12">
         <ul className="px-8 flex flex-wrap justify-center uppercase text-xxs tracking-widest">
           {data.footerMenu?.menuItems?.nodes.map(item => (
             <Link key={item.url} href={item.url}>
@@ -33,7 +33,7 @@ export default function Footer({ data }) {
           ))}
         </ul>
       </section>
-    </>
+    </footer>
   );
 }
 

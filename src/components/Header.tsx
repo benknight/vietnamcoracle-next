@@ -40,7 +40,7 @@ export default function Header({ preview = false }: Props) {
   return (
     <header
       className={cx(
-        'pt-24 pb-12 sm:pt-20 sm:pb-16 px-3 lg:py-12 text-center bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 lg:bg-none',
+        'pt-24 pb-12 sm:pt-20 sm:pb-16 px-3 lg:py-12 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 lg:bg-none',
         { 'mt-8': preview },
       )}
       ref={ref}>
@@ -94,13 +94,12 @@ export default function Header({ preview = false }: Props) {
               'lg:w-10': showMini,
             })}>
             <div className="absolute top-0 left-0 bottom-0 w-10 flex items-center justify-center pointer-events-none">
-              <SearchIcon classes={{ root: 'w-6 h-6 lg:w-5 lg:h-5' }} />
+              <SearchIcon classes={{ root: 'w-5 h-5' }} />
             </div>
             <input
-              className={cx(
-                'form-field w-full h-10 pl-8 pr-1 rounded-full bg-white dark:bg-gray-900',
-                { 'pr-2': searchFocused },
-              )}
+              className={cx('form-field w-full h-10 pl-8 pr-1 rounded-full', {
+                'pr-2': searchFocused,
+              })}
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}
               type="search"

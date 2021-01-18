@@ -71,7 +71,7 @@ export default function Nav({ preview = false }: Props) {
           className="
             flex justify-center flex-auto
             px-1 lg:px-16 max-w-screen-lg
-            text-xxxs sm:text-xxs font-serif uppercase tracking-widest leading-tight
+            text-base font-display tracking-wide leading-tight
             border-t border-gray-300 dark:border-gray-700"
           style={{ marginTop: '-1px' }}>
           {links.map(link => {
@@ -91,11 +91,12 @@ export default function Nav({ preview = false }: Props) {
                     },
                   )}
                   key={link.url}
-                  onClick={() => {
-                    const { offsetTop } = scrollAnchor.current;
-                    if (window.scrollY > offsetTop)
-                      window.scroll({ top: offsetTop });
-                  }}>
+                  // onClick={() => {
+                  //   const { offsetTop } = scrollAnchor.current;
+                  //   if (window.scrollY > offsetTop)
+                  //     window.scroll({ top: offsetTop });
+                  // }}
+                >
                   <div className="lg:mr-2">
                     {cloneElement(isCurrent ? link.icon : link.iconAlt, {
                       className: 'w-6 h-6 mb-1',
@@ -103,7 +104,7 @@ export default function Nav({ preview = false }: Props) {
                   </div>
                   <div
                     className={cx(
-                      'w-full mt-1 lg:mt-0 text-shadow lg:border-b break-words',
+                      'w-full text-shadow lg:border-b break-words',
                       isCurrent
                         ? 'border-blue-500 dark:border-blue-400'
                         : 'border-transparent',

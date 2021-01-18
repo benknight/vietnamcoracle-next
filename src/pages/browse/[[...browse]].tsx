@@ -10,6 +10,7 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MapIcon from '@material-ui/icons/Map';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
+import Hero from '../../components/Hero';
 import Layout, { LayoutMain } from '../../components/Layout';
 import Map from '../../components/Map';
 import PostCard from '../../components/PostCard';
@@ -58,90 +59,63 @@ const Browse = ({ data }) => {
         </>
       )}
       {!isHome && (
-        <section className="relative">
-          {showCoverImg && (
-            <div className="bg-gray-300 dark:bg-gray-950 opacity-90">
-              <div className="block lg:hidden">
-                <Image
-                  alt=""
-                  height={coverImgSm.mediaDetails.height}
-                  src={coverImgSm.sourceUrl}
-                  width={coverImgSm.mediaDetails.width}
-                />
-              </div>
-              <div className="hidden lg:block">
-                <Image
-                  alt=""
-                  height={coverImgLg.mediaDetails.height}
-                  layout="responsive"
-                  src={coverImgLg.sourceUrl}
-                  width={coverImgLg.mediaDetails.width}
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-black-25 to-transparent"></div>
-            </div>
-          )}
-          <div
-            className={cx('page-wrap flex items-end pt-5 lg:pt-7', {
-              'absolute inset-0 text-gray-100 pb-5 lg:pb-7': showCoverImg,
-            })}>
-            <div className="flex-auto flex flex-wrap items-center justify-between">
-              <h1 className="text-2xl md:text-3xl lg:text-4xl sm:mr-6 font-display leading-tight">
-                {subcategory ? (
-                  <>
-                    <span className="inline-block opacity-70 leading-normal">
-                      <Link href={`/browse/${category.slug}`}>
-                        {category.name}
-                      </Link>
-                      &nbsp;&gt;&nbsp;
-                    </span>
-                    <span className="inline-block leading-normal">
-                      {subcategory.name}
-                    </span>
-                  </>
-                ) : (
-                  category.name
-                )}
-              </h1>
-              {categoryPage?.map && !subcategory && (
-                <a
-                  className="my-2 md:order-1 inline-flex items-center text-sm hover:underline"
-                  href="#map">
-                  <MapIcon className="mr-2" />
-                  Jump to map
-                </a>
+        <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
+          <div className="flex-auto flex flex-wrap items-center justify-between">
+            <h1 className="text-2xl md:text-3xl lg:text-4xl sm:mr-6 font-display leading-tight">
+              {subcategory ? (
+                <>
+                  <span className="inline-block opacity-70 leading-normal">
+                    <Link href={`/browse/${category.slug}`}>
+                      {category.name}
+                    </Link>
+                    &nbsp;&gt;&nbsp;
+                  </span>
+                  <span className="inline-block leading-normal">
+                    {subcategory.name}
+                  </span>
+                </>
+              ) : (
+                category.name
               )}
-              {category.children.nodes.length > 0 && (
-                <div className="flex-auto w-full md:w-auto">
-                  <div className="relative inline-flex items-center justify-between w-full md:w-auto h-10 mt-3 md:mt-0 p-3 rounded text-sm border bg-transparent tracking-wide leading-none whitespace-nowrap">
-                    Browse subcategories…
-                    <ArrowDropDownIcon className="ml-2" />
-                    <select
-                      className="absolute inset-0 opacity-0 cursor-pointer w-full"
-                      onChange={event => router.push(event.target.value)}
-                      value={
-                        subcategory?.uri.replace('category', 'browse') ??
-                        'default'
-                      }>
-                      <option disabled value="default">
-                        Browse subcategories…
-                      </option>
-                      {category.children.nodes
-                        .filter(node => node.posts.nodes.length > 0)
-                        .map(node => (
-                          <option
-                            key={node.uri}
-                            value={node.uri.replace('category', 'browse')}>
-                            {node.name}
-                          </option>
-                        ))}
-                    </select>
-                  </div>
+            </h1>
+            {categoryPage?.map && !subcategory && (
+              <a
+                className="my-2 md:order-1 lg:order-1 inline-flex items-center text-sm hover:underline"
+                href="#map">
+                <MapIcon className="mr-2" />
+                Jump to map
+              </a>
+            )}
+            {category.children.nodes.length > 0 && (
+              <div className="flex-auto w-full md:w-auto lg:w-auto">
+                <div className="relative inline-flex items-center justify-between w-full md:w-auto lg:w-auto h-10 mt-3 md:mt-0 lg:mt-0 p-3 rounded text-sm border bg-transparent tracking-wide leading-none whitespace-nowrap">
+                  Browse subcategories…
+                  <ArrowDropDownIcon className="ml-2" />
+                  <select
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full"
+                    onChange={event => router.push(event.target.value)}
+                    value={
+                      subcategory?.uri.replace('category', 'browse') ??
+                      'default'
+                    }>
+                    <option disabled value="default">
+                      Browse subcategories…
+                    </option>
+                    {category.children.nodes
+                      .filter(node => node.posts.nodes.length > 0)
+                      .map(node => (
+                        <option
+                          key={node.uri}
+                          value={node.uri.replace('category', 'browse')}>
+                          {node.name}
+                        </option>
+                      ))}
+                  </select>
                 </div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
-        </section>
+        </Hero>
       )}
       <Layout>
         <LayoutMain>
@@ -163,7 +137,7 @@ const Browse = ({ data }) => {
               </section>
             ))
           ) : (
-            <div className="page-wrap pt-8 lg:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
+            <div className="page-wrap pt-8 lg:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2">
               {(subcategory || category).posts.nodes.map(post => (
                 <PostCard key={post.slug} post={post} flex />
               ))}

@@ -1,6 +1,6 @@
 @layer components {
   .post {
-    @apply font-display leading-normal;
+    @apply font-display leading-snug;
   }
 
   .post a {
@@ -16,7 +16,7 @@
   }
 
   .post h2 strong a {
-    @apply mx-2 border-b-2 border-gray-300 dark:border-gray-700 no-underline;
+    @apply sm:mx-2 border-b-2 border-gray-300 dark:border-gray-700 no-underline;
   }
 
   .post h2 strong a:first-child {

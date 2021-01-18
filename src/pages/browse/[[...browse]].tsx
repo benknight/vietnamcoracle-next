@@ -22,7 +22,6 @@ const Browse = ({ data }) => {
   const { category, categoryPage, subcategory } = data;
   const coverImgSm = subcategory?.cover.small || category?.cover.small;
   const coverImgLg = subcategory?.cover.large || category?.cover.large;
-  const showCoverImg = coverImgSm && coverImgLg; // We are strict about requiring both small and large versions
   return (
     <>
       <Head>

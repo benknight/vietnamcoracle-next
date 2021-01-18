@@ -34,8 +34,8 @@ const Post = ({ data }) => {
           className={cx(
             'mt-12 mb-2 xl:pl-8 xl:pr-60 font-display leading-tight',
             {
-              'text-5xl': data.post.title.length <= 40,
-              'text-4xl': data.post.title.length > 40,
+              'text-4xl lg:text-5xl': data.post.title.length <= 40,
+              'text-3xl lg:text-4xl': data.post.title.length > 40,
             },
           )}
           id="top">
@@ -44,7 +44,7 @@ const Post = ({ data }) => {
       </Hero>
       <Layout>
         <LayoutMain>
-          <div className="px-4 md:px-8 lg:px-8 xl:pl-20 xl:pr-20 text-lg max-w-5xl">
+          <div className="pt-1 px-4 md:px-8 lg:px-8 xl:pl-20 xl:pr-20 text-lg max-w-5xl">
             <div
               className="post"
               dangerouslySetInnerHTML={{ __html: data.post.content }}

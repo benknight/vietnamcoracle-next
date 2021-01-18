@@ -109,7 +109,7 @@ export default function Header({ preview = false }: Props) {
         <div className="absolute top-0 right-0 flex items-center h-16 px-4 lg:px-2 xl:px-4 text-gray-400">
           <a href="https://www.facebook.com/vietnamcoracle">
             <Tooltip
-              title="Facebook"
+              title="Vietnam Coracle on Facebook"
               aria-label="Vietnam Coracle on Facebook"
               arrow>
               <FacebookIcon classes={{ root: 'w-8 h-8' }} />
@@ -117,7 +117,7 @@ export default function Header({ preview = false }: Props) {
           </a>
           <a className="ml-2" href="https://www.facebook.com/vietnamcoracle">
             <Tooltip
-              title="Twitter"
+              title="Vietnam Coracle on Twitter"
               aria-label="Vietnam Coracle on Twitter"
               arrow>
               <TwitterIcon classes={{ root: 'w-8 h-8' }} />
@@ -125,7 +125,7 @@ export default function Header({ preview = false }: Props) {
           </a>
           <a className="ml-2" href="https://www.facebook.com/vietnamcoracle">
             <Tooltip
-              title="YouTube"
+              title="Vietnam Coracle on YouTube"
               aria-label="Vietnam Coracle on YouTube"
               arrow>
               <YouTubeIcon classes={{ root: 'w-8 h-8' }} />

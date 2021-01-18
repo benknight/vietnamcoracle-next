@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import { request, gql } from 'graphql-request';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 import Layout, { LayoutMain } from '../components/Layout';
@@ -23,6 +24,9 @@ const Post = ({ data }) => {
   }
   return (
     <>
+      <Head>
+        <title>{data.post.title}</title>
+      </Head>
       <Hero
         imgSm={data.post.thumbnails.thumbnailSquare}
         imgLg={data.post.featuredImage?.node}>

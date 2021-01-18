@@ -60,7 +60,7 @@
   }
 
   .post .in_article_ad {
-    @apply p-4 pt-0 mb-6 bg-blue-900 bg-opacity-10 leading-loose flex flex-wrap justify-between items-baseline text-base font-serif;
+    @apply p-4 pt-1 mb-6 bg-yellow-100 bg-opacity-60 leading-loose flex flex-wrap justify-between items-baseline text-sm font-sans rounded;
   }
 
   .post .in_article_ad hr {
@@ -68,7 +68,7 @@
   }
 
   .post .in_article_ad_container {
-    @apply w-full flex justify-center;
+    @apply mt-1 w-full flex justify-center;
   }
 
   .post .crp-list-title {

@@ -18,7 +18,7 @@ interface Props {
 export default function Hero({ children, imgSm, imgLg }: Props) {
   const showImg = imgSm && imgLg;
   return (
-    <section className="relative">
+    <section className="mx-auto relative max-w-screen-2xl">
       {showImg && (
         <div className="bg-gray-400 dark:bg-gray-950">
           <div className="block lg:hidden">

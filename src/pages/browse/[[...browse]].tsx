@@ -1,4 +1,3 @@
-import cx from 'classnames';
 import { request, gql } from 'graphql-request';
 import _ from 'lodash';
 import { GetStaticPaths, GetStaticProps } from 'next';
@@ -38,7 +37,7 @@ const Browse = ({ data }) => {
       </Head>
       {isHome && (
         <>
-          <div className="hidden md:block">
+          <div className="hidden md:flex">
             <Image
               alt=""
               height="580"
@@ -47,7 +46,7 @@ const Browse = ({ data }) => {
               width="1600"
             />
           </div>
-          <div className="block md:hidden">
+          <div className="flex md:hidden">
             <Image
               alt=""
               height="1024"

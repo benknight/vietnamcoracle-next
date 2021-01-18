@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { request, gql } from 'graphql-request';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
@@ -17,15 +18,24 @@ const Post = ({ data }) => {
   if (router.isFallback) {
     return null;
   }
+  if (!data) {
+    return;
+  }
   return (
     <>
       <Hero
-        imgSm={data?.post.thumbnails.thumbnailSquare}
-        imgLg={data?.post.featuredImage?.node}>
+        imgSm={data.post.thumbnails.thumbnailSquare}
+        imgLg={data.post.featuredImage?.node}>
         <h1
-          className="mt-12 mb-2 xl:pl-8 xl:pr-60 font-display text-5xl leading-tight"
+          className={cx(
+            'mt-12 mb-2 xl:pl-8 xl:pr-60 font-display leading-tight',
+            {
+              'text-5xl': data.post.title.length <= 40,
+              'text-4xl': data.post.title.length > 40,
+            },
+          )}
           id="top">
-          {data?.post.title}
+          {data.post.title}
         </h1>
       </Hero>
       <Layout>
@@ -33,7 +43,7 @@ const Post = ({ data }) => {
           <div className="px-4 md:px-8 lg:px-8 xl:pl-20 xl:pr-20 text-lg max-w-5xl">
             <div
               className="post"
-              dangerouslySetInnerHTML={{ __html: data?.post.content }}
+              dangerouslySetInnerHTML={{ __html: data.post.content }}
             />
           </div>
         </LayoutMain>

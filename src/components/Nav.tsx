@@ -82,7 +82,7 @@ export default function Nav({ preview = false }: Props) {
                 : path.startsWith(link.url);
             const to = link.url.match(/\/$/) ? link.url : link.url + '/';
             return (
-              <Link href={to} key={to} scroll={false}>
+              <Link href={to} key={to}>
                 <a
                   className={cx(
                     'w-1/5 md:w-28 lg:w-auto sm:p-4 lg:py-0 lg:px-3 xl:px-4 flex flex-col lg:flex-row items-center justify-center text-center',

@@ -42,8 +42,13 @@
     @apply text-base mt-8 mb-0;
   }
 
-  .post p > a + strong {
-    @apply inline-block mt-2 text-base;
+  /* Images & captions */
+  .post p > a[href$='.jpg'] {
+    @apply block mb-2;
+  }
+
+  .post p > a[href$='.jpg'] ~ * {
+    @apply text-sm;
   }
 
   .post span[style*='color: #333'],
@@ -60,15 +65,19 @@
   }
 
   .post .in_article_ad {
-    @apply p-4 pt-1 mb-6 bg-yellow-100 bg-opacity-60 leading-loose flex flex-wrap justify-between items-baseline text-sm font-sans rounded;
+    @apply relative inline-block mb-6 leading-loose text-sm text-gray-500 font-sans;
   }
 
   .post .in_article_ad hr {
     @apply hidden;
   }
 
+  .post .in_article_ad > a {
+    @apply absolute top-0 right-0;
+  }
+
   .post .in_article_ad_container {
-    @apply mt-1 w-full flex justify-center;
+    @apply mt-1 w-full;
   }
 
   .post .crp-list-title {

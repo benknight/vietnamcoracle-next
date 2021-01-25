@@ -58,8 +58,8 @@ const Browse = ({ data }) => {
       )}
       {!isHome && (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
-          <div className="flex-auto flex flex-wrap items-center justify-between">
-            <h1 className="text-2xl md:text-3xl lg:text-4xl sm:mr-6 font-display leading-tight">
+          <div className="pb-4 flex-auto flex flex-wrap items-center justify-between sticky bottom-0">
+            <h1 className="text-4xl lg:text-5xl sm:mr-6 font-display leading-tight">
               {subcategory ? (
                 <>
                   <span className="inline-block opacity-70 leading-normal">
@@ -90,7 +90,7 @@ const Browse = ({ data }) => {
                   Browse subcategories…
                   <ArrowDropDownIcon className="ml-2" />
                   <select
-                    className="absolute inset-0 opacity-0 cursor-pointer w-full"
+                    className="absolute inset-0 opacity-0 cursor-pointer w-full text-black"
                     onChange={event => router.push(event.target.value)}
                     value={
                       subcategory?.uri.replace('category', 'browse') ??

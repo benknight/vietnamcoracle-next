@@ -40,19 +40,13 @@ function PostCard({ flex = false, post }: Props) {
   );
   return (
     <Link href={`/${post.slug}`}>
-      <a
-        className={cx(
-          'relative overflow-hidden flex flex-col shadow rounded-lg',
-          {
-            'w-44 md:w-80 lg:w-80 xl:w-96': !flex,
-          },
-        )}>
+      <a className="relative overflow-hidden flex flex-col shadow rounded-lg">
         <div
           className={cx(
             'relative block w-full md:h-60 lg:h-60 xl:h-72 bg-opacity-10',
             {
               'h-52': flex,
-              'h-40': !flex,
+              'h-32 sm:h-40': !flex,
             },
           )}
           // onClick={event => event.preventDefault()}
@@ -86,7 +80,7 @@ function PostCard({ flex = false, post }: Props) {
               className={cx('leading-tight md:text-xl lg:text-2xl', {
                 'text-xl': flex,
                 'text-sm': !flex && post.title.length > 40,
-                'text-base': !flex && post.title.length <= 40,
+                'text-sm sm:text-base': !flex && post.title.length <= 40,
               })}>
               {post.title}
             </h3>

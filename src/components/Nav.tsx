@@ -22,14 +22,14 @@ const links = [
   {
     icon: <MotorcycleIcon />,
     iconAlt: <MotorcycleIcon />,
-    title: 'Motorbike guides',
+    title: 'Motorbike Guides',
     titleShort: 'Motorbike',
     url: '/browse/motorbike-guides',
   },
   {
     icon: <HotelIcon />,
     iconAlt: <HotelOutlinedIcon />,
-    title: 'Hotel reviews',
+    title: 'Hotel Reviews',
     titleShort: 'Hotels',
     url: '/browse/hotel-reviews',
   },
@@ -55,10 +55,8 @@ interface Props {
 
 export default function Nav({ preview = false }: Props) {
   const router = useRouter();
-  const scrollAnchor = useRef<HTMLDivElement>();
   return (
     <>
-      <div ref={scrollAnchor} />
       <nav
         className={cx(
           'fixed bottom-0 lg:sticky lg:bottom-auto lg:top-0 z-20 flex justify-center w-full h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow',
@@ -71,7 +69,7 @@ export default function Nav({ preview = false }: Props) {
           className="
             flex justify-center flex-auto
             px-1 lg:px-16 max-w-screen-lg
-            text-base font-display tracking-wide leading-tight
+            text-sm md:text-base font-display tracking-wide leading-tight
             border-t border-gray-300 dark:border-gray-700"
           style={{ marginTop: '-1px' }}>
           {links.map(link => {
@@ -90,13 +88,7 @@ export default function Nav({ preview = false }: Props) {
                       'bg-gradient-to-b dark:shadow text-blue-500 dark:text-blue-400': isCurrent,
                     },
                   )}
-                  key={link.url}
-                  // onClick={() => {
-                  //   const { offsetTop } = scrollAnchor.current;
-                  //   if (window.scrollY > offsetTop)
-                  //     window.scroll({ top: offsetTop });
-                  // }}
-                >
+                  key={link.url}>
                   <div className="lg:mr-2">
                     {cloneElement(isCurrent ? link.icon : link.iconAlt, {
                       className: 'w-6 h-6 mb-1',

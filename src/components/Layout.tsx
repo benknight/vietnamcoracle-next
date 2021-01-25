@@ -8,7 +8,7 @@ const Layout = ({ children }) => (
 );
 
 export const LayoutMain = ({ children }) => (
-  <div className="lg:w-2/3">{children}</div>
+  <div className="overflow-hidden lg:w-2/3">{children}</div>
 );
 
 export const LayoutSidebar = ({ children }) => {

@@ -1,10 +1,11 @@
 @layer components {
   .post {
-    @apply font-display leading-snug;
+    @apply font-display leading-normal;
   }
 
-  .post a {
-    @apply underline text-blue-600 dark:text-blue-400;
+  .post a,
+  .post span[style*='color: #3366ff'] {
+    @apply underline text-blue-600 dark:text-blue-400 !important;
   }
 
   .post h1 {
@@ -15,8 +16,27 @@
     @apply mt-0 mb-8 pb-8 font-serif tracking-wider leading-loose border-b dark:border-gray-700;
   }
 
+  .post h2 strong {
+    counter-reset: intro-links;
+    font-size: 0;
+    line-height: 0;
+    @apply mt-4 sm:mt-1 flex flex-col items-start sm:block sm:text-base;
+  }
+
   .post h2 strong a {
-    @apply sm:mx-2 border-b-2 border-gray-300 dark:border-gray-700 no-underline;
+    counter-increment: intro-links;
+    @apply text-base sm:text-lg leading-loose sm:mx-2 border-b-2 border-gray-300 dark:border-gray-700;
+    @apply no-underline !important;
+  }
+
+  .post h2 strong a::before {
+    content: counter(intro-links) '. ';
+  }
+
+  @screen sm {
+    .post h2 strong a::before {
+      content: none;
+    }
   }
 
   .post h2 strong a:first-child {
@@ -101,6 +121,10 @@
   }
 
   @screen md {
+    .post *[style*='font-size: 16px'] {
+      @apply text-lg !important;
+    }
+
     .post p {
       @apply mb-8;
     }

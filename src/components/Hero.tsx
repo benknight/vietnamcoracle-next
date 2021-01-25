@@ -18,10 +18,10 @@ interface Props {
 export default function Hero({ children, imgSm, imgLg }: Props) {
   const showImg = imgSm && imgLg;
   return (
-    <section className="mx-auto relative max-w-screen-2xl">
+    <section className="relative mx-auto max-w-screen-2xl bg-white">
       {showImg && (
         <div className="bg-gray-400 dark:bg-gray-950">
-          <div className="block lg:hidden">
+          <div className="cover-img block md:hidden lg:hidden">
             <Image
               alt=""
               height={imgSm.mediaDetails.height}
@@ -29,11 +29,12 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
               width={imgSm.mediaDetails.width}
             />
           </div>
-          <div className="hidden lg:block">
+          <div className="cover-img hidden md:block lg:block">
             <Image
               alt=""
               height={imgLg.mediaDetails.height}
               layout="responsive"
+              objectFit="cover"
               src={imgLg.sourceUrl}
               width={imgLg.mediaDetails.width}
             />
@@ -45,7 +46,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
         className={cx(
           'mx-auto pt-5 lg:pt-7 page-wrap flex items-end max-w-screen-2xl',
           {
-            'absolute inset-0 text-gray-100 pb-5 lg:pb-7': showImg,
+            'absolute inset-0 text-gray-100 pb-4 lg:pb-5': showImg,
           },
         )}>
         {children}

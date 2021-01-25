@@ -38,6 +38,17 @@
 }
 
 @layer components {
+  @responsive {
+    .backdrop-blur {
+      -webkit-backdrop-filter: blur(100px);
+      backdrop-filter: blur(100px);
+    }
+  }
+
+  .cover-img > div > div:first-child {
+    min-height: 16rem;
+  }
+
   .link {
     @apply text-blue-600 dark:text-blue-400 hover:underline;
   }
@@ -55,10 +66,14 @@
       hover:border-gray-400 dark:hover:border-gray-600;
   }
 
-  @responsive {
-    .backdrop-blur {
-      -webkit-backdrop-filter: blur(100px);
-      backdrop-filter: blur(100px);
+  .map-container {
+    margin-bottom: -14px;
+    height: 75vh;
+  }
+
+  @screen lg {
+    .map-container {
+      height: 600px;
     }
   }
 
@@ -95,6 +110,14 @@
     font-size: 80%;
   }
 
+  .page-heading {
+    @apply font-display text-2xl md:text-4xl;
+  }
+
+  .page-wrap {
+    @apply px-4 md:px-8 xl:px-12;
+  }
+
   /* smartphones, touchscreens */
   @media (hover: none) and (pointer: coarse) {
     .pointer-only {
@@ -102,33 +125,8 @@
     }
   }
 
-  .browse-link {
-    --gradient-from-color: rgba(0, 0, 0, 0.1);
-    --gradient-color-stops: var(--gradient-from-color),
-      var(--gradient-to-color, rgba(255, 255, 255, 0));
-  }
-
-  .page-wrap {
-    @apply px-4 md:px-8 xl:px-12;
-  }
-
-  .page-heading {
-    @apply font-display text-2xl md:text-4xl;
-  }
-
   .post-card-excerpt a {
     @apply hidden;
-  }
-
-  .map-container {
-    margin-bottom: -14px;
-    height: 75vh;
-  }
-
-  @screen lg {
-    .map-container {
-      height: 600px;
-    }
   }
 }
 

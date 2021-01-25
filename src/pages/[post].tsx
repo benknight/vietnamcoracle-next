@@ -1,11 +1,12 @@
 import cx from 'classnames';
-import { request, gql } from 'graphql-request';
+import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Layout, { LayoutMain } from '../components/Layout';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import SidebarDefault from '../components/SidebarDefault';
+import getAPIClient from '../lib/getAPIClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
 const Post = ({ data }) => {
@@ -92,7 +93,8 @@ export async function getStaticProps({ params: { post }, preview = false }) {
     ${Footer.fragments}
     ${SidebarDefault.fragments}
   `;
-  const data = await request(process.env.WORDPRESS_API_URL, query, {
+  const client = await getAPIClient();
+  const data = await client.request(query, {
     preview,
     slug: post,
   });

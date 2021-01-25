@@ -1,13 +1,14 @@
 import { GraphQLClient } from 'graphql-request';
 
-// Fetch WordPress to check if the provided `id` exists
 let client;
 
 export default function getAPIClient() {
   if (!client) {
-    client = new GraphQLClient(process.env.WORDPRESS_API_URL, {
+    client = new GraphQLClient(process.env.NEXT_PUBLIC_WORDPRESS_API_URL, {
       headers: {
-        Authorization: `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`,
+        Authorization: process.env.WORDPRESS_AUTH_REFRESH_TOKEN
+          ? `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
+          : null,
       },
     });
   }

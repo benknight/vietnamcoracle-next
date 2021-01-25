@@ -1,4 +1,4 @@
-import { request, gql } from 'graphql-request';
+import { gql } from 'graphql-request';
 import _ from 'lodash';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
@@ -164,7 +164,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
       }
     }
   `;
-  const data = await request(process.env.WORDPRESS_API_URL, query);
+  const client = getAPIClient();
+  const data = await client.request(query);
   const getComponentsFromURI = (uri: string): string[] => {
     // "/category/blah/" => ["blah"]
     return uri

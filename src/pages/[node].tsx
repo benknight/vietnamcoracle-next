@@ -9,34 +9,36 @@ import SidebarDefault from '../components/SidebarDefault';
 import getAPIClient from '../lib/getAPIClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
-const Post = ({ data }) => {
+const PostOrPage = ({ data }) => {
   const router = useRouter();
   useWaitCursor(router.isFallback);
 
   if (router.isFallback) {
     return null;
   }
+
   if (!data) {
     return;
   }
+
   return (
     <>
       <Head>
-        <title>{data.post.title}</title>
+        <title>{data.contentNode.title}</title>
       </Head>
       <Hero
-        imgSm={data.post.thumbnails.thumbnailSquare}
-        imgLg={data.post.featuredImage?.node}>
+        imgSm={data.contentNode.thumbnails?.thumbnailSquare}
+        imgLg={data.contentNode.featuredImage?.node}>
         <h1
           className={cx(
             'mt-12 mb-2 xl:pl-8 xl:pr-60 font-display leading-tight',
             {
-              'text-4xl lg:text-5xl': data.post.title.length <= 40,
-              'text-3xl lg:text-4xl': data.post.title.length > 40,
+              'text-4xl lg:text-5xl': data.contentNode.title.length <= 40,
+              'text-3xl lg:text-4xl': data.contentNode.title.length > 40,
             },
           )}
           id="top">
-          {data.post.title}
+          {data.contentNode.title}
         </h1>
       </Hero>
       <Layout>
@@ -44,7 +46,7 @@ const Post = ({ data }) => {
           <div className="pt-1 px-4 md:px-8 lg:px-8 xl:pl-20 xl:pr-20 text-lg max-w-5xl">
             <div
               className="post"
-              dangerouslySetInnerHTML={{ __html: data.post.content }}
+              dangerouslySetInnerHTML={{ __html: data.contentNode.content }}
             />
           </div>
         </LayoutMain>
@@ -62,27 +64,42 @@ export function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params: { post }, preview = false }) {
+export async function getStaticProps({ params: { node }, preview = false }) {
   const query = gql`
-    query Post($preview: Boolean!, $slug: ID!) {
-      post(id: $slug, idType: SLUG) {
-        content
-        title
-        featuredImage {
-          node {
-            sourceUrl
-            mediaDetails {
-              height
-              width
+    query PageOrPost($preview: Boolean!, $slug: ID!) {
+      contentNode(id: $slug, idType: URI) {
+        ... on Page {
+          content
+          title
+          featuredImage {
+            node {
+              sourceUrl
+              mediaDetails {
+                height
+                width
+              }
             }
           }
         }
-        thumbnails {
-          thumbnailSquare {
-            sourceUrl
-            mediaDetails {
-              height
-              width
+        ... on Post {
+          content
+          title
+          featuredImage {
+            node {
+              sourceUrl
+              mediaDetails {
+                height
+                width
+              }
+            }
+          }
+          thumbnails {
+            thumbnailSquare {
+              sourceUrl
+              mediaDetails {
+                height
+                width
+              }
             }
           }
         }
@@ -96,10 +113,10 @@ export async function getStaticProps({ params: { post }, preview = false }) {
   const client = await getAPIClient();
   const data = await client.request(query, {
     preview,
-    slug: post,
+    slug: node,
   });
   return {
-    notFound: !data.post,
+    notFound: !data.contentNode,
     props: {
       data,
       preview,
@@ -107,4 +124,4 @@ export async function getStaticProps({ params: { post }, preview = false }) {
   };
 }
 
-export default Post;
+export default PostOrPage;

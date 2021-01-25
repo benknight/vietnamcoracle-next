@@ -2,20 +2,16 @@ import cx from 'classnames';
 import { request, gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
 import Layout, { LayoutMain } from '../components/Layout';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import SidebarDefault from '../components/SidebarDefault';
+import useWaitCursor from '../lib/useWaitCursor';
 
 const Post = ({ data }) => {
   const router = useRouter();
-  useEffect(() => {
-    window.document.querySelector('body').style.cursor = router.isFallback
-      ? 'wait'
-      : '';
-    return () => (window.document.querySelector('body').style.cursor = '');
-  }, [router.isFallback]);
+  useWaitCursor(router.isFallback);
+
   if (router.isFallback) {
     return null;
   }

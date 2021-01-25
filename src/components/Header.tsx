@@ -21,6 +21,7 @@ export default function Header({ preview = false }: Props) {
   const [scrolled, setScolled] = useState(false);
   const [showMini, setShowMini] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
   const isLarge = useMediaQuery('(min-width: 1024px');
 
   useEffect(() => {
@@ -75,10 +76,17 @@ export default function Header({ preview = false }: Props) {
                 />
               </a>
             </Link>
-            <div
+            <form
               className={cx('relative flex-auto w-40 xl:w-44', {
                 'lg:w-10': showMini,
-              })}>
+              })}
+              onSubmit={event => {
+                event.preventDefault();
+                router.push({
+                  pathname: '/search',
+                  query: { query: searchQuery },
+                });
+              }}>
               <div className="absolute top-0 left-0 bottom-0 w-10 flex items-center justify-center pointer-events-none">
                 <SearchIcon classes={{ root: 'w-5 h-5' }} />
               </div>
@@ -87,10 +95,12 @@ export default function Header({ preview = false }: Props) {
                   'pr-2': searchFocused,
                 })}
                 onBlur={() => setSearchFocused(false)}
+                onChange={event => setSearchQuery(event.target.value)}
                 onFocus={() => setSearchFocused(true)}
                 type="search"
+                value={searchQuery}
               />
-            </div>
+            </form>
           </div>
           <div className="absolute top-0 right-0 flex items-center h-16 px-4 lg:px-2 xl:px-4 text-gray-400">
             <a href="https://www.facebook.com/vietnamcoracle">

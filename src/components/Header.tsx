@@ -7,7 +7,9 @@ import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
 import Tooltip from '@material-ui/core/Tooltip';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import EmailIcon from '@material-ui/icons/AlternateEmail';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import InstagramIcon from '@material-ui/icons/Instagram';
 import SearchIcon from '@material-ui/icons/Search';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
@@ -111,6 +113,14 @@ export default function Header({ preview = false }: Props) {
                 <FacebookIcon classes={{ root: 'w-8 h-8' }} />
               </Tooltip>
             </a>
+            <a className="ml-2" href="https://www.instagram.com/vietnamcoracle">
+              <Tooltip
+                title="Vietnam Coracle on Instagram"
+                aria-label="Vietnam Coracle on Instagram"
+                arrow>
+                <InstagramIcon classes={{ root: 'w-8 h-8' }} />
+              </Tooltip>
+            </a>
             <a className="ml-2" href="https://www.facebook.com/vietnamcoracle">
               <Tooltip
                 title="Vietnam Coracle on Twitter"
@@ -125,6 +135,14 @@ export default function Header({ preview = false }: Props) {
                 aria-label="Vietnam Coracle on YouTube"
                 arrow>
                 <YouTubeIcon classes={{ root: 'w-8 h-8' }} />
+              </Tooltip>
+            </a>
+            <a className="ml-2" href="mailto:vietnamcoracle@gmail.com">
+              <Tooltip
+                title="Email Vietnam Coracle"
+                aria-label="Email Vietnam Coracle"
+                arrow>
+                <EmailIcon classes={{ root: 'w-8 h-8' }} />
               </Tooltip>
             </a>
           </div>

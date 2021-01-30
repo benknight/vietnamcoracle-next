@@ -71,8 +71,8 @@
     @apply text-sm;
   }
 
-  .post span[style*='color: #333'],
-  .post span[style*='color: #000'] {
+  .post span[style*='color: #333333'],
+  .post span[style*='color: #000000'] {
     @apply dark:text-white !important;
   }
 

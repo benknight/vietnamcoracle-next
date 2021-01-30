@@ -5,7 +5,7 @@
 
   .post a,
   .post span[style*='color: #3366ff'] {
-    @apply text-blue-600 dark:text-blue-400 !important;
+    @apply text-blue-600 dark:text-blue-400 hover:underline !important;
   }
 
   .post h1 {

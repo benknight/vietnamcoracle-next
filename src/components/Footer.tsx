@@ -6,6 +6,11 @@ import LonelyPlanetLogo from '../../public/lp-logo.svg';
 export default function Footer({ data }) {
   return (
     <footer className="mx-auto max-w-screen-2xl bg-white dark:bg-gray-900">
+      {/* <iframe
+        src="https://www.baolau.vn/en/widget/?source=vietnamcoracle"
+        width="400"
+        height="400"
+        scrolling="no"></iframe> */}
       <div className="block lg:pt-16 pb-16 mx-auto text-center">
         <div className="uppercase text-xxs tracking-widest">Recommended by</div>
         <a

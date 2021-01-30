@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MapIcon from '@material-ui/icons/Map';
 import Collection from '../../components/Collection';
-import Footer from '../../components/Footer';
 import Hero from '../../components/Hero';
 import Layout, { LayoutMain } from '../../components/Layout';
 import Map from '../../components/Map';
@@ -149,7 +148,6 @@ const Browse = ({ data }) => {
         </LayoutMain>
         <SidebarDefault data={data} />
       </Layout>
-      <Footer data={data} />
     </>
   );
 };
@@ -257,7 +255,6 @@ export const getStaticProps: GetStaticProps = async ({
           }
         }
       }
-      ...FooterData
       ...SidebarDefaultData
     }
     fragment CategoryData on Category {
@@ -281,7 +278,6 @@ export const getStaticProps: GetStaticProps = async ({
       }
     }
     ${Collection.fragments}
-    ${Footer.fragments}
     ${Map.fragments}
     ${SidebarDefault.fragments}
   `;

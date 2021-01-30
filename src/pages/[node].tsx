@@ -3,7 +3,6 @@ import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import Layout, { LayoutMain } from '../components/Layout';
-import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import SidebarDefault from '../components/SidebarDefault';
 import getAPIClient from '../lib/getAPIClient';
@@ -52,7 +51,6 @@ const PostOrPage = ({ data }) => {
         </LayoutMain>
         <SidebarDefault data={data} />
       </Layout>
-      <Footer data={data} />
     </>
   );
 };
@@ -104,10 +102,8 @@ export async function getStaticProps({ params: { node }, preview = false }) {
           }
         }
       }
-      ...FooterData
       ...SidebarDefaultData
     }
-    ${Footer.fragments}
     ${SidebarDefault.fragments}
   `;
   const client = await getAPIClient();

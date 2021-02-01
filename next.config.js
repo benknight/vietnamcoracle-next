@@ -8,6 +8,10 @@ module.exports = {
         source: '/',
         destination: '/browse',
       },
+      {
+        source: '/category/:path*',
+        destination: '/browse/:path*',
+      },
     ];
   },
   webpack(config) {

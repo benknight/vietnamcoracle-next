@@ -33,7 +33,7 @@ const PostOrPage = ({ data }) => {
             'mt-12 mb-2 xl:pl-8 xl:pr-60 font-display leading-tight',
             {
               'text-4xl lg:text-5xl': data.contentNode.title.length <= 40,
-              'text-3xl lg:text-4xl': data.contentNode.title.length > 40,
+              'text-4xl': data.contentNode.title.length > 40,
             },
           )}
           id="top">

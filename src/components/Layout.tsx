@@ -1,7 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-const Layout = ({ children }) => (
-  <div className="mx-auto lg:flex max-w-screen-2xl bg-white dark:bg-gray-900">
+type screenSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
+interface LayoutProps {
+  children: JSX.Element;
+  maxWidth: screenSize;
+}
+
+const Layout = ({ children, maxWidth = '2xl' }: LayoutProps) => (
+  <div
+    className={`mx-auto lg:flex max-w-screen-${maxWidth} bg-white dark:bg-gray-900`}>
     {children}
   </div>
 );

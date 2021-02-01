@@ -57,8 +57,8 @@ const Browse = ({ data }) => {
       )}
       {!isHome && (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
-          <div className="pb-4 flex-auto flex flex-wrap items-center justify-between sticky bottom-0">
-            <h1 className="text-4xl lg:text-5xl sm:mr-6 font-display leading-tight">
+          <div className="pb-4 flex-auto flex flex-wrap items-end justify-between">
+            <h1 className="text-4xl md:text-3xl lg:text-5xl sm:mr-6 font-display leading-tight">
               {subcategory ? (
                 <>
                   <span className="inline-block opacity-70 leading-normal">
@@ -77,7 +77,7 @@ const Browse = ({ data }) => {
             </h1>
             {categoryPage?.map && !subcategory && (
               <a
-                className="my-2 md:order-1 lg:order-1 inline-flex items-center text-sm hover:underline"
+                className="hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 lg:order-1 items-end text-sm hover:underline"
                 href="#map">
                 <MapIcon className="mr-2" />
                 Jump to map

@@ -10,7 +10,7 @@ import useWaitCursor from '../lib/useWaitCursor';
 const SEARCH_QUERY = gql`
   query SearchPage($query: String!) {
     contentNodes(
-      first: 10
+      first: 25
       where: { contentTypes: [PAGE, POST], search: $query }
     ) {
       edges {
@@ -63,9 +63,9 @@ export default function SearchPage() {
   }, [router.query]);
 
   return (
-    <Layout>
+    <Layout maxWidth="lg">
       <LayoutMain>
-        <div className="page-wrap pb-24">
+        <div className="page-wrap pb-24 font-serif">
           <h1 className="page-heading mt-12 mb-8">
             Search results for “{router.query.query}”
           </h1>
@@ -76,7 +76,7 @@ export default function SearchPage() {
                 <div className="my-8">
                   <div className="flex items-baseline">
                     <Link href={r.uri}>
-                      <a className="link font-serif text-xl">
+                      <a className="link text-xl">
                         <div className="">{r.title}</div>
                       </a>
                     </Link>
@@ -87,19 +87,17 @@ export default function SearchPage() {
                     )}
                   </div>
                   <div
-                    className="my-1 max-w-2xl font-serif"
+                    className="my-1"
                     dangerouslySetInnerHTML={{ __html: r.excerpt }}
                   />
                   {r.categories?.nodes.length > 0 && (
-                    <div className="font-serif text-sm italic text-gray-400">
+                    <div className="text-sm italic text-gray-500">
                       Posted in{' '}
                       {r.categories.nodes.map((r, index) => (
                         <>
                           {index !== 0 && ', '}
                           <Link href={r.uri}>
-                            <a className="text-gray-500 hover:underline">
-                              {r.name}
-                            </a>
+                            <a className="link hover:underline">{r.name}</a>
                           </Link>
                         </>
                       ))}

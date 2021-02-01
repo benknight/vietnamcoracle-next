@@ -168,7 +168,7 @@ export default function Header({ preview = false }: Props) {
         <h1 className="text-4xl mb-2 text-gray-800 dark:text-gray-200 font-display">
           Vietnam Coracle
         </h1>
-        <h2 className="text-gray-600 text-xxs uppercase tracking-widest font-serif">
+        <h2 className="text-gray-600 uppercase tracking-widest font-serif text-xxxs">
           Independent travel guides to Vietnam
         </h2>
       </header>

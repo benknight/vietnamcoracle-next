@@ -35,11 +35,11 @@ const SidebarDefault = ({ data }) => (
         “Excellent independent travel advice from a long-term resident”
       </div>
     </div>
-    <section className="pb-32 lg:pb-12">
-      <ul className="px-4 flex flex-wrap justify-center uppercase text-xxs tracking-widest">
+    <section className="px-4 lg:px-0 pb-24 lg:pb-12">
+      <ul className="flex flex-wrap justify-center uppercase text-xxs tracking-widest">
         {data.footerMenu?.menuItems?.nodes.map(item => (
           <Link key={item.url} href={item.url}>
-            <a className="m-3 lg:mx-5 opacity-75 hover:opacity-100">
+            <a className="m-3 lg:mx-3 opacity-75 hover:opacity-100">
               {item.label}
             </a>
           </Link>

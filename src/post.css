@@ -54,7 +54,8 @@
       rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
   }
 
-  .post p {
+  .post p,
+  .post ul {
     @apply mb-6 font-serif;
   }
 
@@ -122,23 +123,5 @@
 
   .post .crp-list-item-title a:hover {
     @apply underline;
-  }
-
-  @screen md {
-    .post *[style*='font-size: 16px'] {
-      @apply text-lg !important;
-    }
-
-    .post p {
-      @apply mb-8;
-    }
-
-    .post h1 {
-      @apply mb-8;
-    }
-
-    .post hr {
-      @apply my-8;
-    }
   }
 }

@@ -63,7 +63,7 @@ function PostCard({ flex = false, post }: Props) {
         </div>
         <div
           className="
-            relative p-3 md:px-4 md:py-5 lg:px4 lg:py-5
+            relative p-3 md:px-4 md:py-5 lg:px-4 lg:py-5
             flex-auto flex items-center md:items-start lg:items-start
             text-white bg-gray-900
             font-medium rounded-b">

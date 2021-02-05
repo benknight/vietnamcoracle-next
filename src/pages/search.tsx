@@ -23,7 +23,11 @@ const SEARCH_QUERY = gql`
           ... on Post {
             excerpt
             title
-            categories(where: { exclude: "154" }) {
+            categories(
+              where: {
+                exclude: "154" # Exclude top-level category
+              }
+            ) {
               nodes {
                 name
                 uri
@@ -61,29 +65,34 @@ export default function SearchPage() {
   useWaitCursor(loading);
 
   const loadResults = () => {
-    if (router.query.query) {
-      setLoading(true);
-      client
-        .request(SEARCH_QUERY, {
-          before: pageInfo.startCursor,
-          query: router.query.query,
-        })
-        .then(response => {
-          setResults([
-            ...results,
-            ...response.contentNodes.edges.map(({ node }) => node),
-          ]);
-          setPageInfo(response.contentNodes.pageInfo);
-          setLoading(false);
-        });
-    }
+    if (!router.query.query) return;
+    setLoading(true);
+    client
+      .request(SEARCH_QUERY, {
+        before: pageInfo.startCursor,
+        query: router.query.query,
+      })
+      .then(response => {
+        setResults([
+          ...results,
+          ...response.contentNodes.edges.map(({ node }) => node),
+        ]);
+        setPageInfo(response.contentNodes.pageInfo);
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
-    setResults([]);
-    setPageInfo(getInitialPageInfo());
     loadResults();
-  }, [router.query]);
+  }, [router.query.query]);
+
+  // Reset data when query changes
+  useEffect(() => {
+    if (results.length > 0) {
+      setResults([]);
+      setPageInfo(getInitialPageInfo());
+    }
+  }, [router.query.query]);
 
   return (
     <Layout maxWidth="lg">
@@ -93,7 +102,7 @@ export default function SearchPage() {
             Search results for “{router.query.query}”
           </h1>
           {results.map(r => (
-            <div className="my-8">
+            <div className="my-8" key={r.uri}>
               <div className="flex items-baseline">
                 <Link href={r.uri}>
                   <a className="link text-xl">

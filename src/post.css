@@ -9,7 +9,8 @@
   }
 
   .post h1 {
-    @apply mb-5 text-2xl font-serif tracking-widest;
+    @apply mb-5 text-2xl font-serif;
+    letter-spacing: 0.2em;
   }
 
   .post h2 {
@@ -47,6 +48,10 @@
     @apply my-6 dark:border-gray-800;
   }
 
+  .post iframe {
+    width: 100%;
+  }
+
   .post img,
   .post iframe {
     @apply block;
@@ -81,12 +86,12 @@
     @apply dark:text-white;
   }
 
-  .post .aligncenter {
-    @apply mx-auto;
+  .post ul {
+    @apply list-disc pl-12;
   }
 
-  .post iframe {
-    width: 100%;
+  .post .aligncenter {
+    @apply mx-auto;
   }
 
   .post .in_article_ad {
@@ -110,18 +115,6 @@
   }
 
   .post .crp-list {
-    @apply p-4 grid grid-cols-3 gap-x-12 xl:gap-x-16 gap-y-4 text-center font-serif;
-  }
-
-  .post .crp-list-item-image img {
-    @apply w-full;
-  }
-
-  .post .crp-list-item-title a {
-    @apply my-4 text-base inline-block no-underline leading-tight;
-  }
-
-  .post .crp-list-item-title a:hover {
-    @apply underline;
+    @apply hidden;
   }
 }

@@ -1,9 +1,10 @@
+import cx from 'classnames';
 import { useEffect, useRef } from 'react';
 
 type screenSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
 interface LayoutProps {
-  children: JSX.Element;
-  maxWidth: screenSize;
+  children: JSX.Element[] | JSX.Element;
+  maxWidth?: screenSize;
 }
 
 const Layout = ({ children, maxWidth = '2xl' }: LayoutProps) => (
@@ -17,7 +18,7 @@ export const LayoutMain = ({ children }) => (
   <div className="overflow-hidden lg:w-2/3">{children}</div>
 );
 
-export const LayoutSidebar = ({ children }) => {
+export const LayoutSidebar = ({ className = '', children }) => {
   const sticky = useRef<HTMLDivElement>();
   const stickyContainer = useRef<HTMLDivElement>();
   const spacer = useRef<HTMLDivElement>();
@@ -58,7 +59,7 @@ export const LayoutSidebar = ({ children }) => {
   }, []);
 
   return (
-    <div className="lg:w-1/3">
+    <div className={cx(className, 'lg:w-1/3')}>
       <div className="lg:h-full lg:px-6 py-12 lg:py-0" ref={stickyContainer}>
         <div className="hidden lg:block" ref={spacer} />
         <div className="lg:sticky flex-auto lg:py-4" ref={sticky}>

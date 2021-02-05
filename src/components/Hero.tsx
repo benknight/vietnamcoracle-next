@@ -1,7 +1,9 @@
 import cx from 'classnames';
+import { gql } from 'graphql-request';
 import Image from 'next/image';
 
 type HeroImage = {
+  altText: string;
   sourceUrl: string;
   mediaDetails: {
     height: number;
@@ -10,7 +12,7 @@ type HeroImage = {
 };
 
 interface Props {
-  children: JSX.Element;
+  children?: JSX.Element[] | JSX.Element;
   imgSm?: HeroImage;
   imgLg?: HeroImage;
 }
@@ -21,9 +23,9 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
     <section className="relative mx-auto max-w-screen-2xl bg-white">
       {showImg && (
         <div className="bg-gray-400 dark:bg-gray-950">
-          <div className="cover-img block md:hidden lg:hidden">
+          <div className="cover-img flex md:hidden lg:hidden">
             <Image
-              alt=""
+              alt={imgSm.altText}
               height={imgSm.mediaDetails.height}
               src={imgSm.sourceUrl}
               width={imgSm.mediaDetails.width}
@@ -31,7 +33,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
           </div>
           <div className="cover-img hidden md:block lg:block">
             <Image
-              alt=""
+              alt={imgLg.altText}
               height={imgLg.mediaDetails.height}
               layout="responsive"
               objectFit="cover"
@@ -39,7 +41,9 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
               width={imgLg.mediaDetails.width}
             />
           </div>
-          <div className="absolute inset-0 bg-gradient-to-t from-black via-black-25 to-transparent"></div>
+          {Boolean(children) && (
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black-25 to-transparent"></div>
+          )}
         </div>
       )}
       <div
@@ -54,3 +58,14 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
     </section>
   );
 }
+
+Hero.fragments = gql`
+  fragment HeroImageData on MediaItem {
+    altText
+    sourceUrl
+    mediaDetails {
+      height
+      width
+    }
+  }
+`;

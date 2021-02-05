@@ -2,8 +2,9 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import Layout, { LayoutMain } from '../components/Layout';
 import Hero from '../components/Hero';
+import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
+import PostCard from '../components/PostCard';
 import SidebarDefault from '../components/SidebarDefault';
 import getAPIClient from '../lib/getAPIClient';
 import useWaitCursor from '../lib/useWaitCursor';
@@ -26,11 +27,11 @@ const PostOrPage = ({ data }) => {
         <title>{data.contentNode.title}</title>
       </Head>
       <Hero
-        imgSm={data.contentNode.thumbnails?.thumbnailSquare}
-        imgLg={data.contentNode.featuredImage?.node}>
+        imgSm={data.contentNode.featuredImage?.node}
+        imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
         <h1
           className={cx(
-            'mt-12 mb-2 xl:pl-8 xl:pr-60 font-display leading-tight',
+            'mt-8 mb-2 xl:pl-8 xl:pr-60 font-display leading-tight',
             {
               'text-4xl lg:text-5xl': data.contentNode.title.length <= 40,
               'text-4xl': data.contentNode.title.length > 40,
@@ -47,9 +48,21 @@ const PostOrPage = ({ data }) => {
               className="post"
               dangerouslySetInnerHTML={{ __html: data.contentNode.content }}
             />
+            {data.contentNode.customRelatedPosts && (
+              <>
+                <div className="page-heading">Related Posts:</div>
+                <div className="py-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2">
+                  {data.contentNode.customRelatedPosts.nodes.map(post => (
+                    <PostCard key={post.slug} post={post} flex />
+                  ))}
+                </div>
+              </>
+            )}
           </div>
         </LayoutMain>
-        <SidebarDefault data={data} />
+        <LayoutSidebar className="bg-gray-100 dark:bg-gray-950">
+          <SidebarDefault data={data} />
+        </LayoutSidebar>
       </Layout>
     </>
   );
@@ -71,39 +84,34 @@ export async function getStaticProps({ params: { node }, preview = false }) {
           title
           featuredImage {
             node {
-              sourceUrl
-              mediaDetails {
-                height
-                width
-              }
+              ...HeroImageData
             }
           }
         }
         ... on Post {
           content
           title
+          customRelatedPosts {
+            nodes {
+              ...PostCardPostData
+            }
+          }
           featuredImage {
             node {
-              sourceUrl
-              mediaDetails {
-                height
-                width
-              }
+              ...HeroImageData
             }
           }
           thumbnails {
-            thumbnailSquare {
-              sourceUrl
-              mediaDetails {
-                height
-                width
-              }
+            thumbnailHeader {
+              ...HeroImageData
             }
           }
         }
       }
       ...SidebarDefaultData
     }
+    ${Hero.fragments}
+    ${PostCard.fragments}
     ${SidebarDefault.fragments}
   `;
   const client = await getAPIClient();

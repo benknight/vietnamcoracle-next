@@ -2,14 +2,13 @@ import { gql } from 'graphql-request';
 import Link from 'next/link';
 import About from './About';
 import Block from './Block';
-import { LayoutSidebar } from './Layout';
 import Subscribe from './Subscribe';
 import Support from './Support';
 // @ts-ignore
 import LonelyPlanetLogo from '../../public/lp-logo.svg';
 
 const SidebarDefault = ({ data }) => (
-  <LayoutSidebar>
+  <>
     <section className="mb-20">
       <About data={data.about.block} />
     </section>
@@ -46,7 +45,7 @@ const SidebarDefault = ({ data }) => (
         ))}
       </ul>
     </section>
-  </LayoutSidebar>
+  </>
 );
 
 SidebarDefault.fragments = gql`

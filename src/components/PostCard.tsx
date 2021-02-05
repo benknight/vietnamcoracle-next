@@ -11,9 +11,8 @@ const fragments = gql`
     excerpt
     slug
     title
-    thumbnails {
-      thumbnailSquare {
-        __typename
+    featuredImage {
+      node {
         altText
         id
         sourceUrl(size: LARGE)
@@ -33,11 +32,7 @@ function PostCard({ flex = false, post }: Props) {
   // const isDark = useMediaQuery('(prefers-color-scheme: dark)');
   // TODO: Swatches need to be generated on build
   const swatchKey = 'DarkMuted';
-  const swatch = _get(
-    swatches,
-    [post.thumbnails.thumbnailSquare.id, swatchKey],
-    {},
-  );
+  const swatch = _get(swatches, [post.featuredImage.node.id, swatchKey], {});
   return (
     <Link href={`/${post.slug}`}>
       <a className="relative overflow-hidden flex flex-col shadow rounded-lg">
@@ -54,11 +49,11 @@ function PostCard({ flex = false, post }: Props) {
             backgroundColor: swatch.hex,
           }}>
           <Image
-            alt={post.thumbnails.thumbnailSquare.altText}
+            alt={post.featuredImage.node.altText}
             layout="fill"
             loading="lazy"
             objectFit="cover"
-            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.thumbnails.thumbnailSquare.sourceUrl}`}
+            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.featuredImage.node.sourceUrl}`}
           />
         </div>
         <div
@@ -72,7 +67,7 @@ function PostCard({ flex = false, post }: Props) {
             className="object-bottom object-cover opacity-50"
             layout="fill"
             loading="eager"
-            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${post.thumbnails.thumbnailSquare.sourceUrlFx}`}
+            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${post.featuredImage.node.sourceUrlFx}`}
             unoptimized
           />
           <div className="relative font-serif antialiased">

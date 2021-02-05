@@ -9,10 +9,11 @@ import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MapIcon from '@material-ui/icons/Map';
 import Collection from '../../components/Collection';
 import Hero from '../../components/Hero';
-import Layout, { LayoutMain } from '../../components/Layout';
+import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
 import PostCard from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
+import Slider from '../../components/Slider';
 import getAPIClient from '../../lib/getAPIClient';
 
 const Browse = ({ data }) => {
@@ -33,29 +34,9 @@ const Browse = ({ data }) => {
           {!isHome ? ' – Vietnam Coracle' : ''}
         </title>
       </Head>
-      {isHome && (
-        <>
-          <div className="hidden md:flex">
-            <Image
-              alt=""
-              height="580"
-              loading="eager"
-              src="/slider-wide.jpg"
-              width="1600"
-            />
-          </div>
-          <div className="flex md:hidden">
-            <Image
-              alt=""
-              height="1024"
-              loading="eager"
-              src="/slider-square.jpg"
-              width="1024"
-            />
-          </div>
-        </>
-      )}
-      {!isHome && (
+      {isHome ? (
+        <Slider data={categoryPage.slider} />
+      ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
           <div className="pb-4 flex-auto flex flex-wrap items-end justify-between">
             <h1 className="text-4xl md:text-3xl lg:text-5xl sm:mr-6 font-display leading-tight">
@@ -146,7 +127,9 @@ const Browse = ({ data }) => {
             </section>
           )}
         </LayoutMain>
-        <SidebarDefault data={data} />
+        <LayoutSidebar>
+          <SidebarDefault data={data} />
+        </LayoutSidebar>
       </Layout>
     </>
   );
@@ -244,6 +227,9 @@ export const getStaticProps: GetStaticProps = async ({
         map {
           ...MapComponentData
         }
+        slider {
+          ...SliderComponentData
+        }
       }
       subcategory: category(id: $subcategorySlug, idType: SLUG)
         @include(if: $hasSubcategory) {
@@ -262,24 +248,17 @@ export const getStaticProps: GetStaticProps = async ({
       uri
       cover {
         small {
-          sourceUrl
-          mediaDetails {
-            height
-            width
-          }
+          ...HeroImageData
         }
         large {
-          sourceUrl
-          mediaDetails {
-            height
-            width
-          }
+          ...HeroImageData
         }
       }
     }
     ${Collection.fragments}
     ${Map.fragments}
     ${SidebarDefault.fragments}
+    ${Slider.fragments}
   `;
 
   const categorySlug = params.browse?.[0] ?? '';

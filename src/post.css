@@ -61,7 +61,7 @@
 
   .post p,
   .post ul {
-    @apply mb-6 font-serif;
+    @apply mb-4 font-serif;
   }
 
   .post > p:first-of-type {

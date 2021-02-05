@@ -103,7 +103,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
         ... on Post {
           content
           title
-          customRelatedPosts {
+          customRelatedPosts(first: 6) {
             nodes {
               ...PostCardPostData
             }

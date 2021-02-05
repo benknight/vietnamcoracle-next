@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout = ({ children, maxWidth = '2xl' }: LayoutProps) => (
   <div
-    className={`mx-auto lg:flex max-w-screen-${maxWidth} bg-white dark:bg-gray-900`}>
+    className={`mx-auto lg:flex max-w-screen-${maxWidth} bg-white dark:bg-gray-950`}>
     {children}
   </div>
 );

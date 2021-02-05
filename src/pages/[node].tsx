@@ -9,6 +9,16 @@ import SidebarDefault from '../components/SidebarDefault';
 import getAPIClient from '../lib/getAPIClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
+function cleanPostHTML(html: string): string {
+  let result = html;
+  // Remove related posts heading
+  result = result.replace(
+    /<\s*h1(\s+.*?>|>).*?RELATED POSTS.*?<\s*\/\s*h1\s*>/gi,
+    '',
+  );
+  return result;
+}
+
 const PostOrPage = ({ data }) => {
   const router = useRouter();
   useWaitCursor(router.isFallback);
@@ -46,7 +56,9 @@ const PostOrPage = ({ data }) => {
           <div className="pt-1 px-4 md:px-8 lg:px-8 xl:pl-20 xl:pr-20 text-lg max-w-5xl">
             <div
               className="post"
-              dangerouslySetInnerHTML={{ __html: data.contentNode.content }}
+              dangerouslySetInnerHTML={{
+                __html: cleanPostHTML(data.contentNode.content),
+              }}
             />
             {data.contentNode.customRelatedPosts && (
               <>

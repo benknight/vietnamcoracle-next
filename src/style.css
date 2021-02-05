@@ -50,11 +50,11 @@
   }
 
   .link {
-    @apply text-blue-700 dark:text-blue-400 hover:underline;
+    @apply text-blue-700 dark:text-blue-500 hover:underline;
   }
 
   .link:visited {
-    @apply text-purple-600 dark:text-purple-400;
+    @apply text-purple-600 dark:text-purple-500;
   }
 
   .form-field {

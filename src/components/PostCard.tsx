@@ -6,22 +6,7 @@ import Link from 'next/link';
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
 import swatches from '../json/swatches.json';
 
-const fragments = gql`
-  fragment PostCardPostData on Post {
-    excerpt
-    slug
-    title
-    featuredImage {
-      node {
-        altText
-        id
-        sourceUrl(size: LARGE)
-        sourceUrlFx: sourceUrl(size: MEDIUM)
-        slug
-      }
-    }
-  }
-`;
+const swatchKey = 'DarkMuted';
 
 interface Props {
   flex?: boolean;
@@ -31,7 +16,9 @@ interface Props {
 function PostCard({ flex = false, post }: Props) {
   // const isDark = useMediaQuery('(prefers-color-scheme: dark)');
   // TODO: Swatches need to be generated on build
-  const swatchKey = 'DarkMuted';
+  if (!post.featuredImage) {
+    return null;
+  }
   const swatch = _get(swatches, [post.featuredImage.node.id, swatchKey], {});
   return (
     <Link href={`/${post.slug}`}>
@@ -92,6 +79,21 @@ function PostCard({ flex = false, post }: Props) {
   );
 }
 
-PostCard.fragments = fragments;
+PostCard.fragments = gql`
+  fragment PostCardPostData on Post {
+    excerpt
+    slug
+    title
+    featuredImage {
+      node {
+        altText
+        id
+        sourceUrl(size: LARGE)
+        sourceUrlFx: sourceUrl(size: MEDIUM)
+        slug
+      }
+    }
+  }
+`;
 
 export default PostCard;

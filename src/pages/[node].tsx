@@ -16,6 +16,8 @@ function cleanPostHTML(html: string): string {
     /<\s*h1(\s+.*?>|>).*?RELATED POSTS.*?<\s*\/\s*h1\s*>/gi,
     '',
   );
+  // Force https
+  result = result.replace(/(http)\:\/\//gm, 'https://');
   return result;
 }
 

@@ -23,6 +23,7 @@ module.exports = {
           950: 'hsl(0deg 0% 5%)',
         },
         'lp-blue': '#297CBB',
+        'near-black': 'hsl(0deg 0% 2%)',
       },
       fontFamily: {
         display: ['Baskervville', 'sans-serif'],

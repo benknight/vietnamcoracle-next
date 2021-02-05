@@ -42,7 +42,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
             />
           </div>
           {Boolean(children) && (
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black-25 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-near-black via-black-25 to-transparent"></div>
           )}
         </div>
       )}

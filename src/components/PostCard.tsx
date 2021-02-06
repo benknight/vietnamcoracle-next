@@ -22,16 +22,14 @@ function PostCard({ flex = false, post }: Props) {
   const swatch = _get(swatches, [post.featuredImage.node.id, swatchKey], {});
   return (
     <Link href={`/${post.slug}`}>
-      <a className="relative overflow-hidden flex flex-col shadow rounded-lg">
+      <a className="relative overflow-hidden flex flex-col md:shadow lg:shadow rounded-lg w-full">
         <div
           className={cx(
-            'relative block w-full md:h-60 lg:h-60 xl:h-72 bg-opacity-10',
-            {
-              'h-52': flex,
-              'h-32 sm:h-40': !flex,
-            },
+            'relative block w-full bg-opacity-10',
+            'aspect-w-1 aspect-h-1',
+            'md:aspect-w-4 md:aspect-h-3 lg:aspect-w-4 lg:aspect-h-3',
+            'overflow-hidden rounded-xl md:rounded-none lg:rounded-none',
           )}
-          // onClick={event => event.preventDefault()}
           style={{
             backgroundColor: swatch.hex,
           }}>
@@ -44,31 +42,38 @@ function PostCard({ flex = false, post }: Props) {
           />
         </div>
         <div
-          className="
-            relative p-3 md:px-4 md:py-5 lg:px-4 lg:py-5
-            flex-auto flex items-center md:items-start lg:items-start
-            text-white bg-gray-900
-            font-medium rounded-b">
-          <Image
-            alt=""
-            className="object-bottom object-cover opacity-50"
-            layout="fill"
-            loading="eager"
-            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${post.featuredImage.node.sourceUrlFx}`}
-            unoptimized
-          />
+          className={cx(
+            'relative md:px-4 md:py-5 lg:px-4 lg:py-5',
+            'flex-auto flex items-start',
+            'md:text-white lg:text-white md:bg-gray-900 lg:bg-gray-900',
+            'font-medium rounded-b',
+            {
+              'px-1 pt-4 pb-6': flex,
+              'p-1 pt-2 pr-2': !flex,
+            },
+          )}>
+          <div className="hidden md:block lg:block">
+            <Image
+              alt=""
+              className="object-bottom object-cover opacity-50"
+              layout="fill"
+              loading="eager"
+              src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${post.featuredImage.node.sourceUrlFx}`}
+              unoptimized
+            />
+          </div>
           <div className="relative font-serif antialiased">
             <h3
               className={cx('leading-tight md:text-xl lg:text-2xl', {
-                'text-xl': flex,
-                'text-sm': !flex && post.title.length > 40,
-                'text-sm sm:text-base': !flex && post.title.length <= 40,
+                'text-2xl': flex,
+                'text-sm sm:text-base': !flex && post.title.length > 40,
+                'text-sm sm:text-lg': !flex && post.title.length <= 40,
               })}>
               {post.title}
             </h3>
             <div
               className={cx(
-                'post-card-excerpt mt-2 text-xs sm:text-sm md:text-xs lg:text-sm opacity-75',
+                'post-card-excerpt mt-2 text-sm md:text-xs lg:text-sm opacity-75',
                 { 'hidden md:line-clamp lg:line-clamp': !flex },
               )}
               dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>

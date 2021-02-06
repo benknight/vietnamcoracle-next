@@ -71,7 +71,7 @@ const Collection = ({ data }) => {
           {posts.map((post, index) => (
             <li
               className={cx(
-                'flex flex-shrink-0 w-44 md:w-5/12 lg:w-3/7 pr-2 md:pr-3',
+                'flex flex-shrink-0 w-3/7 pr-3',
                 index === posts.length - 1 && 'lg:pr-0',
               )}
               title={post.slug}

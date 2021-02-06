@@ -4,6 +4,7 @@ import Image from 'next/image';
 
 type HeroImage = {
   altText: string;
+  id: string;
   sourceUrl: string;
   mediaDetails: {
     height: number;
@@ -27,6 +28,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
             <Image
               alt={imgSm.altText}
               height={imgSm.mediaDetails.height}
+              key={imgSm.id}
               src={imgSm.sourceUrl}
               width={imgSm.mediaDetails.width}
             />
@@ -35,6 +37,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
             <Image
               alt={imgLg.altText}
               height={imgLg.mediaDetails.height}
+              key={imgLg.id}
               layout="responsive"
               objectFit="cover"
               src={imgLg.sourceUrl}
@@ -62,6 +65,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
 Hero.fragments = gql`
   fragment HeroImageData on MediaItem {
     altText
+    id
     sourceUrl
     mediaDetails {
       height

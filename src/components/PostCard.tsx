@@ -3,15 +3,16 @@ import { gql } from 'graphql-request';
 import _get from 'lodash/get';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useContext } from 'react';
-import { SwatchesContext } from '../pages/browse/[[...browse]]';
+import { createContext, useContext } from 'react';
 
 interface Props {
   flex?: boolean;
   post: any;
 }
 
-function PostCard({ flex = false, post }: Props) {
+export const SwatchesContext = createContext({});
+
+const PostCard = ({ flex = false, post }: Props) => {
   if (!post.featuredImage) {
     return null;
   }
@@ -79,7 +80,7 @@ function PostCard({ flex = false, post }: Props) {
       </a>
     </Link>
   );
-}
+};
 
 PostCard.fragments = gql`
   fragment PostCardPostData on Post {

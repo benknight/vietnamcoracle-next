@@ -5,7 +5,6 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import vibrant from 'node-vibrant';
-import { createContext } from 'react';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MapIcon from '@material-ui/icons/Map';
 import Collection from '../../components/Collection';
@@ -13,12 +12,10 @@ import Footer from '../../components/Footer';
 import Hero from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
-import PostCard from '../../components/PostCard';
+import PostCard, { SwatchesContext } from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
 import getAPIClient from '../../lib/getAPIClient';
-
-export const SwatchesContext = createContext({});
 
 const Browse = ({ data, swatches }) => {
   const router = useRouter();

@@ -80,7 +80,7 @@ const PostOrPage = ({ data }) => {
             )}
           </div>
         </LayoutMain>
-        <LayoutSidebar className="bg-gray-100 dark:bg-near-black">
+        <LayoutSidebar className="bg-gray-100">
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>

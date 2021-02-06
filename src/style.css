@@ -27,10 +27,6 @@
       format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
 }
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 @import 'styles/base.css';
 @import 'styles/components.css';
 @import 'styles/utilities.css';

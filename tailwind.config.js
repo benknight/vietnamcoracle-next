@@ -6,7 +6,7 @@ module.exports = {
     purgeLayersByDefault: true,
     removeDeprecatedGapUtilities: true,
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/aspect-ratio')],
   purge: {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
     layers: ['utilities'],
@@ -52,14 +52,17 @@ module.exports = {
     },
   },
   variants: {
-    width: ['responsive', 'focus'],
-    backgroundOpacity: [
-      'responsive',
-      'dark',
-      'group-hover',
-      'focus-within',
-      'hover',
-      'focus',
-    ],
+    extend: {
+      backgroundOpacity: [
+        'responsive',
+        'dark',
+        'group-hover',
+        'focus-within',
+        'hover',
+        'focus',
+      ],
+      fontSmoothing: ['dark'],
+      width: ['focus'],
+    },
   },
 };

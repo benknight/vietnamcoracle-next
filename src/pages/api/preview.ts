@@ -1,4 +1,9 @@
-export default async function preview(req, res) {
+import type { NextApiRequest, NextApiResponse } from 'next';
+
+export default async function preview(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   const { secret, redirect } = req.query;
 
   // Check the secret and next parameters

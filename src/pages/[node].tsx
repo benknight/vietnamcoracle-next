@@ -19,6 +19,11 @@ function cleanPostHTML(html: string): string {
   );
   // Force https
   result = result.replace(/(http)\:\/\//gm, 'https://');
+  // Set language to English on all embeded maps
+  result = result.replace(
+    /(google\.com\/maps\/d\/embed([\?&]\w+=\w+)+)/g,
+    '$1&hl=en',
+  );
   return result;
 }
 
@@ -65,7 +70,7 @@ const PostOrPage = ({ data }) => {
             />
             {data.contentNode.customRelatedPosts && (
               <>
-                <div className="page-heading">Related Posts:</div>
+                <div className="page-heading mt-12">Related Posts:</div>
                 <div className="py-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2">
                   {data.contentNode.customRelatedPosts.nodes.map(post => (
                     <PostCard key={post.slug} post={post} flex />

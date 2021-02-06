@@ -1,13 +1,15 @@
 import { gql } from 'graphql-request';
 import _ from 'lodash';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import type { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import vibrant from 'node-vibrant';
+import { createContext } from 'react';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import MapIcon from '@material-ui/icons/Map';
 import Collection from '../../components/Collection';
+import Footer from '../../components/Footer';
 import Hero from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
@@ -16,14 +18,16 @@ import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
 import getAPIClient from '../../lib/getAPIClient';
 
-const Browse = ({ data }) => {
+export const SwatchesContext = createContext({});
+
+const Browse = ({ data, swatches }) => {
   const router = useRouter();
   const isHome = !router.query.browse;
   const { category, categoryPage, subcategory } = data;
   const coverImgSm = subcategory?.cover.small || category?.cover.small;
   const coverImgLg = subcategory?.cover.large || category?.cover.large;
   return (
-    <>
+    <SwatchesContext.Provider value={swatches}>
       <Head>
         <title>
           {!category
@@ -42,7 +46,7 @@ const Browse = ({ data }) => {
             <h1 className="text-4xl md:text-3xl lg:text-5xl sm:mr-6 font-display leading-tight">
               {subcategory ? (
                 <>
-                  <span className="inline-block opacity-70 leading-normal">
+                  <span className="inline-block leading-normal">
                     <Link href={`/browse/${category.slug}`}>
                       {category.name}
                     </Link>
@@ -101,13 +105,13 @@ const Browse = ({ data }) => {
             categoryPage.collections?.items.map(item => (
               <section className="my-5 md:my-10" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
-                  <h3 className="font-display text-xl md:text-2xl lg:text-3xl">
+                  <h3 className="mb-1 font-display text-xl sm:text-2xl lg:text-3xl">
                     {item.title}
                   </h3>
                   {item.type === 'category' && item.category && (
                     <Link
                       href={item.category.uri.replace('category', 'browse')}>
-                      <a className="link ml-4 text-sm">View all</a>
+                      <a className="link ml-4 text-sm font-serif">View all</a>
                     </Link>
                   )}
                 </div>
@@ -129,9 +133,10 @@ const Browse = ({ data }) => {
         </LayoutMain>
         <LayoutSidebar>
           <SidebarDefault data={data} />
+          <Footer data={data} />
         </LayoutSidebar>
       </Layout>
-    </>
+    </SwatchesContext.Provider>
   );
 };
 
@@ -241,6 +246,7 @@ export const getStaticProps: GetStaticProps = async ({
           }
         }
       }
+      ...FooterData
       ...SidebarDefaultData
     }
     fragment CategoryData on Category {
@@ -256,6 +262,7 @@ export const getStaticProps: GetStaticProps = async ({
       }
     }
     ${Collection.fragments}
+    ${Footer.fragments}
     ${Map.fragments}
     ${SidebarDefault.fragments}
     ${Slider.fragments}
@@ -264,6 +271,8 @@ export const getStaticProps: GetStaticProps = async ({
   const categorySlug = params.browse?.[0] ?? '';
   const categoryPageId = catPageIds[categorySlug || 'home'] || '';
   const subcategorySlug = params.browse?.[1] ?? '';
+
+  // Fire the request
   const data = await getAPIClient().request(query, {
     categoryPageId,
     categorySlug,
@@ -278,12 +287,37 @@ export const getStaticProps: GetStaticProps = async ({
         'food-and-drink',
         'hotel-reviews',
         'destinations',
-      ].includes(categorySlug), // TODO: Alternatively query for which categorys have pages?
+      ].includes(categorySlug),
     subcategorySlug,
   });
 
+  let swatches = {};
+
+  // Generate swatches
+  if (process.env.NODE_ENV === 'production') {
+    const thumbnails = (
+      JSON.stringify(data).match(
+        /\{[^\{]*"__typename":\s*"MediaItem"[^\}]*\}/g,
+      ) || []
+    ).map(match => JSON.parse(match));
+    const results = (
+      await Promise.all(
+        thumbnails.map(t =>
+          vibrant
+            .from(
+              `https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${t.sourceUrlFx}`,
+            )
+            .getPalette(),
+        ),
+      )
+    ).map(palette => palette.DarkMuted.hex);
+    for (let i = 0; i < thumbnails.length; i++) {
+      swatches[thumbnails[i].id] = results[i];
+    }
+  }
+
   return {
-    props: { data, preview },
+    props: { data, preview, swatches },
     revalidate: 1,
   };
 };

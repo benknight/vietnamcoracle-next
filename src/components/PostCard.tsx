@@ -3,10 +3,8 @@ import { gql } from 'graphql-request';
 import _get from 'lodash/get';
 import Image from 'next/image';
 import Link from 'next/link';
-// import useMediaQuery from '@material-ui/core/useMediaQuery';
-import swatches from '../json/swatches.json';
-
-const swatchKey = 'DarkMuted';
+import { useContext } from 'react';
+import { SwatchesContext } from '../pages/browse/[[...browse]]';
 
 interface Props {
   flex?: boolean;
@@ -14,12 +12,11 @@ interface Props {
 }
 
 function PostCard({ flex = false, post }: Props) {
-  // const isDark = useMediaQuery('(prefers-color-scheme: dark)');
-  // TODO: Swatches need to be generated on build
   if (!post.featuredImage) {
     return null;
   }
-  const swatch = _get(swatches, [post.featuredImage.node.id, swatchKey], {});
+  const swatches = useContext(SwatchesContext);
+  const swatch = swatches[post.featuredImage.node.id];
   return (
     <Link href={`/${post.slug}`}>
       <a className="relative overflow-hidden flex flex-col md:shadow lg:shadow rounded-lg w-full">
@@ -31,7 +28,7 @@ function PostCard({ flex = false, post }: Props) {
             'overflow-hidden rounded-xl md:rounded-none lg:rounded-none',
           )}
           style={{
-            backgroundColor: swatch.hex,
+            backgroundColor: swatch,
           }}>
           <Image
             alt={post.featuredImage.node.altText}
@@ -91,6 +88,7 @@ PostCard.fragments = gql`
     title
     featuredImage {
       node {
+        __typename
         altText
         id
         sourceUrl(size: LARGE)

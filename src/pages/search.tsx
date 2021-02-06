@@ -102,7 +102,7 @@ export default function SearchPage() {
             Search results for “{router.query.query}”
           </h1>
           {results.map(r => (
-            <div className="my-8" key={r.uri}>
+            <div className="my-14" key={r.uri}>
               <div className="flex items-baseline">
                 <Link href={r.uri}>
                   <a className="link text-xl">

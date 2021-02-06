@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 import _upperFirst from 'lodash/upperFirst';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useEffect, useState } from 'react';
@@ -95,52 +96,59 @@ export default function SearchPage() {
   }, [router.query.query]);
 
   return (
-    <Layout maxWidth="lg">
-      <LayoutMain>
-        <div className="page-wrap pb-24 font-serif">
-          <h1 className="page-heading my-8 lg:mt-16">
-            Search results for “{router.query.query}”
-          </h1>
-          {results.map(r => (
-            <div className="my-14" key={r.uri}>
-              <div className="flex items-baseline">
-                <Link href={r.uri}>
-                  <a className="link text-xl">
-                    <div className="">{r.title}</div>
-                  </a>
-                </Link>
-                {r.contentType.node.name !== 'post' && (
-                  <div className="ml-2 italic opacity-50">
-                    {_upperFirst(r.contentType.node.name)}
+    <>
+      <Head>
+        <title>Search results for {router.query.query}</title>
+      </Head>
+      <Layout maxWidth="lg">
+        <LayoutMain>
+          <div className="page-wrap pb-24 font-serif">
+            <h1 className="page-heading my-8 lg:mt-16">
+              Search results for “{router.query.query}”
+            </h1>
+            {results.map(r => (
+              <div className="my-14" key={r.uri}>
+                <div className="flex items-baseline">
+                  <Link href={r.uri}>
+                    <a className="link text-xl">
+                      <div className="">{r.title}</div>
+                    </a>
+                  </Link>
+                  {r.contentType.node.name !== 'post' && (
+                    <div className="ml-2 italic opacity-50">
+                      {_upperFirst(r.contentType.node.name)}
+                    </div>
+                  )}
+                </div>
+                <div
+                  className="my-1"
+                  dangerouslySetInnerHTML={{ __html: r.excerpt }}
+                />
+                {r.categories?.nodes.length > 0 && (
+                  <div className="text-sm italic text-gray-500">
+                    Posted in{' '}
+                    {r.categories.nodes.map((r, index) => (
+                      <>
+                        {index !== 0 && ', '}
+                        <Link href={r.uri}>
+                          <a className="link hover:underline">{r.name}</a>
+                        </Link>
+                      </>
+                    ))}
                   </div>
                 )}
               </div>
-              <div
-                className="my-1"
-                dangerouslySetInnerHTML={{ __html: r.excerpt }}
-              />
-              {r.categories?.nodes.length > 0 && (
-                <div className="text-sm italic text-gray-500">
-                  Posted in{' '}
-                  {r.categories.nodes.map((r, index) => (
-                    <>
-                      {index !== 0 && ', '}
-                      <Link href={r.uri}>
-                        <a className="link hover:underline">{r.name}</a>
-                      </Link>
-                    </>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
-          {loading ? (
-            'Searching…'
-          ) : pageInfo.hasNextPage ? (
-            <button onClick={loadResults}>Load more</button>
-          ) : null}
-        </div>
-      </LayoutMain>
-    </Layout>
+            ))}
+            {loading ? (
+              'Searching…'
+            ) : pageInfo.hasNextPage ? (
+              <button className="btn" onClick={loadResults}>
+                Load More Results
+              </button>
+            ) : null}
+          </div>
+        </LayoutMain>
+      </Layout>
+    </>
   );
 }

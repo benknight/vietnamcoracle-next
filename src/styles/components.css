@@ -1,11 +1,74 @@
 @layer components {
+  @responsive {
+    .backdrop-blur {
+      -webkit-backdrop-filter: blur(100px);
+      backdrop-filter: blur(100px);
+    }
+  }
+
+  .btn {
+    @apply h-8 px-4 text-sm text-white bg-blue-500 rounded subpixel-antialiased;
+  }
+
+  .cover-img > div > div:first-child {
+    min-height: 16rem;
+  }
+
+  .link {
+    @apply text-blue-700 dark:text-blue-300 hover:underline;
+  }
+
+  .link:visited {
+    @apply text-purple-600 dark:text-purple-400;
+  }
+
+  .form-field {
+    @apply outline-none leading-none font-sans
+      bg-white dark:bg-gray-950
+      text-gray-500 focus:text-gray-800 dark:focus:text-gray-200
+      border border-gray-300 dark:border-gray-800
+      focus:border-gray-400 dark:focus:border-gray-600
+      hover:border-gray-400 dark:hover:border-gray-600;
+  }
+
+  .map-container {
+    margin-bottom: -14px;
+    height: 75vh;
+  }
+
+  @screen lg {
+    .map-container {
+      height: 600px;
+    }
+  }
+
+  .page-heading {
+    @apply font-display text-2xl md:text-4xl;
+  }
+
+  .page-wrap {
+    @apply px-4 md:px-8 xl:px-12;
+  }
+
+  /* smartphones, touchscreens */
+  @media (hover: none) and (pointer: coarse) {
+    .pointer-only {
+      pointer-events: none;
+    }
+  }
+
+  .post-card-excerpt a {
+    @apply hidden;
+  }
+
   .post {
     @apply font-display leading-normal dark:text-gray-300;
   }
 
   .post a,
   .post span[style*='color: #3366ff'] {
-    @apply text-blue-600 dark:text-blue-400 hover:underline !important;
+    @apply text-blue-700 dark:text-blue-300 !important;
+    @apply hover:underline !important;
   }
 
   .post h1 {

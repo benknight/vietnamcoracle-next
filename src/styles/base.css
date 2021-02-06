@@ -1,0 +1,5 @@
+@layer base {
+  body {
+    @apply text-gray-800 overscroll-x-none dark:text-gray-200 bg-gray-100 dark:bg-gray-950 dark:antialiased;
+  }
+}

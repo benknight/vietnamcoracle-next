@@ -5,7 +5,6 @@ import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
 import '../style.css';
-import '../post.css';
 
 const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
 

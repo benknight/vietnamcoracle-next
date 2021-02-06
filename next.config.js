@@ -2,15 +2,20 @@ module.exports = {
   images: {
     domains: ['www.vietnamcoracle.com', 'res.cloudinary.com'],
   },
+  async redirects() {
+    return [
+      {
+        destination: '/browse/:path*',
+        permanent: true,
+        source: '/category/:path*',
+      },
+    ];
+  },
   async rewrites() {
     return [
       {
-        source: '/',
         destination: '/browse',
-      },
-      {
-        source: '/category/:path*',
-        destination: '/browse/:path*',
+        source: '/',
       },
     ];
   },

@@ -1,16 +1,12 @@
 import { gql } from 'graphql-request';
 import Link from 'next/link';
+import ElsewhereLinks from './ElsewhereLinks';
 // @ts-ignore
 import LonelyPlanetLogo from '../../public/lp-logo.svg';
 
 export default function Footer({ data }) {
   return (
-    <footer className="mx-auto max-w-screen-2xl bg-white dark:bg-gray-900">
-      {/* <iframe
-        src="https://www.baolau.vn/en/widget/?source=vietnamcoracle"
-        width="400"
-        height="400"
-        scrolling="no"></iframe> */}
+    <footer>
       <div className="block lg:pt-16 pb-16 mx-auto text-center">
         <div className="uppercase text-xxs tracking-widest">Recommended by</div>
         <a
@@ -27,17 +23,20 @@ export default function Footer({ data }) {
           “Excellent independent travel advice from a long-term resident”
         </div>
       </div>
-      <section className="pb-32 lg:pb-12">
-        <ul className="px-8 flex flex-wrap justify-center uppercase text-xxs tracking-widest">
+      <section className="px-4 lg:px-0 pb-12">
+        <ul className="flex flex-wrap justify-center uppercase text-xxs tracking-widest">
           {data.footerMenu?.menuItems?.nodes.map(item => (
             <Link key={item.url} href={item.url}>
-              <a className="m-3 lg:mx-5 opacity-75 hover:opacity-100">
+              <a className="m-3 lg:mx-3 opacity-75 hover:opacity-100">
                 {item.label}
               </a>
             </Link>
           ))}
         </ul>
       </section>
+      <nav className="pb-32 lg:pb-12">
+        <ElsewhereLinks />
+      </nav>
     </footer>
   );
 }

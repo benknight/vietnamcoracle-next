@@ -59,9 +59,13 @@
       rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
   }
 
+  .post img.size-large {
+    @apply mt-8;
+  }
+
   .post p,
   .post ul {
-    @apply mb-4 font-serif;
+    @apply mb-5 font-serif;
   }
 
   .post > p:first-of-type {
@@ -75,6 +79,10 @@
 
   .post p > a[href$='.jpg'] ~ * {
     @apply text-sm;
+  }
+
+  .post figcaption {
+    @apply text-sm py-2 px-1 leading-tight;
   }
 
   .post span[style*='color: #333333'],
@@ -92,6 +100,15 @@
 
   .post .aligncenter {
     @apply mx-auto;
+  }
+
+  .post .blocks-gallery-grid {
+    @apply list-none pl-0;
+    @apply grid gap-4 sm:grid-cols-2;
+  }
+
+  .post .blocks-gallery-item img {
+    @apply block rounded;
   }
 
   .post .in_article_ad {

@@ -15,8 +15,8 @@ const Map = ({ data }) => {
         className={cx(
           'relative p-8 text-center dark:bg-opacity-10 dark:text-white lg:rounded-t-lg font-display',
           {
-            'bg-blue-300 dark:bg-blue-500': !browse,
-            'bg-amber-400': browse?.[0] === 'hotel-reviews',
+            'bg-blue-100 dark:bg-blue-500': !browse,
+            'bg-amber-100 dark:bg-amber-400': browse?.[0] === 'hotel-reviews',
             'text-white bg-green-600': browse?.[0] === 'motorbike-guides',
             'text-white bg-yellow-900': browse?.[0] === 'destinations',
             'bg-yellow-200': browse?.[0] === 'food-and-drink',

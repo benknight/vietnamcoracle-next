@@ -2,6 +2,7 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
 import PostCard from '../components/PostCard';
@@ -74,8 +75,9 @@ const PostOrPage = ({ data }) => {
             )}
           </div>
         </LayoutMain>
-        <LayoutSidebar className="bg-gray-100 dark:bg-gray-900">
+        <LayoutSidebar className="bg-gray-100 dark:bg-near-black">
           <SidebarDefault data={data} />
+          <Footer data={data} />
         </LayoutSidebar>
       </Layout>
     </>
@@ -122,9 +124,11 @@ export async function getStaticProps({ params: { node }, preview = false }) {
           }
         }
       }
+      ...FooterData
       ...SidebarDefaultData
     }
     ${Hero.fragments}
+    ${Footer.fragments}
     ${PostCard.fragments}
     ${SidebarDefault.fragments}
   `;

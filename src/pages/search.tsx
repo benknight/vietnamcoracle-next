@@ -98,7 +98,7 @@ export default function SearchPage() {
     <Layout maxWidth="lg">
       <LayoutMain>
         <div className="page-wrap pb-24 font-serif">
-          <h1 className="page-heading mt-12 mb-8">
+          <h1 className="page-heading my-8 lg:mt-16">
             Search results for “{router.query.query}”
           </h1>
           {results.map(r => (

@@ -58,13 +58,11 @@ export default function Header({ preview = false }: Props) {
           )}>
           <div
             className={cx(
-              'z-10 absolute top-0 left-0',
+              'z-10 absolute top-0 left-0 overflow-hidden',
               'flex items-center h-16 px-4',
               'transform transition-transform duration-200 ease-out',
               {
                 '-translate-x-16': !showMini,
-                'right-0 lg:w-96': searchFocused,
-                '-right-16': !showMini && searchFocused,
               },
             )}>
             <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
@@ -78,9 +76,20 @@ export default function Header({ preview = false }: Props) {
                 />
               </a>
             </Link>
+          </div>
+          <div
+            className={cx(
+              'absolute top-0 right-0 flex items-center h-16 px-4 lg:px-2 xl:px-4 text-gray-400',
+              {
+                'left-0 sm:left-auto': !showMini,
+              },
+            )}>
             <form
-              className={cx('relative flex-auto w-40 xl:w-44', {
-                'lg:w-10': showMini,
+              className={cx('relative flex-auto', {
+                'w-40 xl:w-44': showMini && !searchFocused,
+                'w-56 xl:w-72': showMini && searchFocused,
+                'w-full xl:w-44': !showMini && !searchFocused,
+                'w-full xl:w-72': !showMini && searchFocused,
               })}
               onSubmit={event => {
                 event.preventDefault();
@@ -99,52 +108,11 @@ export default function Header({ preview = false }: Props) {
                 onBlur={() => setSearchFocused(false)}
                 onChange={event => setSearchQuery(event.target.value)}
                 onFocus={() => setSearchFocused(true)}
+                placeholder="Search"
                 type="search"
                 value={searchQuery}
               />
             </form>
-          </div>
-          <div className="absolute top-0 right-0 flex items-center h-16 px-4 lg:px-2 xl:px-4 text-gray-400">
-            <a href="https://www.facebook.com/vietnamcoracle">
-              <Tooltip
-                title="Vietnam Coracle on Facebook"
-                aria-label="Vietnam Coracle on Facebook"
-                arrow>
-                <FacebookIcon classes={{ root: 'w-8 h-8' }} />
-              </Tooltip>
-            </a>
-            <a className="ml-2" href="https://www.instagram.com/vietnamcoracle">
-              <Tooltip
-                title="Vietnam Coracle on Instagram"
-                aria-label="Vietnam Coracle on Instagram"
-                arrow>
-                <InstagramIcon classes={{ root: 'w-8 h-8' }} />
-              </Tooltip>
-            </a>
-            <a className="ml-2" href="https://www.facebook.com/vietnamcoracle">
-              <Tooltip
-                title="Vietnam Coracle on Twitter"
-                aria-label="Vietnam Coracle on Twitter"
-                arrow>
-                <TwitterIcon classes={{ root: 'w-8 h-8' }} />
-              </Tooltip>
-            </a>
-            <a className="ml-2" href="https://www.facebook.com/vietnamcoracle">
-              <Tooltip
-                title="Vietnam Coracle on YouTube"
-                aria-label="Vietnam Coracle on YouTube"
-                arrow>
-                <YouTubeIcon classes={{ root: 'w-8 h-8' }} />
-              </Tooltip>
-            </a>
-            <a className="ml-2" href="mailto:vietnamcoracle@gmail.com">
-              <Tooltip
-                title="Email Vietnam Coracle"
-                aria-label="Email Vietnam Coracle"
-                arrow>
-                <EmailIcon classes={{ root: 'w-8 h-8' }} />
-              </Tooltip>
-            </a>
           </div>
         </div>
       </Wrapper>

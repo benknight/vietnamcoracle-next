@@ -28,9 +28,7 @@ export default function Subscribe({ data: block }: Props) {
             className="form-field flex-auto h-8 mr-2 p-2 text-sm rounded"
             type="email"
           />
-          <button
-            className="h-8 px-4 text-sm text-white bg-blue-500 rounded"
-            type="submit">
+          <button className="btn" type="submit">
             Subscribe
           </button>
         </form>

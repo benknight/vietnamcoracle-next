@@ -1,13 +1,6 @@
 @tailwind components;
 
 @layer components {
-  @responsive {
-    .backdrop-blur {
-      -webkit-backdrop-filter: blur(100px);
-      backdrop-filter: blur(100px);
-    }
-  }
-
   .btn {
     @apply h-8 px-4 text-sm text-white bg-blue-500 rounded subpixel-antialiased;
   }

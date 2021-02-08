@@ -92,7 +92,7 @@
   .post h2 strong a {
     counter-increment: intro-links;
     @apply text-base sm:text-lg leading-loose sm:mx-2 border-b-2 border-gray-300 dark:border-gray-700;
-    @apply no-underline !important;
+    @apply hover:no-underline !important;
   }
 
   .post h2 strong a::before {

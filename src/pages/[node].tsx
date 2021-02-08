@@ -43,6 +43,14 @@ const PostOrPage = ({ data }) => {
     <>
       <Head>
         <title>{data.contentNode.title}</title>
+        <link
+          href="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.css"
+          rel="stylesheet"
+        />
+        <script
+          async
+          src="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
+        />
       </Head>
       <Hero
         imgSm={data.contentNode.featuredImage?.node}

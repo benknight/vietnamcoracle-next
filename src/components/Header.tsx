@@ -5,14 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
-import Tooltip from '@material-ui/core/Tooltip';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import EmailIcon from '@material-ui/icons/AlternateEmail';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
+// import useMediaQuery from '@material-ui/core/useMediaQuery';
 import SearchIcon from '@material-ui/icons/Search';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import YouTubeIcon from '@material-ui/icons/YouTube';
 
 interface Props {
   preview?: boolean;
@@ -24,7 +18,7 @@ export default function Header({ preview = false }: Props) {
   const [showMini, setShowMini] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const isLarge = useMediaQuery('(min-width: 1024px');
+  // const isLarge = useMediaQuery('(min-width: 1024px');
 
   useEffect(() => {
     const listener = _debounce(() => {
@@ -42,11 +36,11 @@ export default function Header({ preview = false }: Props) {
   }, []);
 
   const router = useRouter();
-  const Wrapper = isLarge ? 'div' : Headroom;
+  // const Wrapper = isLarge ? 'div' : Headroom;
 
   return (
     <>
-      <Wrapper>
+      <Headroom>
         <div
           className={cx(
             'w-full h-16 lg:h-auto lg:fixed z-30 bg-white dark:bg-gray-900',
@@ -115,7 +109,7 @@ export default function Header({ preview = false }: Props) {
             </form>
           </div>
         </div>
-      </Wrapper>
+      </Headroom>
       <header
         className={cx(
           'py-12 sm:py-16 px-3 lg:py-12 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 lg:bg-none',

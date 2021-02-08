@@ -39,27 +39,27 @@ const Browse = ({ data, swatches }) => {
         <Slider data={categoryPage.slider} />
       ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
-          <div className="pb-4 flex-auto flex flex-wrap items-end justify-between">
-            <h1 className="text-4xl md:text-3xl lg:text-5xl sm:mr-6 font-display leading-tight">
+          <div className="pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end justify-between">
+            <h1 className="sm:mr-6 font-display">
               {subcategory ? (
-                <>
-                  <span className="inline-block leading-normal">
+                <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
+                  <span className="inline-block text-gray-300 opacity-90">
                     <Link href={`/browse/${category.slug}`}>
                       {category.name}
                     </Link>
                     &nbsp;&gt;&nbsp;
                   </span>
-                  <span className="inline-block leading-normal">
-                    {subcategory.name}
-                  </span>
-                </>
+                  <span className="inline-block">{subcategory.name}</span>
+                </div>
               ) : (
-                category.name
+                <div className="text-4xl md:text-3xl lg:text-5xl leading-tight">
+                  {category.name}
+                </div>
               )}
             </h1>
             {categoryPage?.map && !subcategory && (
               <a
-                className="hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 lg:order-1 items-end text-sm hover:underline"
+                className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 lg:order-1 items-end text-sm hover:underline"
                 href="#map">
                 <MapIcon className="mr-2" />
                 Jump to map
@@ -67,7 +67,7 @@ const Browse = ({ data, swatches }) => {
             )}
             {category.children.nodes.length > 0 && (
               <div className="flex-auto w-full md:w-auto lg:w-auto">
-                <div className="relative inline-flex items-center justify-between w-full md:w-auto lg:w-auto h-10 mt-3 md:mt-0 lg:mt-0 p-3 rounded text-sm border bg-transparent tracking-wide leading-none whitespace-nowrap">
+                <div className="relative inline-flex items-center justify-between w-full md:w-auto lg:w-auto h-10 mt-3 p-3 rounded text-sm border bg-transparent tracking-wide leading-none whitespace-nowrap">
                   Browse subcategories…
                   <ArrowDropDownIcon className="ml-2" />
                   <select

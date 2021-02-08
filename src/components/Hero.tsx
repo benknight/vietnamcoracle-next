@@ -23,7 +23,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
   return (
     <section className="relative mx-auto max-w-screen-2xl bg-white">
       {showImg && (
-        <div className="bg-gray-400 dark:bg-gray-950">
+        <div className="bg-gray-400">
           <div className="cover-img flex md:hidden lg:hidden">
             <Image
               alt={imgSm.altText}

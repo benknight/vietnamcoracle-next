@@ -28,7 +28,7 @@ const Browse = ({ data, swatches }) => {
       <Head>
         <title>
           {!category
-            ? 'Vietnam Coracle'
+            ? 'Vietnam Coracle – Independent Travel Guides to Vietnam'
             : subcategory
             ? `${category.name} > ${subcategory.name}`
             : category.name}

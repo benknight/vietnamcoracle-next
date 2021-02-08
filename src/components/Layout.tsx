@@ -15,7 +15,7 @@ const Layout = ({ children, maxWidth = '2xl' }: LayoutProps) => (
 );
 
 export const LayoutMain = ({ children }) => (
-  <div className="overflow-hidden lg:w-2/3">{children}</div>
+  <main className="overflow-hidden lg:w-2/3">{children}</main>
 );
 
 export const LayoutSidebar = ({ className = '', children }) => {

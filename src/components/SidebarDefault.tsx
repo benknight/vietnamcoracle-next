@@ -7,15 +7,15 @@ import SlidingSticky from './SlidingSticky';
 
 const SidebarDefault = ({ data }) => (
   <SlidingSticky>
-    <section className="mb-20">
+    <aside className="mb-20">
       <About data={data.about.block} />
-    </section>
-    <section className="mb-20">
+    </aside>
+    <aside className="mb-20">
       <Support data={data.support.block} />
-    </section>
-    <section>
+    </aside>
+    <aside>
       <Subscribe data={data.subscribe.block} />
-    </section>
+    </aside>
   </SlidingSticky>
 );
 

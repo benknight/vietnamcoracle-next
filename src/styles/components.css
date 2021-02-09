@@ -57,7 +57,7 @@
   }
 
   .post {
-    @apply font-display leading-normal dark:text-gray-300;
+    @apply text-base font-display leading-relaxed dark:text-gray-300;
   }
 
   .post a,
@@ -170,7 +170,7 @@
   }
 
   .post .in_article_ad {
-    @apply relative inline-block mb-6 leading-loose text-sm text-gray-500 font-sans;
+    @apply relative mb-6 p-3 pt-10 leading-loose text-sm text-gray-500 font-sans bg-gray-100 dark:bg-gray-900;
   }
 
   .post .in_article_ad hr {
@@ -178,11 +178,15 @@
   }
 
   .post .in_article_ad > a {
-    @apply absolute top-0 right-0;
+    @apply absolute top-4 right-4 block leading-none;
+  }
+
+  .post .in_article_ad > small {
+    @apply absolute top-4 left-4 block leading-none;
   }
 
   .post .in_article_ad_container {
-    @apply mt-1 w-full;
+    @apply mt-1 flex justify-center;
   }
 
   .post .crp-list-title {

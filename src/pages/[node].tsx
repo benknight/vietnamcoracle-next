@@ -47,6 +47,10 @@ const PostOrPage = ({ data }) => {
           href="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.css"
           rel="stylesheet"
         />
+        <link
+          href="https://vietnamcoracle.com/wp-includes/css/dist/block-library/style.css"
+          rel="stylesheet"
+        />
         <script
           async
           src="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"

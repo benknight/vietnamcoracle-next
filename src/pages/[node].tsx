@@ -73,7 +73,7 @@ const PostOrPage = ({ data }) => {
       </Hero>
       <Layout>
         <LayoutMain>
-          <div className="pt-1 px-4 md:px-8 lg:px-8 xl:pl-20 xl:pr-20 text-lg max-w-5xl">
+          <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg max-w-5xl">
             <article
               className="post"
               dangerouslySetInnerHTML={{

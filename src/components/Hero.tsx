@@ -24,7 +24,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
     <section className="relative mx-auto max-w-screen-2xl bg-white">
       {showImg && (
         <div className="bg-gray-400">
-          <div className="cover-img flex md:hidden lg:hidden">
+          <div className="cover-img flex md:hidden">
             <Image
               alt={imgSm.altText}
               height={imgSm.mediaDetails.height}
@@ -33,7 +33,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
               width={imgSm.mediaDetails.width}
             />
           </div>
-          <div className="cover-img hidden md:block lg:block">
+          <div className="cover-img hidden md:block">
             <Image
               alt={imgLg.altText}
               height={imgLg.mediaDetails.height}

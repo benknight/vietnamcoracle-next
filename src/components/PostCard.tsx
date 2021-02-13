@@ -26,7 +26,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             'relative block w-full bg-opacity-10',
             'aspect-w-1 aspect-h-1',
             'md:aspect-w-4 md:aspect-h-3 lg:aspect-w-4 lg:aspect-h-3',
-            'overflow-hidden rounded-xl md:rounded-none lg:rounded-none',
+            'overflow-hidden rounded-xl md:rounded-none',
           )}
           style={{
             backgroundColor: swatch,
@@ -41,16 +41,16 @@ const PostCard = ({ flex = false, post }: Props) => {
         </div>
         <div
           className={cx(
-            'relative md:px-4 md:py-5 lg:px-4 lg:py-5',
+            'relative md:px-4 md:py-5',
             'flex-auto flex items-start',
-            'md:text-white lg:text-white md:bg-gray-900 lg:bg-gray-900',
+            'md:text-white md:bg-gray-900',
             'font-medium rounded-b',
             {
               'px-1 pt-4 pb-6': flex,
               'p-1 pt-2 pr-2': !flex,
             },
           )}>
-          <div className="hidden md:block lg:block">
+          <div className="hidden md:block">
             <Image
               alt=""
               className="object-bottom object-cover opacity-50"
@@ -72,7 +72,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             <div
               className={cx(
                 'post-card-excerpt mt-2 text-sm md:text-xs lg:text-sm opacity-75',
-                { 'hidden md:line-clamp lg:line-clamp': !flex },
+                { 'hidden md:line-clamp': !flex },
               )}
               dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>
           </div>

@@ -59,15 +59,15 @@ const Browse = ({ data, swatches }) => {
             </h1>
             {categoryPage?.map && !subcategory && (
               <a
-                className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 lg:order-1 items-end text-sm hover:underline"
+                className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 items-end text-sm hover:underline"
                 href="#map">
                 <MapIcon className="mr-2" />
                 Jump to map
               </a>
             )}
             {category.children.nodes.length > 0 && (
-              <div className="flex-auto w-full md:w-auto lg:w-auto">
-                <div className="relative inline-flex items-center justify-between w-full md:w-auto lg:w-auto h-10 mt-3 p-3 rounded text-sm border bg-transparent tracking-wide leading-none whitespace-nowrap">
+              <div className="flex-auto w-full md:w-auto">
+                <div className="relative inline-flex items-center justify-between w-full md:w-auto h-10 mt-3 p-3 rounded text-sm border bg-transparent tracking-wide leading-none whitespace-nowrap">
                   Browse subcategories…
                   <ArrowDropDownIcon className="ml-2" />
                   <select
@@ -116,7 +116,7 @@ const Browse = ({ data, swatches }) => {
               </section>
             ))
           ) : (
-            <div className="page-wrap pt-8 lg:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2">
+            <div className="page-wrap pt-8 lg:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
               {(subcategory || category).posts.nodes.map(post => (
                 <PostCard key={post.slug} post={post} flex />
               ))}

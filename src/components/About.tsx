@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
 
 interface Props {
@@ -24,9 +25,9 @@ export default function About({ data: block }: Props) {
       <BlockContent>
         <p>
           {block.description}{' '}
-          <a className="link" href={block.link.url}>
-            {block.link.title}
-          </a>
+          <Link href={'/about-2'}>
+            <a className="link">{block.link.title}</a>
+          </Link>
         </p>
       </BlockContent>
     </Block>

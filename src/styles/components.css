@@ -38,7 +38,13 @@
   }
 
   .page-heading {
-    @apply font-display text-2xl md:text-4xl;
+    @apply font-display text-2xl;
+  }
+
+  @screen md {
+    .page-heading {
+      @apply text-4xl;
+    }
   }
 
   .page-wrap {
@@ -72,7 +78,7 @@
   }
 
   .post h2 {
-    @apply mt-0 mb-8 pb-8 font-serif tracking-wider leading-loose border-b dark:border-gray-700;
+    @apply -mt-4 mb-8 pb-8 font-serif tracking-wider leading-loose border-b dark:border-gray-700;
   }
 
   .post h2 strong {
@@ -127,7 +133,7 @@
   }
 
   .post > p:first-of-type {
-    @apply text-base mt-8 mb-0;
+    @apply text-base mt-8;
   }
 
   /* Images & captions */

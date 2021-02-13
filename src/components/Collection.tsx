@@ -66,14 +66,11 @@ const Collection = ({ data }) => {
       )}
       <div className="overflow-hidden">
         <ol
-          className="flex pb-8 -mb-8 pl-4 md:pl-8 xl:pl-12 overflow-y-auto"
+          className="flex pb-8 -mb-8 pl-4 md:pl-8 lg:pl-4 xl:pl-12 overflow-y-auto"
           ref={scrollAreaRef as RefObject<HTMLOListElement>}>
           {posts.map((post, index) => (
             <li
-              className={cx(
-                'flex flex-shrink-0 w-3/7 pr-3',
-                index === posts.length - 1 && 'lg:pr-0',
-              )}
+              className="flex flex-shrink-0 w-3/7 pr-3"
               title={post.slug}
               key={post.slug}>
               <PostCard post={post} />

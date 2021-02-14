@@ -21,6 +21,7 @@
     "autoprefixer": "^10.1.0",
     "classnames": "latest",
     "cors": "^2.8.5",
+    "date-fns": "^2.17.0",
     "graphql": "latest",
     "graphql-request": "^3.4.0",
     "lodash": "^4.17.20",

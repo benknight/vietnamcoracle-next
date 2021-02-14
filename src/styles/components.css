@@ -9,6 +9,14 @@
     min-height: 16rem;
   }
 
+  .comment {
+    @apply text-sm leading-snug;
+  }
+
+  .comment p {
+    @apply mb-4;
+  }
+
   .link {
     @apply text-blue-700 dark:text-blue-300 hover:underline;
   }

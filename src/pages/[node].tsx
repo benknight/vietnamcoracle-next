@@ -2,6 +2,7 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
@@ -90,6 +91,14 @@ const PostOrPage = ({ data }) => {
                 </div>
               </>
             )}
+            {data.contentNode.comments && (
+              <>
+                <div className="page-heading mt-4 mb-4">
+                  {data.contentNode.commentCount} Comments
+                </div>
+                <CommentThread comments={data.contentNode.comments.nodes} />
+              </>
+            )}
           </div>
         </LayoutMain>
         <LayoutSidebar className="bg-gray-100 dark:bg-gray-950">
@@ -113,8 +122,14 @@ export async function getStaticProps({ params: { node }, preview = false }) {
     query PageOrPost($preview: Boolean!, $slug: ID!) {
       contentNode(id: $slug, idType: URI) {
         ... on Page {
+          commentCount
           content
           title
+          comments(first: 25) {
+            nodes {
+              ...CommentThreadCommentData
+            }
+          }
           featuredImage {
             node {
               ...HeroImageData
@@ -122,8 +137,14 @@ export async function getStaticProps({ params: { node }, preview = false }) {
           }
         }
         ... on Post {
+          commentCount
           content
           title
+          comments(first: 25) {
+            nodes {
+              ...CommentThreadCommentData
+            }
+          }
           customRelatedPosts(first: 6) {
             nodes {
               ...PostCardPostData
@@ -144,6 +165,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
       ...FooterData
       ...SidebarDefaultData
     }
+    ${CommentThread.fragments}
     ${Hero.fragments}
     ${Footer.fragments}
     ${PostCard.fragments}

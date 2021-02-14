@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request';
 import About from './About';
 import Block from './Block';
+import ElsewhereLinks from './ElsewhereLinks';
 import Subscribe from './Subscribe';
 import Support from './Support';
 import SlidingSticky from './SlidingSticky';
@@ -16,6 +17,9 @@ const SidebarDefault = ({ data }) => (
     <aside>
       <Subscribe data={data.subscribe.block} />
     </aside>
+    <div className="mt-4 mb-14">
+      <ElsewhereLinks />
+    </div>
   </SlidingSticky>
 );
 

@@ -1,13 +1,12 @@
 import { gql } from 'graphql-request';
 import Link from 'next/link';
-import ElsewhereLinks from './ElsewhereLinks';
 // @ts-ignore
 import LonelyPlanetLogo from '../../public/lp-logo.svg';
 
 export default function Footer({ data }) {
   return (
     <footer>
-      <div className="block lg:pt-16 pb-16 mx-auto text-center">
+      <div className="block lg:pt-4 pb-16 mx-auto text-center">
         <div className="uppercase text-xxs tracking-widest">Recommended by</div>
         <a
           className="inline-block relative my-4 text-lp-blue dark:text-gray-500"
@@ -26,7 +25,7 @@ export default function Footer({ data }) {
       <section className="px-4 lg:px-0 pb-12">
         <ul className="flex flex-wrap justify-center uppercase text-xxs tracking-widest">
           {data.footerMenu?.menuItems?.nodes.map(item => (
-            <Link key={item.url} href={item.url}>
+            <Link key={item.path} href={item.path}>
               <a className="m-3 lg:mx-3 opacity-75 hover:opacity-100">
                 {item.label}
               </a>
@@ -34,9 +33,6 @@ export default function Footer({ data }) {
           ))}
         </ul>
       </section>
-      <nav className="pb-32 lg:pb-12">
-        <ElsewhereLinks />
-      </nav>
     </footer>
   );
 }
@@ -46,7 +42,7 @@ Footer.fragments = gql`
     footerMenu: menu(id: "dGVybTo0MDk=") {
       menuItems {
         nodes {
-          url
+          path
           label
         }
       }

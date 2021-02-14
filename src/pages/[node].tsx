@@ -15,7 +15,7 @@ function cleanPostHTML(html: string): string {
   let result = html;
   // Remove related posts heading
   result = result.replace(
-    /<\s*h1(\s+.*?>|>).*?RELATED POSTS.*?<\s*\/\s*h1\s*>/gi,
+    /<\s*h1(\s+.*?>|>).*?RELATED POSnodTS.*?<\s*\/\s*h1\s*>/gi,
     '',
   );
   // Force https
@@ -62,7 +62,7 @@ const PostOrPage = ({ data }) => {
         imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
         <h1
           className={cx(
-            'mt-8 mb-2 lg:pl-4 xl:pl-8 xl:pr-60 font-display leading-tight',
+            'mt-8 mb-2 xl:pl-8 xl:pr-60 font-display leading-tight',
             {
               'text-4xl lg:text-5xl': data.contentNode.title.length <= 40,
               'text-4xl': data.contentNode.title.length > 40,
@@ -93,7 +93,7 @@ const PostOrPage = ({ data }) => {
             )}
             {data.contentNode.comments.nodes.length > 0 && (
               <>
-                <div className="page-heading mt-4 mb-4">
+                <div className="page-heading mt-12 mb-4">
                   {data.contentNode.commentCount} Comments
                 </div>
                 <CommentThread comments={data.contentNode.comments.nodes} />
@@ -125,7 +125,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
           commentCount
           content
           title
-          comments(first: 25) {
+          comments(first: 1000) {
             nodes {
               ...CommentThreadCommentData
             }
@@ -140,7 +140,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
           commentCount
           content
           title
-          comments(first: 25) {
+          comments(first: 1000) {
             nodes {
               ...CommentThreadCommentData
             }

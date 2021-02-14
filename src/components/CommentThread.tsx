@@ -32,7 +32,9 @@ const CommentHeader = ({ comment, isReply = false }) => (
 );
 
 const CommentReplies = ({ all, comment }) => {
-  const replies = all.filter(reply => reply.parentId === comment.id);
+  const replies = all
+    .filter(reply => reply.parentId === comment.id)
+    .sort((a, b) => a.commentId - b.commentId);
   if (replies.length === 0) {
     return null;
   }
@@ -59,6 +61,7 @@ export default function CommentThread({ comments }) {
     <ol>
       {comments
         .filter(c => c.parentId === null)
+        .sort()
         .map(comment => (
           <li
             className="my-8 px-4 md:px-7 py-6 rounded-lg bg-gray-100 dark:bg-gray-900 dark:text-gray-300 font-sans"
@@ -80,6 +83,7 @@ export default function CommentThread({ comments }) {
 CommentThread.fragments = gql`
   fragment CommentThreadCommentData on Comment {
     content
+    commentId
     dateGmt
     parentId
     id

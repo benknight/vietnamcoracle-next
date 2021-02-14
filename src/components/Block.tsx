@@ -14,6 +14,12 @@ export type BlockType = {
     title: string;
     url: string;
   };
+  messages: [
+    {
+      key: string;
+      value: string;
+    },
+  ];
 };
 
 export const BlockContent = props => (
@@ -38,6 +44,10 @@ Block.fragments = gql`
     link {
       title
       url
+    }
+    messages {
+      key
+      value
     }
   }
 `;

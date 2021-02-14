@@ -91,7 +91,7 @@ const PostOrPage = ({ data }) => {
                 </div>
               </>
             )}
-            {data.contentNode.comments && (
+            {data.contentNode.comments.nodes.length > 0 && (
               <>
                 <div className="page-heading mt-4 mb-4">
                   {data.contentNode.commentCount} Comments

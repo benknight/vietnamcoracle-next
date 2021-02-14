@@ -62,7 +62,7 @@ const PostCard = ({ flex = false, post }: Props) => {
           </div>
           <div className="relative font-serif antialiased">
             <h3
-              className={cx('leading-tight md:text-xl lg:text-2xl', {
+              className={cx('leading-tight md:text-xl xl:text-2xl', {
                 'text-2xl': flex,
                 'text-sm sm:text-base': !flex && post.title.length > 40,
                 'text-sm sm:text-lg': !flex && post.title.length <= 40,

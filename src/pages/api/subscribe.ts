@@ -56,7 +56,7 @@ export default async function preview(
     if (error.status === 400) {
       code = 'ERR_ALREADY_SUBSCRIBED';
     }
-    res.status(error.status).send({
+    res.status(error.status || 500).send({
       code,
       success: false,
     });

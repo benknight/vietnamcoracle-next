@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import _keyBy from 'lodash/keyBy';
 import _mapValues from 'lodash/mapValues';
 import Image from 'next/image';
@@ -77,7 +78,10 @@ export default function Subscribe({ data: block }: Props) {
             type="email"
             value={email}
           />
-          <button className="btn" type="submit">
+          <button
+            className={cx('btn', { 'opacity-50': loading })}
+            disabled={loading}
+            type="submit">
             Subscribe
           </button>
         </form>

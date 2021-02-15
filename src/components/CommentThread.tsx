@@ -64,7 +64,9 @@ export default function CommentThread({ comments }) {
         .sort()
         .map(comment => (
           <li
-            className="my-8 px-4 md:px-7 py-6 rounded-lg bg-gray-100 dark:bg-gray-900 dark:text-gray-300 font-sans"
+            className="
+              my-8 px-4 md:px-7 py-6 font-sans
+              bg-gray-100 dark:bg-gray-900 dark:text-gray-300 rounded-lg"
             key={comment.id}>
             <CommentHeader comment={comment} />
             <div

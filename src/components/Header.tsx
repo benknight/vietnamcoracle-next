@@ -133,10 +133,10 @@ export default function Header({ preview = false }: Props) {
             />
           </a>
         </Link>
-        <h1 className="text-4xl mb-2 text-gray-800 dark:text-gray-200 font-display">
+        <h1 className="text-3xl xl:text-4xl mb-2 text-gray-700 dark:text-gray-200 font-display antialiased">
           Vietnam Coracle
         </h1>
-        <h2 className="text-gray-600 uppercase tracking-widest font-serif text-xxxs">
+        <h2 className="text-gray-600 dark:text-gray-500 uppercase tracking-widest font-serif text-xxs">
           Independent travel guides to Vietnam
         </h2>
       </header>

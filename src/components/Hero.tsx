@@ -21,7 +21,7 @@ interface Props {
 export default function Hero({ children, imgSm, imgLg }: Props) {
   const showImg = imgSm && imgLg;
   return (
-    <section className="relative mx-auto max-w-screen-2xl bg-white dark:bg-gray-950">
+    <section className="relative mx-auto max-w-screen-2xl bg-gray-950 pb-12">
       {showImg && (
         <div className="bg-gray-400">
           <div className="cover-img flex md:hidden">
@@ -45,7 +45,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
             />
           </div>
           {Boolean(children) && (
-            <div className="absolute inset-0 bg-gradient-to-t from-near-black via-black-25 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-black-25 to-transparent mb-12"></div>
           )}
         </div>
       )}
@@ -53,7 +53,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
         className={cx(
           'mx-auto pt-5 lg:pt-7 page-wrap flex items-end max-w-screen-2xl',
           {
-            'absolute inset-0 text-gray-100 pb-4 lg:pb-5': showImg,
+            'absolute inset-0 text-gray-100 pb-4 lg:pb-5 dark:pb-2 lg:dark:pb-2': showImg,
           },
         )}>
         {children}

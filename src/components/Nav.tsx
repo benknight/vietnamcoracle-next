@@ -101,7 +101,7 @@ export default function Nav({ preview = false }: Props) {
                         ? 'border-blue-500 dark:border-blue-400'
                         : 'border-transparent',
                     )}>
-                    <div className="lg:hidden">{link.titleShort}</div>
+                    <div className="lg:hidden text-xxxs">{link.titleShort}</div>
                     <div className="hidden lg:block">{link.title}</div>
                   </div>
                 </a>

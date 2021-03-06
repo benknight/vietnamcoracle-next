@@ -100,17 +100,17 @@ export default function SearchPage() {
       <Head>
         <title>Search results for {router.query.query}</title>
       </Head>
-      <Layout maxWidth="lg">
+      <Layout>
         <LayoutMain>
           <div className="page-wrap pb-24 font-serif">
-            <h1 className="page-heading my-8 lg:mt-16">
+            <h1 className="text-xl my-4 lg:mt-16">
               Search results for “{router.query.query}”
             </h1>
             {results.map(r => (
               <div className="my-14" key={r.uri}>
                 <div className="flex items-baseline">
                   <Link href={r.uri}>
-                    <a className="link text-xl">
+                    <a className="link text-2xl font-display">
                       <div className="">{r.title}</div>
                     </a>
                   </Link>

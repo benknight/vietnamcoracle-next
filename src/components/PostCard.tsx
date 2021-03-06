@@ -41,7 +41,7 @@ const PostCard = ({ flex = false, post }: Props) => {
         </div>
         <div
           className={cx(
-            'relative md:px-4 md:py-5',
+            'relative md:px-5 md:py-6',
             'flex-auto flex items-start',
             'md:text-white md:bg-gray-900',
             'font-medium rounded-b',
@@ -60,18 +60,21 @@ const PostCard = ({ flex = false, post }: Props) => {
               unoptimized
             />
           </div>
-          <div className="relative font-serif antialiased">
+          <div className="relative antialiased">
             <h3
-              className={cx('leading-tight md:text-xl xl:text-2xl', {
-                'text-2xl': flex,
-                'text-sm sm:text-base': !flex && post.title.length > 40,
-                'text-sm sm:text-lg': !flex && post.title.length <= 40,
-              })}>
+              className={cx(
+                'font-display leading-tight md:text-xl xl:text-2xl',
+                {
+                  'text-2xl': flex,
+                  'text-sm sm:text-base': !flex && post.title.length > 40,
+                  'text-sm sm:text-lg': !flex && post.title.length <= 40,
+                },
+              )}>
               {post.title}
             </h3>
             <div
               className={cx(
-                'post-card-excerpt mt-2 text-sm md:text-xs lg:text-sm opacity-75',
+                'post-card-excerpt font-serif mt-2 text-sm md:text-xs lg:text-sm opacity-75',
                 { 'hidden md:line-clamp': !flex },
               )}
               dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>

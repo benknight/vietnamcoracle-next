@@ -81,7 +81,7 @@
   }
 
   .post h1 {
-    @apply mb-5 text-2xl font-serif;
+    @apply mb-5 text-2xl;
     letter-spacing: 0.2em;
   }
 
@@ -98,6 +98,7 @@
 
   .post h2 strong a {
     counter-increment: intro-links;
+    @apply font-display;
     @apply text-base sm:text-lg leading-loose sm:mx-2 border-b-2 border-gray-300 dark:border-gray-700;
     @apply hover:no-underline !important;
   }
@@ -141,7 +142,7 @@
   }
 
   .post > p:first-of-type {
-    @apply text-base mt-8;
+    @apply text-base mt-6;
   }
 
   /* Images & captions */

@@ -20,8 +20,12 @@ interface Props {
 
 export default function Hero({ children, imgSm, imgLg }: Props) {
   const showImg = imgSm && imgLg;
+  const hasChildren = Boolean(children);
   return (
-    <section className="relative mx-auto max-w-screen-2xl bg-gray-950 pb-12">
+    <section
+      className={cx('relative mx-auto max-w-screen-2xl bg-gray-950', {
+        'pb-12': hasChildren,
+      })}>
       {showImg && (
         <div className="bg-gray-400">
           <div className="cover-img flex md:hidden">
@@ -44,7 +48,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
               width={imgLg.mediaDetails.width}
             />
           </div>
-          {Boolean(children) && (
+          {hasChildren && (
             <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-black-25 to-transparent mb-12"></div>
           )}
         </div>

@@ -39,9 +39,9 @@ export default function Carousel({ className, children, ...props }) {
   }, []);
 
   return (
-    <div {...props} className={cx(className, 'relative')}>
+    <div {...props} className={cx(className, 'relative overflow-hidden')}>
       <div
-        className="overflow-auto flex w-full h-full"
+        className="overflow-x-auto flex w-full h-full -mb-4 pb-14"
         ref={ref}
         style={{ scrollSnapType: 'x mandatory' }}>
         {children}

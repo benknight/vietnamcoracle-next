@@ -100,7 +100,7 @@ const Browse = ({ data, swatches }) => {
         <LayoutMain>
           {categoryPage && !subcategory ? (
             categoryPage.collections?.items.map(item => (
-              <section className="my-5 md:my-10" key={item.title}>
+              <section className="my-8 md:my-10" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
                   <h3 className="mb-1 font-display text-xl sm:text-2xl lg:text-3xl">
                     {item.title}

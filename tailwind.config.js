@@ -26,7 +26,7 @@ module.exports = {
         'near-black': 'hsl(0deg 0% 2%)',
       },
       fontFamily: {
-        display: ['Baskervville', 'sans-serif'],
+        display: ['Libre Baskerville', 'sans-serif'],
       },
       fontSize: {
         xxxs: '10px',

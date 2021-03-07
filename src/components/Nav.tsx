@@ -59,7 +59,7 @@ export default function Nav({ preview = false }: Props) {
     <>
       <nav
         className={cx(
-          'fixed bottom-0 lg:sticky lg:bottom-auto lg:top-0 z-20 flex justify-center w-full h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow',
+          'fixed bottom-0 lg:sticky lg:bottom-auto lg:top-0 z-20 flex justify-center w-full h-12 lg:h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow',
           {
             'lg:top-0': !preview,
             'lg:top-8': preview,

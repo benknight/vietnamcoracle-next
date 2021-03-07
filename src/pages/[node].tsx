@@ -63,7 +63,7 @@ const PostOrPage = ({ data }) => {
         <h1
           className={cx('mt-8 mb-2 xl:pl-8 xl:pr-60 font-display', {
             'text-3xl lg:text-5xl': data.contentNode.title.length <= 40,
-            'text-2xl lg:text-4xl': data.contentNode.title.length > 40,
+            'text-3xl lg:text-4xl': data.contentNode.title.length > 40,
           })}
           id="top">
           {data.contentNode.title}

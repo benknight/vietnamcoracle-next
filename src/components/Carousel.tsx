@@ -59,11 +59,14 @@ export default function Carousel({ className, children, ...props }) {
                 setCursor(i);
               }}>
               <span
-                className={cx('block bg-white text-white rounded-full shadow', {
-                  'w-2 h-2': cursor === i,
-                  'w-1 h-1 border border-white opacity-50 box-content':
-                    cursor !== i,
-                })}
+                className={cx(
+                  'block bg-blue-700 dark:bg-white rounded-full shadow',
+                  {
+                    'w-2 h-2': cursor === i,
+                    'w-1 h-1 border border-blue-700 dark:border-white opacity-50 box-content':
+                      cursor !== i,
+                  },
+                )}
               />
               <span className="sr-only">{i}</span>
             </button>,

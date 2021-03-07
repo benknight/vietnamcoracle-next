@@ -56,6 +56,7 @@ module.exports = {
         'focus',
       ],
       fontSmoothing: ['dark'],
+      margin: ['responsive', 'dark'],
       padding: ['responsive', 'dark'],
       width: ['focus'],
     },

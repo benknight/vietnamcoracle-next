@@ -7,12 +7,7 @@ import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
 import Tooltip from '@material-ui/core/Tooltip';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import EmailIcon from '@material-ui/icons/AlternateEmail';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
 import SearchIcon from '@material-ui/icons/Search';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import YouTubeIcon from '@material-ui/icons/YouTube';
 
 interface Props {
   preview?: boolean;
@@ -49,9 +44,9 @@ export default function Header({ preview = false }: Props) {
       <Wrapper>
         <div
           className={cx(
-            'w-full h-16 lg:h-auto lg:fixed z-30 bg-white dark:bg-gray-900',
+            'w-full h-14 lg:h-auto lg:fixed z-30 bg-white dark:bg-gray-900',
             {
-              'shadow-lg': scrolled,
+              shadow: scrolled,
               'top-0': !preview,
               'top-8': preview,
             },
@@ -59,14 +54,14 @@ export default function Header({ preview = false }: Props) {
           <div
             className={cx(
               'z-10 absolute top-0 left-0 overflow-hidden',
-              'flex items-center h-16 px-4',
+              'flex items-center h-14 lg:h-16 px-2',
               'transform transition-transform duration-200 ease-out',
               {
                 '-translate-x-16': !showMini,
               },
             )}>
             <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-              <a className="inline-flex mr-4 md:mr-2">
+              <a className="inline-flex mr-4 md:mr-2 transform scale-90 lg:scale-100">
                 <Image
                   className="rounded-full"
                   height={48}
@@ -79,7 +74,7 @@ export default function Header({ preview = false }: Props) {
           </div>
           <div
             className={cx(
-              'absolute top-0 right-0 flex items-center h-16 px-4 lg:px-2 xl:px-4 text-gray-400',
+              'absolute top-0 right-0 flex items-center h-14 lg:h-16 px-2 xl:px-4 text-gray-400',
               {
                 'left-0 sm:left-auto': !showMini,
               },

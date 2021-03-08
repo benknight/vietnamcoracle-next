@@ -4,11 +4,11 @@ import { gql } from 'graphql-request';
 
 function formatDate(value: string): string {
   const date = parseJSON(value);
-  return format(date, "MMMM do, yyyy 'at' p O");
+  return format(date, "MMMM d, yyyy 'at' p");
 }
 
 const CommentHeader = ({ comment, isReply = false }) => (
-  <div className="flex items-center mb-4 font-serif">
+  <div className="flex items-center mb-4 font-display text-sm">
     {comment.author.node?.avatar?.url && (
       <img
         className="w-11 h-11 mr-2 rounded-full"
@@ -24,7 +24,7 @@ const CommentHeader = ({ comment, isReply = false }) => (
         }}
       />{' '}
       <span className="italic">says:</span>
-      <div className="mt-1 text-sm italic opacity-75">
+      <div className="mt-2 text-xs opacity-75">
         {formatDate(comment.dateGmt)}
       </div>
     </div>

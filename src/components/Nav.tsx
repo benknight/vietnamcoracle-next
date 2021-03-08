@@ -83,7 +83,7 @@ export default function Nav({ preview = false }: Props) {
               <Link href={to} key={to}>
                 <a
                   className={cx(
-                    'w-1/5 md:w-28 lg:w-auto sm:p-4 lg:py-0 lg:px-3 xl:px-4 flex flex-col lg:flex-row items-center justify-center text-center',
+                    'group w-1/5 md:w-28 lg:w-auto sm:p-4 lg:py-0 lg:px-3 xl:px-4 flex flex-col lg:flex-row items-center justify-center text-center',
                     {
                       'bg-gradient-to-b dark:shadow text-blue-500 dark:text-blue-400': isCurrent,
                     },
@@ -96,7 +96,7 @@ export default function Nav({ preview = false }: Props) {
                   </div>
                   <div
                     className={cx(
-                      'w-full text-shadow lg:border-b break-words',
+                      'w-full text-shadow lg:border-b break-words group-hover:border-gray-500 dark:group-hover:border-white',
                       isCurrent
                         ? 'border-blue-500 dark:border-blue-400'
                         : 'border-transparent',

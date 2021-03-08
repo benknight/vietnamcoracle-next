@@ -118,7 +118,7 @@ export default function Header({ preview = false }: Props) {
         )}
         ref={ref}>
         <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-          <a className="inline-flex">
+          <a className="block">
             <Image
               className="rounded-full"
               height={120}
@@ -126,14 +126,14 @@ export default function Header({ preview = false }: Props) {
               src="/logo.jpg"
               width={120}
             />
+            <h1 className="text-3xl xl:text-4xl mb-2 text-gray-700 dark:text-gray-200 font-display antialiased">
+              Vietnam Coracle
+            </h1>
+            <h2 className="text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display text-xxxxs">
+              Independent travel guides to Vietnam
+            </h2>
           </a>
         </Link>
-        <h1 className="text-3xl xl:text-4xl mb-2 text-gray-700 dark:text-gray-200 font-display antialiased">
-          Vietnam Coracle
-        </h1>
-        <h2 className="text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display text-xxxs">
-          Independent travel guides to Vietnam
-        </h2>
       </header>
     </>
   );

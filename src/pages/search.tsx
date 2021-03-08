@@ -103,7 +103,7 @@ export default function SearchPage() {
       <Layout>
         <LayoutMain>
           <div className="page-wrap pb-24 font-serif">
-            <h1 className="text-xl my-4 lg:mt-16">
+            <h1 className="text-xl mb-2 lg:mt-24 font-display">
               Search results for “{router.query.query}”
             </h1>
             {results.map(r => (
@@ -125,13 +125,13 @@ export default function SearchPage() {
                   dangerouslySetInnerHTML={{ __html: r.excerpt }}
                 />
                 {r.categories?.nodes.length > 0 && (
-                  <div className="text-sm italic text-gray-500">
+                  <div className="text-gray-500">
                     Posted in{' '}
                     {r.categories.nodes.map((r, index) => (
                       <>
                         {index !== 0 && ', '}
                         <Link href={r.uri}>
-                          <a className="link hover:underline">{r.name}</a>
+                          <a className="italic hover:underline">{r.name}</a>
                         </Link>
                       </>
                     ))}

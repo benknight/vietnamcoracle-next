@@ -29,6 +29,7 @@ module.exports = {
         display: ['Libre Baskerville', 'sans-serif'],
       },
       fontSize: {
+        xxxxs: '9px',
         xxxs: '10px',
         xxs: '11px',
       },

@@ -30,7 +30,7 @@ module.exports = {
       },
       fontSize: {
         xxxs: '10px',
-        xxs: '0.6875rem',
+        xxs: '11px',
       },
       screens: {
         lg: '1025px',

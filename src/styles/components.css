@@ -74,10 +74,8 @@
     @apply text-base font-display leading-relaxed dark:text-gray-300;
   }
 
-  .post a,
-  .post span[style*='color: #3366ff'] {
-    @apply text-blue-700 dark:text-blue-300 !important;
-    @apply hover:underline !important;
+  .post a {
+    @apply link;
   }
 
   .post h1 {
@@ -210,5 +208,9 @@
 
   .post .crp-list {
     @apply hidden;
+  }
+
+  .post .crp-list + div > a {
+    @apply hover:no-underline;
   }
 }

@@ -96,9 +96,9 @@ export default function Nav({ preview = false }: Props) {
                   </div>
                   <div
                     className={cx(
-                      'w-full text-shadow lg:border-b break-words group-hover:border-gray-500 dark:group-hover:border-white',
+                      'w-full text-shadow lg:border-b break-words group-hover:border-gray-500 dark:group-hover:border-gray-600',
                       isCurrent
-                        ? 'border-blue-500 dark:border-blue-400'
+                        ? 'border-blue-500 dark:border-blue-400 group-hover:border-blue-500 dark:group-hover:border-blue-400'
                         : 'border-transparent',
                     )}>
                     <div className="lg:hidden text-xxxs">{link.titleShort}</div>

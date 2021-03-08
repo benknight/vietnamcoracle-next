@@ -5,9 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
-import Tooltip from '@material-ui/core/Tooltip';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import SearchIcon from '@material-ui/icons/Search';
+import SearchForm from './SearchForm';
 
 interface Props {
   preview?: boolean;
@@ -18,7 +17,6 @@ export default function Header({ preview = false }: Props) {
   const [scrolled, setScolled] = useState(false);
   const [showMini, setShowMini] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const isLarge = useMediaQuery('(min-width: 1024px');
 
   useEffect(() => {
@@ -64,10 +62,10 @@ export default function Header({ preview = false }: Props) {
               <a className="inline-flex mr-4 md:mr-2 transform scale-90 lg:scale-100">
                 <Image
                   className="rounded-full"
-                  height={48}
+                  height={42}
                   loading="eager"
                   src="/logo.jpg"
-                  width={48}
+                  width={42}
                 />
               </a>
             </Link>
@@ -79,35 +77,18 @@ export default function Header({ preview = false }: Props) {
                 'left-0 sm:left-auto': !showMini,
               },
             )}>
-            <form
-              className={cx('relative flex-auto', {
-                'w-40 xl:w-44': showMini && !searchFocused,
-                'w-56 xl:w-72': showMini && searchFocused,
-                'w-full xl:w-44': !showMini && !searchFocused,
-                'w-full xl:w-72': !showMini && searchFocused,
-              })}
-              onSubmit={event => {
-                event.preventDefault();
-                router.push({
-                  pathname: '/search',
-                  query: { query: searchQuery },
-                });
-              }}>
-              <div className="absolute top-0 left-0 bottom-0 w-10 flex items-center justify-center pointer-events-none">
-                <SearchIcon classes={{ root: 'w-5 h-5' }} />
-              </div>
-              <input
-                className={cx('form-field w-full h-10 pl-8 pr-1 rounded-full', {
-                  'pr-2': searchFocused,
+            {router.pathname === '/search' ? null : (
+              <SearchForm
+                className={cx({
+                  'w-40 lg:w-28 xl:w-44': showMini && !searchFocused,
+                  'w-56 lg:w-60 xl:w-44': showMini && searchFocused,
+                  'w-full xl:w-44': !showMini && !searchFocused,
+                  'w-full xl:w-72': !showMini && searchFocused,
                 })}
                 onBlur={() => setSearchFocused(false)}
-                onChange={event => setSearchQuery(event.target.value)}
                 onFocus={() => setSearchFocused(true)}
-                placeholder="Search"
-                type="search"
-                value={searchQuery}
               />
-            </form>
+            )}
           </div>
         </div>
       </Wrapper>
@@ -118,7 +99,7 @@ export default function Header({ preview = false }: Props) {
         )}
         ref={ref}>
         <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-          <a className="block">
+          <a className="inline-flex flex-col items-center">
             <Image
               className="rounded-full"
               height={120}
@@ -126,7 +107,7 @@ export default function Header({ preview = false }: Props) {
               src="/logo.jpg"
               width={120}
             />
-            <h1 className="text-3xl xl:text-4xl mb-2 text-gray-700 dark:text-gray-200 font-display antialiased">
+            <h1 className="text-3xl xl:text-4xl my-2 text-gray-700 dark:text-gray-200 font-display antialiased">
               Vietnam Coracle
             </h1>
             <h2 className="text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display text-xxxxs">

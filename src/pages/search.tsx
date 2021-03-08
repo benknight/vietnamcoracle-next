@@ -3,8 +3,9 @@ import _upperFirst from 'lodash/upperFirst';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import Layout, { LayoutMain } from '../components/Layout';
+import SearchForm from '../components/SearchForm';
 import getAPIClient from '../lib/getAPIClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
@@ -60,18 +61,19 @@ const getInitialPageInfo = () => ({
 export default function SearchPage() {
   const [loading, setLoading] = useState(false);
   const [results, setResults] = useState([]);
+  const [query, setQuery] = useState('');
   const [pageInfo, setPageInfo] = useState(getInitialPageInfo());
   const router = useRouter();
 
   useWaitCursor(loading);
 
   const loadResults = () => {
-    if (!router.query.query) return;
+    if (!query) return;
     setLoading(true);
     client
       .request(SEARCH_QUERY, {
         before: pageInfo.startCursor,
-        query: router.query.query,
+        query,
       })
       .then(response => {
         setResults([
@@ -84,28 +86,30 @@ export default function SearchPage() {
   };
 
   useEffect(() => {
-    loadResults();
-  }, [router.query.query]);
-
-  // Reset data when query changes
-  useEffect(() => {
     if (results.length > 0) {
       setResults([]);
       setPageInfo(getInitialPageInfo());
     }
+    setQuery(String(router.query.query) || '');
   }, [router.query.query]);
+
+  useEffect(() => {
+    loadResults();
+  }, [query]);
 
   return (
     <>
       <Head>
-        <title>Search results for {router.query.query}</title>
+        <title>
+          Search results{router.query.query ? ` for ${router.query.query}` : ''}
+        </title>
       </Head>
       <Layout>
         <LayoutMain>
           <div className="page-wrap pb-24 font-serif">
-            <h1 className="text-xl mb-2 lg:mt-24 font-display">
-              Search results for “{router.query.query}”
-            </h1>
+            <div className="max-w-md my-12">
+              <SearchForm />
+            </div>
             {results.map(r => (
               <div className="my-14" key={r.uri}>
                 <div className="flex items-baseline">
@@ -128,12 +132,12 @@ export default function SearchPage() {
                   <div className="text-gray-500">
                     Posted in{' '}
                     {r.categories.nodes.map((r, index) => (
-                      <>
+                      <Fragment key={r.uri}>
                         {index !== 0 && ', '}
                         <Link href={r.uri}>
                           <a className="italic hover:underline">{r.name}</a>
                         </Link>
-                      </>
+                      </Fragment>
                     ))}
                   </div>
                 )}

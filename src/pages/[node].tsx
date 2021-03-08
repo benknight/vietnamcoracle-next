@@ -98,7 +98,7 @@ const PostOrPage = ({ data }) => {
             )}
           </div>
         </LayoutMain>
-        <LayoutSidebar className="bg-gray-100 dark:bg-gray-950">
+        <LayoutSidebar className="bg-gray-50 dark:bg-gray-950">
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>

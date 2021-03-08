@@ -2,6 +2,7 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
+import { useEffect, useMemo, useRef } from 'react';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
@@ -29,8 +30,19 @@ function cleanPostHTML(html: string): string {
 }
 
 const PostOrPage = ({ data }) => {
+  const articleRef = useRef<HTMLDivElement>();
+  const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
   useWaitCursor(router.isFallback);
+
+  useEffect(() => {
+    const crpList = document.querySelector('.crp-list');
+    if (!crpList) return;
+    articleRef.current.insertBefore(
+      relatedPostsRef.current,
+      crpList.nextSibling,
+    );
+  }, []);
 
   if (router.isFallback) {
     return null;
@@ -61,7 +73,7 @@ const PostOrPage = ({ data }) => {
         imgSm={data.contentNode.featuredImage?.node}
         imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
         <h1
-          className={cx('mt-8 mb-2 xl:pl-8 xl:pr-60 font-display', {
+          className={cx('mt-8 mb-2 xl:pl-8 xl:pr-24 font-display', {
             'text-3xl lg:text-5xl': data.contentNode.title.length <= 40,
             'text-3xl lg:text-4xl': data.contentNode.title.length > 40,
           })}
@@ -77,25 +89,25 @@ const PostOrPage = ({ data }) => {
               dangerouslySetInnerHTML={{
                 __html: cleanPostHTML(data.contentNode.content),
               }}
+              ref={articleRef}
             />
-            {data.contentNode.customRelatedPosts && (
-              <>
-                <div className="page-heading mt-12">Related Posts:</div>
-                <div className="py-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2">
-                  {data.contentNode.customRelatedPosts.nodes.map(post => (
-                    <PostCard key={post.slug} post={post} flex />
-                  ))}
-                </div>
-              </>
-            )}
-            {data.contentNode.comments.nodes.length > 0 && (
+            {data?.contentNode.customRelatedPosts ? (
+              <div
+                className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
+                ref={relatedPostsRef}>
+                {data.contentNode.customRelatedPosts.nodes.map(post => (
+                  <PostCard key={post.slug} post={post} flex />
+                ))}
+              </div>
+            ) : null}
+            {data.contentNode.comments.nodes.length > 0 ? (
               <>
                 <div className="page-heading mt-12 mb-4">
                   {data.contentNode.commentCount} Comments
                 </div>
                 <CommentThread comments={data.contentNode.comments.nodes} />
               </>
-            )}
+            ) : null}
           </div>
         </LayoutMain>
         <LayoutSidebar className="bg-gray-50 dark:bg-gray-950">

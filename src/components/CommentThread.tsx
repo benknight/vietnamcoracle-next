@@ -15,7 +15,7 @@ const CommentHeader = ({ comment, isReply = false }) => (
         src={comment.author.node.avatar.url}
       />
     )}
-    <div className="flex-auto leading-none">
+    <div className="flex-auto">
       {isReply && <span className="opacity-50">➥ </span>}
       <strong
         className="text-black dark:text-white"

@@ -69,7 +69,7 @@ export default function Nav({ preview = false }: Props) {
           className="
             flex justify-center flex-auto
             px-1 lg:px-16 max-w-screen-lg
-            text-sm md:text-base font-display tracking-wide leading-tight
+            font-display tracking-wide leading-tight
             border-t border-gray-300 dark:border-gray-700"
           style={{ marginTop: '-1px' }}>
           {links.map(link => {

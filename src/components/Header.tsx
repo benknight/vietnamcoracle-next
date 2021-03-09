@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import MenuIcon from '@material-ui/icons/Menu';
 import SearchForm from './SearchForm';
 
 interface Props {
@@ -55,35 +56,41 @@ export default function Header({ preview = false }: Props) {
               'flex items-center h-14 lg:h-16 px-2',
               'transform transition-transform duration-200 ease-out',
               {
-                '-translate-x-16': !showMini,
+                '-translate-x-14': !showMini,
               },
             )}>
             <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-              <a className="inline-flex mr-4 md:mr-2 transform scale-90 lg:scale-100">
+              <a className="inline-flex mr-2 transform scale-90 lg:scale-100">
                 <Image
                   className="rounded-full"
-                  height={42}
+                  height={44}
                   loading="eager"
                   src="/logo.jpg"
-                  width={42}
+                  width={44}
                 />
               </a>
             </Link>
+            <button className="font-sans flex items-center px-1">
+              <MenuIcon className="w-7 h-7 mr-2" fontSize="large" />
+              <span className="uppercase text-sm tracking-widest lg:hidden xl:inline">
+                Menu
+              </span>
+            </button>
           </div>
           <div
             className={cx(
-              'absolute top-0 right-0 flex items-center h-14 lg:h-16 px-2 xl:px-4 text-gray-400',
+              'z-20 absolute top-0 right-0 flex items-center h-14 lg:h-16 px-2 xl:px-4 text-gray-400',
               {
-                'left-0 sm:left-auto': !showMini,
+                'left-auto': !searchFocused,
+                'left-0 lg:left-auto': searchFocused,
               },
             )}>
             {router.pathname === '/search' ? null : (
               <SearchForm
                 className={cx({
-                  'w-40 lg:w-28 xl:w-44': showMini && !searchFocused,
-                  'w-56 lg:w-60 xl:w-44': showMini && searchFocused,
-                  'w-full xl:w-44': !showMini && !searchFocused,
-                  'w-full xl:w-72': !showMini && searchFocused,
+                  'w-32 lg:w-28 xl:w-44': !searchFocused,
+                  'w-full lg:w-60 xl:w-44': showMini && searchFocused,
+                  'w-full xl:w-80': !showMini && searchFocused,
                 })}
                 onBlur={() => setSearchFocused(false)}
                 onFocus={() => setSearchFocused(true)}

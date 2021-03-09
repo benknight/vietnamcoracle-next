@@ -41,7 +41,7 @@ const CommentReplies = ({ all, comment }) => {
   return (
     <ol>
       {replies.map(reply => (
-        <li className="mt-16 md:pl-8" key={reply.id}>
+        <li className="mt-12 md:pl-8" key={reply.id}>
           <CommentHeader comment={reply} isReply />
           <div
             className="comment"

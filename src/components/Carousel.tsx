@@ -41,12 +41,14 @@ export default function Carousel({ className, children, ...props }) {
   return (
     <div {...props} className={cx(className, 'relative overflow-hidden')}>
       <div
-        className="overflow-x-auto flex w-full h-full -mb-4 pb-14"
+        className="overflow-x-auto flex flex-nowrap w-full h-full -mb-4 pb-14"
+        dir="ltr"
         ref={ref}
         style={{ scrollSnapType: 'x mandatory' }}>
         {children}
       </div>
       {(() => {
+        if (slideCount === 0) return null;
         const buttons = [];
         for (let i = 0; i < slideCount; i++) {
           buttons.push(

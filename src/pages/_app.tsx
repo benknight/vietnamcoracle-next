@@ -28,6 +28,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const handleRouteChange = (url, { shallow }) => {
+      // TODO: Improve this
       window.requestAnimationFrame(() => {
         if (window.scrollY < 317) {
           window.scrollTo(0, 317);

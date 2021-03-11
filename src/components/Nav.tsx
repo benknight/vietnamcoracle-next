@@ -59,18 +59,14 @@ export default function Nav({ preview = false }: Props) {
     <>
       <nav
         className={cx(
-          'fixed bottom-0 lg:sticky lg:bottom-auto lg:top-0 z-20 flex justify-center w-full h-12 lg:h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow',
+          'fixed bottom-0 lg:sticky lg:bottom-auto lg:top-0 z-20 flex justify-center w-full h-12 lg:h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow-inner lg:shadow',
           {
             'lg:top-0': !preview,
             'lg:top-8': preview,
           },
         )}>
         <div
-          className="
-            flex justify-center flex-auto
-            px-1 lg:px-16 max-w-screen-lg
-            font-display tracking-wide leading-tight
-            border-t border-gray-300 dark:border-gray-700"
+          className="flex justify-center flex-auto px-1 lg:px-16 font-sans lg:font-display tracking-wide leading-tight border-t border-gray-300 dark:border-gray-700"
           style={{ marginTop: '-1px' }}>
           {links.map(link => {
             const path = router.asPath;

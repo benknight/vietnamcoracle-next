@@ -3,7 +3,7 @@ import _debounce from 'lodash/debounce';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, Children } from 'react';
 import Headroom from 'react-headroom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -13,12 +13,20 @@ interface Props {
   preview?: boolean;
 }
 
+function ConditionalHeadroom({ children }) {
+  const isSmall = useMediaQuery('(max-width: 1024px)');
+  if (typeof window !== 'undefined' && isSmall) {
+    return <Headroom>{children}</Headroom>;
+  }
+  return children;
+}
+
 export default function Header({ preview = false }: Props) {
   const ref = useRef<HTMLElement>();
   const [scrolled, setScolled] = useState(false);
   const [showMini, setShowMini] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
-  const isLarge = useMediaQuery('(min-width: 1024px');
+  const router = useRouter();
 
   useEffect(() => {
     const listener = _debounce(() => {
@@ -35,12 +43,9 @@ export default function Header({ preview = false }: Props) {
     return () => window.removeEventListener('scroll', listener);
   }, []);
 
-  const router = useRouter();
-  const Wrapper = isLarge ? 'div' : Headroom;
-
   return (
     <>
-      <Wrapper>
+      <ConditionalHeadroom>
         <div
           className={cx(
             'w-full h-14 lg:h-auto lg:fixed z-30 bg-white dark:bg-gray-900',
@@ -52,7 +57,7 @@ export default function Header({ preview = false }: Props) {
           )}>
           <div
             className={cx(
-              'z-10 absolute top-0 left-0 overflow-hidden',
+              'z-20 absolute top-0 left-0 overflow-hidden',
               'flex items-center h-14 lg:h-16 px-2',
               'transform transition-transform duration-200 ease-out',
               {
@@ -79,26 +84,25 @@ export default function Header({ preview = false }: Props) {
           </div>
           <div
             className={cx(
-              'z-20 absolute top-0 right-0 flex items-center h-14 lg:h-16 px-2 xl:px-4 text-gray-400',
+              'z-30 absolute top-0 right-0 flex items-center h-14 lg:h-16 px-2 xl:px-4 text-gray-400',
               {
                 'left-auto': !searchFocused,
                 'left-0 lg:left-auto': searchFocused,
               },
             )}>
-            {router.pathname === '/search' ? null : (
-              <SearchForm
-                className={cx({
-                  'w-32 lg:w-28 xl:w-44': !searchFocused,
-                  'w-full lg:w-60 xl:w-44': showMini && searchFocused,
-                  'w-full xl:w-80': !showMini && searchFocused,
-                })}
-                onBlur={() => setSearchFocused(false)}
-                onFocus={() => setSearchFocused(true)}
-              />
-            )}
+            <SearchForm
+              className={cx({
+                hidden: router.pathname === '/search',
+                'w-32 lg:w-32 xl:w-44': !searchFocused,
+                'w-full lg:w-60 xl:w-44': showMini && searchFocused,
+                'w-full xl:w-80': !showMini && searchFocused,
+              })}
+              onBlur={() => setSearchFocused(false)}
+              onFocus={() => setSearchFocused(true)}
+            />
           </div>
         </div>
-      </Wrapper>
+      </ConditionalHeadroom>
       <header
         className={cx(
           'py-12 sm:py-16 px-3 lg:py-12 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 lg:bg-none',

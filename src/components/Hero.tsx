@@ -49,7 +49,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
             />
           </div>
           {hasChildren && (
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-black-25 to-transparent mb-12"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-gray-950 via-black-25 to-transparent mb-12 pointer-events-none"></div>
           )}
         </div>
       )}

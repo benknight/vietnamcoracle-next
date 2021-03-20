@@ -165,6 +165,10 @@
     @apply dark:text-white !important;
   }
 
+  .post span[style*='color: #808080'] {
+    @apply text-gray-400 dark:text-gray-400 !important;
+  }
+
   .post strong {
     @apply dark:text-white;
   }

@@ -22,7 +22,7 @@ export default function Footer({ data }) {
           “Excellent independent travel advice from a long-term resident”
         </div>
       </div>
-      <section className="px-4 pb-32 lg:px-0 lg:pb-12">
+      <section className="px-4 pb-12 lg:px-0">
         <ul className="flex flex-wrap justify-center uppercase text-xxs tracking-widest">
           {data.footerMenu?.menuItems?.nodes.map(item => (
             <Link key={item.path} href={item.path}>

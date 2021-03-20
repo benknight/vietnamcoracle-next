@@ -160,13 +160,17 @@
     @apply text-sm py-2 px-1 leading-tight;
   }
 
-  .post span[style*='color: #333333'],
-  .post span[style*='color: #000000'] {
+  .post span[style*='#333333'],
+  .post span[style*='#000000'] {
     @apply dark:text-white !important;
   }
 
-  .post span[style*='color: #808080'] {
-    @apply text-gray-400 dark:text-gray-400 !important;
+  .post span[style*='#808080'] {
+    @apply text-gray-400 !important;
+  }
+
+  .post span[style*='#ff0000'] {
+    @apply text-red-600 dark:text-red-500 !important;
   }
 
   .post strong {
@@ -174,7 +178,7 @@
   }
 
   .post ul {
-    @apply list-disc pl-12;
+    @apply list-disc pl-8;
   }
 
   .post .aligncenter {
@@ -220,6 +224,6 @@
 
   .post .crp-list + div > a {
     color: inherit !important;
-    @apply hover:no-underline;
+    @apply hover:no-underline !important;
   }
 }

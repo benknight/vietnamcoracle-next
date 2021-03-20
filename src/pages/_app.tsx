@@ -28,10 +28,11 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useEffect(() => {
     const handleRouteChange = (url, { shallow }) => {
-      // TODO: Improve this
+      const header = document.querySelector('header');
+      const { height: headerHeight } = header.getBoundingClientRect();
       window.requestAnimationFrame(() => {
-        if (window.scrollY < 317) {
-          window.scrollTo(0, 317);
+        if (window.scrollY < headerHeight) {
+          window.scrollTo(0, headerHeight);
         }
       });
     };

@@ -60,7 +60,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
             'absolute inset-0 text-gray-100 pb-4 lg:pb-5 dark:pb-2 pointer-events-none': showImg,
           },
         )}>
-        <div className="pointer-events-auto">{children}</div>
+        <div className="flex-auto pointer-events-auto">{children}</div>
       </div>
     </section>
   );

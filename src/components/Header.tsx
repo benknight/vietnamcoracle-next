@@ -6,7 +6,6 @@ import { useRouter } from 'next/router';
 import { useRef, useState, useEffect, Children } from 'react';
 import Headroom from 'react-headroom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchForm from './SearchForm';
 
 interface Props {
@@ -65,7 +64,7 @@ export default function Header({ preview = false }: Props) {
               },
             )}>
             <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-              <a className="inline-flex mr-2 transform scale-90 xl:scale-100">
+              <a className="flex items-center transform scale-90 xl:scale-100">
                 <Image
                   className="rounded-full"
                   height={44}
@@ -73,29 +72,29 @@ export default function Header({ preview = false }: Props) {
                   src="/logo.jpg"
                   width={44}
                 />
+                <h1
+                  className={cx('ml-3 font-semibold font-display', {
+                    hidden: !showMini,
+                  })}>
+                  Vietnam Coracle
+                </h1>
               </a>
             </Link>
-            <button className="font-sans flex items-center px-1">
-              <MenuIcon className="w-7 h-7 mr-2" fontSize="large" />
-              <span className="uppercase text-sm tracking-widest xl:hidden xl:inline">
-                Menu
-              </span>
-            </button>
           </div>
           <div
             className={cx(
               'z-30 absolute top-0 right-0 flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
               {
-                'left-auto': !searchFocused,
-                'left-0 xl:left-auto': searchFocused,
+                'left-auto': !searchFocused && showMini,
+                'left-0 lg:left-auto': searchFocused || !showMini,
               },
             )}>
             <SearchForm
               className={cx({
                 hidden: router.pathname === '/search',
-                'w-32 xl:w-32 xl:w-44': !searchFocused,
-                'w-full xl:w-60 xl:w-44': showMini && searchFocused,
-                'w-full xl:w-80': !showMini && searchFocused,
+                'w-28': !searchFocused && showMini,
+                'w-full lg:w-80 xl:w-44': searchFocused && showMini,
+                'w-full lg:w-80': searchFocused && !showMini,
               })}
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}
@@ -105,7 +104,7 @@ export default function Header({ preview = false }: Props) {
       </ConditionalHeadroom>
       <header
         className={cx(
-          'py-12 sm:py-16 px-3 xl:py-12 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 xl:bg-none',
+          'py-12 sm:py-16 px-3 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 xl:bg-none',
           { 'mt-8': preview },
         )}
         ref={ref}>

@@ -20,13 +20,15 @@ const PostCard = ({ flex = false, post }: Props) => {
   const swatch = swatches[post.featuredImage.node.id];
   return (
     <Link href={`/${post.slug}`}>
-      <a className="relative overflow-hidden flex flex-col md:shadow lg:shadow rounded-lg w-full">
+      <a className="relative overflow-hidden flex flex-col md:shadow lg:shadow w-full rounded-lg">
         <div
           className={cx(
             'relative block w-full bg-opacity-10',
-            'aspect-w-1 aspect-h-1',
-            'md:aspect-w-4 md:aspect-h-3 lg:aspect-w-4 lg:aspect-h-3',
-            'overflow-hidden rounded-xl md:rounded-none',
+            'overflow-hidden rounded-lg md:rounded-none',
+            {
+              'aspect-w-1 aspect-h-1 md:aspect-w-4 md:aspect-h-3': !flex,
+              'aspect-w-4 aspect-h-3': flex,
+            },
           )}
           style={{
             backgroundColor: swatch,

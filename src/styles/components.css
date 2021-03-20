@@ -18,7 +18,7 @@
   }
 
   .link {
-    @apply text-blue-700 dark:text-blue-300 hover:underline;
+    @apply text-blue-700 dark:text-blue-400 hover:underline !important;
   }
 
   .link:visited {
@@ -74,7 +74,8 @@
     @apply text-base font-display leading-relaxed dark:text-gray-300;
   }
 
-  .post a {
+  .post a,
+  .post *[style*='color: #3366ff'] {
     @apply link;
   }
 
@@ -84,25 +85,17 @@
   }
 
   .post h2 {
-    @apply sm:-mt-4 pb-8 font-serif tracking-wider leading-loose;
+    @apply sm:-mt-4 pb-4 lg:pb-8 font-display tracking-wider leading-loose;
   }
 
   .post h2 strong {
-    counter-reset: intro-links;
     font-size: 0;
     line-height: 0;
     @apply mt-4 sm:mt-1 flex flex-col items-start sm:block sm:text-base;
   }
 
   .post h2 strong a {
-    counter-increment: intro-links;
-    @apply font-display;
-    @apply text-base sm:text-lg leading-relaxed mb-2 sm:mx-2 border-b-2 border-gray-300 dark:border-gray-700;
-    @apply hover:no-underline !important;
-  }
-
-  .post h2 strong a::before {
-    content: counter(intro-links) '. ';
+    @apply text-base sm:text-lg leading-relaxed mb-2 sm:mx-2;
   }
 
   @screen sm {
@@ -136,11 +129,22 @@
 
   .post p,
   .post ul {
-    @apply mb-5 font-serif;
+    @apply mb-5 font-sans xl:font-serif;
+  }
+
+  .post span[style*='Georgia'] {
+    font-family: inherit !important;
+  }
+
+  .post span[style*='25px'],
+  .post span[style*='26px'],
+  .post span[style*='27px'],
+  .post span[style*='28px'] {
+    @apply font-display !important;
   }
 
   .post > p:first-of-type {
-    @apply text-base mt-6 dark:mt-0;
+    @apply text-base font-display mt-6 dark:mt-0;
   }
 
   /* Images & captions */
@@ -211,7 +215,7 @@
   }
 
   .post .crp-list + div > a {
-    color: inherit;
+    color: inherit !important;
     @apply hover:no-underline;
   }
 }

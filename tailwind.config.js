@@ -31,7 +31,7 @@ module.exports = {
         xxs: '11px',
       },
       screens: {
-        lg: '1025px',
+        xl: '1200px',
       },
       width: {
         '1/7': '14.2857143%',

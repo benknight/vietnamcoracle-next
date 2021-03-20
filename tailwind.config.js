@@ -1,11 +1,8 @@
 const colors = require('tailwindcss/colors');
+const defaultTheme = require('tailwindcss/defaultTheme');
 
 module.exports = {
   darkMode: 'media',
-  future: {
-    purgeLayersByDefault: true,
-    removeDeprecatedGapUtilities: true,
-  },
   plugins: [require('@tailwindcss/aspect-ratio')],
   purge: {
     content: ['./src/**/*.{js,jsx,ts,tsx}'],
@@ -26,7 +23,7 @@ module.exports = {
         'near-black': 'hsl(0deg 0% 2%)',
       },
       fontFamily: {
-        display: ['Libre Baskerville', 'sans-serif'],
+        display: ['Libre Baskerville', ...defaultTheme.fontFamily.serif],
       },
       fontSize: {
         xxxxs: '9px',

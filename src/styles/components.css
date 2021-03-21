@@ -66,10 +66,6 @@
     }
   }
 
-  .post-card-excerpt a {
-    @apply hidden;
-  }
-
   .post {
     @apply text-base font-display leading-relaxed dark:text-gray-300;
   }
@@ -225,5 +221,17 @@
   .post .crp-list + div > a {
     color: inherit !important;
     @apply hover:no-underline !important;
+  }
+
+  .post .crp-list + div p {
+    margin-bottom: 0 !important;
+  }
+
+  .post-card-img-fx {
+    mask-image: linear-gradient(to top, black, black 50%, transparent);
+  }
+
+  .post-card-excerpt a {
+    @apply hidden;
   }
 }

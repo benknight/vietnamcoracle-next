@@ -25,7 +25,7 @@ export type BlockType = {
 export const BlockContent = props => (
   <div
     className="
-      mx-auto mb-8 px-6 max-w-sm lg:text-sm xl:text-base font-serif dark:text-gray-400">
+      mx-auto mb-8 px-3 max-w-sm lg:text-sm xl:text-base font-serif dark:text-gray-400">
     {props.children}
   </div>
 );

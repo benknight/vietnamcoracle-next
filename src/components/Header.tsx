@@ -95,7 +95,7 @@ export default function Header({ preview = false }: Props) {
             <SearchForm
               className={cx({
                 hidden: router.pathname === '/search',
-                'w-28': !searchFocused && showMini,
+                'w-32': !searchFocused && showMini,
                 'w-full lg:w-80 xl:w-44': searchFocused && showMini,
                 'w-full lg:w-80': searchFocused && !showMini,
               })}

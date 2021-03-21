@@ -57,25 +57,28 @@ export default function Header({ preview = false }: Props) {
           <div
             className={cx(
               'z-20 absolute top-0 left-0 overflow-hidden',
-              'flex items-center h-14 xl:h-16 px-2',
+              'flex items-center h-14 xl:h-16 px-2 xl:px-4',
               'transform transition-transform duration-200 ease-out',
               {
-                '-translate-x-14': !showMini,
+                '-translate-x-14 xl:-translate-x-16': !showMini,
               },
             )}>
             <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-              <a className="flex items-center transform scale-90 xl:scale-100">
+              <a className="flex items-center">
                 <Image
-                  className="rounded-full"
+                  className="rounded-full transform scale-90 lg:scale-100"
                   height={44}
                   loading="eager"
                   src="/logo.jpg"
                   width={44}
                 />
                 <h1
-                  className={cx('ml-3 font-semibold font-display', {
-                    hidden: !showMini,
-                  })}>
+                  className={cx(
+                    'ml-2 font-semibold font-display tracking-tight',
+                    {
+                      hidden: !showMini,
+                    },
+                  )}>
                   Vietnam Coracle
                 </h1>
               </a>

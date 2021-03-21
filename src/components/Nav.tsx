@@ -98,7 +98,7 @@ export default function Nav({ preview = false }: Props) {
                         : 'border-transparent',
                     )}>
                     <div className="xl:hidden text-xxxs">{link.titleShort}</div>
-                    <div className="hidden xl:block">{link.title}</div>
+                    <div className="hidden text-sm xl:block">{link.title}</div>
                   </div>
                 </a>
               </Link>

@@ -57,7 +57,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
         className={cx(
           'mx-auto pt-5 lg:pt-7 page-wrap flex items-end max-w-screen-2xl',
           {
-            'absolute inset-0 text-gray-100 pb-4 lg:pb-5 dark:pb-2 pointer-events-none': showImg,
+            'absolute inset-0 text-gray-100 pb-4 lg:pb-5 pointer-events-none': showImg,
           },
         )}>
         <div className="flex-auto pointer-events-auto">{children}</div>

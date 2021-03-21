@@ -51,18 +51,6 @@ export default function Subscribe({ data: block }: Props) {
 
   return (
     <Block>
-      <div className="flex justify-center mb-4">
-        <a href={block.link.url}>
-          <Image
-            alt=""
-            className="h-full rounded-full object-cover"
-            height="96"
-            layout="fixed"
-            src={block.image.sourceUrl}
-            width="96"
-          />
-        </a>
-      </div>
       <BlockTitle>{block.title}</BlockTitle>
       <BlockContent>
         <p>{block.description}</p>

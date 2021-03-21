@@ -50,16 +50,6 @@ const PostCard = ({ flex = false, post }: Props) => {
               'p-1 pt-2 pr-2': !flex,
             },
           )}>
-          <div className="hidden md:block">
-            <Image
-              alt=""
-              className="post-card-img-fx object-bottom object-cover"
-              layout="fill"
-              loading="eager"
-              src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150,b_black,o_25/${post.featuredImage.node.sourceUrlFx}`}
-              unoptimized
-            />
-          </div>
           <div className="relative antialiased">
             <h3
               className={cx(

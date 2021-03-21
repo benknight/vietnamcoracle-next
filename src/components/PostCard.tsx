@@ -22,11 +22,7 @@ const PostCard = ({ flex = false, post }: Props) => {
     <Link href={`/${post.slug}`}>
       <a className="relative overflow-hidden flex flex-col shadow w-full rounded-lg bg-gray-900">
         <div
-          className={cx(
-            'relative block w-full bg-opacity-10',
-            'overflow-hidden rounded-lg md:rounded-none',
-            'aspect-w-1 aspect-h-1',
-          )}
+          className="relative block w-full bg-opacity-10 aspect-w-1 aspect-h-1"
           style={{
             backgroundColor: swatch,
           }}>
@@ -41,7 +37,7 @@ const PostCard = ({ flex = false, post }: Props) => {
         </div>
         <div
           className={cx(
-            'relative -mt-16 lg:-mt-24 md:px-5 md:py-6',
+            'relative -mt-10 lg:-mt-24 md:px-5 md:py-6',
             'flex-auto flex items-end',
             'md:text-white',
             'font-medium rounded-b',
@@ -56,8 +52,8 @@ const PostCard = ({ flex = false, post }: Props) => {
                 'font-display leading-tight md:text-xl xl:text-2xl text-white',
                 {
                   'text-2xl': flex,
-                  'text-xs sm:text-base': !flex && post.title.length > 40,
-                  'text-xs sm:text-lg': !flex && post.title.length <= 40,
+                  'text-sm sm:text-base': !flex && post.title.length > 40,
+                  'text-base sm:text-lg': !flex && post.title.length <= 40,
                 },
               )}>
               {post.title}

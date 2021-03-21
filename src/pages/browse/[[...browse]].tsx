@@ -67,7 +67,7 @@ const Browse = ({ data, swatches }) => {
             )}
             {category.children.nodes.length > 0 && (
               <div className="flex-auto w-full md:w-auto">
-                <div className="relative inline-flex items-center justify-between w-full md:w-auto h-10 mt-3 p-3 rounded text-sm border bg-transparent tracking-wide leading-none whitespace-nowrap">
+                <div className="relative inline-flex items-center justify-between w-full md:w-auto h-10 mt-3 p-3 rounded text-sm border bg-black bg-opacity-50 tracking-wide leading-none whitespace-nowrap">
                   Browse subcategories…
                   <ArrowDropDownIcon className="ml-2" />
                   <select

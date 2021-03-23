@@ -3,6 +3,7 @@ import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef } from 'react';
+import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
@@ -100,9 +101,15 @@ const PostOrPage = ({ data }) => {
                 ))}
               </div>
             ) : null}
+            <div className="page-heading mt-8 md:mt-12 mb-4">
+              Leave a Comment
+            </div>
+            <div className="mb-12">
+              <CommentForm post={data.contentNode.databaseId} />
+            </div>
             {data.contentNode.comments.nodes.length > 0 ? (
               <>
-                <div className="page-heading mt-12 mb-4">
+                <div className="page-heading mb-4">
                   {data.contentNode.commentCount} Comments
                 </div>
                 <CommentThread comments={data.contentNode.comments.nodes} />
@@ -133,6 +140,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
         ... on Page {
           commentCount
           content
+          databaseId
           title
           comments(first: 1000) {
             nodes {
@@ -148,6 +156,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
         ... on Post {
           commentCount
           content
+          databaseId
           title
           comments(first: 1000) {
             nodes {

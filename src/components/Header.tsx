@@ -13,7 +13,7 @@ interface Props {
 }
 
 function ConditionalHeadroom({ children }) {
-  const isSmall = useMediaQuery('(max-width: 1023px)');
+  const isSmall = useMediaQuery('(max-width: 1199px)');
   if (typeof window !== 'undefined' && isSmall) {
     return <Headroom>{children}</Headroom>;
   }
@@ -31,9 +31,9 @@ export default function Header({ preview = false }: Props) {
     const listener = _debounce(() => {
       // NOTE: To avoid complexity the following breakpoint value is hardcoded
       // https://tailwindcss.com/docs/configuration#referencing-in-java-script
-      const { matches: isLarge } = window.matchMedia('(min-width: 1024px)');
+      const { matches } = window.matchMedia('(min-width: 1024px)');
       const thresholdHeight =
-        (isLarge ? 1 : 0.75) * ref.current.getBoundingClientRect().height;
+        (matches ? 1 : 0.75) * ref.current.getBoundingClientRect().height;
       setScolled(window.scrollY > 0);
       setShowMini(window.scrollY >= thresholdHeight);
     }, 10);
@@ -47,7 +47,7 @@ export default function Header({ preview = false }: Props) {
       <ConditionalHeadroom>
         <div
           className={cx(
-            'w-full h-14 lg:h-auto lg:fixed z-30 bg-white dark:bg-gray-900',
+            'w-full h-14 xl:h-auto xl:fixed z-30 bg-white dark:bg-gray-900',
             {
               shadow: scrolled,
               'top-0': !preview,
@@ -57,16 +57,16 @@ export default function Header({ preview = false }: Props) {
           <div
             className={cx(
               'z-20 absolute top-0 left-0 overflow-hidden',
-              'flex items-center h-14 lg:h-16 px-2 lg:px-4',
+              'flex items-center h-14 xl:h-16 px-2 xl:px-4',
               'transform transition-transform duration-200 ease-out',
               {
-                '-translate-x-14 lg:-translate-x-16': !showMini,
+                '-translate-x-14 xl:-translate-x-16': !showMini,
               },
             )}>
             <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
               <a className="flex items-center">
                 <Image
-                  className="rounded-full transform scale-90 lg:scale-100"
+                  className="rounded-full transform scale-90 xl:scale-100"
                   height={44}
                   loading="eager"
                   src="/logo.jpg"
@@ -86,10 +86,10 @@ export default function Header({ preview = false }: Props) {
           </div>
           <div
             className={cx(
-              'z-30 absolute top-0 right-0 flex items-center h-14 lg:h-16 px-2 lg:px-4 text-gray-400',
+              'z-30 absolute top-0 right-0 flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
               {
                 'left-auto': !searchFocused && showMini,
-                'left-0 lg:left-auto': searchFocused || !showMini,
+                'left-0 xl:left-auto': searchFocused || !showMini,
               },
             )}>
             <SearchForm

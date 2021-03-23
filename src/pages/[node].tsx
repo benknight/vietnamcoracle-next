@@ -75,10 +75,10 @@ const PostOrPage = ({ data }) => {
         imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
         <h1
           className={cx(
-            'max-w-3xl lg:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display',
+            'max-w-3xl xl:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display',
             {
-              'text-3xl lg:text-5xl': data.contentNode.title.length <= 40,
-              'text-3xl lg:text-4xl': data.contentNode.title.length > 40,
+              'text-4xl xl:text-5xl': data.contentNode.title.length <= 40,
+              'text-3xl xl:text-4xl': data.contentNode.title.length > 40,
             },
           )}
           id="top">
@@ -88,36 +88,38 @@ const PostOrPage = ({ data }) => {
       <Layout>
         <LayoutMain>
           <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
-            <article
-              className="post max-w-3xl lg:max-w-4xl mx-auto"
-              dangerouslySetInnerHTML={{
-                __html: cleanPostHTML(data.contentNode.content),
-              }}
-              ref={articleRef}
-            />
-            {data?.contentNode.customRelatedPosts ? (
-              <div
-                className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
-                ref={relatedPostsRef}>
-                {data.contentNode.customRelatedPosts.nodes.map(post => (
-                  <PostCard key={post.slug} post={post} flex />
-                ))}
-              </div>
-            ) : null}
-            <div className="page-heading mt-8 md:mt-12 mb-4">
-              Leave a Comment
-            </div>
-            <div className="mb-12">
-              <CommentForm post={data.contentNode.databaseId} />
-            </div>
-            {data.contentNode.comments.nodes.length > 0 ? (
-              <>
-                <div className="page-heading mb-4">
-                  {data.contentNode.commentCount} Comments
+            <div className="max-w-3xl xl:max-w-4xl mx-auto">
+              <article
+                className="post"
+                dangerouslySetInnerHTML={{
+                  __html: cleanPostHTML(data.contentNode.content),
+                }}
+                ref={articleRef}
+              />
+              {data?.contentNode.customRelatedPosts ? (
+                <div
+                  className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
+                  ref={relatedPostsRef}>
+                  {data.contentNode.customRelatedPosts.nodes.map(post => (
+                    <PostCard key={post.slug} post={post} flex />
+                  ))}
                 </div>
-                <CommentThread comments={data.contentNode.comments.nodes} />
-              </>
-            ) : null}
+              ) : null}
+              <div className="page-heading mt-8 md:mt-12 mb-4">
+                Leave a Comment
+              </div>
+              <div className="mb-12">
+                <CommentForm post={data.contentNode.databaseId} />
+              </div>
+              {data.contentNode.comments.nodes.length > 0 ? (
+                <>
+                  <div className="page-heading mb-4">
+                    {data.contentNode.commentCount} Comments
+                  </div>
+                  <CommentThread comments={data.contentNode.comments.nodes} />
+                </>
+              ) : null}
+            </div>
           </div>
         </LayoutMain>
         <LayoutSidebar className="bg-gray-50 dark:bg-gray-950">

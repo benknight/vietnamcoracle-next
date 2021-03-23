@@ -60,7 +60,8 @@ const PostCard = ({ flex = false, post }: Props) => {
             </h3>
             <div
               className={cx(
-                'post-card-excerpt font-serif mt-2 text-sm md:text-xs lg:text-sm text-gray-200',
+                'post-card-excerpt',
+                'mt-2 font-sans xl:font-serif text-sm md:text-xs lg:text-sm text-gray-400',
                 { 'hidden md:line-clamp': !flex },
               )}
               dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>

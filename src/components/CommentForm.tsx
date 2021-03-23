@@ -103,7 +103,7 @@ export default function CommentForm({ post }: Props) {
               required
             />
           </label>
-          <label className="flex items-baseline select-none cursor-pointer">
+          <label className="flex items-center select-none cursor-pointer">
             <Field
               className="mr-2 cursor-pointer"
               name="subscribe"

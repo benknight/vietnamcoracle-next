@@ -74,19 +74,22 @@ const PostOrPage = ({ data }) => {
         imgSm={data.contentNode.featuredImage?.node}
         imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
         <h1
-          className={cx('mt-8 mb-2 xl:pl-8 xl:pr-24 font-display', {
-            'text-3xl lg:text-5xl': data.contentNode.title.length <= 40,
-            'text-3xl lg:text-4xl': data.contentNode.title.length > 40,
-          })}
+          className={cx(
+            'max-w-3xl lg:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display',
+            {
+              'text-3xl lg:text-5xl': data.contentNode.title.length <= 40,
+              'text-3xl lg:text-4xl': data.contentNode.title.length > 40,
+            },
+          )}
           id="top">
           {data.contentNode.title}
         </h1>
       </Hero>
       <Layout>
         <LayoutMain>
-          <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg max-w-5xl">
+          <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
             <article
-              className="post"
+              className="post max-w-3xl lg:max-w-4xl mx-auto"
               dangerouslySetInnerHTML={{
                 __html: cleanPostHTML(data.contentNode.content),
               }}

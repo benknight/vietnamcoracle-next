@@ -70,7 +70,7 @@ const Collection = ({ data }) => {
           ref={scrollAreaRef as RefObject<HTMLOListElement>}>
           {posts.map((post, index) => (
             <li
-              className="flex flex-shrink-0 w-3/7 pr-3"
+              className="flex flex-shrink-0 w-3/7 md:w-3/8 lg:w-3/7 pr-3 md:pr-4 lg:pr-3"
               title={post.slug}
               key={post.slug}>
               <PostCard post={post} />

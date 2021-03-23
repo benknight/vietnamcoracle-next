@@ -4,7 +4,7 @@ import Hero from './Hero';
 
 const Slider = ({ data }) => {
   return (
-    <Carousel className="text-gray-900 bg-white dark:bg-gray-950">
+    <Carousel className="text-gray-900 bg-white dark:bg-gray-950 max-w-screen-2xl mx-auto">
       {data.posts
         .filter(
           post =>

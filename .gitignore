@@ -52,6 +52,7 @@ typings/
 *.tgz
 
 # dotenv environment variable files
+.env
 .env*.local
 
 # Mac files
@@ -70,3 +71,4 @@ yarn-error.log
 out
 
 TODO
+.vercel

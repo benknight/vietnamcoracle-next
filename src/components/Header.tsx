@@ -23,9 +23,10 @@ function ConditionalHeadroom({ children }) {
 export default function Header({ preview = false }: Props) {
   const ref = useRef<HTMLElement>();
   const [scrolled, setScolled] = useState(false);
-  const [showMini, setShowMini] = useState(false);
+  const [aboveThreshold, setAboveThreshold] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
+  const showMini = router.asPath !== '/' || aboveThreshold;
 
   useEffect(() => {
     const listener = _debounce(() => {
@@ -35,7 +36,7 @@ export default function Header({ preview = false }: Props) {
       const thresholdHeight =
         (matches ? 1 : 0.75) * ref.current.getBoundingClientRect().height;
       setScolled(window.scrollY > 0);
-      setShowMini(window.scrollY >= thresholdHeight);
+      setAboveThreshold(window.scrollY >= thresholdHeight);
     }, 10);
     listener();
     window.addEventListener('scroll', listener);
@@ -109,6 +110,7 @@ export default function Header({ preview = false }: Props) {
         className={cx(
           'py-12 sm:py-16 px-3 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
           { 'mt-8': preview },
+          { hidden: router.asPath !== '/' },
         )}
         ref={ref}>
         <Link href="/" shallow={router.pathname === '/[[...slug]]'}>

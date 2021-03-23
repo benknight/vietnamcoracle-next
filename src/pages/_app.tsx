@@ -2,7 +2,7 @@ import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
 import { useRouter } from 'next/router';
 import { create } from 'jss';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
@@ -25,26 +25,6 @@ function MyApp({ Component, pageProps }: AppProps) {
       }),
     [],
   );
-
-  useEffect(() => {
-    const handleRouteChange = (url, { shallow }) => {
-      const header = document.querySelector('header');
-      const { height: headerHeight } = header.getBoundingClientRect();
-      window.requestAnimationFrame(() => {
-        if (window.scrollY < headerHeight) {
-          window.scrollTo(0, headerHeight);
-        }
-      });
-    };
-
-    router.events.on('routeChangeComplete', handleRouteChange);
-
-    // If the component is unmounted, unsubscribe
-    // from the event with the `off` method:
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, []);
 
   return (
     <StylesProvider jss={jss}>

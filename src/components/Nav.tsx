@@ -59,14 +59,14 @@ export default function Nav({ preview = false }: Props) {
     <>
       <nav
         className={cx(
-          'fixed bottom-0 xl:sticky xl:bottom-auto xl:top-0 z-20 flex justify-center w-full h-14 xl:h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow-inner xl:shadow',
+          'fixed bottom-0 lg:sticky lg:bottom-auto lg:top-0 z-20 flex justify-center w-full h-14 lg:h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black shadow-inner lg:shadow',
           {
-            'xl:top-0': !preview,
-            'xl:top-8': preview,
+            'lg:top-0': !preview,
+            'lg:top-8': preview,
           },
         )}>
         <div
-          className="flex justify-center flex-auto px-1 xl:px-16 font-sans xl:font-display tracking-wide leading-tight border-t border-gray-300 dark:border-gray-700"
+          className="flex justify-center flex-auto px-1 xl:px-16 font-sans lg:font-display tracking-wide leading-tight border-t border-gray-300 dark:border-gray-700"
           style={{ marginTop: '-1px' }}>
           {links.map(link => {
             const path = router.asPath;
@@ -79,26 +79,28 @@ export default function Nav({ preview = false }: Props) {
               <Link href={to} key={to}>
                 <a
                   className={cx(
-                    'group w-1/5 md:w-28 xl:w-auto sm:p-4 xl:py-0 xl:px-4 flex flex-col xl:flex-row items-center justify-center text-center',
+                    'group w-1/5 md:w-28 lg:w-auto sm:px-3 xl:px-3 lg:py-0 flex flex-col lg:flex-row items-center justify-center text-center',
                     {
                       'bg-gradient-to-b dark:shadow text-blue-500 dark:text-blue-400': isCurrent,
                     },
                   )}
                   key={link.url}>
-                  <div className="xl:mr-2">
+                  <div className="lg:mr-2">
                     {cloneElement(isCurrent ? link.icon : link.iconAlt, {
                       className: 'w-6 h-6 mb-1',
                     })}
                   </div>
                   <div
                     className={cx(
-                      'w-full text-shadow xl:border-b break-words group-hover:border-gray-500 dark:group-hover:border-gray-600',
+                      'w-full text-shadow lg:border-b break-words group-hover:border-gray-500 dark:group-hover:border-gray-600',
                       isCurrent
                         ? 'border-blue-500 dark:border-blue-400 group-hover:border-blue-500 dark:group-hover:border-blue-400'
                         : 'border-transparent',
                     )}>
-                    <div className="xl:hidden text-xxs">{link.titleShort}</div>
-                    <div className="hidden text-sm xl:block">{link.title}</div>
+                    <div className="xl:hidden text-xxs lg:text-base">
+                      {link.titleShort}
+                    </div>
+                    <div className="hidden xl:block text-sm">{link.title}</div>
                   </div>
                 </a>
               </Link>

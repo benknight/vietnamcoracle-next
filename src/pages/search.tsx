@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState, Fragment } from 'react';
 import Layout, { LayoutMain } from '../components/Layout';
 import SearchForm from '../components/SearchForm';
-import getAPIClient from '../lib/getAPIClient';
+import APIClient from '../lib/APIClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
 const SEARCH_QUERY = gql`
@@ -51,8 +51,6 @@ const SEARCH_QUERY = gql`
   }
 `;
 
-const client = getAPIClient();
-
 const getInitialPageInfo = () => ({
   startCursor: '',
   hasNextPage: false,
@@ -70,19 +68,17 @@ export default function SearchPage() {
   const loadResults = () => {
     if (!query) return;
     setLoading(true);
-    client
-      .request(SEARCH_QUERY, {
-        before: pageInfo.startCursor,
-        query,
-      })
-      .then(response => {
-        setResults([
-          ...results,
-          ...response.contentNodes.edges.map(({ node }) => node),
-        ]);
-        setPageInfo(response.contentNodes.pageInfo);
-        setLoading(false);
-      });
+    APIClient.request(SEARCH_QUERY, {
+      before: pageInfo.startCursor,
+      query,
+    }).then(response => {
+      setResults([
+        ...results,
+        ...response.contentNodes.edges.map(({ node }) => node),
+      ]);
+      setPageInfo(response.contentNodes.pageInfo);
+      setLoading(false);
+    });
   };
 
   useEffect(() => {

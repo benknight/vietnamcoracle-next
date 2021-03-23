@@ -10,7 +10,7 @@ import Hero from '../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
 import PostCard from '../components/PostCard';
 import SidebarDefault from '../components/SidebarDefault';
-import getAPIClient from '../lib/getAPIClient';
+import APIClient from '../lib/APIClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
 function cleanPostHTML(html: string): string {
@@ -189,8 +189,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
     ${PostCard.fragments}
     ${SidebarDefault.fragments}
   `;
-  const client = await getAPIClient();
-  const data = await client.request(query, {
+  const data = await APIClient.request(query, {
     preview,
     slug: node,
   });

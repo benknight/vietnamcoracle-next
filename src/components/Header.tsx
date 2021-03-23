@@ -13,7 +13,7 @@ interface Props {
 }
 
 function ConditionalHeadroom({ children }) {
-  const isSmall = useMediaQuery('(max-width: 1200px)');
+  const isSmall = useMediaQuery('(max-width: 1023px)');
   if (typeof window !== 'undefined' && isSmall) {
     return <Headroom>{children}</Headroom>;
   }
@@ -47,7 +47,7 @@ export default function Header({ preview = false }: Props) {
       <ConditionalHeadroom>
         <div
           className={cx(
-            'w-full h-14 xl:h-auto xl:fixed z-30 bg-white dark:bg-gray-900',
+            'w-full h-14 lg:h-auto lg:fixed z-30 bg-white dark:bg-gray-900',
             {
               shadow: scrolled,
               'top-0': !preview,
@@ -57,10 +57,10 @@ export default function Header({ preview = false }: Props) {
           <div
             className={cx(
               'z-20 absolute top-0 left-0 overflow-hidden',
-              'flex items-center h-14 xl:h-16 px-2 xl:px-4',
+              'flex items-center h-14 lg:h-16 px-2 lg:px-4',
               'transform transition-transform duration-200 ease-out',
               {
-                '-translate-x-14 xl:-translate-x-16': !showMini,
+                '-translate-x-14 lg:-translate-x-16': !showMini,
               },
             )}>
             <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
@@ -86,7 +86,7 @@ export default function Header({ preview = false }: Props) {
           </div>
           <div
             className={cx(
-              'z-30 absolute top-0 right-0 flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
+              'z-30 absolute top-0 right-0 flex items-center h-14 lg:h-16 px-2 lg:px-4 text-gray-400',
               {
                 'left-auto': !searchFocused && showMini,
                 'left-0 lg:left-auto': searchFocused || !showMini,
@@ -95,9 +95,9 @@ export default function Header({ preview = false }: Props) {
             <SearchForm
               className={cx({
                 hidden: router.pathname === '/search',
-                'w-32': !searchFocused && showMini,
-                'w-full lg:w-80 xl:w-44': searchFocused && showMini,
-                'w-full lg:w-80': searchFocused && !showMini,
+                'w-32 lg:w-44': !searchFocused && showMini,
+                'w-full lg:w-60 xl:w-44': searchFocused && showMini,
+                'w-full lg:w-60': searchFocused && !showMini,
               })}
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}
@@ -107,7 +107,7 @@ export default function Header({ preview = false }: Props) {
       </ConditionalHeadroom>
       <header
         className={cx(
-          'py-12 sm:py-16 px-3 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950 xl:bg-none',
+          'py-12 sm:py-16 px-3 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
           { 'mt-8': preview },
         )}
         ref={ref}>

@@ -5,6 +5,8 @@ export default function useWaitCursor(isLoading) {
     window.document.querySelector('body').style.cursor = isLoading
       ? 'wait'
       : '';
-    return () => (window.document.querySelector('body').style.cursor = '');
+    return () => {
+      window.document.querySelector('body').style.cursor = '';
+    };
   }, [isLoading]);
 }

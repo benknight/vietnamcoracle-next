@@ -60,12 +60,12 @@ export default function SearchPage() {
   const [results, setResults] = useState([]);
   const [query, setQuery] = useState('');
   const [page, setPage] = useState(1);
-  const [hasNextPage, setHasNextPage] = useState(true);
+  const [hasNextPage, setHasNextPage] = useState(false);
 
   useWaitCursor(loading);
 
   const loadResults = async () => {
-    // console.log('loadResults', query, pageInfo);
+    // TODO: Use SWR to leverage caching on these queries
     setLoading(true);
     const posts = await fetch(
       `/api/search?query=${query}&page=${page}`,
@@ -101,7 +101,7 @@ export default function SearchPage() {
         </title>
       </Head>
       <div className="page-wrap pb-24 max-w-5xl mx-auto">
-        <div className="max-w-md my-12">
+        <div className="max-w-sm mt-16 mb-12">
           <SearchForm />
         </div>
         {results.map(r => (
@@ -151,9 +151,7 @@ export default function SearchPage() {
           </div>
         ))}
         <div className="text-center">
-          {loading ? (
-            'Searching…'
-          ) : hasNextPage ? (
+          {hasNextPage ? (
             <button className="btn" onClick={loadResults}>
               Load More Results
             </button>

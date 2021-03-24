@@ -83,6 +83,7 @@ PostCard.fragments = gql`
         altText
         id
         sourceUrl(size: LARGE)
+        sourceUrlFx: sourceUrl(size: MEDIUM)
         slug
       }
     }

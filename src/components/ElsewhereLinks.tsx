@@ -1,7 +1,7 @@
 import Tooltip from '@material-ui/core/Tooltip';
 import EmailIcon from '@material-ui/icons/AlternateEmail';
 import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
+// import InstagramIcon from '@material-ui/icons/Instagram';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 

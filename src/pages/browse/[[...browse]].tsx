@@ -15,7 +15,7 @@ import Map from '../../components/Map';
 import PostCard, { SwatchesContext } from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
-import APIClient from '../../lib/APIClient';
+import GraphQLClient from '../../lib/GraphQLClient';
 
 const Browse = ({ data, swatches }) => {
   const router = useRouter();
@@ -147,7 +147,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
       }
     }
   `;
-  const data = await APIClient.request(query);
+  const data = await GraphQLClient.request(query);
   const getComponentsFromURI = (uri: string): string[] => {
     // "/category/blah/" => ["blah"]
     return uri
@@ -269,7 +269,7 @@ export const getStaticProps: GetStaticProps = async ({
   const subcategorySlug = params.browse?.[1] ?? '';
 
   // Fire the request
-  const data = await APIClient.request(query, {
+  const data = await GraphQLClient.request(query, {
     categoryPageId,
     categorySlug,
     hasCategoryPage: Boolean(categoryPageId),

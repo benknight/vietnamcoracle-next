@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState, Fragment } from 'react';
 import Layout, { LayoutMain } from '../components/Layout';
 import SearchForm from '../components/SearchForm';
-import APIClient from '../lib/APIClient';
+import GraphQLClient from '../lib/GraphQLClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
 const SEARCH_QUERY = gql`
@@ -68,7 +68,7 @@ export default function SearchPage() {
   const loadResults = () => {
     if (!query) return;
     setLoading(true);
-    APIClient.request(SEARCH_QUERY, {
+    GraphQLClient.request(SEARCH_QUERY, {
       before: pageInfo.startCursor,
       query,
     }).then(response => {

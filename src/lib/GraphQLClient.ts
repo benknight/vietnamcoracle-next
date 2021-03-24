@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 
-const APIClient = new GraphQLClient(process.env.NEXT_PUBLIC_WORDPRESS_API_URL, {
+const client = new GraphQLClient(process.env.NEXT_PUBLIC_WORDPRESS_API_URL, {
   headers: {
     Authorization: process.env.WORDPRESS_AUTH_REFRESH_TOKEN
       ? `Bearer ${process.env.WORDPRESS_AUTH_REFRESH_TOKEN}`
@@ -8,4 +8,4 @@ const APIClient = new GraphQLClient(process.env.NEXT_PUBLIC_WORDPRESS_API_URL, {
   },
 });
 
-export default APIClient;
+export default client;

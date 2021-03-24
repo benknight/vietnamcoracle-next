@@ -117,7 +117,7 @@ export default function Header({ preview = false }: Props) {
         )}
         ref={ref}>
         <div className="hidden xl:block absolute top-4 left-4 opacity-75">
-          <ElsewhereLinks />
+          <ElsewhereLinks useBrandColors />
         </div>
         <Link href="/">
           <a className="inline-flex flex-col items-center">

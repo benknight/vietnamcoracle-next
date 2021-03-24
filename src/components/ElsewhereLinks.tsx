@@ -5,9 +5,9 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import YouTubeIcon from '@material-ui/icons/YouTube';
 
-export default function ElsewhereLinks() {
+export default function ElsewhereLinks({ useBrandColors = false }) {
   return (
-    <div className="flex items-center justify-center text-gray-500">
+    <div className="flex items-center justify-center text-gray-400">
       <a href="https://www.facebook.com/vietnamcoracle">
         <Tooltip
           title="Vietnam Coracle on Facebook"
@@ -15,7 +15,7 @@ export default function ElsewhereLinks() {
           arrow>
           <FacebookIcon
             classes={{ root: 'w-8 h-8' }}
-            style={{ color: '#3b5998' }}
+            style={useBrandColors ? { color: '#3b5998' } : {}}
           />
         </Tooltip>
       </a>
@@ -26,7 +26,7 @@ export default function ElsewhereLinks() {
           arrow>
           <InstagramIcon
             classes={{ root: 'w-8 h-8' }}
-            style={{ color: '#E1306C' }}
+            style={useBrandColors ? { color: '#E1306C' } : {}}
           />
         </Tooltip>
       </a> */}
@@ -37,7 +37,7 @@ export default function ElsewhereLinks() {
           arrow>
           <TwitterIcon
             classes={{ root: 'w-8 h-8' }}
-            style={{ color: '#1da1f2' }}
+            style={useBrandColors ? { color: '#1da1f2' } : {}}
           />
         </Tooltip>
       </a>
@@ -48,7 +48,7 @@ export default function ElsewhereLinks() {
           arrow>
           <YouTubeIcon
             classes={{ root: 'w-8 h-8' }}
-            style={{ color: '#c4302b' }}
+            style={useBrandColors ? { color: '#c4302b' } : {}}
           />
         </Tooltip>
       </a>

@@ -49,7 +49,7 @@ const PostCard = ({ flex = false, post }: Props) => {
           <div className="relative antialiased">
             <h3
               className={cx(
-                'font-display leading-tight sm:text-xl md:text-2xl text-white',
+                'font-display leading-tight sm:text-xl lg:text-2xl text-white',
                 {
                   'text-2xl': flex,
                   'text-sm sm:text-base': !flex && post.title.length > 40,
@@ -61,7 +61,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             <div
               className={cx(
                 'post-card-excerpt',
-                'mt-2 font-sans xl:font-serif text-xs md:text-sm text-gray-400',
+                'mt-2 font-sans xl:font-serif text-xs lg:text-sm text-gray-400',
                 { 'hidden sm:line-clamp': !flex },
               )}
               dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>

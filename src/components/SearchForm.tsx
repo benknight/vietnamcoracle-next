@@ -1,12 +1,19 @@
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
-import { useCallback, useDebugValue, useState } from 'react';
+import { useEffect, useState } from 'react';
 import SearchIcon from '@material-ui/icons/Search';
 
 export default function SearchInput({ className = '', ...inputProps }) {
   const router = useRouter();
-  const [value, setValue] = useState(router.query.query || '');
+  const [value, setValue] = useState('');
+
+  useEffect(() => {
+    if (router.query?.query) {
+      setValue(router.query.query);
+    }
+  }, [router.query.query]);
+
   return (
     <form
       className={cx('relative flex-auto', className)}
@@ -23,7 +30,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
       </div>
       <input
         {...inputProps}
-        className="form-field w-full h-10 pl-8 pr-3 rounded-full"
+        className="form-field w-full h-10 pl-9 pr-3 rounded-full"
         onChange={event => {
           setValue(event.target.value);
         }}

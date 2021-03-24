@@ -92,15 +92,15 @@ export default function Header({ preview = false }: Props) {
               'z-30 absolute top-0 right-0',
               {
                 'left-auto': !searchFocused && showMini,
-                'left-0 xl:left-auto': searchFocused || !showMini,
+                'left-0 lg:left-auto': searchFocused || !showMini,
               },
               'flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
             )}>
             <SearchForm
               className={cx({
                 hidden: router.pathname === '/search',
-                'w-32 lg:w-44': !searchFocused,
-                'w-full lg:w-60': searchFocused,
+                'w-32 md:w-44': !searchFocused,
+                'w-full md:w-60': searchFocused,
               })}
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}

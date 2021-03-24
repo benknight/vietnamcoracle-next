@@ -89,11 +89,12 @@ export default function Header({ preview = false }: Props) {
           </div>
           <div
             className={cx(
-              'z-30 absolute top-0 right-0 flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
+              'z-30 absolute top-0 right-0',
               {
                 'left-auto': !searchFocused && showMini,
                 'left-0 xl:left-auto': searchFocused || !showMini,
               },
+              'flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
             )}>
             <SearchForm
               className={cx({
@@ -109,7 +110,8 @@ export default function Header({ preview = false }: Props) {
       </Headroom>
       <header
         className={cx(
-          'relative py-12 sm:py-16 px-3 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
+          'relative py-12 sm:py-16 px-3 xl:py-16 text-center',
+          'bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
           { 'mt-8': preview },
           { hidden: !isHome },
         )}
@@ -117,7 +119,7 @@ export default function Header({ preview = false }: Props) {
         <div className="hidden xl:block absolute top-4 left-4 opacity-75">
           <ElsewhereLinks />
         </div>
-        <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
+        <Link href="/">
           <a className="inline-flex flex-col items-center">
             <Image
               className="rounded-full"
@@ -126,10 +128,10 @@ export default function Header({ preview = false }: Props) {
               src="/logo.jpg"
               width={120}
             />
-            <h1 className="text-3xl xl:text-4xl my-2 text-gray-700 dark:text-white font-display antialiased">
+            <h1 className="my-2 text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased">
               Vietnam Coracle
             </h1>
-            <h2 className="text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display text-xxxxs xl:text-xxxs">
+            <h2 className="text-xxxxs xl:text-xxxs text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display">
               Independent travel guides to Vietnam
             </h2>
           </a>

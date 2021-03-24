@@ -17,12 +17,12 @@ interface Props {
 export default function Header({ preview = false }: Props) {
   const ref = useRef<HTMLElement>();
   const [scrolled, setScolled] = useState(false);
-  const [aboveThreshold, setAboveThreshold] = useState(false);
+  const [pastThreshold, setPastThreshold] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
   const isXL = useMediaQuery(`(min-width: ${breakpoints.xl})`);
   const isHome = router.asPath === '/' || router.asPath === '/browse';
-  const showMini = !isHome || aboveThreshold;
+  const showMini = !isHome || pastThreshold;
 
   useEffect(() => {
     const update = _debounce(() => {
@@ -32,7 +32,7 @@ export default function Header({ preview = false }: Props) {
       const thresholdHeight =
         (isLarge ? 1 : 0.75) * ref.current.getBoundingClientRect().height;
       setScolled(window.scrollY > 0);
-      setAboveThreshold(window.scrollY >= thresholdHeight);
+      setPastThreshold(window.scrollY >= thresholdHeight);
     }, 10);
 
     // Call update on initialization
@@ -129,7 +129,7 @@ export default function Header({ preview = false }: Props) {
             <h1 className="text-3xl xl:text-4xl my-2 text-gray-700 dark:text-white font-display antialiased">
               Vietnam Coracle
             </h1>
-            <h2 className="text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display text-xxxxs">
+            <h2 className="text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display text-xxxxs xl:text-xxxs">
               Independent travel guides to Vietnam
             </h2>
           </a>

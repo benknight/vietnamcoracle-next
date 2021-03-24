@@ -10,7 +10,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
 
   useEffect(() => {
     if (router.query?.query) {
-      setValue(router.query.query);
+      setValue(router.query.query.toString());
     }
   }, [router.query.query]);
 

@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import _keyBy from 'lodash/keyBy';
 import _mapValues from 'lodash/mapValues';
-import Image from 'next/image';
 import { useState } from 'react';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
 import useWaitCursor from '../lib/useWaitCursor';

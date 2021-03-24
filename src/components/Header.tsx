@@ -6,18 +6,12 @@ import { useRouter } from 'next/router';
 import { useRef, useState, useEffect, Children } from 'react';
 import Headroom from 'react-headroom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import breakpoints from '../config/breakpoints';
 import SearchForm from './SearchForm';
+import ElsewhereLinks from './ElsewhereLinks';
 
 interface Props {
   preview?: boolean;
-}
-
-function ConditionalHeadroom({ children }) {
-  const isSmall = useMediaQuery('(max-width: 1199px)');
-  if (typeof window !== 'undefined' && isSmall) {
-    return <Headroom>{children}</Headroom>;
-  }
-  return children;
 }
 
 export default function Header({ preview = false }: Props) {
@@ -26,35 +20,43 @@ export default function Header({ preview = false }: Props) {
   const [aboveThreshold, setAboveThreshold] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
-  const showMini = router.asPath !== '/' || aboveThreshold;
+  const isXL = useMediaQuery(`(min-width: ${breakpoints.xl})`);
+  const isHome = router.asPath === '/' || router.asPath === '/browse';
+  const showMini = !isHome || aboveThreshold;
 
   useEffect(() => {
-    const listener = _debounce(() => {
-      // NOTE: To avoid complexity the following breakpoint value is hardcoded
-      // https://tailwindcss.com/docs/configuration#referencing-in-java-script
-      const { matches } = window.matchMedia('(min-width: 1024px)');
+    const update = _debounce(() => {
+      const { matches: isLarge } = window.matchMedia(
+        `(min-width: ${breakpoints.lg})`,
+      );
       const thresholdHeight =
-        (matches ? 1 : 0.75) * ref.current.getBoundingClientRect().height;
+        (isLarge ? 1 : 0.75) * ref.current.getBoundingClientRect().height;
       setScolled(window.scrollY > 0);
       setAboveThreshold(window.scrollY >= thresholdHeight);
     }, 10);
-    listener();
-    window.addEventListener('scroll', listener);
-    return () => window.removeEventListener('scroll', listener);
+
+    // Call update on initialization
+    update();
+
+    // Subscribe to events
+    router.events.on('routeChangeComplete', update);
+    window.addEventListener('scroll', update);
+
+    return () => {
+      router.events.off('routeChangeComplete', update);
+      window.removeEventListener('scroll', update);
+    };
   }, []);
 
   return (
     <>
-      <ConditionalHeadroom>
+      <Headroom className="relative xl:fixed z-30 w-full" disable={isXL}>
         <div
-          className={cx(
-            'w-full h-14 xl:h-auto xl:fixed z-30 bg-white dark:bg-gray-900',
-            {
-              shadow: scrolled,
-              'top-0': !preview,
-              'top-8': preview,
-            },
-          )}>
+          className={cx('h-14 xl:h-auto bg-white dark:bg-gray-900', {
+            shadow: scrolled,
+            'top-0': !preview,
+            'top-8': preview,
+          })}>
           <div
             className={cx(
               'z-20 absolute top-0 left-0 overflow-hidden',
@@ -96,23 +98,25 @@ export default function Header({ preview = false }: Props) {
             <SearchForm
               className={cx({
                 hidden: router.pathname === '/search',
-                'w-32 lg:w-44': !searchFocused && showMini,
-                'w-full lg:w-60 xl:w-44': searchFocused && showMini,
-                'w-full lg:w-60': searchFocused && !showMini,
+                'w-32 lg:w-44': !searchFocused,
+                'w-full lg:w-60': searchFocused,
               })}
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}
             />
           </div>
         </div>
-      </ConditionalHeadroom>
+      </Headroom>
       <header
         className={cx(
-          'py-12 sm:py-16 px-3 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
+          'relative py-12 sm:py-16 px-3 xl:py-16 text-center bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
           { 'mt-8': preview },
-          { hidden: router.asPath !== '/' },
+          { hidden: !isHome },
         )}
         ref={ref}>
+        <div className="hidden xl:block absolute top-4 left-4 opacity-75">
+          <ElsewhereLinks />
+        </div>
         <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
           <a className="inline-flex flex-col items-center">
             <Image

@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { gql } from 'graphql-request';
 import _upperFirst from 'lodash/upperFirst';
 import Head from 'next/head';
@@ -101,29 +102,40 @@ export default function SearchPage() {
           Search results{router.query.query ? ` for ${router.query.query}` : ''}
         </title>
       </Head>
-      <div className="page-wrap pb-24 max-w-5xl mx-auto">
-        <div className="max-w-sm mt-16 mb-12">
+      <div className="px-3 pb-24 max-w-5xl mx-auto">
+        <div className="lg:max-w-sm my-4 lg:my-12 xl:mb-12 xl:mt-16">
           <SearchForm />
         </div>
         {results.map(r => (
-          <div className="flex my-14" key={r.uri}>
+          <div
+            className="relative sm:flex my-2 p-4 xl:px-0 rounded overflow-hidden bg-white dark:bg-gray-950 xl:bg-transparent shadow xl:shadow-none"
+            key={r.uri}>
+            <Link href={r.uri}>
+              <a className="absolute inset-0 sm:hidden" />
+            </Link>
             {r.featuredImage ? (
-              <div className="flex-shrink-0 mr-6">
-                <Image
-                  alt={r.featuredImage.node.altText}
-                  className="rounded"
-                  height={150}
-                  layout="fixed"
-                  loading="lazy"
-                  src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${r.featuredImage.node.sourceUrl}`}
-                  width={150}
-                />
+              <div className="float-right w-24 h-24 sm:w-auto sm:h-auto flex-shrink-0 ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0">
+                <Link href={r.uri}>
+                  <a>
+                    <Image
+                      alt={r.featuredImage.node.altText}
+                      className="rounded"
+                      height={150}
+                      layout="intrinsic"
+                      loading="lazy"
+                      src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${r.featuredImage.node.sourceUrl}`}
+                      width={150}
+                    />
+                  </a>
+                </Link>
               </div>
             ) : null}
             <div className="flex-auto">
               <div className="flex items-baseline">
                 <Link href={r.uri}>
-                  <a className="link mt-1 text-2xl font-display">{r.title}</a>
+                  <a className="link sm:mt-1 text-base sm:text-2xl font-display">
+                    {r.title}
+                  </a>
                 </Link>
                 {r.contentType.node.name !== 'post' && (
                   <div className="ml-2 italic opacity-50">
@@ -132,11 +144,11 @@ export default function SearchPage() {
                 )}
               </div>
               <div
-                className="my-1"
+                className="my-1 text-sm sm:text-base"
                 dangerouslySetInnerHTML={{ __html: r.excerpt }}
               />
               {r.categories?.nodes.length > 0 && (
-                <div className="text-gray-500">
+                <div className="hidden sm:block text-gray-500">
                   Posted in{' '}
                   {r.categories.nodes.map((r, index) => (
                     <Fragment key={r.uri}>
@@ -153,7 +165,12 @@ export default function SearchPage() {
         ))}
         <div className="text-center">
           {hasNextPage ? (
-            <button className="btn" onClick={loadResults}>
+            <button
+              className={cx('btn w-full h-12 xl:w-auto', {
+                'opacity-50': loading,
+              })}
+              disabled={loading}
+              onClick={loadResults}>
               Load More Results
             </button>
           ) : null}

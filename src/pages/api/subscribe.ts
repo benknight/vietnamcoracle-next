@@ -1,4 +1,3 @@
-import cors from 'cors';
 import type { NextApiRequest, NextApiResponse } from 'next';
 // @ts-ignore
 import mailchimp from '@mailchimp/mailchimp_marketing';
@@ -8,34 +7,10 @@ mailchimp.setConfig({
   server: process.env.MAILCHIMP_SERVER_PREFIX,
 });
 
-// Initializing the cors middleware
-const corsMiddleware = cors({
-  origin: [
-    'http://localhost:3000',
-    'https://vietnamcoracle-next.vercel.app',
-    'https://vietnamcoracle.com',
-    'https://www.vietnamcoracle.com',
-  ],
-  methods: ['POST'],
-});
-
-function runMiddleware(req, res, fn) {
-  return new Promise((resolve, reject) => {
-    fn(req, res, result => {
-      if (result instanceof Error) {
-        return reject(result);
-      }
-      return resolve(result);
-    });
-  });
-}
-
 export default async function preview(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  await runMiddleware(req, res, corsMiddleware);
-
   const { email } = req.body;
 
   if (!email) {

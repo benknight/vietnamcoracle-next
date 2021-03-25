@@ -147,7 +147,7 @@
   }
 
   .post > p:first-of-type {
-    @apply text-base font-serif mt-10 dark:mt-3 dark:text-gray-400;
+    @apply text-base font-serif mt-8 dark:text-gray-400;
   }
 
   /* Images & captions */

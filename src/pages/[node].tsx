@@ -2,7 +2,10 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useRef } from 'react';
+import { EmailShareButton, TwitterShareButton } from 'react-share';
+import EmailIcon from '@material-ui/icons/AlternateEmail';
+import TwitterIcon from '@material-ui/icons/Twitter';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
@@ -89,6 +92,38 @@ const PostOrPage = ({ data }) => {
         <LayoutMain>
           <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
             <div className="max-w-3xl xl:max-w-4xl mx-auto">
+              <div className="flex text-white mt-8 dark:mt-0">
+                <EmailShareButton
+                  body=""
+                  style={{ fontSize: '12px' }}
+                  subject={data.contentNode.title}
+                  url={data.contentNode.link}>
+                  <span className="rounded bg-red-600 flex items-center px-2 font-medium">
+                    <EmailIcon className="w-4 h-4" fontSize="small" />
+                    <span className="ml-1">Email</span>
+                  </span>
+                </EmailShareButton>
+                <TwitterShareButton
+                  className="rounded ml-2"
+                  style={{ backgroundColor: '#1da1f2', fontSize: '12px' }}
+                  title={data.contentNode.title}
+                  url={data.contentNode.link}>
+                  <span className="flex items-center px-2 font-medium">
+                    <TwitterIcon className="w-4 h-4" fontSize="small" />
+                    <span className="ml-1">Tweet</span>
+                  </span>
+                </TwitterShareButton>
+                <iframe
+                  className="ml-2"
+                  src={`https://www.facebook.com/plugins/share_button.php?href=${data.contentNode.link}&layout=button_count&size=large&appId=384812182900382&width=102&height=28`}
+                  width="102"
+                  height="28"
+                  style={{ border: 'none', overflow: 'hidden' }}
+                  scrolling="no"
+                  frameBorder="0"
+                  allowFullScreen={true}
+                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+              </div>
               <article
                 className="post"
                 dangerouslySetInnerHTML={{
@@ -142,27 +177,34 @@ export async function getStaticProps({ params: { node }, preview = false }) {
   const query = gql`
     query PageOrPost($preview: Boolean!, $slug: ID!) {
       contentNode(id: $slug, idType: URI) {
-        ... on Page {
-          commentCount
-          content
+        ... on ContentNode {
           databaseId
-          title
-          comments(first: 1000) {
-            nodes {
-              ...CommentThreadCommentData
-            }
-          }
+          link
+        }
+        ... on NodeWithComments {
+          commentCount
+        }
+        ... on NodeWithContentEditor {
+          content
+        }
+        ... on NodeWithFeaturedImage {
           featuredImage {
             node {
               ...HeroImageData
             }
           }
         }
-        ... on Post {
-          commentCount
-          content
-          databaseId
+        ... on NodeWithTitle {
           title
+        }
+        ... on Page {
+          comments(first: 1000) {
+            nodes {
+              ...CommentThreadCommentData
+            }
+          }
+        }
+        ... on Post {
           comments(first: 1000) {
             nodes {
               ...CommentThreadCommentData
@@ -171,11 +213,6 @@ export async function getStaticProps({ params: { node }, preview = false }) {
           customRelatedPosts(first: 6) {
             nodes {
               ...PostCardPostData
-            }
-          }
-          featuredImage {
-            node {
-              ...HeroImageData
             }
           }
           thumbnails {

@@ -108,7 +108,7 @@ export default function SearchPage() {
         </div>
         {results.map(r => (
           <div
-            className="relative sm:flex my-2 p-4 xl:px-0 rounded overflow-hidden bg-white dark:bg-gray-950 xl:bg-transparent shadow xl:shadow-none"
+            className="relative sm:flex my-2 p-4 xl:px-0 rounded overflow-hidden bg-white dark:bg-gray-900 xl:bg-transparent shadow xl:shadow-none"
             key={r.uri}>
             <Link href={r.uri}>
               <a className="absolute inset-0 sm:hidden" />

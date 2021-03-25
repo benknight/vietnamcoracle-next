@@ -93,36 +93,38 @@ const PostOrPage = ({ data }) => {
           <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
             <div className="max-w-3xl xl:max-w-4xl mx-auto">
               <div className="flex text-white mt-8 dark:mt-0">
-                <EmailShareButton
-                  body=""
-                  style={{ fontSize: '12px' }}
-                  subject={data.contentNode.title}
-                  url={data.contentNode.link}>
-                  <span className="rounded bg-red-600 flex items-center px-2 font-medium">
-                    <EmailIcon className="w-4 h-4" fontSize="small" />
-                    <span className="ml-1">Email</span>
-                  </span>
-                </EmailShareButton>
+                <div className="rounded" style={{ backgroundColor: '#1877f2' }}>
+                  <iframe
+                    src={`https://www.facebook.com/plugins/share_button.php?href=${data.contentNode.link}&layout=button_count&size=large&appId=384812182900382&width=102&height=28`}
+                    width="102"
+                    height="28"
+                    style={{ border: 'none', overflow: 'hidden' }}
+                    scrolling="no"
+                    frameBorder="0"
+                    allowFullScreen={true}
+                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                </div>
                 <TwitterShareButton
                   className="rounded ml-2"
                   style={{ backgroundColor: '#1da1f2', fontSize: '12px' }}
                   title={data.contentNode.title}
                   url={data.contentNode.link}>
-                  <span className="flex items-center px-2 font-medium">
+                  <span className="flex items-center px-3 font-medium">
                     <TwitterIcon className="w-4 h-4" fontSize="small" />
                     <span className="ml-1">Tweet</span>
                   </span>
                 </TwitterShareButton>
-                <iframe
+                <EmailShareButton
+                  body=""
                   className="ml-2"
-                  src={`https://www.facebook.com/plugins/share_button.php?href=${data.contentNode.link}&layout=button_count&size=large&appId=384812182900382&width=102&height=28`}
-                  width="102"
-                  height="28"
-                  style={{ border: 'none', overflow: 'hidden' }}
-                  scrolling="no"
-                  frameBorder="0"
-                  allowFullScreen={true}
-                  allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+                  style={{ fontSize: '12px' }}
+                  subject={data.contentNode.title}
+                  url={data.contentNode.link}>
+                  <span className="rounded bg-red-600 flex items-center px-3 font-medium">
+                    <EmailIcon className="w-4 h-4" fontSize="small" />
+                    <span className="ml-1">Email</span>
+                  </span>
+                </EmailShareButton>
               </div>
               <article
                 className="post"

@@ -84,6 +84,7 @@ export default function SearchPage() {
     if (results.length > 0) {
       setResults([]);
       setPage(1);
+      setHasNextPage(false);
     }
     setQuery(String(router.query.query) || '');
   }, [router.query.query]);

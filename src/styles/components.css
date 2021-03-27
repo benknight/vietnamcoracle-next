@@ -190,7 +190,6 @@
 
   .post .blocks-gallery-grid {
     @apply list-none pl-0;
-    @apply grid gap-4 sm:grid-cols-2;
   }
 
   .post .blocks-gallery-item img {

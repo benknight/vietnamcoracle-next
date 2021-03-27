@@ -256,7 +256,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
           data.contentNode.link,
         )}&fields=og_object{engagement}`,
       );
-      fbShareCount = response.data?.og_object?.engagement?.count;
+      fbShareCount = response.data?.og_object?.engagement?.count ?? 0;
     } catch (error) {
       // console.error(error);
     }

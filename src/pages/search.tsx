@@ -107,10 +107,10 @@ export default function SearchPage() {
           <SearchForm />
         </div>
         {isLoadingInitialData ? (
-          <div className="text-center xl:text-left my-8">Loading…</div>
+          <div className="text-center lg:text-left my-8">Loading…</div>
         ) : null}
         {isEmpty ? (
-          <div className="text-center xl:text-left my-8">
+          <div className="text-center lg:text-left my-8">
             No results found for <em>{query}</em>
           </div>
         ) : null}
@@ -119,9 +119,9 @@ export default function SearchPage() {
             <SearchResult data={result} key={result.uri} />
           )),
         )}
-        <div className="text-center xl:my-8">
+        <div className="text-center lg:my-8">
           <button
-            className={cx('btn w-full h-12 xl:h-10 xl:w-auto', {
+            className={cx('btn w-full h-12 lg:h-10 lg:w-auto', {
               'opacity-50': isLoadingMore,
               hidden: isLoadingInitialData || isReachingEnd,
             })}
@@ -149,8 +149,8 @@ function SearchResult({ data }) {
   return (
     <div
       className="
-        relative sm:flex my-2 p-4 xl:px-0 rounded overflow-hidden
-        bg-white dark:bg-gray-900 xl:bg-transparent shadow xl:shadow-none"
+        relative sm:flex my-2 p-4 lg:px-0 rounded overflow-hidden
+        bg-white dark:bg-gray-900 lg:bg-transparent shadow lg:shadow-none"
       key={data.uri}>
       <Link href={data.uri}>
         <a className="absolute inset-0 sm:hidden" />

@@ -19,8 +19,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
       className={cx('relative flex-auto', className)}
       onSubmit={event => {
         event.preventDefault();
-        const method = router.pathname === '/search' ? 'replace' : 'push';
-        router[method]({
+        router.push({
           pathname: '/search',
           query: { query: value },
         });

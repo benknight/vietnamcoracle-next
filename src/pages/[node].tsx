@@ -87,7 +87,7 @@ const PostOrPage = ({ data, fbShareCount }) => {
             'max-w-3xl xl:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display',
             {
               'text-4xl xl:text-5xl': data.contentNode.title.length <= 40,
-              'text-3xl xl:text-4xl': data.contentNode.title.length > 40,
+              'text-4xl': data.contentNode.title.length > 40,
             },
           )}
           id="top">

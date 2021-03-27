@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 
 export const BlockTitle = props => (
-  <h3 className="text-xl mb-3">{props.children}</h3>
+  <h3 className="text-xl lg:text-2xl xl:text-xl mb-3">{props.children}</h3>
 );
 
 export type BlockType = {
@@ -25,7 +25,10 @@ export type BlockType = {
 export const BlockContent = props => (
   <div
     className="
-      mx-auto mb-8 px-4 max-w-sm lg:text-sm xl:text-base font-serif dark:text-gray-400">
+      mx-auto mb-8 px-4
+      max-w-sm lg:max-w-md xl:max-w-sm
+      lg:text-lg xl:text-base font-serif
+      dark:text-gray-400">
     {props.children}
   </div>
 );

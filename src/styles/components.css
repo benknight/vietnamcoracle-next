@@ -132,7 +132,7 @@
 
   .post p,
   .post ul {
-    @apply mb-5 font-sans xl:font-serif;
+    @apply mb-5 font-sans md:font-serif;
   }
 
   .post span[style*='Georgia'] {

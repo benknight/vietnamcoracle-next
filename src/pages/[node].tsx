@@ -1,10 +1,16 @@
+import axios from 'axios';
 import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
-import { EmailShareButton, TwitterShareButton } from 'react-share';
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  TwitterShareButton,
+} from 'react-share';
 import EmailIcon from '@material-ui/icons/AlternateEmail';
+import FacebookIcon from '@material-ui/icons/Facebook';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
@@ -33,7 +39,7 @@ function cleanPostHTML(html: string): string {
   return result;
 }
 
-const PostOrPage = ({ data }) => {
+const PostOrPage = ({ data, fbShareCount }) => {
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
@@ -93,23 +99,23 @@ const PostOrPage = ({ data }) => {
           <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
             <div className="max-w-3xl xl:max-w-4xl mx-auto">
               <div className="flex text-white mt-8 dark:mt-0">
-                <div className="rounded" style={{ backgroundColor: '#1877f2' }}>
-                  <iframe
-                    src={`https://www.facebook.com/plugins/share_button.php?href=${data.contentNode.link}&layout=button_count&size=large&appId=384812182900382&width=102&height=28`}
-                    width="102"
-                    height="28"
-                    style={{ border: 'none', overflow: 'hidden' }}
-                    scrolling="no"
-                    frameBorder="0"
-                    allowFullScreen={true}
-                    allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
-                </div>
+                <FacebookShareButton
+                  className="rounded"
+                  style={{ backgroundColor: '#1877f2', fontSize: '12px' }}
+                  title={data.contentNode.title}
+                  url={data.contentNode.link}>
+                  <span className="flex items-center px-2">
+                    <FacebookIcon className="w-4 h-4" fontSize="small" />
+                    <span className="mx-1 font-medium">Share</span>{' '}
+                    {fbShareCount > 0 ? fbShareCount : ''}
+                  </span>
+                </FacebookShareButton>
                 <TwitterShareButton
                   className="rounded ml-2"
                   style={{ backgroundColor: '#1da1f2', fontSize: '12px' }}
                   title={data.contentNode.title}
                   url={data.contentNode.link}>
-                  <span className="flex items-center px-3 font-medium">
+                  <span className="flex items-center px-2 font-medium">
                     <TwitterIcon className="w-4 h-4" fontSize="small" />
                     <span className="ml-1">Tweet</span>
                   </span>
@@ -120,7 +126,7 @@ const PostOrPage = ({ data }) => {
                   style={{ fontSize: '12px' }}
                   subject={data.contentNode.title}
                   url={data.contentNode.link}>
-                  <span className="rounded bg-red-600 flex items-center px-3 font-medium">
+                  <span className="rounded bg-red-600 flex items-center px-2 font-medium">
                     <EmailIcon className="w-4 h-4" fontSize="small" />
                     <span className="ml-1">Email</span>
                   </span>
@@ -233,16 +239,37 @@ export async function getStaticProps({ params: { node }, preview = false }) {
     ${PostCard.fragments}
     ${SidebarDefault.fragments}
   `;
+
   const data = await GraphQLClient.request(query, {
     preview,
     slug: node,
   });
+
+  let fbShareCount = 0;
+
+  if (data.contentNode) {
+    try {
+      const response = await axios.get(
+        `https://graph.facebook.com/v10.0/?access_token=${
+          process.env.FACEBOOK_ACCESS_TOKEN
+        }&id=${encodeURIComponent(
+          data.contentNode.link,
+        )}&fields=og_object{engagement}`,
+      );
+      fbShareCount = response.data?.og_object?.engagement?.count;
+    } catch (error) {
+      // console.error(error);
+    }
+  }
+
   return {
     notFound: !data.contentNode,
     props: {
       data,
       preview,
+      fbShareCount,
     },
+    revalidate: 1,
   };
 }
 

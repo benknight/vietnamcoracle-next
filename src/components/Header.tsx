@@ -116,7 +116,7 @@ export default function Header({ preview = false }: Props) {
           { hidden: !isHome },
         )}
         ref={ref}>
-        <div className="hidden xl:block absolute top-4 left-4 opacity-75">
+        <div className="hidden lg:block absolute top-4 left-4 opacity-75">
           <ElsewhereLinks useBrandColors />
         </div>
         <Link href="/">

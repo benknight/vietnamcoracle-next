@@ -20,7 +20,7 @@ export default function Header({ preview = false }: Props) {
   const [pastThreshold, setPastThreshold] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
-  const isXL = useMediaQuery(`(min-width: ${breakpoints.xl})`);
+  const isLG = useMediaQuery(`(min-width: ${breakpoints.lg})`);
   const isHome = router.asPath === '/' || router.asPath === '/browse';
   const showMini = !isHome || pastThreshold;
 
@@ -50,9 +50,9 @@ export default function Header({ preview = false }: Props) {
 
   return (
     <>
-      <Headroom className="relative xl:fixed z-30 w-full" disable={isXL}>
+      <Headroom className="relative lg:fixed z-30 w-full" disable={isLG}>
         <div
-          className={cx('h-14 xl:h-auto bg-white dark:bg-gray-900', {
+          className={cx('h-14 lg:h-auto bg-white dark:bg-gray-900', {
             shadow: scrolled,
             'top-0': !preview,
             'top-8': preview,

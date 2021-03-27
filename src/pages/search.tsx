@@ -5,8 +5,8 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState, Fragment } from 'react';
-import useSWR from 'swr';
+import { Fragment } from 'react';
+import { useSWRInfinite } from 'swr';
 import SearchForm from '../components/SearchForm';
 import GraphQLClient from '../lib/GraphQLClient';
 import useWaitCursor from '../lib/useWaitCursor';
@@ -56,133 +56,43 @@ const SEARCH_RESULTS_QUERY = gql`
   }
 `;
 
-const resultsFetcher = (url: string) => fetch(url).then(res => res.json());
-
-const postsFetcher = (query: string, ids: string) =>
-  GraphQLClient.request(query, {
-    in: ids.split(',').map(i => window.parseInt(i)),
+const resultsFetcher = async (query: string, page: number) => {
+  const results = await fetch(
+    `/api/search?query=${query}&page=${page}&pageSize=${PAGE_SIZE}`,
+  ).then(res => res.json());
+  if (results.length === 0) {
+    return [];
+  }
+  const data = await GraphQLClient.request(SEARCH_RESULTS_QUERY, {
+    in: results.map(r => r.id),
   });
-
-function Page({ query, index, isLast, onLoadMore }) {
-  const results = useSWR(
-    `/api/search?query=${query}&page=${index}&pageSize=${PAGE_SIZE}`,
-    resultsFetcher,
-    { revalidateOnFocus: false, revalidateOnReconnect: false },
-  );
-  const posts = useSWR(
-    results.data
-      ? [SEARCH_RESULTS_QUERY, results.data.map(r => r.id).join(',')]
-      : null,
-    postsFetcher,
-    { revalidateOnFocus: false, revalidateOnReconnect: false },
-  );
-  const loading = !posts.data && !posts.error;
-  useWaitCursor(loading);
-  return (
-    <>
-      {posts.data?.contentNodes?.nodes.map(post => (
-        <div
-          className="relative sm:flex my-2 p-4 xl:px-0 rounded overflow-hidden bg-white dark:bg-gray-900 xl:bg-transparent shadow xl:shadow-none"
-          key={post.uri}>
-          <Link href={post.uri}>
-            <a className="absolute inset-0 sm:hidden" />
-          </Link>
-          {post.featuredImage ? (
-            <div className="float-right w-24 h-24 sm:w-auto sm:h-auto flex-shrink-0 ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0">
-              <Link href={post.uri}>
-                <a>
-                  <Image
-                    alt={post.featuredImage.node.altText}
-                    className="rounded"
-                    height={150}
-                    layout="intrinsic"
-                    loading="lazy"
-                    src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.featuredImage.node.sourceUrl}`}
-                    width={150}
-                  />
-                </a>
-              </Link>
-            </div>
-          ) : null}
-          <div className="flex-auto">
-            <div className="flex items-baseline">
-              <Link href={post.uri}>
-                <a className="link sm:mt-1 text-base sm:text-2xl font-display">
-                  {post.title}
-                </a>
-              </Link>
-              {post.contentType.node.name !== 'post' && (
-                <div className="ml-2 italic opacity-50">
-                  {_upperFirst(post.contentType.node.name)}
-                </div>
-              )}
-            </div>
-            <div
-              className="my-1 text-sm sm:text-base"
-              dangerouslySetInnerHTML={{ __html: post.excerpt }}
-            />
-            {post.categories?.nodes.length > 0 && (
-              <div className="hidden sm:block text-gray-500">
-                Posted in{' '}
-                {post.categories.nodes.map((cat, i) => (
-                  <Fragment key={cat.uri}>
-                    {i !== 0 && ', '}
-                    <Link href={cat.uri}>
-                      <a className="italic hover:underline">{cat.name}</a>
-                    </Link>
-                  </Fragment>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-      ))}
-      {index === 1 && loading ? (
-        <div className="text-center xl:text-left">Loading…</div>
-      ) : isLast ? (
-        <div className="text-center xl:my-8">
-          <button
-            className={cx('btn w-full h-12 xl:h-10 xl:w-auto', {
-              'opacity-50': loading,
-              hidden: posts.data?.contentNodes?.nodes.length < PAGE_SIZE,
-            })}
-            disabled={loading}
-            onClick={onLoadMore}>
-            Load More Results
-          </button>
-        </div>
-      ) : null}
-    </>
-  );
-}
+  return data.contentNodes.nodes;
+};
 
 export default function SearchPage() {
   const router = useRouter();
   const { query } = router.query;
-  const page = router.query.p ? parseInt(String(router.query.p)) : 1;
-  const pages = [];
-  if (query) {
-    for (let i = 1; i <= page; i++) {
-      pages.push(
-        <Page
-          index={i}
-          isLast={i === page}
-          key={i}
-          query={query}
-          onLoadMore={() => {
-            router.replace(
-              {
-                pathname: '/search',
-                query: { query, p: page + 1 },
-              },
-              null,
-              { scroll: false },
-            );
-          }}
-        />,
-      );
-    }
-  }
+  const initialSize = router.query.size
+    ? parseInt(String(router.query.size))
+    : 1;
+  const { data, error, size, setSize } = useSWRInfinite(
+    index => (query ? [query, index + 1] : null),
+    resultsFetcher,
+    {
+      initialSize,
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
+    },
+  );
+  const isLoadingInitialData = !data && !error;
+  const isLoadingMore =
+    isLoadingInitialData ||
+    (size > 0 && data && typeof data[size - 1] === 'undefined');
+  const isEmpty = data?.[0]?.length === 0;
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.length < PAGE_SIZE);
+
+  useWaitCursor(isLoadingInitialData || isLoadingMore);
 
   return (
     <>
@@ -196,8 +106,101 @@ export default function SearchPage() {
         <div className="lg:max-w-sm my-4 lg:my-12 xl:mb-12 xl:mt-16">
           <SearchForm />
         </div>
-        {pages}
+        {isLoadingInitialData ? (
+          <div className="text-center xl:text-left my-8">Loading…</div>
+        ) : null}
+        {isEmpty ? (
+          <div className="text-center xl:text-left my-8">
+            No results found for <em>{query}</em>
+          </div>
+        ) : null}
+        {data?.map(results =>
+          results.map(result => (
+            <SearchResult data={result} key={result.uri} />
+          )),
+        )}
+        <div className="text-center xl:my-8">
+          <button
+            className={cx('btn w-full h-12 xl:h-10 xl:w-auto', {
+              'opacity-50': isLoadingMore,
+              hidden: isLoadingInitialData || isReachingEnd,
+            })}
+            disabled={isLoadingMore}
+            onClick={() => {
+              router.replace(
+                {
+                  pathname: '/search',
+                  query: { query, size: size + 1 },
+                },
+                null,
+                { scroll: false },
+              );
+              setSize(size + 1);
+            }}>
+            Load More Results
+          </button>
+        </div>
       </div>
     </>
+  );
+}
+
+function SearchResult({ data }) {
+  return (
+    <div
+      className="relative sm:flex my-2 p-4 xl:px-0 rounded overflow-hidden bg-white dark:bg-gray-900 xl:bg-transparent shadow xl:shadow-none"
+      key={data.uri}>
+      <Link href={data.uri}>
+        <a className="absolute inset-0 sm:hidden" />
+      </Link>
+      {data.featuredImage ? (
+        <div className="float-right w-24 h-24 sm:w-auto sm:h-auto flex-shrink-0 ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0">
+          <Link href={data.uri}>
+            <a>
+              <Image
+                alt={data.featuredImage.node.altText}
+                className="rounded"
+                height={150}
+                layout="intrinsic"
+                loading="lazy"
+                src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.sourceUrl}`}
+                width={150}
+              />
+            </a>
+          </Link>
+        </div>
+      ) : null}
+      <div className="flex-auto">
+        <div className="flex items-baseline">
+          <Link href={data.uri}>
+            <a className="link sm:mt-1 text-base sm:text-2xl font-display">
+              {data.title}
+            </a>
+          </Link>
+          {data.contentType.node.name !== 'post' && (
+            <div className="ml-2 italic opacity-50">
+              {_upperFirst(data.contentType.node.name)}
+            </div>
+          )}
+        </div>
+        <div
+          className="my-1 text-sm sm:text-base"
+          dangerouslySetInnerHTML={{ __html: data.excerpt }}
+        />
+        {data.categories?.nodes.length > 0 && (
+          <div className="hidden sm:block text-gray-500">
+            Posted in{' '}
+            {data.categories.nodes.map((cat, i) => (
+              <Fragment key={cat.uri}>
+                {i !== 0 && ', '}
+                <Link href={cat.uri}>
+                  <a className="italic hover:underline">{cat.name}</a>
+                </Link>
+              </Fragment>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

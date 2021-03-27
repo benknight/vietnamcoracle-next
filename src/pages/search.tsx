@@ -67,12 +67,14 @@ function Page({ query, index, isLast, onLoadMore }) {
   const results = useSWR(
     `/api/search?query=${query}&page=${index}&pageSize=${PAGE_SIZE}`,
     resultsFetcher,
+    { revalidateOnFocus: false, revalidateOnReconnect: false },
   );
   const posts = useSWR(
     results.data
       ? [SEARCH_RESULTS_QUERY, results.data.map(r => r.id).join(',')]
       : null,
     postsFetcher,
+    { revalidateOnFocus: false, revalidateOnReconnect: false },
   );
   const loading = !posts.data && !posts.error;
   useWaitCursor(loading);
@@ -156,17 +158,9 @@ function Page({ query, index, isLast, onLoadMore }) {
 
 export default function SearchPage() {
   const router = useRouter();
-  const [query, setQuery] = useState('');
-  const [page, setPage] = useState(1);
-
-  useEffect(() => {
-    if (!router.query.query || query === router.query.query) return;
-    setPage(1);
-    setQuery(String(router.query.query) || '');
-  }, [router.query.query]);
-
+  const { query } = router.query;
+  const page = router.query.p ? parseInt(String(router.query.p)) : 1;
   const pages = [];
-
   if (query) {
     for (let i = 1; i <= page; i++) {
       pages.push(
@@ -175,7 +169,16 @@ export default function SearchPage() {
           isLast={i === page}
           key={i}
           query={query}
-          onLoadMore={() => setPage(page => page + 1)}
+          onLoadMore={() => {
+            router.replace(
+              {
+                pathname: '/search',
+                query: { query, p: page + 1 },
+              },
+              null,
+              { scroll: false },
+            );
+          }}
         />,
       );
     }

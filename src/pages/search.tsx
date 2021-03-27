@@ -148,13 +148,18 @@ export default function SearchPage() {
 function SearchResult({ data }) {
   return (
     <div
-      className="relative sm:flex my-2 p-4 xl:px-0 rounded overflow-hidden bg-white dark:bg-gray-900 xl:bg-transparent shadow xl:shadow-none"
+      className="
+        relative sm:flex my-2 p-4 xl:px-0 rounded overflow-hidden
+        bg-white dark:bg-gray-900 xl:bg-transparent shadow xl:shadow-none"
       key={data.uri}>
       <Link href={data.uri}>
         <a className="absolute inset-0 sm:hidden" />
       </Link>
       {data.featuredImage ? (
-        <div className="float-right w-24 h-24 sm:w-auto sm:h-auto flex-shrink-0 ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0">
+        <div
+          className="
+            w-24 h-24 sm:w-auto sm:h-auto ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0
+            float-right flex-shrink-0">
           <Link href={data.uri}>
             <a>
               <Image

@@ -1,0 +1,102 @@
+@import 'fonts.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  body {
+    @apply overscroll-x-none;
+    @apply text-gray-800 dark:text-gray-200;
+    @apply bg-gray-100 dark:bg-black;
+  }
+  @media (min-resolution: 320dpi) and (prefers-color-scheme: dark) {
+    body {
+      @apply antialiased;
+    }
+  }
+}
+@layer components {
+  @import 'post.css';
+  .btn {
+    @apply h-8 px-4 text-sm text-white bg-blue-500 rounded subpixel-antialiased font-sans;
+  }
+  .cover-img > div > div:first-child {
+    min-height: 16rem;
+  }
+  .comment {
+    @apply text-sm leading-snug;
+  }
+  .comment p {
+    @apply mb-4;
+  }
+  .link {
+    @apply text-blue-700 dark:text-blue-400 hover:underline !important;
+  }
+  .link:visited {
+    @apply text-purple-600 dark:text-purple-400;
+  }
+  .form-field {
+    @apply outline-none leading-none font-sans
+      bg-gray-50 dark:bg-black focus:bg-white dark:focus:bg-gray-950
+      text-gray-500 focus:text-gray-800 dark:focus:text-gray-200
+      border border-gray-400 dark:border-gray-700
+      focus:border-gray-500 dark:focus:border-gray-600
+      hover:border-gray-500 dark:hover:border-gray-600;
+  }
+  .map-container {
+    margin-bottom: -14px;
+    height: 75vh;
+  }
+  @screen lg {
+    .map-container {
+      height: 600px;
+    }
+  }
+  .page-heading {
+    @apply font-display text-2xl;
+  }
+  @screen md {
+    .page-heading {
+      @apply text-4xl;
+    }
+  }
+  .page-wrap {
+    @apply px-4 md:px-8 xl:px-12;
+  }
+  /* smartphones, touchscreens */
+  @media (hover: none) and (pointer: coarse) {
+    .pointer-only {
+      pointer-events: none;
+    }
+  }
+  .post-card-img-fx {
+    mask-image: linear-gradient(to top, black, black 50%, transparent);
+  }
+  .post-card-excerpt a {
+    @apply hidden;
+  }
+}
+@layer utilities {
+  @responsive {
+    .text-shadow {
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    .text-shadow-md {
+      text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
+    }
+    .text-shadow-lg {
+      text-shadow: 0 15px 30px rgba(0, 0, 0, 0.11),
+        0 5px 15px rgba(0, 0, 0, 0.08);
+    }
+    .text-shadow-none {
+      text-shadow: none;
+    }
+  }
+  @responsive {
+    .line-clamp {
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  }
+}

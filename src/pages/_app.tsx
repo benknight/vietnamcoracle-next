@@ -1,18 +1,16 @@
 import type { AppProps } from 'next/app';
 import dynamic from 'next/dynamic';
-import { useRouter } from 'next/router';
 import { create } from 'jss';
 import { useMemo } from 'react';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
-import '../style.css';
+import '../styles/style.css';
 
 const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { preview } = pageProps;
-  const router = useRouter();
   const jss = useMemo(
     () =>
       create({

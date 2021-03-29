@@ -1,0 +1,115 @@
+.post {
+  @apply text-base font-display leading-relaxed dark:text-gray-300;
+}
+.post a,
+.post *[style*='color: #3366ff'] {
+  @apply link;
+}
+.post h1 {
+  @apply mb-5 text-2xl;
+  letter-spacing: 0.2em;
+}
+.post h2 {
+  @apply sm:-mt-6 pb-4 lg:pb-8 font-display tracking-wider leading-loose;
+}
+.post h2 strong {
+  font-size: 0;
+  line-height: 0;
+  @apply mt-4 sm:mt-8 flex flex-col items-start sm:block;
+}
+.post h2 strong a {
+  letter-spacing: 3px;
+  @apply text-lg sm:text-lg leading-relaxed mb-2;
+}
+@screen sm {
+  .post h2 strong a::after {
+    content: '/';
+    color: inherit;
+    @apply inline-block mx-4;
+  }
+  .post h2 strong a:last-child::after {
+    content: none;
+  }
+}
+.post h2 strong a:first-child {
+  @apply ml-0;
+}
+.post hr {
+  @apply my-6 dark:border-gray-800;
+}
+.post iframe {
+  width: 100%;
+}
+.post img,
+.post iframe {
+  @apply block;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 3px -2px,
+    rgba(0, 0, 0, 0.14) 0px 3px 4px 0px, rgba(0, 0, 0, 0.12) 0px 1px 8px 0px;
+}
+.post img.size-large {
+  @apply mt-8;
+}
+.post p,
+.post ul {
+  @apply mb-5 font-sans md:font-serif;
+}
+.post span[style*='Georgia'] {
+  font-family: inherit !important;
+}
+.post span[style*='25px'],
+.post span[style*='26px'],
+.post span[style*='27px'],
+.post span[style*='28px'] {
+  @apply font-display tracking-widest !important;
+}
+.post > p:first-of-type {
+  @apply text-base font-serif mt-8 dark:text-gray-400;
+}
+/* Images & captions */
+.post p > a[href$='.jpg'] {
+  @apply block mb-2;
+}
+.post p > a[href$='.jpg'] ~ * {
+  @apply text-sm block;
+}
+.post figcaption {
+  @apply text-sm py-2 px-1 leading-tight;
+}
+.post span[style*='#333333'],
+.post span[style*='#000000'] {
+  @apply dark:text-white !important;
+}
+.post span[style*='#808080'] {
+  @apply text-gray-400 !important;
+}
+.post span[style*='#ff0000'] {
+  @apply text-red-600 dark:text-red-500 !important;
+}
+.post strong {
+  @apply text-black dark:text-white;
+}
+.post ul {
+  @apply list-disc pl-8;
+}
+.post .aligncenter {
+  @apply mx-auto;
+}
+.post .blocks-gallery-grid {
+  @apply list-none pl-0;
+}
+.post .blocks-gallery-item img {
+  @apply block rounded;
+}
+.post .crp-list-title {
+  @apply hidden;
+}
+.post .crp-list {
+  @apply hidden;
+}
+.post .crp-list + div > a {
+  color: inherit !important;
+  @apply hover:no-underline !important;
+}
+.post .crp-list + div p {
+  margin-bottom: 0 !important;
+}

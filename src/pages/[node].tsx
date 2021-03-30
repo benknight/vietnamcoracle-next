@@ -7,10 +7,14 @@ import { useEffect, useRef } from 'react';
 import {
   EmailShareButton,
   FacebookShareButton,
+  PinterestShareButton,
+  RedditShareButton,
   TwitterShareButton,
 } from 'react-share';
 import EmailIcon from '@material-ui/icons/AlternateEmail';
 import FacebookIcon from '@material-ui/icons/Facebook';
+import PinterestIcon from '@material-ui/icons/Pinterest';
+import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
@@ -177,13 +181,34 @@ const PostOrPage = ({ data, fbShareCount }) => {
                     <span className="ml-1">Tweet</span>
                   </span>
                 </TwitterShareButton>
+                <PinterestShareButton
+                  className="rounded ml-2"
+                  media={data.contentNode.featuredImage?.node.sourceUrl}
+                  style={{ backgroundColor: '#e60023', fontSize: '12px' }}
+                  title={data.contentNode.title}
+                  url={data.contentNode.link}>
+                  <span className="flex items-center px-2 font-medium">
+                    <PinterestIcon className="w-4 h-4" />
+                    <span className="ml-1">Pin</span>
+                  </span>
+                </PinterestShareButton>
+                <RedditShareButton
+                  className="rounded ml-2"
+                  style={{ backgroundColor: '#ff4500', fontSize: '12px' }}
+                  title={data.contentNode.title}
+                  url={data.contentNode.link}>
+                  <span className="flex items-center px-2 font-medium">
+                    <RedditIcon className="w-4 h-4" />
+                    <span className="ml-1">Share</span>
+                  </span>
+                </RedditShareButton>
                 <EmailShareButton
                   body=""
                   className="ml-2"
                   style={{ fontSize: '12px' }}
                   subject={data.contentNode.title}
                   url={data.contentNode.link}>
-                  <span className="rounded bg-red-600 flex items-center px-2 font-medium">
+                  <span className="rounded bg-gray-500 flex items-center px-2 font-medium">
                     <EmailIcon className="w-4 h-4" fontSize="small" />
                     <span className="ml-1">Email</span>
                   </span>

@@ -86,18 +86,22 @@ const PostOrPage = ({ data, fbShareCount }) => {
           property="og:description"
           content={data.contentNode.seo.opengraphDescription}
         />
-        <meta
-          property="og:image"
-          content={data.contentNode.seo.opengraphImage?.sourceUrl}
-        />
-        <meta
-          property="og:image:height"
-          content={data.contentNode.seo.opengraphImage?.mediaDetails.height}
-        />
-        <meta
-          property="og:image:width"
-          content={data.contentNode.seo.opengraphImage?.mediaDetails.width}
-        />
+        {data.contentNode.seo.opengraphImage ? (
+          <>
+            <meta
+              property="og:image"
+              content={data.contentNode.seo.opengraphImage.sourceUrl}
+            />
+            <meta
+              property="og:image:height"
+              content={data.contentNode.seo.opengraphImage.mediaDetails.height}
+            />
+            <meta
+              property="og:image:width"
+              content={data.contentNode.seo.opengraphImage.mediaDetails.width}
+            />
+          </>
+        ) : null}
         <meta property="og:locale" content="en_US" />
         <meta
           property="og:site_name"
@@ -115,7 +119,7 @@ const PostOrPage = ({ data, fbShareCount }) => {
           content={data.contentNode.seo.twitterDescription}
         />
         <meta
-          property="og:image"
+          property="twitter:image"
           content={data.contentNode.seo.twitterImage?.sourceUrl}
         />
         <meta name="twitter:label1" content="Written by" />

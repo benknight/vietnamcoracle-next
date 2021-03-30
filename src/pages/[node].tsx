@@ -84,15 +84,15 @@ const PostOrPage = ({ data, fbShareCount }) => {
         />
         <meta
           property="og:image"
-          content={data.contentNode.seo.opengraphImage.sourceUrl}
+          content={data.contentNode.seo.opengraphImage?.sourceUrl}
         />
         <meta
           property="og:image:height"
-          content={data.contentNode.seo.opengraphImage.mediaDetails.height}
+          content={data.contentNode.seo.opengraphImage?.mediaDetails.height}
         />
         <meta
           property="og:image:width"
-          content={data.contentNode.seo.opengraphImage.mediaDetails.width}
+          content={data.contentNode.seo.opengraphImage?.mediaDetails.width}
         />
         <meta property="og:locale" content="en_US" />
         <meta
@@ -112,7 +112,7 @@ const PostOrPage = ({ data, fbShareCount }) => {
         />
         <meta
           property="og:image"
-          content={data.contentNode.seo.twitterImage.sourceUrl}
+          content={data.contentNode.seo.twitterImage?.sourceUrl}
         />
         <meta name="twitter:label1" content="Written by" />
         <meta name="twitter:data1" content="Tom" />

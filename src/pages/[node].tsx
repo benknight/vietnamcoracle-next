@@ -65,7 +65,61 @@ const PostOrPage = ({ data, fbShareCount }) => {
   return (
     <>
       <Head>
-        <title>{data.contentNode.title}</title>
+        <meta name="description" content={data.contentNode.seo.metaDesc} />
+        <meta
+          name="robots"
+          content={`${data.contentNode.seo.metaRobotsNoindex}, ${data.contentNode.seo.metaRobotsNofollow}`}
+        />
+        <meta
+          property="article:published_time"
+          content={data.contentNode.seo.opengraphPublishedTime}
+        />
+        <meta
+          property="article:modified_time"
+          content={data.contentNode.seo.opengraphModifiedTime}
+        />
+        <meta
+          property="og:description"
+          content={data.contentNode.seo.opengraphDescription}
+        />
+        <meta
+          property="og:image"
+          content={data.contentNode.seo.opengraphImage.sourceUrl}
+        />
+        <meta
+          property="og:image:height"
+          content={data.contentNode.seo.opengraphImage.mediaDetails.height}
+        />
+        <meta
+          property="og:image:width"
+          content={data.contentNode.seo.opengraphImage.mediaDetails.width}
+        />
+        <meta property="og:locale" content="en_US" />
+        <meta
+          property="og:site_name"
+          content={data.contentNode.seo.opengraphSiteName}
+        />
+        <meta property="og:type" content={data.contentNode.seo.opengraphType} />
+        <meta property="og:url" content={data.contentNode.seo.opengraphUrl} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          name="twitter:title"
+          content={data.contentNode.seo.twitterTitle}
+        />
+        <meta
+          name="twitter:description"
+          content={data.contentNode.seo.twitterDescription}
+        />
+        <meta
+          property="og:image"
+          content={data.contentNode.seo.twitterImage.sourceUrl}
+        />
+        <meta name="twitter:label1" content="Written by" />
+        <meta name="twitter:data1" content="Tom" />
+        <meta name="twitter:label2" content="Est. reading time" />
+        <meta name="twitter:data2" content={data.contentNode.seo.readingTime} />
+        <title>{data.contentNode.seo.title}</title>
+        <link rel="canonical" href={data.contentNode.seo.canonical} />
         <link
           href="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.css"
           rel="stylesheet"
@@ -78,6 +132,9 @@ const PostOrPage = ({ data, fbShareCount }) => {
           async
           src="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
         />
+        <script type="application/ld+json" className="yoast-schema-graph">
+          {data.contentNode.seo.schema.raw}
+        </script>
       </Head>
       <Hero
         imgSm={data.contentNode.featuredImage?.node}
@@ -86,8 +143,8 @@ const PostOrPage = ({ data, fbShareCount }) => {
           className={cx(
             'max-w-3xl xl:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display',
             {
-              'text-4xl xl:text-5xl': data.contentNode.title.length <= 40,
-              'text-4xl': data.contentNode.title.length > 40,
+              'text-4xl xl:text-5xl': data.contentNode.title.length <= 44,
+              'text-4xl': data.contentNode.title.length > 44,
             },
           )}
           id="top">
@@ -211,6 +268,9 @@ export async function getStaticProps({ params: { node }, preview = false }) {
               ...CommentThreadCommentData
             }
           }
+          seo {
+            ...SEOData
+          }
         }
         ... on Post {
           comments(first: 1000) {
@@ -223,6 +283,9 @@ export async function getStaticProps({ params: { node }, preview = false }) {
               ...PostCardPostData
             }
           }
+          seo {
+            ...SEOData
+          }
           thumbnails {
             thumbnailHeader {
               ...HeroImageData
@@ -232,6 +295,40 @@ export async function getStaticProps({ params: { node }, preview = false }) {
       }
       ...FooterData
       ...SidebarDefaultData
+    }
+    fragment SEOData on PostTypeSEO {
+      canonical
+      metaDesc
+      metaRobotsNofollow
+      metaRobotsNoindex
+      opengraphDescription
+      opengraphImage {
+        mediaDetails {
+          height
+          width
+        }
+        sourceUrl
+      }
+      opengraphModifiedTime
+      opengraphPublishedTime
+      opengraphSiteName
+      opengraphTitle
+      opengraphType
+      opengraphUrl
+      readingTime
+      schema {
+        raw
+      }
+      title
+      twitterDescription
+      twitterImage {
+        mediaDetails {
+          height
+          width
+        }
+        sourceUrl
+      }
+      twitterTitle
     }
     ${CommentThread.fragments}
     ${Hero.fragments}

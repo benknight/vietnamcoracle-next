@@ -15,39 +15,6 @@ const Collection = ({ data }) => {
     scrollAreaRef,
     scrollPosition,
   } = useCarousel();
-  const posts = useMemo(() => {
-    let posts;
-    switch (data.type) {
-      case 'category':
-        posts = data.category?.posts.nodes ?? [];
-        break;
-      case 'manual':
-        posts = data.posts;
-        break;
-      default:
-        posts = [];
-        break;
-    }
-    switch (data.orderby) {
-      case 'date':
-        posts.sort((a, b) =>
-          data.direction === 'asc'
-            ? new Date(a.date).getTime() - new Date(b.date).getTime()
-            : new Date(b.date).getTime() - new Date(a.date).getTime(),
-        );
-        break;
-      case 'alpha':
-        posts.sort((a, b) =>
-          data.direction === 'asc' ? a.title - b.title : b.title - a.title,
-        );
-        break;
-      case 'random':
-      default:
-        posts = _shuffle(posts);
-        break;
-    }
-    return posts;
-  }, [data]);
   return (
     <div className="relative my-3 lg:my-4 rounded-r-lg overflow-hidden">
       {!isTouchDevice && scrollPosition && scrollPosition !== 'start' && (
@@ -68,7 +35,7 @@ const Collection = ({ data }) => {
         <ol
           className="flex pb-8 -mb-8 pl-4 md:pl-8 lg:pl-8 xl:pl-12 overflow-y-auto"
           ref={scrollAreaRef as RefObject<HTMLOListElement>}>
-          {posts.map((post, index) => (
+          {data.posts?.map(post => (
             <li
               className="flex flex-shrink-0 w-3/7 lg:w-3/8 xl:w-3/7 pr-3 lg:pr-4 xl:pr-3"
               title={post.slug}
@@ -83,24 +50,11 @@ const Collection = ({ data }) => {
 };
 
 Collection.fragments = gql`
-  fragment CollectionComponentPostData on Post {
-    slug
-    ...PostCardPostData
-  }
   fragment CollectionComponentData on CategoryPage_Collections_items {
-    direction
-    orderby
-    type
-    category {
-      posts(first: 10) {
-        nodes {
-          ...CollectionComponentPostData
-        }
-      }
-    }
     posts {
       ... on Post {
-        ...CollectionComponentPostData
+        slug
+        ...PostCardPostData
       }
     }
   }

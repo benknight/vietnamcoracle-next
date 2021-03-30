@@ -105,7 +105,7 @@ const Browse = ({ data, swatches }) => {
                   <h3 className="mb-1 font-display text-xl sm:text-2xl lg:text-3xl">
                     {item.title}
                   </h3>
-                  {item.type === 'category' && item.category && (
+                  {item.category && (
                     <Link
                       href={item.category.uri.replace('category', 'browse')}>
                       <a className="link ml-4 text-sm font-serif">View all</a>

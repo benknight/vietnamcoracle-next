@@ -33,7 +33,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             objectFit="cover"
             src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.featuredImage.node.sourceUrl}`}
           />
-          <div className="absolute inset-0 pointer-events-none bg-gradient-to-t from-gray-900 via-black-25 to-transparent" />
+          <div className="absolute inset-0 top-auto h-1/2 pointer-events-none bg-gradient-to-t from-gray-900 via-black-50 to-transparent" />
         </div>
         <div
           className={cx(

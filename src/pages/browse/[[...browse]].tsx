@@ -124,7 +124,7 @@ const Browse = ({ data, swatches }) => {
           )}
           {categoryPage?.map && (
             <section className="mt-8 lg:mb-8 lg:px-8 xl:pl-12 xl:pr-0">
-              <Map data={categoryPage.map} />
+              <Map data={categoryPage.map} isHome={isHome} />
             </section>
           )}
         </LayoutMain>

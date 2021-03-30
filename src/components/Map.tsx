@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import LaunchIcon from '@material-ui/icons/Launch';
 // import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 
-const Map = ({ data }) => {
+const Map = ({ data, isHome = false }) => {
   const router = useRouter();
   const { browse } = router.query;
   return (
@@ -56,7 +56,9 @@ const Map = ({ data }) => {
             <iframe
               className="absolute inset-0 w-full h-full"
               height="650"
-              src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=6&hl=en`}
+              src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=${
+                isHome ? '6' : '5'
+              }&hl=en`}
               title={data.title}
               width="800"></iframe>
           </div>

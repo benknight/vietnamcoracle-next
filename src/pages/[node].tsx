@@ -1,7 +1,10 @@
 import axios from 'axios';
+import cheerio from 'cheerio';
 import cx from 'classnames';
+import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
 import {
@@ -16,6 +19,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import PinterestIcon from '@material-ui/icons/Pinterest';
 import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
+import UpdateIcon from '@material-ui/icons/Update';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
@@ -28,11 +32,6 @@ import useWaitCursor from '../lib/useWaitCursor';
 
 function cleanPostHTML(html: string): string {
   let result = html;
-  // Remove related posts heading
-  result = result.replace(
-    /<\s*h1(\s+.*?>|>).*?RELATED POSnodTS.*?<\s*\/\s*h1\s*>/gi,
-    '',
-  );
   // Force https
   result = result.replace(/(http)\:\/\//gm, 'https://');
   // Set language to English on all embeded maps
@@ -43,7 +42,7 @@ function cleanPostHTML(html: string): string {
   return result;
 }
 
-const PostOrPage = ({ data, fbShareCount }) => {
+const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
@@ -163,6 +162,21 @@ const PostOrPage = ({ data, fbShareCount }) => {
         <LayoutMain>
           <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
             <div className="max-w-3xl xl:max-w-4xl mx-auto">
+              {monthsOld > 24 ? (
+                <div className="flex items-center p-4 mt-4 mb-8 text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
+                  <UpdateIcon className="text-yellow-600 dark:text-yellow-500" />
+                  <div className="flex-auto ml-2 text-yellow-900 dark:text-yellow-100">
+                    This article is more than {Math.floor(monthsOld / 12)} years
+                    old.{' '}
+                    <Link href="/updates-and-accuracy">
+                      <a className="link">
+                        Read more about updates and accuracy
+                      </a>
+                    </Link>
+                    .
+                  </div>
+                </div>
+              ) : null}
               <div className="flex text-white mt-8 dark:mt-0">
                 <FacebookShareButton
                   className="rounded"
@@ -202,7 +216,7 @@ const PostOrPage = ({ data, fbShareCount }) => {
                   title={data.contentNode.title}
                   url={data.contentNode.link}>
                   <span className="flex items-center px-2 font-medium">
-                    <RedditIcon className="w-4 h-4" />
+                    <RedditIcon className="relative w-4 h-4 top-[-1px]" />
                     <span className="ml-1">Share</span>
                   </span>
                 </RedditShareButton>
@@ -221,7 +235,7 @@ const PostOrPage = ({ data, fbShareCount }) => {
               <article
                 className="post"
                 dangerouslySetInnerHTML={{
-                  __html: cleanPostHTML(data.contentNode.content),
+                  __html: html,
                 }}
                 ref={articleRef}
               />
@@ -388,10 +402,35 @@ export async function getStaticProps({ params: { node }, preview = false }) {
     }
   }
 
+  let html = '';
+
+  if (data.contentNode?.content) {
+    html = cleanPostHTML(data.contentNode.content);
+  }
+
+  let monthsOld: number = null;
+
+  if (html) {
+    const $ = cheerio.load(html);
+    const lastUpdated = $("p:first-of-type:contains('Last updated')");
+    if (lastUpdated) {
+      const date = lastUpdated
+        .text()
+        .match(/Last\s+updated\s+([^|]+)/)?.[1]
+        ?.trim();
+      if (date) {
+        const parsed = parse(date, 'LLLL yyyy', new Date());
+        monthsOld = differenceInMonths(new Date(), parsed);
+      }
+    }
+  }
+
   return {
     notFound: !data.contentNode,
     props: {
       data,
+      html,
+      monthsOld,
       preview,
       fbShareCount,
     },

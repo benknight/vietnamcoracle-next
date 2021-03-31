@@ -38,6 +38,7 @@ module.exports = {
     },
     screens: {
       ...breakpoints,
+      pointer: { raw: '(pointer: fine)' },
     },
   },
   variants: {

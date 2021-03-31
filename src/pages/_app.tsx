@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { create } from 'jss';
 import { useEffect, useMemo, useState } from 'react';
-import LinearProgress from '@material-ui/core/LinearProgress';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import Nav from '../components/Nav';
@@ -48,15 +48,21 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <StylesProvider jss={jss}>
-      <LinearProgress
-        classes={{
-          root: cx('absolute z-40 top-0 w-full h-0.5 bg-transparent', {
-            'block lg:hidden': loading,
+      <div
+        className={cx(
+          'fixed z-40 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center p-3 bg-white dark:bg-black shadow rounded-full',
+          {
+            'block pointer:hidden': true,
             hidden: !loading,
-          }),
-          bar: 'bg-gray-700 dark:bg-white',
-        }}
-      />
+          },
+        )}>
+        <CircularProgress
+          classes={{
+            colorPrimary: 'text-black dark:text-white',
+          }}
+          size={24}
+        />
+      </div>
       {preview && <PreviewAlert />}
       <Header preview={preview} />
       <Nav preview={preview} />

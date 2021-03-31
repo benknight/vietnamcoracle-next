@@ -166,8 +166,8 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                 <div className="flex items-center p-4 mt-4 mb-8 text-xs sm:text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
                   <UpdateIcon className="text-yellow-600 dark:text-yellow-500" />
                   <div className="flex-auto ml-3 text-yellow-900 dark:text-yellow-100">
-                    This article is more than {Math.floor(monthsOld / 12)} years
-                    old.{' '}
+                    This post was last updated more than{' '}
+                    {Math.floor(monthsOld / 12)} years ago.{' '}
                     <Link href="/updates-and-accuracy">
                       <a className="link">
                         Read more about accuracy &amp; updates
@@ -176,9 +176,9 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                   </div>
                 </div>
               ) : null}
-              <div className="flex text-white mt-8 dark:mt-0">
+              <div className="flex flex-wrap text-white mt-8 dark:mt-0">
                 <FacebookShareButton
-                  className="rounded"
+                  className="rounded mr-2 mb-2"
                   style={{ backgroundColor: '#1877f2', fontSize: '12px' }}
                   title={data.contentNode.title}
                   url={data.contentNode.link}>
@@ -189,7 +189,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                   </span>
                 </FacebookShareButton>
                 <TwitterShareButton
-                  className="rounded ml-2"
+                  className="rounded mr-2 mb-2"
                   style={{ backgroundColor: '#1da1f2', fontSize: '12px' }}
                   title={data.contentNode.title}
                   url={data.contentNode.link}>
@@ -199,7 +199,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                   </span>
                 </TwitterShareButton>
                 <PinterestShareButton
-                  className="rounded ml-2"
+                  className="rounded mr-2 mb-2"
                   media={data.contentNode.featuredImage?.node.sourceUrl}
                   style={{ backgroundColor: '#e60023', fontSize: '12px' }}
                   title={data.contentNode.title}
@@ -210,7 +210,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                   </span>
                 </PinterestShareButton>
                 <RedditShareButton
-                  className="rounded ml-2"
+                  className="rounded mr-2 mb-2"
                   style={{ backgroundColor: '#ff4500', fontSize: '12px' }}
                   title={data.contentNode.title}
                   url={data.contentNode.link}>
@@ -221,7 +221,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                 </RedditShareButton>
                 <EmailShareButton
                   body=""
-                  className="ml-2"
+                  className="rounded mr-2 mb-2"
                   style={{ fontSize: '12px' }}
                   subject={data.contentNode.title}
                   url={data.contentNode.link}>
@@ -415,7 +415,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
     if (lastUpdated) {
       const date = lastUpdated
         .text()
-        .match(/Last\s+updated\s+([^|]+)/)?.[1]
+        .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]
         ?.trim();
       if (date) {
         const parsed = parse(date, 'LLLL yyyy', new Date());

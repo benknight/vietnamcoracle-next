@@ -43,7 +43,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             'font-medium rounded-b',
             {
               '-mt-24 px-4 pt-4 pb-6': flex,
-              '-mt-12 lg:-mt-24 p-3 pr-4': !flex,
+              '-mt-12 md:-mt-24 p-3 pr-4': !flex,
             },
           )}>
           <div className="relative antialiased">

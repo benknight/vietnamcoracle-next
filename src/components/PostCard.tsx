@@ -50,7 +50,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             <h3
               className={cx('font-display text-white', {
                 'text-2xl': flex,
-                'text-xs sm:text-base md:text-2xl':
+                'text-sm sm:text-base md:text-2xl':
                   !flex && post.title.length > 40,
                 'text-sm sm:text-lg md:text-2xl':
                   !flex && post.title.length <= 40,

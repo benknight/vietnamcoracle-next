@@ -108,7 +108,9 @@ const Browse = ({ data, swatches }) => {
                   {item.category && (
                     <Link
                       href={item.category.uri.replace('category', 'browse')}>
-                      <a className="link ml-4 text-sm font-serif">View all</a>
+                      <a className="link ml-4 text-sm font-serif whitespace-nowrap">
+                        See all
+                      </a>
                     </Link>
                   )}
                 </div>

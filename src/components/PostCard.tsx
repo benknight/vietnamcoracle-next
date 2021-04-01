@@ -37,13 +37,13 @@ const PostCard = ({ flex = false, post }: Props) => {
         </div>
         <div
           className={cx(
-            'relative -mt-12 lg:-mt-24 md:px-5 md:py-6',
+            'relative md:px-5 md:py-6',
             'flex-auto flex items-end',
             'md:text-white',
             'font-medium rounded-b',
             {
-              'px-4 pt-4 pb-6': flex,
-              'p-3 pr-4': !flex,
+              '-mt-24 px-4 pt-4 pb-6': flex,
+              '-mt-12 lg:-mt-24 p-3 pr-4': !flex,
             },
           )}>
           <div className="relative antialiased">

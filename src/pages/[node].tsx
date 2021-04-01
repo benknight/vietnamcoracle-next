@@ -163,9 +163,9 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
           <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
             <div className="max-w-3xl xl:max-w-4xl mx-auto">
               {monthsOld > 24 ? (
-                <div className="flex items-center p-4 mt-4 mb-8 text-xs sm:text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
+                <div className="flex items-center p-2 sm:p-3 mt-4 dark:mt-0 mb-7 text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
                   <UpdateIcon className="text-yellow-600 dark:text-yellow-500" />
-                  <div className="flex-auto ml-3 text-yellow-900 dark:text-yellow-100">
+                  <div className="flex-auto ml-2 leading-tight">
                     This post was last updated more than{' '}
                     {Math.floor(monthsOld / 12)} years ago.{' '}
                     <Link href="/updates-and-accuracy">

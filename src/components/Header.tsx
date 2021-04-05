@@ -67,7 +67,7 @@ export default function Header({ preview = false }: Props) {
               },
             )}>
             <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-              <a className="flex items-center">
+              <a className="flex items-center hover:text-black dark:hover:text-white">
                 <Image
                   className="rounded-full transform scale-90 xl:scale-100"
                   height={44}

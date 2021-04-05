@@ -52,7 +52,7 @@
 .post span[style*='26px'],
 .post span[style*='27px'],
 .post span[style*='28px'] {
-  @apply font-display tracking-widest !important;
+  @apply font-display !important;
 }
 .post > p:first-of-type {
   @apply text-base font-serif mt-4 dark:text-gray-400;

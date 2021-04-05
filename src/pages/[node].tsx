@@ -148,7 +148,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
         imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
         <h1
           className={cx(
-            'max-w-3xl xl:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display',
+            'max-w-3xl xl:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display tracking-tight',
             {
               'text-4xl xl:text-5xl': data.contentNode.title.length <= 44,
               'text-4xl': data.contentNode.title.length > 44,
@@ -160,22 +160,8 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
       </Hero>
       <Layout>
         <LayoutMain>
-          <div className="pt-1 px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
+          <div className="px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
             <div className="max-w-3xl xl:max-w-4xl mx-auto">
-              {monthsOld > 24 ? (
-                <div className="flex items-center p-2 sm:p-3 mt-4 dark:mt-0 mb-7 text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
-                  <UpdateIcon className="text-yellow-600 dark:text-yellow-500" />
-                  <div className="flex-auto ml-2 leading-tight">
-                    This post was last updated more than{' '}
-                    {Math.floor(monthsOld / 12)} years ago.{' '}
-                    <Link href="/updates-and-accuracy">
-                      <a className="link">
-                        Read more about accuracy &amp; updates
-                      </a>
-                    </Link>
-                  </div>
-                </div>
-              ) : null}
               <div className="flex flex-wrap text-white mt-8 dark:mt-0">
                 <FacebookShareButton
                   className="rounded mr-2 mb-2"
@@ -231,6 +217,20 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                   </span>
                 </EmailShareButton>
               </div>
+              {monthsOld > 24 ? (
+                <div className="flex items-center py-3 px-2 mt-3 mb-4 text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
+                  <UpdateIcon className="text-yellow-600 dark:text-yellow-500" />
+                  <div className="flex-auto ml-2 leading-tight">
+                    This article was last updated more than{' '}
+                    {Math.floor(monthsOld / 12)} years ago.{' '}
+                    <Link href="/updates-and-accuracy">
+                      <a className="link">
+                        Read more about accuracy &amp; updates
+                      </a>
+                    </Link>
+                  </div>
+                </div>
+              ) : null}
               <article
                 className="post"
                 dangerouslySetInnerHTML={{

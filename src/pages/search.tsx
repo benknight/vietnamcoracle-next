@@ -107,7 +107,7 @@ export default function SearchPage() {
           <SearchForm />
         </div>
         {isLoadingInitialData ? (
-          <div className="text-center lg:text-left my-8">Loading…</div>
+          <div className="text-center lg:text-left my-8">Searching…</div>
         ) : null}
         {isEmpty ? (
           <div className="text-center lg:text-left my-8">

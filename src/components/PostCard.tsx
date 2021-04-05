@@ -43,19 +43,21 @@ const PostCard = ({ flex = false, post }: Props) => {
             'font-medium rounded-b',
             {
               '-mt-24 px-4 pt-4 pb-6': flex,
-              '-mt-12 md:-mt-24 p-3 pr-4': !flex,
+              '-mt-16 md:-mt-24 p-3 pr-4 max-h-40': !flex,
             },
           )}>
           <div className="relative antialiased">
             <h3
-              className={cx('font-display text-white', {
-                'text-2xl': flex,
-                'text-sm sm:text-base md:text-2xl':
-                  !flex && post.title.length > 40,
-                'text-sm sm:text-lg md:text-2xl':
-                  !flex && post.title.length <= 40,
-              })}
-              style={{ textShadow: '0 1px 2px black' }}>
+              className={cx(
+                'font-display text-white tracking-tightest sm:tracking-tight text-shadow',
+                {
+                  'text-2xl': flex,
+                  'text-sm sm:text-base md:text-2xl':
+                    !flex && post.title.length > 40,
+                  'text-sm sm:text-lg md:text-2xl':
+                    !flex && post.title.length <= 40,
+                },
+              )}>
               {post.title}
             </h3>
             <div

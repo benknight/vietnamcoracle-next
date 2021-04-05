@@ -61,6 +61,7 @@ function MyApp({ Component, pageProps }: AppProps) {
             colorPrimary: 'text-black dark:text-white',
           }}
           size={24}
+          thickness={5}
         />
       </div>
       {preview && <PreviewAlert />}

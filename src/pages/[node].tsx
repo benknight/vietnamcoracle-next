@@ -148,9 +148,10 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
         imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
         <h1
           className={cx(
-            'max-w-3xl xl:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display tracking-tight',
+            'max-w-3xl xl:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display tracking-tight ',
             {
-              'text-4xl xl:text-5xl': data.contentNode.title.length <= 44,
+              'text-4xl xl:text-5xl xl:leading-tight':
+                data.contentNode.title.length <= 44,
               'text-4xl': data.contentNode.title.length > 44,
             },
           )}
@@ -171,7 +172,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                   <span className="flex items-center px-2">
                     <FacebookIcon className="w-4 h-4" fontSize="small" />
                     <span className="mx-1 font-medium">Share</span>{' '}
-                    {fbShareCount > 0 ? fbShareCount : ''}
+                    {fbShareCount > 0 ? fbShareCount.toLocaleString() : ''}
                   </span>
                 </FacebookShareButton>
                 <TwitterShareButton

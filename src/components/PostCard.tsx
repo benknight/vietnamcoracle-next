@@ -20,7 +20,7 @@ const PostCard = ({ flex = false, post }: Props) => {
   const swatch = swatches[post.featuredImage.node.id];
   return (
     <Link href={`/${post.slug}`}>
-      <a className="relative overflow-hidden flex flex-col shadow w-full rounded-lg bg-gray-800">
+      <a className="group relative overflow-hidden flex flex-col shadow w-full rounded-lg bg-gray-900">
         <div
           className="relative block w-full bg-opacity-10 aspect-w-1 aspect-h-1"
           style={{
@@ -33,7 +33,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             objectFit="cover"
             src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.featuredImage.node.sourceUrl}`}
           />
-          <div className="absolute inset-0 top-auto h-1/2 pointer-events-none bg-gradient-to-t from-gray-800 via-black-50 to-transparent" />
+          <div className="absolute inset-0 top-auto h-1/2 pointer-events-none bg-gradient-to-t from-gray-900 via-black-50 to-transparent" />
         </div>
         <div
           className={cx(
@@ -42,8 +42,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             'md:text-white',
             'font-medium rounded-b',
             {
-              '-mt-24 px-4 pt-4 pb-6': flex,
-              '-mt-16 md:-mt-24 p-3 pr-4 max-h-40': !flex,
+              '-mt-24 px-4 pt-4 pb-6': true,
             },
           )}>
           <div className="relative antialiased">
@@ -63,8 +62,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             <div
               className={cx(
                 'post-card-excerpt',
-                'mt-2 font-sans xl:font-serif text-xs lg:text-sm text-gray-300',
-                { 'hidden sm:line-clamp': !flex },
+                'mt-2 font-sans xl:font-serif text-xs lg:text-sm text-white',
               )}
               dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>
           </div>

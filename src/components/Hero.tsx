@@ -23,12 +23,11 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
   const hasChildren = Boolean(children);
   return (
     <section
-      className={cx(
-        'relative mx-auto max-w-screen-2xl bg-white dark:bg-gray-950',
-        {
-          'pb-12': showImg && hasChildren,
-        },
-      )}>
+      className={cx('relative mx-auto max-w-screen-2xl', {
+        'bg-gray-950': showImg,
+        'bg-white dark:bg-gray-950': !showImg,
+        'pb-12': showImg && hasChildren,
+      })}>
       {showImg && (
         <div className="bg-gray-400">
           <div className="cover-img flex md:hidden">

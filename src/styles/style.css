@@ -55,7 +55,7 @@
   }
   @screen lg {
     .map-container {
-      height: 600px;
+      height: 95vh;
     }
   }
   .page-heading {

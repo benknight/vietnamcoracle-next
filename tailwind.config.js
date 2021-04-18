@@ -5,11 +5,8 @@ const breakpoints = require('./src/config/breakpoints');
 module.exports = {
   darkMode: 'media',
   plugins: [require('@tailwindcss/aspect-ratio')],
-  purge: {
-    content: ['./src/**/*.{js,jsx,ts,tsx}'],
-    layers: ['utilities'],
-    options: {},
-  },
+  purge: ['./src/**/*.{js,jsx,ts,tsx}'],
+  mode: 'jit',
   theme: {
     extend: {
       colors: {

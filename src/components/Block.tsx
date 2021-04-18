@@ -34,7 +34,7 @@ export const BlockContent = props => (
 );
 
 const Block = props => (
-  <div className="text-center font-display">{props.children}</div>
+  <aside className="tw-block text-center font-display">{props.children}</aside>
 );
 
 Block.fragments = gql`

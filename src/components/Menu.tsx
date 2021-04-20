@@ -12,11 +12,11 @@ import GraphQLClient from '../lib/GraphQLClient';
 
 const fetcher = query => GraphQLClient.request(query);
 
-export default function Menu() {
+export default function Menu({ isMiniHeader }) {
   const { data, error } = useSWR(
     gql`
       query Menu {
-        menuItems(where: { location: HEADER_MENU }, first: 1000) {
+        menuItems(where: { location: HEADER_MENU_NEXT }, first: 1000) {
           nodes {
             id
             label
@@ -34,15 +34,20 @@ export default function Menu() {
     },
   );
   return (
-    <Popover className="ml-2">
+    <Popover className="ml-3">
       {({ open }) => (
         <>
           <Popover.Button
             className="
-              flex items-center p-2 md:px-3 uppercase text-xs rounded-full
-              hover:bg-gray-100 hover:dark:bg-gray-800
+              flex items-center justify-center h-10 p-2 min-w-[2.5rem] uppercase text-xs rounded-full
+              bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 hover:dark:bg-gray-700
               focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500">
-            <div className="hidden md:block mr-1 tracking-wider">Menu</div>
+            <div
+              className={cx('hidden pl-2 mr-1 tracking-wider', {
+                'md:block': !isMiniHeader,
+              })}>
+              Menu
+            </div>
             <ChevronDownIcon className="w-5 h-5" />
           </Popover.Button>
           <Transition
@@ -57,9 +62,9 @@ export default function Menu() {
             <Popover.Panel
               static
               className="
-                absolute z-10 left-1 md:left-auto
-                w-72 max-h-[87vh] mt-3 p-2 overflow-auto
-                font-medium
+                absolute z-10
+                w-72 max-h-[87vh] mt-2 p-2 overflow-auto
+                font-medium font-display text-sm
                 bg-white dark:bg-gray-800
                 border border-gray-200 dark:border-gray-700
                 shadow-lg
@@ -106,12 +111,12 @@ function MenuNav({ items = [], open = false }) {
             <li>
               <Link href={byId[key].path || byId[key].url}>
                 <a
-                  className="group flex items-center p-3 text-lg font-bold rounded hover:bg-gray-100 hover:dark:bg-gray-700"
+                  className="flex items-center h-12 px-4 text-base font-bold rounded hover:bg-gray-100 hover:dark:bg-gray-700"
                   onClick={event => {
                     event.preventDefault();
                     setCursor(byId[key].parentId);
                   }}>
-                  <div className="flex items-center justify-center mr-3 p-2 dark:bg-gray-700 group-hover:dark:bg-gray-500 rounded-full">
+                  <div className="flex items-center justify-center mr-3">
                     <ArrowLeftIcon className="w-5 h-5" />
                   </div>
                   <div className="flex-auto">{byId[key].label}</div>
@@ -123,7 +128,7 @@ function MenuNav({ items = [], open = false }) {
             <li key={item.url}>
               <Link href={item.path || item.url}>
                 <a
-                  className="flex items-center p-3 rounded hover:bg-gray-100 hover:dark:bg-gray-700"
+                  className="flex items-center h-12 px-4 rounded hover:bg-gray-100 hover:dark:bg-gray-700"
                   onClick={event => {
                     if (grouped[item.id]) {
                       event.preventDefault();

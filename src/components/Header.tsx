@@ -86,14 +86,14 @@ export default function Header({ preview = false }: Props) {
                 </h1>
               </a>
             </Link>
-            <Menu />
+            <Menu isMiniHeader={showMini} />
           </div>
           <div
             className={cx(
               'z-30 absolute top-0 right-0',
               {
                 'left-auto': !searchFocused && showMini,
-                'left-0 lg:left-auto': searchFocused || !showMini,
+                'left-12 lg:left-auto': searchFocused || !showMini,
               },
               'flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
             )}>

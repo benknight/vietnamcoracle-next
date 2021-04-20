@@ -95,7 +95,7 @@ export default function Nav({ preview = false }: Props) {
                         ? 'border-blue-500 dark:border-blue-400 group-hover:border-blue-500 dark:group-hover:border-blue-400'
                         : 'border-transparent',
                     )}>
-                    <div className="xl:hidden text-xxs xl:text-base">
+                    <div className="xl:hidden text-xxs lg:text-xs">
                       {link.titleShort}
                     </div>
                     <div className="hidden xl:block text-sm">{link.title}</div>

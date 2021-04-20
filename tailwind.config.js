@@ -14,7 +14,7 @@ module.exports = {
         'black-25': 'rgba(0, 0, 0, 0.25)',
         'black-75': 'rgba(0, 0, 0, 0.75)',
         gray: {
-          ...colors.gray,
+          ...colors.warmGray,
           950: 'hsl(0deg 0% 5%)',
         },
         'lp-blue': '#297CBB',

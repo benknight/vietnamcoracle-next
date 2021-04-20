@@ -1,9 +1,7 @@
-import cx from 'classnames';
 import { gql } from 'graphql-request';
 import _shuffle from 'lodash/shuffle';
-import { useMemo, RefObject } from 'react';
-import ChevronLeft from '@material-ui/icons/ChevronLeft';
-import ChevronRight from '@material-ui/icons/ChevronRight';
+import { RefObject } from 'react';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
 import useCarousel from '../lib/useCarousel';
 import PostCard from './PostCard';
 
@@ -19,16 +17,16 @@ const Collection = ({ data }) => {
     <div className="relative my-3 lg:my-4 rounded-r-lg overflow-hidden">
       {!isTouchDevice && scrollPosition && scrollPosition !== 'start' && (
         <button
-          className="absolute z-10 left-2 top-1/2 transform -translate-y-1/2 w-16 h-16 rounded-full bg-black bg-opacity-75 text-white"
+          className="flex items-center justify-center absolute z-10 left-2 top-1/2 transform -translate-y-1/2 w-16 h-16 rounded-full bg-black bg-opacity-75 text-white"
           {...getLeftNavProps()}>
-          <ChevronLeft classes={{ root: 'w-10 h-10' }} />
+          <ArrowLeftIcon className="w-7 h-7" />
         </button>
       )}
       {!isTouchDevice && scrollPosition && scrollPosition !== 'end' && (
         <button
-          className="absolute z-10 top-1/2 right-2 transform -translate-y-1/2 w-16 h-16 rounded-full bg-black bg-opacity-75 text-white"
+          className="flex items-center justify-center absolute z-10 top-1/2 right-2 transform -translate-y-1/2 w-16 h-16 rounded-full bg-black bg-opacity-75 text-white"
           {...getRightNavProps()}>
-          <ChevronRight classes={{ root: 'w-10 h-10' }} />
+          <ArrowRightIcon className="w-7 h-7" />
         </button>
       )}
       <div className="overflow-hidden">

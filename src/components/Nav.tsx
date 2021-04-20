@@ -3,7 +3,8 @@ import _defer from 'lodash/defer';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { cloneElement, useRef } from 'react';
-import HomeOutlinedIcon from '@material-ui/icons/HomeOutlined';
+import { HomeIcon } from '@heroicons/react/solid';
+import { HomeIcon as HomeOutlinedIcon } from '@heroicons/react/outline';
 import HotelIcon from '@material-ui/icons/Hotel';
 import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
 import RestaurantIcon from '@material-ui/icons/Restaurant';
@@ -13,7 +14,7 @@ import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
 
 const links = [
   {
-    icon: <HomeOutlinedIcon />,
+    icon: <HomeIcon />,
     iconAlt: <HomeOutlinedIcon />,
     title: 'Home',
     titleShort: 'Home',
@@ -63,7 +64,7 @@ export default function Nav({ preview = false }: Props) {
           { 'top-8': preview },
         )}>
         <div
-          className="flex justify-center flex-auto px-1 xl:px-16 font-sans lg:font-display tracking-wide leading-tight border-t border-gray-300 dark:border-gray-700"
+          className="flex justify-center items-center flex-auto px-1 xl:px-16 font-sans lg:font-display tracking-wide leading-tight border-t border-gray-300 dark:border-gray-700"
           style={{ marginTop: '-1px' }}>
           {links.map(link => {
             const path = router.asPath;
@@ -76,7 +77,7 @@ export default function Nav({ preview = false }: Props) {
               <Link href={to} key={to}>
                 <a
                   className={cx(
-                    'group w-1/5 md:w-28 xl:w-auto sm:px-3 xl:px-3 xl:py-0 flex flex-col xl:flex-row items-center justify-center text-center',
+                    'group w-1/5 md:w-24 xl:w-auto h-10 mx-1 sm:px-3 xl:px-3 xl:py-0 flex flex-col xl:flex-row items-center justify-center text-center rounded-full xl:bg-gray-100 xl:dark:bg-gray-800',
                     {
                       'bg-gradient-to-b dark:shadow text-blue-500 dark:text-blue-400': isCurrent,
                     },
@@ -84,7 +85,7 @@ export default function Nav({ preview = false }: Props) {
                   key={link.url}>
                   <div className="xl:mr-2">
                     {cloneElement(isCurrent ? link.icon : link.iconAlt, {
-                      className: 'w-6 h-6 mb-1',
+                      className: 'w-5 h-5 mb-1',
                     })}
                   </div>
                   <div

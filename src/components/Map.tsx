@@ -2,9 +2,7 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-// import FullscreenIcon from '@material-ui/icons/Fullscreen';
-import LaunchIcon from '@material-ui/icons/Launch';
-// import MenuOpenIcon from '@material-ui/icons/MenuOpen';
+import { ExternalLinkIcon } from '@heroicons/react/solid';
 
 const Map = ({ data, isHome = false }) => {
   const router = useRouter();
@@ -47,7 +45,7 @@ const Map = ({ data, isHome = false }) => {
             />
           </div>
           Open in Google Maps
-          <LaunchIcon className="ml-2" fontSize="small" />
+          <ExternalLinkIcon className="ml-2 w-4 h-4" />
         </a>
       </div>
       <div className="relative">

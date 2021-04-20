@@ -2,7 +2,7 @@ import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import SearchIcon from '@material-ui/icons/Search';
+import { SearchIcon } from '@heroicons/react/solid';
 
 export default function SearchInput({ className = '', ...inputProps }) {
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
         });
       }}>
       <div className="absolute top-0 left-0 bottom-0 w-10 flex items-center justify-center pointer-events-none">
-        <SearchIcon classes={{ root: 'w-5 h-5' }} />
+        <SearchIcon className="w-5 h-5" />
       </div>
       <input
         {...inputProps}

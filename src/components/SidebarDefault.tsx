@@ -1,24 +1,23 @@
+import cx from 'classnames';
 import { gql } from 'graphql-request';
 import About from './About';
 import Block from './Block';
-import ElsewhereLinks from './ElsewhereLinks';
+import Book from './Book';
 import Subscribe from './Subscribe';
 import Support from './Support';
 import SlidingSticky from './SlidingSticky';
 
-const SidebarDefault = ({ data }) => (
+const SidebarDefault = ({ className = '', data }) => (
   <SlidingSticky>
-    <aside className="mb-20">
+    <div
+      className={cx(
+        'py-8 bg-gray-100 dark:bg-gray-950 border border-transparent dark:border-gray-800 rounded-2xl',
+        className,
+      )}>
       <About data={data.about.block} />
-    </aside>
-    <aside className="mb-20">
       <Support data={data.support.block} />
-    </aside>
-    <aside>
+      <Book />
       <Subscribe data={data.subscribe.block} />
-    </aside>
-    <div className="mt-4 mb-14">
-      <ElsewhereLinks />
     </div>
   </SlidingSticky>
 );

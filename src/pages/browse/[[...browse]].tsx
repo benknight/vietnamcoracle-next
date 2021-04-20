@@ -5,8 +5,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import vibrant from 'node-vibrant';
-import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
-import MapIcon from '@material-ui/icons/Map';
+import { MapIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon } from '@heroicons/react/solid';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
 import Hero from '../../components/Hero';
@@ -40,7 +40,7 @@ const Browse = ({ data, swatches }) => {
       ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
           <div className="pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end justify-between">
-            <h1 className="sm:mr-6 font-display">
+            <h1 className="mt-8 sm:mr-6 font-display">
               {subcategory ? (
                 <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
                   <span className="inline-block text-gray-300 opacity-90">
@@ -61,7 +61,7 @@ const Browse = ({ data, swatches }) => {
               <a
                 className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 items-end text-sm hover:underline"
                 href="#map">
-                <MapIcon className="mr-2" />
+                <MapIcon className="w-5 h-5 mr-2" />
                 Jump to map
               </a>
             )}
@@ -69,7 +69,7 @@ const Browse = ({ data, swatches }) => {
               <div className="flex-auto w-full md:w-auto">
                 <div className="relative inline-flex items-center justify-between w-full md:w-auto h-10 mt-3 p-3 rounded text-sm border bg-black bg-opacity-50 tracking-wide leading-none whitespace-nowrap">
                   Browse subcategories…
-                  <ArrowDropDownIcon className="ml-2" />
+                  <ChevronDownIcon className="w-4 h-4 ml-2" />
                   <select
                     className="absolute inset-0 opacity-0 cursor-pointer w-full text-black"
                     onChange={event => router.push(event.target.value)}

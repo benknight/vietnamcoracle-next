@@ -14,12 +14,12 @@ import {
   RedditShareButton,
   TwitterShareButton,
 } from 'react-share';
+import { ClockIcon } from '@heroicons/react/solid';
 import EmailIcon from '@material-ui/icons/AlternateEmail';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import PinterestIcon from '@material-ui/icons/Pinterest';
 import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
-import UpdateIcon from '@material-ui/icons/Update';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
@@ -148,11 +148,10 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
         imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
         <h1
           className={cx(
-            'max-w-3xl xl:max-w-none mx-auto mt-8 mb-2 xl:pl-8 xl:pr-24 font-display tracking-tight ',
+            'max-w-3xl xl:max-w-5xl mx-auto xl:mx-0 mt-8 mb-2 xl:pl-8 xl:pr-0 font-display tracking-tight text-4xl leading-tight',
             {
-              'text-4xl xl:text-5xl xl:leading-tight':
-                data.contentNode.title.length <= 44,
-              'text-4xl': data.contentNode.title.length > 44,
+              'xl:text-5xl xl:leading-tight':
+                data.contentNode.title.length <= 60,
             },
           )}
           id="top">
@@ -219,8 +218,8 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                 </EmailShareButton>
               </div>
               {monthsOld > 24 ? (
-                <div className="flex items-center py-3 px-2 mt-3 mb-4 text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
-                  <UpdateIcon className="text-yellow-600 dark:text-yellow-500" />
+                <div className="flex items-center py-3 px-2 mt-8 mb-4 text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
+                  <ClockIcon className="w-5 h-5 text-yellow-600 dark:text-yellow-500" />
                   <div className="flex-auto ml-2 leading-tight">
                     This article was last updated more than{' '}
                     {Math.floor(monthsOld / 12)} years ago.{' '}
@@ -265,7 +264,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
             </div>
           </div>
         </LayoutMain>
-        <LayoutSidebar className="bg-gray-50 dark:bg-gray-950">
+        <LayoutSidebar>
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>

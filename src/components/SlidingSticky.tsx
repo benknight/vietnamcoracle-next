@@ -8,7 +8,7 @@ export default function SlidingSticky({ children }) {
 
   useEffect(() => {
     scrollPosition.current = 0;
-    const topOffset = 72;
+    const topOffset = 56;
     const listener = () => {
       if (!sticky.current) return;
       const { top } = document.body.getBoundingClientRect();
@@ -43,7 +43,7 @@ export default function SlidingSticky({ children }) {
   return (
     <div className="lg:flex-auto lg:px-6 py-12 lg:py-0" ref={stickyContainer}>
       <div className="hidden lg:block" ref={spacer} />
-      <div className=" flex-auto lg:sticky lg:pb-4 lg:pt-8" ref={sticky}>
+      <div className="flex-auto lg:sticky lg:py-8" ref={sticky}>
         {children}
       </div>
     </div>

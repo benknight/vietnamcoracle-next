@@ -3,6 +3,7 @@ import _keyBy from 'lodash/keyBy';
 import _mapValues from 'lodash/mapValues';
 import { useState } from 'react';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
+import ElsewhereLinks from './ElsewhereLinks';
 import useWaitCursor from '../lib/useWaitCursor';
 
 interface Props {
@@ -54,7 +55,7 @@ export default function Subscribe({ data: block }: Props) {
       <BlockContent>
         <p>{block.description}</p>
         <form
-          className="flex justify-center max-w-xs mt-4 mx-auto"
+          className="flex justify-center max-w-xs mt-4 mb-8 mx-auto"
           onSubmit={event => {
             event.preventDefault();
             onSubmit();
@@ -72,6 +73,7 @@ export default function Subscribe({ data: block }: Props) {
             Subscribe
           </button>
         </form>
+        <ElsewhereLinks />
       </BlockContent>
     </Block>
   );

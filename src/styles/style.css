@@ -17,7 +17,7 @@
 @layer components {
   @import 'post.css';
   .tw-block::after {
-    @apply block w-32 mx-auto my-12 border-t border-gray-300;
+    @apply block w-32 mx-auto my-12 border-t border-gray-300 dark:border-gray-600;
     content: '';
   }
   .tw-block:last-child::after {

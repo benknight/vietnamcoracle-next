@@ -3,12 +3,12 @@ import _debounce from 'lodash/debounce';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useRef, useState, useEffect, Children } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import breakpoints from '../config/breakpoints';
+import Menu from './Menu';
 import SearchForm from './SearchForm';
-import ElsewhereLinks from './ElsewhereLinks';
 
 interface Props {
   preview?: boolean;
@@ -59,7 +59,7 @@ export default function Header({ preview = false }: Props) {
           })}>
           <div
             className={cx(
-              'z-20 absolute top-0 left-0 overflow-hidden',
+              'z-20 absolute top-0 left-0',
               'flex items-center h-14 xl:h-16 px-2 xl:px-4',
               'transform transition-transform duration-200 ease-out',
               {
@@ -86,6 +86,7 @@ export default function Header({ preview = false }: Props) {
                 </h1>
               </a>
             </Link>
+            <Menu />
           </div>
           <div
             className={cx(
@@ -98,7 +99,6 @@ export default function Header({ preview = false }: Props) {
             )}>
             <SearchForm
               className={cx({
-                hidden: router.pathname === '/search',
                 'w-32 md:w-44': !searchFocused,
                 'w-full md:w-60': searchFocused,
               })}
@@ -116,9 +116,6 @@ export default function Header({ preview = false }: Props) {
           { hidden: !isHome },
         )}
         ref={ref}>
-        <div className="hidden lg:block absolute top-4 left-4 opacity-75">
-          <ElsewhereLinks useBrandColors />
-        </div>
         <Link href="/">
           <a className="inline-flex flex-col items-center">
             <Image

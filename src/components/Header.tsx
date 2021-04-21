@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
+import { Transition } from '@headlessui/react';
+import { MenuIcon } from '@heroicons/react/solid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import breakpoints from '../config/breakpoints';
 import Menu from './Menu';
@@ -52,53 +54,71 @@ export default function Header({ preview = false }: Props) {
     <>
       <Headroom className="relative lg:fixed z-30 w-full" disable={isLG}>
         <div
-          className={cx('h-14 lg:h-auto bg-white dark:bg-gray-900', {
-            shadow: scrolled,
-            'top-0': !preview,
-            'top-8': preview,
-          })}>
+          className={cx(
+            'relative max-w-screen-2xl h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900',
+            {
+              shadow: scrolled,
+              'top-0': !preview,
+              'top-8': preview,
+            },
+          )}>
           <div
             className={cx(
               'z-20 absolute top-0 left-0',
               'flex items-center h-14 xl:h-16 px-2 xl:px-4',
-              'transform transition-transform duration-200 ease-out',
-              {
-                '-translate-x-14 xl:-translate-x-16': !showMini,
-              },
+              // 'transform transition-transform duration-200 ease-out',
+              // {
+              //   '-translate-x-14 xl:-translate-x-16': !showMini,
+              // },
             )}>
-            <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-              <a className="flex items-center hover:text-black dark:hover:text-white">
+            <Menu className="transform scale-90 md:scale-100">
+              <MenuIcon className="w-5 h-5 mx-3" />
+              <div
+                className={
+                  showMini
+                    ? 'hidden'
+                    : 'hidden md:block text-xs tracking-widest uppercase -ml-1 mr-3'
+                }>
+                Menu
+              </div>
+              <div className={showMini ? 'flex -ml-1' : 'hidden'}>
                 <Image
-                  className="rounded-full transform scale-90 xl:scale-100"
+                  className="rounded-full"
                   height={44}
                   loading="eager"
                   src="/logo.jpg"
                   width={44}
                 />
-                <h1
-                  className={cx(
-                    'ml-2 font-semibold font-display tracking-tight',
-                    {
-                      hidden: !showMini,
-                    },
-                  )}>
-                  Vietnam Coracle
-                </h1>
+              </div>
+            </Menu>
+            <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
+              <a className="flex items-center hover:text-black dark:hover:text-white">
+                <Transition
+                  enter="transform transition duration-300"
+                  enterFrom="opacity-0 -translate-x-4"
+                  enterTo="opacity-100 traslate-x-0"
+                  leave="hidden"
+                  show={showMini}
+                  unmount={false}>
+                  <h1 className="ml-2 text-sm font-semibold font-display tracking-tight">
+                    Vietnam Coracle
+                  </h1>
+                </Transition>
               </a>
             </Link>
-            <Menu isMiniHeader={showMini} />
           </div>
           <div
             className={cx(
               'z-30 absolute top-0 right-0',
               {
                 'left-auto': !searchFocused && showMini,
-                'left-12 lg:left-auto': searchFocused || !showMini,
+                'left-12 md:left-auto': !showMini,
+                '!left-0 md:left-auto': searchFocused,
               },
               'flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
             )}>
             <SearchForm
-              className={cx({
+              className={cx('ring-2 dark:ring-gray-900', {
                 'w-32 md:w-44': !searchFocused,
                 'w-full md:w-60': searchFocused,
               })}
@@ -116,23 +136,25 @@ export default function Header({ preview = false }: Props) {
           { hidden: !isHome },
         )}
         ref={ref}>
-        <Link href="/">
-          <a className="inline-flex flex-col items-center">
-            <Image
-              className="rounded-full"
-              height={120}
-              loading="eager"
-              src="/logo.jpg"
-              width={120}
-            />
-            <h1 className="my-2 text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased">
-              Vietnam Coracle
-            </h1>
-            <h2 className="text-xxxxs xl:text-xxxs text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display">
-              Independent travel guides to Vietnam
-            </h2>
-          </a>
-        </Link>
+        <div className="inline-flex flex-col items-center">
+          <Link href="/">
+            <a className="flex">
+              <Image
+                className="rounded-full"
+                height={120}
+                loading="eager"
+                src="/logo.jpg"
+                width={120}
+              />
+            </a>
+          </Link>
+          <h1 className="my-2 text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased">
+            Vietnam Coracle
+          </h1>
+          <h2 className="text-xxxxs xl:text-xxxs text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display">
+            Independent travel guides to Vietnam
+          </h2>
+        </div>
       </header>
     </>
   );

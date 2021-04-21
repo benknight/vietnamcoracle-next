@@ -7,12 +7,12 @@ import { Fragment, useEffect, useMemo, useState } from 'react';
 import useSWR from 'swr';
 import { Popover, Transition } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/outline';
-import { ArrowLeftIcon, ChevronDownIcon } from '@heroicons/react/solid';
+import { ArrowLeftIcon } from '@heroicons/react/solid';
 import GraphQLClient from '../lib/GraphQLClient';
 
 const fetcher = query => GraphQLClient.request(query);
 
-export default function Menu({ isMiniHeader }) {
+export default function Menu({ children, className = '' }) {
   const { data, error } = useSWR(
     gql`
       query Menu {
@@ -34,21 +34,16 @@ export default function Menu({ isMiniHeader }) {
     },
   );
   return (
-    <Popover className="ml-3">
+    <Popover>
       {({ open }) => (
         <>
           <Popover.Button
-            className="
-              flex items-center justify-center h-10 p-2 min-w-[2.5rem] uppercase text-xs rounded-full
-              bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 hover:dark:bg-gray-700
-              focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500">
-            <div
-              className={cx('hidden pl-2 mr-1 tracking-wider', {
-                'md:block': !isMiniHeader,
-              })}>
-              Menu
-            </div>
-            <ChevronDownIcon className="w-5 h-5" />
+            className={cx(
+              className,
+              'flex items-center justify-center h-11 min-w-[2.5rem] uppercase text-xs rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 hover:dark:bg-gray-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500',
+            )}
+            id="menu-button">
+            {children}
           </Popover.Button>
           <Transition
             show={open}
@@ -106,7 +101,8 @@ function MenuNav({ items = [], open = false }) {
         <ul
           className={cx({
             hidden: key === 'null' ? cursor !== null : cursor !== key,
-          })}>
+          })}
+          key={key}>
           {key === 'null' ? null : (
             <li>
               <Link href={byId[key].path || byId[key].url}>
@@ -133,6 +129,8 @@ function MenuNav({ items = [], open = false }) {
                     if (grouped[item.id]) {
                       event.preventDefault();
                       setCursor(item.id);
+                    } else {
+                      document.querySelector('input').focus();
                     }
                   }}>
                   <div className="flex-auto">{item.label}</div>

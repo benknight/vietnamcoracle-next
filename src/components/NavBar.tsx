@@ -54,7 +54,7 @@ interface Props {
   preview?: boolean;
 }
 
-export default function Nav({ preview = false }: Props) {
+export default function NavBar({ preview = false }: Props) {
   const router = useRouter();
   return (
     <>

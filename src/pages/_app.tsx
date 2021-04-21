@@ -7,7 +7,7 @@ import { useEffect, useMemo, useState } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
-import Nav from '../components/Nav';
+import NavBar from '../components/NavBar';
 import useWaitCursor from '../lib/useWaitCursor';
 import '../styles/style.css';
 
@@ -66,7 +66,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </div>
       {preview && <PreviewAlert />}
       <Header preview={preview} />
-      <Nav preview={preview} />
+      <NavBar preview={preview} />
       <Component {...pageProps} />
     </StylesProvider>
   );

@@ -1,6 +1,5 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
-import cx from 'classnames';
 import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
 import Head from 'next/head';

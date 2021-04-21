@@ -63,15 +63,10 @@ export default function Header({ preview = false }: Props) {
             },
           )}>
           <div
-            className={cx(
-              'z-20 absolute top-0 left-0',
-              'flex items-center h-14 xl:h-16 px-2 xl:px-4',
-              // 'transform transition-transform duration-200 ease-out',
-              // {
-              //   '-translate-x-14 xl:-translate-x-16': !showMini,
-              // },
-            )}>
-            <Menu className="transform scale-90 md:scale-100">
+            className="
+              z-20 absolute top-0 left-0
+              flex items-center h-14 lg:h-16 px-2">
+            <Menu className="transform scale-90 xl:scale-100">
               <MenuIcon className="w-5 h-5 mx-3" />
               <div
                 className={
@@ -115,10 +110,10 @@ export default function Header({ preview = false }: Props) {
                 'left-12 md:left-auto': !showMini,
                 '!left-0 md:!left-auto': searchFocused,
               },
-              'flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
+              'flex items-center h-14 lg:h-16 px-2 lg:px-4 text-gray-400',
             )}>
             <SearchForm
-              className={cx('ring-2 dark:ring-gray-900', {
+              className={cx('ring-2 ring-white dark:ring-gray-900', {
                 'w-32 md:w-44': !searchFocused,
                 'w-full md:w-60': searchFocused,
               })}

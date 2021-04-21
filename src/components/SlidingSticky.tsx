@@ -42,8 +42,8 @@ export default function SlidingSticky({ children }) {
 
   return (
     <div className="lg:flex-auto lg:px-6 py-12 lg:py-0" ref={stickyContainer}>
-      <div className="hidden lg:block" ref={spacer} />
-      <div className="flex-auto lg:sticky lg:py-8" ref={sticky}>
+      <div className="hidden xl:block" ref={spacer} />
+      <div className="flex-auto xl:sticky xl:py-8" ref={sticky}>
         {children}
       </div>
     </div>

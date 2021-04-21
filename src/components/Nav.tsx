@@ -60,7 +60,7 @@ export default function Nav({ preview = false }: Props) {
     <>
       <nav
         className={cx(
-          'fixed lg:sticky lg:top-0 bottom-0 lg:bottom-auto z-20 flex justify-center w-full h-14 xl:h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black lg:shadow',
+          'fixed lg:sticky lg:top-0 bottom-0 lg:bottom-auto z-20 flex justify-center w-full h-14 lg:h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black lg:shadow',
           { 'top-8': preview },
         )}>
         <div
@@ -77,20 +77,20 @@ export default function Nav({ preview = false }: Props) {
               <Link href={to} key={to}>
                 <a
                   className={cx(
-                    'group w-1/5 md:w-24 xl:w-auto h-10 mx-1 sm:px-3 xl:px-3 xl:py-0 flex flex-col xl:flex-row items-center justify-center text-center rounded-full xl:bg-gray-100 xl:dark:bg-gray-800',
+                    'group w-1/5 md:w-24 lg:w-auto h-10 mx-1 sm:px-3 lg:px-3 lg:py-0 flex flex-col lg:flex-row items-center justify-center text-center rounded-full lg:bg-gray-100 lg:dark:bg-gray-800',
                     {
                       'bg-gradient-to-b dark:shadow text-blue-500 dark:text-blue-400': isCurrent,
                     },
                   )}
                   key={link.url}>
-                  <div className="xl:mr-2">
+                  <div className="lg:mr-2">
                     {cloneElement(isCurrent ? link.icon : link.iconAlt, {
                       className: 'w-5 h-5 mb-1',
                     })}
                   </div>
                   <div
                     className={cx(
-                      'w-full text-shadow xl:border-b break-words group-hover:border-gray-500 dark:group-hover:border-gray-600',
+                      'w-full text-shadow lg:border-b break-words group-hover:border-gray-500 dark:group-hover:border-gray-600',
                       isCurrent
                         ? 'border-blue-500 dark:border-blue-400 group-hover:border-blue-500 dark:group-hover:border-blue-400'
                         : 'border-transparent',
@@ -98,7 +98,7 @@ export default function Nav({ preview = false }: Props) {
                     <div className="xl:hidden text-xxs lg:text-xs">
                       {link.titleShort}
                     </div>
-                    <div className="hidden xl:block text-xs">{link.title}</div>
+                    <div className="hidden xl:block text-sm">{link.title}</div>
                   </div>
                 </a>
               </Link>

@@ -126,7 +126,10 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
         <meta name="twitter:label2" content="Est. reading time" />
         <meta name="twitter:data2" content={data.contentNode.seo.readingTime} />
         <title>{data.contentNode.seo.title}</title>
-        <link rel="canonical" href={data.contentNode.seo.canonical} />
+        <link
+          rel="canonical"
+          href={data.contentNode.seo.canonical.replace('https', 'http')}
+        />
         <link
           href="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.css"
           rel="stylesheet"

@@ -20,9 +20,12 @@ const PostCard = ({ flex = false, post }: Props) => {
   const swatch = swatches[post.featuredImage.node.id];
   return (
     <Link href={`/${post.slug}`}>
-      <a className="group relative overflow-hidden flex flex-col shadow w-full rounded-lg bg-gray-900">
+      <a className="group relative overflow-hidden flex flex-col shadow w-full rounded-lg sm:bg-gray-900">
         <div
-          className="relative block w-full bg-opacity-10 aspect-w-1 aspect-h-1"
+          className="
+            relative overflow-hidden block w-full
+            bg-opacity-10 aspect-w-1 aspect-h-1
+            rounded-b-lg sm:rounded-none"
           style={{
             backgroundColor: swatch,
           }}>
@@ -33,28 +36,20 @@ const PostCard = ({ flex = false, post }: Props) => {
             objectFit="cover"
             src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.featuredImage.node.sourceUrl}`}
           />
-          <div className="absolute inset-0 top-auto h-1/2 pointer-events-none bg-gradient-to-t from-gray-900 via-black-50 to-transparent" />
+          <div className="absolute inset-0 top-auto h-1/2 pointer-events-none sm:bg-gradient-to-t from-gray-900 via-black-50 to-transparent" />
         </div>
         <div
-          className={cx(
-            'relative md:px-5 md:py-6',
-            'flex-auto flex items-end',
-            'md:text-white',
-            'font-medium rounded-b',
-            {
-              '-mt-24 px-4 pt-4 pb-6': true,
-            },
-          )}>
-          <div className="relative antialiased">
+          className="
+            relative sm:-mt-24 p-1 pt-2 sm:px-4 sm:pt-4 sm:pb-6 md:px-5 md:py-6
+            flex-auto flex sm:items-end
+            md:text-white
+            font-medium rounded-b">
+          <div className="relative">
             <h3
               className={cx(
-                'font-display text-white tracking-tightest sm:tracking-tight text-shadow',
+                'text-xs sm:text-lg md:text-2xl font-sans sm:font-display text-gray-100 tracking-tightest lg:tracking-tight text-shadow',
                 {
                   'text-2xl': flex,
-                  'text-sm sm:text-base md:text-2xl':
-                    !flex && post.title.length > 40,
-                  'text-sm sm:text-lg md:text-2xl':
-                    !flex && post.title.length <= 40,
                 },
               )}>
               {post.title}
@@ -62,7 +57,7 @@ const PostCard = ({ flex = false, post }: Props) => {
             <div
               className={cx(
                 'post-card-excerpt',
-                'mt-2 font-sans xl:font-serif text-xs lg:text-sm text-white',
+                'mt-2 font-sans xl:font-serif text-xs md:text-sm text-gray-100',
                 { 'hidden sm:block': !flex },
               )}
               dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>

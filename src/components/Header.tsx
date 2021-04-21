@@ -113,7 +113,7 @@ export default function Header({ preview = false }: Props) {
               {
                 'left-auto': !searchFocused && showMini,
                 'left-12 md:left-auto': !showMini,
-                '!left-0 md:left-auto': searchFocused,
+                '!left-0 md:!left-auto': searchFocused,
               },
               'flex items-center h-14 xl:h-16 px-2 xl:px-4 text-gray-400',
             )}>

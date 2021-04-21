@@ -47,7 +47,7 @@ const PostCard = ({ flex = false, post }: Props) => {
           <div className="relative">
             <h3
               className={cx(
-                'text-xs sm:text-lg md:text-2xl font-sans sm:font-display text-gray-100 tracking-tightest lg:tracking-tight text-shadow',
+                'text-sm sm:text-lg md:text-2xl font-sans sm:font-display text-gray-100 tracking-tightest lg:tracking-tight text-shadow',
                 {
                   'text-2xl': flex,
                 },

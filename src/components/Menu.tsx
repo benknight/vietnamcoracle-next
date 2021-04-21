@@ -130,7 +130,8 @@ function MenuNav({ items = [], open = false }) {
                       event.preventDefault();
                       setCursor(item.id);
                     } else {
-                      document.querySelector('input').focus();
+                      // TODO
+                      // document.querySelector('input').focus();
                     }
                   }}>
                   <div className="flex-auto">{item.label}</div>

@@ -147,21 +147,17 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
         imgSm={data.contentNode.featuredImage?.node}
         imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
         <h1
-          className={cx(
-            'max-w-3xl xl:max-w-5xl mx-auto xl:mx-0 mt-8 mb-2 xl:pl-8 xl:pr-0 font-display tracking-tight text-4xl leading-tight',
-            {
-              'xl:text-5xl xl:leading-tight':
-                data.contentNode.title.length <= 60,
-            },
-          )}
+          className="
+            max-w-3xl xl:max-w-none mx-auto xl:mx-0 mt-8 mb-2 xl:px-8
+            text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight"
           id="top">
           {data.contentNode.title}
         </h1>
       </Hero>
       <Layout>
         <LayoutMain>
-          <div className="px-4 md:px-8 xl:pl-20 xl:pr-20 text-lg">
-            <div className="max-w-3xl xl:max-w-4xl mx-auto">
+          <div className="px-4 md:px-8 xl:pl-20 text-lg">
+            <div className="max-w-3xl mx-auto xl:mx-0">
               <div className="flex flex-wrap text-white mt-8 dark:mt-0">
                 <FacebookShareButton
                   className="rounded mr-2 mb-2"

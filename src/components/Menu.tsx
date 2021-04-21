@@ -3,7 +3,7 @@ import { gql } from 'graphql-request';
 import _groupBy from 'lodash/groupBy';
 import _keyBy from 'lodash/keyBy';
 import Link from 'next/link';
-import { Fragment, useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 import { Popover, Transition } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/outline';
@@ -40,7 +40,7 @@ export default function Menu({ children, className = '' }) {
           <Popover.Button
             className={cx(
               className,
-              'flex items-center justify-center h-11 min-w-[2.5rem] uppercase text-xs rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 hover:dark:bg-gray-700 focus:outline-none focus-visible:ring-4 focus-visible:ring-blue-500',
+              'flex items-center justify-center h-11 min-w-[2.5rem] uppercase text-xs rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 hover:dark:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
             )}
             id="menu-button">
             {children}
@@ -58,7 +58,7 @@ export default function Menu({ children, className = '' }) {
               static
               className="
                 absolute z-10
-                w-72 max-h-[87vh] mt-2 p-2 overflow-auto
+                w-72 max-h-[87vh] mt-2 overflow-auto
                 font-medium font-display text-sm
                 bg-white dark:bg-gray-800
                 border border-gray-200 dark:border-gray-700
@@ -75,7 +75,9 @@ export default function Menu({ children, className = '' }) {
 }
 
 function MenuNav({ items = [], open = false }) {
+  const ref = useRef<HTMLElement>();
   const [cursor, setCursor] = useState(null);
+  const [menuHeight, setMenuHeight] = useState<number>(null);
   const byId = useMemo(() => _keyBy(items, 'id'), [items]);
   const grouped = useMemo(() => _groupBy(items, 'parentId'), [items]);
 
@@ -86,23 +88,34 @@ function MenuNav({ items = [], open = false }) {
   }, [open]);
 
   return (
-    <nav>
+    <nav
+      className="transition-all ease duration-500"
+      ref={ref}
+      style={{ height: menuHeight ? `${menuHeight}px` : undefined }}>
       {Object.keys(grouped).map(key => (
-        // <Transition
-        //   as="ul"
-        //   enter="transition-all ease duration-200 transform absolute"
-        //   enterFrom="-translate-x-full"
-        //   enterTo="translate-x-0"
-        //   key={key}
-        //   leave="transition-all ease duration-150 transform absolute"
-        //   leaveFrom="translate-x-0"
-        //   leaveTo="-translate-x-full"
-        //   show={key === 'null' ? cursor === null : cursor === key}>
-        <ul
-          className={cx({
-            hidden: key === 'null' ? cursor !== null : cursor !== key,
-          })}
-          key={key}>
+        <Transition
+          as="ul"
+          beforeEnter={() => {
+            window.setTimeout(() => {
+              const ul: HTMLElement = ref.current.querySelector(
+                `[data-key="${key}"]`,
+              );
+              setMenuHeight(ul.offsetHeight);
+            });
+          }}
+          className="p-2"
+          data-key={key}
+          enter="transition-all ease duration-500 transform absolute w-full"
+          enterFrom={key === 'null' ? '-translate-x-full' : 'translate-x-full'}
+          enterTo="translate-x-0"
+          key={key}
+          leave="transition-all ease duration-500 transform absolute w-full"
+          leaveFrom="translate-x-0"
+          leaveTo={key === 'null' ? '-translate-x-full' : 'translate-x-full'}
+          show={
+            open ? (key === 'null' ? cursor === null : cursor === key) : false
+          }
+          unmount={false}>
           {key === 'null' ? null : (
             <li>
               <Link href={byId[key].path || byId[key].url}>
@@ -142,7 +155,7 @@ function MenuNav({ items = [], open = false }) {
               </Link>
             </li>
           ))}
-        </ul>
+        </Transition>
       ))}
     </nav>
   );

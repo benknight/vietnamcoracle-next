@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
 import { Transition } from '@headlessui/react';
-import { MenuIcon } from '@heroicons/react/solid';
+import { MenuIcon } from '@heroicons/react/outline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import breakpoints from '../config/breakpoints';
 import Menu from './Menu';
@@ -66,7 +66,7 @@ export default function Header({ preview = false }: Props) {
             className="
               z-20 absolute top-0 left-0
               flex items-center h-14 lg:h-16 px-2">
-            <Menu className="transform scale-90 xl:scale-100">
+            <Menu className="transform scale-90 origin-left xl:scale-100">
               <MenuIcon className="w-5 h-5 mx-3" />
               <div
                 className={

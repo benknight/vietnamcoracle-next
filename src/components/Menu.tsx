@@ -48,10 +48,10 @@ export default function Menu({ children, className = '' }) {
           <Transition
             show={open}
             as={Fragment}
-            enter="transition ease-out duration-200"
+            enter="transition ease-out duration-200 transform"
             enterFrom="opacity-0 translate-y-1"
             enterTo="opacity-100 translate-y-0"
-            leave="transition ease-in duration-150"
+            leave="transition ease-in duration-150 transform"
             leaveFrom="opacity-100 translate-y-0"
             leaveTo="opacity-0 translate-y-1">
             <Popover.Panel
@@ -77,6 +77,7 @@ export default function Menu({ children, className = '' }) {
 function MenuNav({ items = [], open = false }) {
   const ref = useRef<HTMLElement>();
   const [cursor, setCursor] = useState(null);
+  const [direction, setDirection] = useState('');
   const [menuHeight, setMenuHeight] = useState<number>(null);
   const byId = useMemo(() => _keyBy(items, 'id'), [items]);
   const grouped = useMemo(() => _groupBy(items, 'parentId'), [items]);
@@ -106,12 +107,24 @@ function MenuNav({ items = [], open = false }) {
           className="p-2"
           data-key={key}
           enter="transition-all ease duration-500 transform absolute w-full"
-          enterFrom={key === 'null' ? '-translate-x-full' : 'translate-x-full'}
+          enterFrom={
+            key === 'null'
+              ? direction === 'backwards'
+                ? '-translate-x-full'
+                : 'translate-x-0'
+              : 'translate-x-full'
+          }
           enterTo="translate-x-0"
           key={key}
           leave="transition-all ease duration-500 transform absolute w-full"
           leaveFrom="translate-x-0"
-          leaveTo={key === 'null' ? '-translate-x-full' : 'translate-x-full'}
+          leaveTo={
+            open
+              ? key === 'null'
+                ? '-translate-x-full'
+                : 'translate-x-full'
+              : 'translate-x-0'
+          }
           show={
             open ? (key === 'null' ? cursor === null : cursor === key) : false
           }
@@ -124,6 +137,7 @@ function MenuNav({ items = [], open = false }) {
                   onClick={event => {
                     event.preventDefault();
                     setCursor(byId[key].parentId);
+                    setDirection('backwards');
                   }}>
                   <div className="flex items-center justify-center mr-3">
                     <ArrowLeftIcon className="w-5 h-5" />
@@ -142,6 +156,7 @@ function MenuNav({ items = [], open = false }) {
                     if (grouped[item.id]) {
                       event.preventDefault();
                       setCursor(item.id);
+                      setDirection('forwards');
                     } else {
                       // TODO
                       // document.querySelector('input').focus();

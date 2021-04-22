@@ -58,7 +58,7 @@ export default function Menu({ children, className = '' }) {
               static
               className="
                 absolute z-10
-                w-72 max-h-[87vh] mt-2 overflow-auto
+                w-80 max-h-[87vh] mt-1 lg:mt-2 overflow-auto
                 font-medium font-display text-sm
                 bg-white dark:bg-gray-800
                 border border-gray-200 dark:border-gray-700
@@ -73,6 +73,8 @@ export default function Menu({ children, className = '' }) {
     </Popover>
   );
 }
+
+const speed = 300;
 
 function MenuNav({ items = [], open = false }) {
   const ref = useRef<HTMLElement>();
@@ -90,7 +92,7 @@ function MenuNav({ items = [], open = false }) {
 
   return (
     <nav
-      className="transition-all ease duration-500"
+      className={`transition-all ease duration-${speed}`}
       ref={ref}
       style={{ height: menuHeight ? `${menuHeight}px` : undefined }}>
       {Object.keys(grouped).map(key => (
@@ -106,23 +108,23 @@ function MenuNav({ items = [], open = false }) {
           }}
           className="p-2"
           data-key={key}
-          enter="transition-all ease duration-500 transform absolute w-full"
+          enter={`transition-all ease duration-${speed} transform absolute w-full`}
           enterFrom={
-            key === 'null'
-              ? direction === 'backwards'
-                ? '-translate-x-full'
-                : 'translate-x-0'
+            direction === 'backwards'
+              ? '-translate-x-full'
+              : key === 'null'
+              ? 'translate-x-0'
               : 'translate-x-full'
           }
           enterTo="translate-x-0"
           key={key}
-          leave="transition-all ease duration-500 transform absolute w-full"
+          leave={`transition-all ease duration-${speed} transform absolute w-full`}
           leaveFrom="translate-x-0"
           leaveTo={
             open
-              ? key === 'null'
-                ? '-translate-x-full'
-                : 'translate-x-full'
+              ? direction === 'backwards'
+                ? 'translate-x-full'
+                : '-translate-x-full'
               : 'translate-x-0'
           }
           show={
@@ -158,8 +160,7 @@ function MenuNav({ items = [], open = false }) {
                       setCursor(item.id);
                       setDirection('forwards');
                     } else {
-                      // TODO
-                      // document.querySelector('input').focus();
+                      document.getElementById('top').focus();
                     }
                   }}>
                   <div className="flex-auto">{item.label}</div>

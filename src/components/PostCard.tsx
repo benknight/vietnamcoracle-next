@@ -4,23 +4,30 @@ import _get from 'lodash/get';
 import Image from 'next/image';
 import Link from 'next/link';
 import { createContext, useContext } from 'react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import breakpoints from '../config/breakpoints';
 
 interface Props {
-  flex?: boolean;
+  inGrid?: boolean;
   post: any;
 }
 
 export const SwatchesContext = createContext({});
 
-const PostCard = ({ flex = false, post }: Props) => {
+const PostCard = ({ inGrid = false, post }: Props) => {
+  const swatches = useContext(SwatchesContext);
+  const swatch = swatches[post.featuredImage.node.id];
+  const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   if (!post.featuredImage) {
     return null;
   }
-  const swatches = useContext(SwatchesContext);
-  const swatch = swatches[post.featuredImage.node.id];
   return (
     <Link href={`/${post.slug}`}>
-      <a className="group relative overflow-hidden flex flex-col shadow w-full rounded-lg sm:bg-gray-900">
+      <a
+        className={cx(
+          'group relative overflow-hidden flex flex-col sm:shadow w-full rounded-lg',
+          { 'bg-gray-900': isSmall || inGrid },
+        )}>
         <div
           className="
             relative overflow-hidden block w-full
@@ -36,20 +43,30 @@ const PostCard = ({ flex = false, post }: Props) => {
             objectFit="cover"
             src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.featuredImage.node.sourceUrl}`}
           />
-          <div className="absolute inset-0 top-auto h-1/2 pointer-events-none sm:bg-gradient-to-t from-gray-900 via-black-50 to-transparent" />
+          <div
+            className={cx(
+              'absolute inset-0 top-auto h-1/2 pointer-events-none ',
+              {
+                'bg-gradient-to-t from-gray-900 via-black-50 to-transparent':
+                  isSmall || inGrid,
+              },
+            )}
+          />
         </div>
         <div
-          className="
-            relative sm:-mt-24 p-1 pt-2 sm:px-4 sm:pt-4 sm:pb-6 md:px-5 md:py-6
-            flex-auto flex sm:items-end
-            md:text-white
-            font-medium rounded-b">
+          className={cx(
+            'relative flex-auto flex p-1 pt-2 md:px-5 md:py-6 font-medium',
+            {
+              'items-end -mt-24 px-4 pt-4 pb-6 rounded-b': inGrid || isSmall,
+            },
+          )}>
           <div className="relative">
             <h3
               className={cx(
-                'text-sm sm:text-lg md:text-2xl font-sans sm:font-display text-gray-100 tracking-tightest lg:tracking-tight text-shadow',
+                'text-sm md:text-2xl tracking-tightest lg:tracking-tight',
                 {
-                  'text-2xl': flex,
+                  'sm:text-lg sm:leading-snug': !inGrid,
+                  'font-display text-2xl text-gray-100': inGrid || isSmall,
                 },
               )}>
               {post.title}
@@ -57,8 +74,10 @@ const PostCard = ({ flex = false, post }: Props) => {
             <div
               className={cx(
                 'post-card-excerpt',
-                'mt-2 font-sans xl:font-serif text-xs md:text-sm text-gray-100',
-                { 'hidden sm:block': !flex },
+                'mt-2 font-sans xl:font-serif text-sm text-gray-100',
+                {
+                  'hidden sm:block sm:line-clamp-3 md:line-clamp-none': !inGrid,
+                },
               )}
               dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>
           </div>

@@ -120,7 +120,7 @@ const Browse = ({ data, swatches }) => {
           ) : (
             <div className="page-wrap pt-8 lg:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
               {(subcategory || category).posts.nodes.map(post => (
-                <PostCard key={post.slug} post={post} flex />
+                <PostCard key={post.slug} post={post} inGrid />
               ))}
             </div>
           )}

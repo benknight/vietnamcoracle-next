@@ -241,7 +241,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                   className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
                   ref={relatedPostsRef}>
                   {data.contentNode.customRelatedPosts.nodes.map(post => (
-                    <PostCard key={post.slug} post={post} flex />
+                    <PostCard key={post.slug} post={post} inGrid />
                   ))}
                 </div>
               ) : null}

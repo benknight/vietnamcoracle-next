@@ -16,11 +16,11 @@ export const SwatchesContext = createContext({});
 
 const PostCard = ({ inGrid = false, post }: Props) => {
   const swatches = useContext(SwatchesContext);
-  const swatch = swatches[post.featuredImage.node.id];
   const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   if (!post.featuredImage) {
     return null;
   }
+  const swatch = swatches[post.featuredImage.node.id];
   return (
     <Link href={`/${post.slug}`}>
       <a

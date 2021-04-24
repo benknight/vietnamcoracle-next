@@ -145,7 +145,7 @@ const Browse = ({ data, swatches }) => {
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths = async () => {
   const query = gql`
     {
       category(id: "features-guides", idType: SLUG) {

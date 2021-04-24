@@ -25,6 +25,7 @@ import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
 import PostCard from '../components/PostCard';
+import SEO from '../components/SEO';
 import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
 import useWaitCursor from '../lib/useWaitCursor';
@@ -66,69 +67,11 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
 
   return (
     <>
-      <Head>
-        <meta name="description" content={data.contentNode.seo.metaDesc} />
-        <meta
-          name="robots"
-          content={`${data.contentNode.seo.metaRobotsNoindex}, ${data.contentNode.seo.metaRobotsNofollow}`}
-        />
-        <meta
-          property="article:published_time"
-          content={data.contentNode.seo.opengraphPublishedTime}
-        />
-        <meta
-          property="article:modified_time"
-          content={data.contentNode.seo.opengraphModifiedTime}
-        />
-        <meta
-          property="og:description"
-          content={data.contentNode.seo.opengraphDescription}
-        />
-        {data.contentNode.seo.opengraphImage ? (
-          <>
-            <meta
-              property="og:image"
-              content={data.contentNode.seo.opengraphImage.sourceUrl}
-            />
-            <meta
-              property="og:image:height"
-              content={data.contentNode.seo.opengraphImage.mediaDetails.height}
-            />
-            <meta
-              property="og:image:width"
-              content={data.contentNode.seo.opengraphImage.mediaDetails.width}
-            />
-          </>
-        ) : null}
-        <meta property="og:locale" content="en_US" />
-        <meta
-          property="og:site_name"
-          content={data.contentNode.seo.opengraphSiteName}
-        />
-        <meta property="og:type" content={data.contentNode.seo.opengraphType} />
-        <meta property="og:url" content={data.contentNode.seo.opengraphUrl} />
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          name="twitter:title"
-          content={data.contentNode.seo.twitterTitle}
-        />
-        <meta
-          name="twitter:description"
-          content={data.contentNode.seo.twitterDescription}
-        />
-        <meta
-          property="twitter:image"
-          content={data.contentNode.seo.twitterImage?.sourceUrl}
-        />
+      <SEO {...data.contentNode.seo}>
         <meta name="twitter:label1" content="Written by" />
-        <meta name="twitter:data1" content="Tom" />
-        <meta name="twitter:label2" content="Est. reading time" />
-        <meta name="twitter:data2" content={data.contentNode.seo.readingTime} />
-        <title>{data.contentNode.seo.title}</title>
-        <link
-          rel="canonical"
-          href={data.contentNode.seo.canonical.replace('https', 'http')}
-        />
+        <meta name="twitter:data1" content="Vietnam Coracle" />
+      </SEO>
+      <Head>
         <link
           href="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.css"
           rel="stylesheet"
@@ -141,9 +84,6 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
           async
           src="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
         />
-        <script type="application/ld+json" className="yoast-schema-graph">
-          {data.contentNode.seo.schema.raw}
-        </script>
       </Head>
       <Hero
         imgSm={data.contentNode.featuredImage?.node}
@@ -309,7 +249,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
             }
           }
           seo {
-            ...SEOData
+            ...SEOPostData
           }
         }
         ... on Post {
@@ -324,7 +264,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
             }
           }
           seo {
-            ...SEOData
+            ...SEOPostData
           }
           thumbnails {
             thumbnailHeader {
@@ -336,44 +276,11 @@ export async function getStaticProps({ params: { node }, preview = false }) {
       ...FooterData
       ...SidebarDefaultData
     }
-    fragment SEOData on PostTypeSEO {
-      canonical
-      metaDesc
-      metaRobotsNofollow
-      metaRobotsNoindex
-      opengraphDescription
-      opengraphImage {
-        mediaDetails {
-          height
-          width
-        }
-        sourceUrl
-      }
-      opengraphModifiedTime
-      opengraphPublishedTime
-      opengraphSiteName
-      opengraphTitle
-      opengraphType
-      opengraphUrl
-      readingTime
-      schema {
-        raw
-      }
-      title
-      twitterDescription
-      twitterImage {
-        mediaDetails {
-          height
-          width
-        }
-        sourceUrl
-      }
-      twitterTitle
-    }
     ${CommentThread.fragments}
     ${Hero.fragments}
     ${Footer.fragments}
     ${PostCard.fragments}
+    ${SEO.fragments.post}
     ${SidebarDefault.fragments}
   `;
 

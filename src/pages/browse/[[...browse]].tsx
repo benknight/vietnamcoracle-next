@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request';
 import _ from 'lodash';
 import type { GetStaticPaths, GetStaticProps } from 'next';
-import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import vibrant from 'node-vibrant';
@@ -13,6 +12,7 @@ import Hero from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
 import PostCard, { SwatchesContext } from '../../components/PostCard';
+import SEO from '../../components/SEO';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
 import GraphQLClient from '../../lib/GraphQLClient';
@@ -25,16 +25,23 @@ const Browse = ({ data, swatches }) => {
   const coverImgLg = subcategory?.cover.large || category?.cover.large;
   return (
     <SwatchesContext.Provider value={swatches}>
-      <Head>
-        <title>
+      <SEO
+        {...(category?.seo || {
+          metaDesc: data.seo.openGraph.frontPage.description,
+          canonical: 'https://www.vietnamcoracle.com',
+          opengraphDescription: data.seo.openGraph.frontPage.description,
+          opengraphImage: data.seo.openGraph.frontPage.image,
+          title: data.seo.openGraph.frontPage.title,
+        })}
+      />
+      {/* <title>
           {!category
             ? 'Vietnam Coracle – Independent Travel Guides to Vietnam'
             : subcategory
             ? `${category.name} > ${subcategory.name}`
             : category.name}
           {!isHome ? ' – Vietnam Coracle' : ''}
-        </title>
-      </Head>
+        </title> */}
       {isHome ? (
         <Slider data={categoryPage.slider} />
       ) : (
@@ -234,6 +241,21 @@ export const getStaticProps: GetStaticProps = async ({
           ...SliderComponentData
         }
       }
+      seo {
+        openGraph {
+          frontPage {
+            title
+            description
+            image {
+              mediaDetails {
+                height
+                width
+              }
+              sourceUrl
+            }
+          }
+        }
+      }
       subcategory: category(id: $subcategorySlug, idType: SLUG)
         @include(if: $hasSubcategory) {
         ...CategoryData
@@ -258,10 +280,14 @@ export const getStaticProps: GetStaticProps = async ({
           ...HeroImageData
         }
       }
+      seo {
+        ...SEOCategoryData
+      }
     }
     ${Collection.fragments}
     ${Footer.fragments}
     ${Map.fragments}
+    ${SEO.fragments.category}
     ${SidebarDefault.fragments}
     ${Slider.fragments}
   `;

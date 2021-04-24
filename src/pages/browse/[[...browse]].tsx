@@ -21,8 +21,12 @@ const Browse = ({ data, swatches }) => {
   const router = useRouter();
   const isHome = !router.query.browse;
   const { category, categoryPage, subcategory } = data;
-  const coverImgSm = subcategory?.cover.small || category?.cover.small;
-  const coverImgLg = subcategory?.cover.large || category?.cover.large;
+  const coverImgSm =
+    (subcategory ? subcategory.cover.small : category?.cover.small) ||
+    category?.parent.node.cover.small;
+  const coverImgLg =
+    (subcategory ? subcategory.cover.large : category?.cover.large) ||
+    category?.parent.node.cover.large;
   return (
     <SwatchesContext.Provider value={swatches}>
       <SEO
@@ -220,6 +224,11 @@ export const getStaticProps: GetStaticProps = async ({
                 id
               }
             }
+          }
+        }
+        parent {
+          node {
+            ...CategoryData
           }
         }
         posts(first: 1000) @skip(if: $skipCategoryPosts) {

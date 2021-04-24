@@ -15,6 +15,7 @@ import PostCard, { SwatchesContext } from '../../components/PostCard';
 import SEO from '../../components/SEO';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
+import getCategoryLink from '../../lib/getCategoryLink';
 import GraphQLClient from '../../lib/GraphQLClient';
 
 const Browse = ({ data, swatches }) => {
@@ -55,7 +56,7 @@ const Browse = ({ data, swatches }) => {
               {subcategory ? (
                 <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
                   <span className="inline-block text-gray-300 opacity-90">
-                    <Link href={`/category/${category.slug}`}>
+                    <Link href={getCategoryLink(category.uri)}>
                       {category.name}
                     </Link>
                     &nbsp;&gt;&nbsp;
@@ -83,7 +84,9 @@ const Browse = ({ data, swatches }) => {
                   <ChevronDownIcon className="w-4 h-4 ml-2" />
                   <select
                     className="absolute inset-0 opacity-0 cursor-pointer w-full text-black"
-                    onChange={event => router.push(event.target.value)}
+                    onChange={event =>
+                      router.push(getCategoryLink(event.target.value))
+                    }
                     value={subcategory?.uri ?? 'default'}>
                     <option disabled value="default">
                       Browse subcategories…
@@ -166,9 +169,9 @@ export const getStaticPaths = async () => {
   const getComponentsFromURI = (uri: string): string[] => {
     // "/category/blah/" => ["blah"]
     return uri
+      .replace('/category/features-guides/', '')
       .split('/')
-      .filter(s => s.length > 0)
-      .slice(2);
+      .filter(s => s.length > 0);
   };
   const result = {
     paths: [

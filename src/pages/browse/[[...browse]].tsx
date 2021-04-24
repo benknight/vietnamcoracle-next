@@ -51,7 +51,7 @@ const Browse = ({ data, swatches }) => {
               {subcategory ? (
                 <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
                   <span className="inline-block text-gray-300 opacity-90">
-                    <Link href={`/browse/${category.slug}`}>
+                    <Link href={`/category/${category.slug}`}>
                       {category.name}
                     </Link>
                     &nbsp;&gt;&nbsp;
@@ -80,19 +80,14 @@ const Browse = ({ data, swatches }) => {
                   <select
                     className="absolute inset-0 opacity-0 cursor-pointer w-full text-black"
                     onChange={event => router.push(event.target.value)}
-                    value={
-                      subcategory?.uri.replace('category', 'browse') ??
-                      'default'
-                    }>
+                    value={subcategory?.uri ?? 'default'}>
                     <option disabled value="default">
                       Browse subcategories…
                     </option>
                     {category.children.nodes
                       .filter(node => node.posts.nodes.length > 0)
                       .map(node => (
-                        <option
-                          key={node.uri}
-                          value={node.uri.replace('category', 'browse')}>
+                        <option key={node.uri} value={node.uri}>
                           {node.name}
                         </option>
                       ))}
@@ -149,9 +144,16 @@ const Browse = ({ data, swatches }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   const query = gql`
     {
-      categories(first: 1000) {
-        nodes {
-          uri
+      category(id: "features-guides", idType: SLUG) {
+        children(first: 1000) {
+          nodes {
+            uri
+            children(first: 1000) {
+              nodes {
+                uri
+              }
+            }
+          }
         }
       }
     }
@@ -162,19 +164,25 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return uri
       .split('/')
       .filter(s => s.length > 0)
-      .slice(1);
+      .slice(2);
   };
-  return {
+  const result = {
     paths: [
       { params: { browse: [] } },
-      ...data.categories.nodes.map(node => ({
-        params: {
-          browse: getComponentsFromURI(node.uri),
-        },
-      })),
+      ..._.flatten(
+        data.category.children.nodes.map(node => {
+          return [
+            { params: { browse: getComponentsFromURI(node.uri) } },
+            ...node.children.nodes.map(node => ({
+              params: { browse: getComponentsFromURI(node.uri) },
+            })),
+          ];
+        }),
+      ),
     ],
     fallback: false,
   };
+  return result;
 };
 
 // TODO: It's not possible to previews via the `asPreview` argument with slugs or uri's as IDs, hence this mapping.

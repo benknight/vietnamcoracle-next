@@ -7,7 +7,7 @@ module.exports = {
       {
         destination: '/browse/:path*',
         permanent: true,
-        source: '/category/:path*',
+        source: '/category/features-guides/:path*',
       },
     ];
   },

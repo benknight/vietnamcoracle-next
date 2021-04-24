@@ -21,12 +21,12 @@ const Map = ({ data, isHome = false }) => {
           },
         )}>
         <h3
-          className="text-2xl sm:text-3xl"
+          className="text-xl xs:text-2xl sm:text-3xl"
           id="map"
           style={{ scrollMarginTop: '2rem' }}>
           {data.title}
         </h3>
-        <p className="mt-2 mb-4 sm:px-16 mx-auto text-sm md:text-base font-serif dark:text-gray-400">
+        <p className="max-w-4xl mt-2 mb-4 sm:px-16 mx-auto text-sm md:text-base font-serif dark:text-gray-400">
           {data.description}
         </p>
         <a
@@ -50,7 +50,8 @@ const Map = ({ data, isHome = false }) => {
       </div>
       <div className="relative">
         <div className="overflow-hidden">
-          <div className="map-container">
+          <div
+            className={cx('h-[75vh] mb-[-14px]', { 'min-h-[850px]': isHome })}>
             <iframe
               className="absolute inset-0 w-full h-full"
               height="650"

@@ -55,7 +55,7 @@ export default function Header({ preview = false }: Props) {
       <Headroom className="relative lg:fixed z-30 w-full" disable={isLG}>
         <div
           className={cx(
-            'relative max-w-screen-2xl h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900',
+            'relative h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900',
             {
               shadow: scrolled,
               'top-0': !preview,
@@ -97,7 +97,7 @@ export default function Header({ preview = false }: Props) {
                   leave="hidden"
                   show={showMini}
                   unmount={false}>
-                  <h1 className="ml-2 text-sm font-semibold font-display tracking-tight">
+                  <h1 className="hidden xs:block ml-2 text-sm font-semibold font-display tracking-tight">
                     Vietnam Coracle
                   </h1>
                 </Transition>
@@ -145,7 +145,7 @@ export default function Header({ preview = false }: Props) {
               />
             </a>
           </Link>
-          <h1 className="my-2 text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased">
+          <h1 className="my-2 text-2xl xs:text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased">
             Vietnam Coracle
           </h1>
           <h2 className="text-xxxxs xl:text-xxxs text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display">

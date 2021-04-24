@@ -96,7 +96,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
           {data.contentNode.title}
         </h1>
       </Hero>
-      <Layout>
+      <Layout className="max-w-screen-2xl">
         <LayoutMain>
           <div className="px-4 md:px-8 xl:pl-20 text-lg">
             <div className="max-w-3xl mx-auto xl:mx-0">
@@ -155,7 +155,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                   </span>
                 </EmailShareButton>
               </div>
-              {monthsOld > 24 ? (
+              {monthsOld > 24 && (
                 <div className="flex items-center py-3 px-2 mt-8 mb-4 text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
                   <ClockIcon className="w-5 h-5 text-yellow-600 dark:text-yellow-500" />
                   <div className="flex-auto ml-2 leading-tight">
@@ -168,7 +168,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                     </Link>
                   </div>
                 </div>
-              ) : null}
+              )}
               <article
                 className="post"
                 dangerouslySetInnerHTML={{
@@ -176,7 +176,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                 }}
                 ref={articleRef}
               />
-              {data?.contentNode.customRelatedPosts ? (
+              {data?.contentNode.customRelatedPosts && (
                 <div
                   className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
                   ref={relatedPostsRef}>
@@ -184,21 +184,21 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                     <PostCard key={post.slug} post={post} inGrid />
                   ))}
                 </div>
-              ) : null}
+              )}
               <div className="page-heading mt-8 md:mt-12 mb-4">
                 Leave a Comment
               </div>
               <div className="mb-12">
                 <CommentForm post={data.contentNode.databaseId} />
               </div>
-              {data.contentNode.comments.nodes.length > 0 ? (
+              {data.contentNode.comments.nodes.length > 0 && (
                 <>
                   <div className="page-heading mb-4">
                     {data.contentNode.commentCount} Comments
                   </div>
                   <CommentThread comments={data.contentNode.comments.nodes} />
                 </>
-              ) : null}
+              )}
             </div>
           </div>
         </LayoutMain>

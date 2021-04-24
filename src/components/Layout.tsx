@@ -1,26 +1,28 @@
 import cx from 'classnames';
 
-type screenSize = 'sm' | 'md' | 'lg' | 'xl' | '2xl';
-
-interface LayoutProps {
-  children: JSX.Element[] | JSX.Element;
-  maxWidth?: screenSize;
-}
-
-const Layout = ({ children, maxWidth = '2xl' }: LayoutProps) => (
+const Layout = ({ children, className = '' }) => (
   <div
-    className={`mx-auto xl:flex max-w-screen-${maxWidth} bg-white dark:bg-gray-950 pb-14 xl:pb-0`}>
+    className={cx(
+      'mx-auto xl:flex bg-white dark:bg-gray-950 pb-14 xl:pb-0',
+      className,
+    )}>
     {children}
   </div>
 );
 
 export const LayoutMain = ({ children }) => (
-  <main className="overflow-hidden xl:w-2/3">{children}</main>
+  <main className="overflow-hidden xl:w-2/3 2xl:w-auto 2xl:flex-auto">
+    {children}
+  </main>
 );
 
-export const LayoutSidebar = ({ className = '', children }) => {
+export const LayoutSidebar = ({ children, className = '' }) => {
   return (
-    <div className={cx(className, 'xl:w-1/3 xl:flex xl:flex-col')}>
+    <div
+      className={cx(
+        className,
+        'xl:w-1/3 2xl:w-[32rem] xl:flex xl:flex-col flex-shrink-0',
+      )}>
       {children}
     </div>
   );

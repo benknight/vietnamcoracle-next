@@ -106,14 +106,14 @@ export default function SearchPage() {
         <div className="lg:max-w-sm my-4 lg:my-12 xl:mb-12 xl:mt-16">
           <SearchForm />
         </div>
-        {isLoadingInitialData ? (
+        {isLoadingInitialData && (
           <div className="text-center lg:text-left my-8">Searching…</div>
-        ) : null}
-        {isEmpty ? (
+        )}
+        {isEmpty && (
           <div className="text-center lg:text-left my-8">
             No results found for <em>{query}</em>
           </div>
-        ) : null}
+        )}
         {data?.map(results =>
           results.map(result => (
             <SearchResult data={result} key={result.uri} />
@@ -155,7 +155,7 @@ function SearchResult({ data }) {
       <Link href={data.uri}>
         <a className="absolute inset-0 sm:hidden" />
       </Link>
-      {data.featuredImage ? (
+      {data.featuredImage && (
         <div
           className="
             w-24 h-24 sm:w-auto sm:h-auto ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0
@@ -174,7 +174,7 @@ function SearchResult({ data }) {
             </a>
           </Link>
         </div>
-      ) : null}
+      )}
       <div className="flex-auto">
         <div className="flex items-baseline">
           <Link href={data.uri}>

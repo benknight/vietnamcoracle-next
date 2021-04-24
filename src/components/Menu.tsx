@@ -10,10 +10,8 @@ import { ChevronRightIcon } from '@heroicons/react/outline';
 import { ArrowLeftIcon } from '@heroicons/react/solid';
 import GraphQLClient from '../lib/GraphQLClient';
 
-const fetcher = query => GraphQLClient.request(query);
-
 export default function Menu({ children, className = '' }) {
-  const { data, error } = useSWR(
+  const { data } = useSWR(
     gql`
       query Menu {
         menuItems(where: { location: HEADER_MENU_NEXT }, first: 1000) {
@@ -27,7 +25,7 @@ export default function Menu({ children, className = '' }) {
         }
       }
     `,
-    fetcher,
+    query => GraphQLClient.request(query),
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -58,8 +56,8 @@ export default function Menu({ children, className = '' }) {
               static
               className="
                 absolute z-10
-                w-80 max-h-[87vh] mt-1 lg:mt-2 overflow-auto
-                font-medium font-display text-sm
+                w-72 xs:w-80 max-h-[87vh] mt-1 lg:mt-2 overflow-auto
+                font-medium font-sans md:font-display text-base md:text-sm
                 bg-white dark:bg-gray-800
                 border border-gray-200 dark:border-gray-700
                 shadow-lg
@@ -164,9 +162,7 @@ function MenuNav({ items = [], open = false }) {
                     }
                   }}>
                   <div className="flex-auto">{item.label}</div>
-                  {grouped[item.id] ? (
-                    <ChevronRightIcon className="w-4 h-4" />
-                  ) : null}
+                  {grouped[item.id] && <ChevronRightIcon className="w-4 h-4" />}
                 </a>
               </Link>
             </li>

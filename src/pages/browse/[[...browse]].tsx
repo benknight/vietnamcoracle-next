@@ -109,7 +109,7 @@ const Browse = ({ data, swatches }) => {
             categoryPage.collections?.items.map(item => (
               <section className="my-6 md:my-10" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
-                  <h3 className="mb-1 font-display text-xl sm:text-2xl lg:text-3xl">
+                  <h3 className="mb-1 font-display text-lg xs:text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl">
                     {item.title}
                   </h3>
                   {item.category && (

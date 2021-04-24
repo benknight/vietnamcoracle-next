@@ -49,15 +49,6 @@
       focus:border-gray-500 dark:focus:border-gray-600
       hover:border-gray-500 dark:hover:border-gray-600;
   }
-  .map-container {
-    margin-bottom: -14px;
-    height: 75vh;
-  }
-  @screen lg {
-    .map-container {
-      height: 95vh;
-    }
-  }
   .page-heading {
     @apply font-display text-2xl;
   }

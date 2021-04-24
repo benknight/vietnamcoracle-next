@@ -18,15 +18,15 @@ export default function Footer({ data }) {
             viewBox="0 0 400 198"
           />
         </a>
-        <div className="px-16 text-base md:text-lg font-display italic text-gray-500 dark:text-gray-200">
+        <div className="md:max-w-lg mx-auto px-8 xs:px-16 text-base md:text-xl lg:text-lg font-display italic text-gray-500 dark:text-gray-200">
           “Excellent independent travel advice from a long-term resident”
         </div>
       </div>
-      <section className="px-4 pb-12 lg:px-0">
+      <section className="px-2 pb-12 lg:px-0">
         <ul className="flex flex-wrap justify-center uppercase text-xxs tracking-widest">
           {data.footerMenu?.menuItems?.nodes.map(item => (
             <Link key={item.path} href={item.path}>
-              <a className="m-3 lg:mx-3 opacity-75 hover:opacity-100">
+              <a className="mx-2 my-3 xs:mx-3 lg:mx-3 opacity-75 hover:opacity-100">
                 {item.label}
               </a>
             </Link>

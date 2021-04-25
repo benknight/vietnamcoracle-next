@@ -97,7 +97,7 @@ export default function Header({ preview = false }: Props) {
                   leave="hidden"
                   show={showMini}
                   unmount={false}>
-                  <h1 className="hidden xs:block ml-2 text-sm font-semibold font-display tracking-tight">
+                  <h1 className="header-title hidden xs:block ml-2 font-semibold font-display tracking-tight">
                     Vietnam Coracle
                   </h1>
                 </Transition>

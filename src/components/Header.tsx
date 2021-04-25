@@ -66,7 +66,7 @@ export default function Header({ preview = false }: Props) {
             className="
               z-20 absolute top-0 left-0
               flex items-center h-14 lg:h-16 px-2">
-            <Menu className="transform scale-90 origin-left lg:scale-100">
+            <Menu className="transform scale-90 lg:scale-100">
               <MenuIcon className="w-5 h-5 mx-3" />
               <div
                 className={

@@ -7,6 +7,7 @@ module.exports = {
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/line-clamp'),
+    require('tailwindcss-scroll-snap'),
   ],
   purge: ['./src/**/*.{js,jsx,ts,tsx}'],
   mode: 'jit',

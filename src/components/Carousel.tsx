@@ -41,10 +41,9 @@ export default function Carousel({ className, children, ...props }) {
   return (
     <div {...props} className={cx(className, 'relative overflow-hidden')}>
       <div
-        className="overflow-x-auto flex flex-nowrap w-full h-full -mb-4 pb-14"
+        className="snap snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full -mb-4 pb-14"
         dir="ltr"
-        ref={ref}
-        style={{ scrollSnapType: 'x mandatory' }}>
+        ref={ref}>
         {children}
       </div>
       {(() => {
@@ -87,12 +86,12 @@ export default function Carousel({ className, children, ...props }) {
   );
 }
 
-export function CarouselSlide({ component, ...props }) {
+export function CarouselSlide({ className, component, ...props }) {
   const Component = component;
   return (
     <Component
       {...props}
-      style={{ scrollSnapAlign: 'center', scrollSnapStop: 'always' }}
+      className={cx(className, 'snap-center always-stop')}
     />
   );
 }

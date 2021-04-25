@@ -90,7 +90,7 @@ export default function Post({ data, html, fbShareCount, monthsOld }) {
 
   const heading = (
     <h1
-      className="max-w-3xl xl:max-w-none mx-auto xl:mx-0 mt-16 mb-2 text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight"
+      className="max-w-3xl xl:max-w-none mx-auto xl:mx-0 mt-16 mb-2 text-3xl xs:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight"
       id="top">
       {content.title}
     </h1>
@@ -165,7 +165,7 @@ export default function Post({ data, html, fbShareCount, monthsOld }) {
                   </div>
                   {content.comments.nodes.length > 0 && (
                     <>
-                      <div className="page-heading mb-4">
+                      <div className="page-heading mb-4" id="comments">
                         {content.commentCount} Comments
                       </div>
                       <CommentThread comments={content.comments.nodes} />

@@ -4,7 +4,7 @@ import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import useSWR from 'swr';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
@@ -32,18 +32,32 @@ function cleanPostHTML(html: string): string {
   return result;
 }
 
-const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
+export default function Post({ data, html, fbShareCount, monthsOld }) {
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
+
   const asyncRequest = useSWR(
     data?.contentNode.isRestricted && router.query?.secret
       ? `/api/post?id=${data.contentNode.databaseId}&password=${router.query?.secret}`
       : null,
     url => axios.get(url).then(res => res.data),
+    {
+      revalidateOnFocus: false,
+    },
   );
 
-  useWaitCursor(router.isFallback);
+  const content = useMemo(() => {
+    return data
+      ? {
+          ...data.contentNode,
+          get showHero() {
+            return this.featuredImage?.node && this.thumbnails?.thumbnailHeader;
+          },
+          type: data.contentNode.contentType?.node.name,
+        }
+      : null;
+  }, [data]);
 
   useEffect(() => {
     const crpList = document.querySelector('.crp-list');
@@ -53,6 +67,8 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
       crpList.nextSibling,
     );
   }, []);
+
+  useWaitCursor(router.isFallback || asyncRequest.isValidating);
 
   if (router.isFallback) {
     return null;
@@ -64,16 +80,25 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
 
   let articleHTML = html;
 
-  if (typeof window !== 'undefined' && data.contentNode.isRestricted) {
+  // TODO: Show a loading state
+  if (typeof window !== 'undefined' && content.isRestricted) {
     if (!router.query?.secret) {
       return <NotFound />;
     }
     articleHTML = asyncRequest.data?.content.rendered;
   }
 
+  const heading = (
+    <h1
+      className="max-w-3xl xl:max-w-none mx-auto xl:mx-0 mt-16 mb-2 text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight"
+      id="top">
+      {content.title}
+    </h1>
+  );
+
   return (
     <>
-      <SEO {...data.contentNode.seo}>
+      <SEO {...content.seo}>
         <meta name="twitter:label1" content="Written by" />
         <meta name="twitter:data1" content="Vietnam Coracle" />
       </SEO>
@@ -91,30 +116,29 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
           src="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
         />
       </Head>
-      <Hero
-        imgSm={data.contentNode.featuredImage?.node}
-        imgLg={data.contentNode.thumbnails?.thumbnailHeader}>
-        <h1
-          className="
-            max-w-3xl xl:max-w-none mx-auto xl:mx-0 mt-8 mb-2 xl:px-8
-            text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight"
-          id="top">
-          {data.contentNode.title}
-        </h1>
-      </Hero>
+      {content.showHero && (
+        <Hero
+          imgSm={content.featuredImage?.node}
+          imgLg={content.thumbnails?.thumbnailHeader}>
+          <div className="xl:px-8">{heading}</div>
+        </Hero>
+      )}
       <Layout className="max-w-screen-2xl">
         <LayoutMain>
           <div className="px-4 md:px-8 xl:pl-20 text-lg">
             <div className="max-w-3xl mx-auto xl:mx-0">
-              {!data.contentNode.isRestricted && (
+              {!content.showHero && heading}
+              {content.type === 'post' && !content.isRestricted && (
                 <ShareButtons
                   fbShareCount={fbShareCount}
-                  image={data.contentNode.featuredImage?.node.sourceUrl}
-                  link={data.contentNode.link}
-                  title={data.contentNode.title}
+                  image={content.featuredImage?.node.sourceUrl}
+                  link={content.link}
+                  title={content.title}
                 />
               )}
-              {monthsOld > 24 && <OldPostAlert monthsOld={monthsOld} />}
+              {content.type === 'post' && monthsOld > 24 && (
+                <OldPostAlert monthsOld={monthsOld} />
+              )}
               <article
                 className="post"
                 dangerouslySetInnerHTML={{
@@ -126,23 +150,27 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
                 <div
                   className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
                   ref={relatedPostsRef}>
-                  {data.contentNode.customRelatedPosts.nodes.map(post => (
+                  {content.customRelatedPosts.nodes.map(post => (
                     <PostCard key={post.slug} post={post} inGrid />
                   ))}
                 </div>
               )}
-              <div className="page-heading mt-8 md:mt-12 mb-4">
-                Leave a Comment
-              </div>
-              <div className="mb-12">
-                <CommentForm post={data.contentNode.databaseId} />
-              </div>
-              {data.contentNode.comments.nodes.length > 0 && (
+              {articleHTML && (
                 <>
-                  <div className="page-heading mb-4">
-                    {data.contentNode.commentCount} Comments
+                  <div className="page-heading mt-8 md:mt-12 mb-4">
+                    Leave a Comment
                   </div>
-                  <CommentThread comments={data.contentNode.comments.nodes} />
+                  <div className="mb-12">
+                    <CommentForm post={content.databaseId} />
+                  </div>
+                  {content.comments.nodes.length > 0 && (
+                    <>
+                      <div className="page-heading mb-4">
+                        {content.commentCount} Comments
+                      </div>
+                      <CommentThread comments={content.comments.nodes} />
+                    </>
+                  )}
                 </>
               )}
             </div>
@@ -155,7 +183,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
       </Layout>
     </>
   );
-};
+}
 
 export function getStaticPaths() {
   return {
@@ -164,7 +192,7 @@ export function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params: { node }, preview = false }) {
+export async function getStaticProps({ params: { slug }, preview = false }) {
   const query = gql`
     query PageOrPost($preview: Boolean!, $slug: ID!) {
       contentNode(id: $slug, idType: URI) {
@@ -172,6 +200,11 @@ export async function getStaticProps({ params: { node }, preview = false }) {
           databaseId
           isRestricted
           link
+          contentType {
+            node {
+              name
+            }
+          }
         }
         ... on NodeWithComments {
           commentCount
@@ -233,7 +266,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
 
   const data = await GraphQLClient.request(query, {
     preview,
-    slug: node,
+    slug,
   });
 
   let fbShareCount = 0;
@@ -290,5 +323,3 @@ export async function getStaticProps({ params: { node }, preview = false }) {
     revalidate: 1,
   };
 }
-
-export default PostOrPage;

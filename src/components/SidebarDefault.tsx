@@ -2,7 +2,6 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import About from './About';
 import Block from './Block';
-import Book from './Book';
 import Subscribe from './Subscribe';
 import Support from './Support';
 import SlidingSticky from './SlidingSticky';
@@ -16,7 +15,6 @@ const SidebarDefault = ({ className = '', data }) => (
       )}>
       <About data={data.about.block} />
       <Support data={data.support.block} />
-      <Book />
       <Subscribe data={data.subscribe.block} />
     </div>
   </SlidingSticky>

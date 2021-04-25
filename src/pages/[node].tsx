@@ -5,11 +5,13 @@ import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
+import useSWR from 'swr';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
+import NotFound from '../components/NotFound';
 import OldPostAlert from '../components/OldPostAlert';
 import PostCard from '../components/PostCard';
 import SEO from '../components/SEO';
@@ -34,6 +36,13 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
+  const asyncRequest = useSWR(
+    data?.contentNode.isRestricted && router.query?.secret
+      ? `/api/post?id=${data.contentNode.databaseId}&password=${router.query?.secret}`
+      : null,
+    url => axios.get(url).then(res => res.data),
+  );
+
   useWaitCursor(router.isFallback);
 
   useEffect(() => {
@@ -51,6 +60,15 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
 
   if (!data) {
     return;
+  }
+
+  let articleHTML = html;
+
+  if (typeof window !== 'undefined' && data.contentNode.isRestricted) {
+    if (!router.query?.secret) {
+      return <NotFound />;
+    }
+    articleHTML = asyncRequest.data?.content.rendered;
   }
 
   return (
@@ -100,7 +118,7 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
               <article
                 className="post"
                 dangerouslySetInnerHTML={{
-                  __html: html,
+                  __html: articleHTML,
                 }}
                 ref={articleRef}
               />

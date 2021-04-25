@@ -3,29 +3,17 @@ import cheerio from 'cheerio';
 import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useRef } from 'react';
-import {
-  EmailShareButton,
-  FacebookShareButton,
-  PinterestShareButton,
-  RedditShareButton,
-  TwitterShareButton,
-} from 'react-share';
-import { ClockIcon } from '@heroicons/react/solid';
-import EmailIcon from '@material-ui/icons/AlternateEmail';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import PinterestIcon from '@material-ui/icons/Pinterest';
-import RedditIcon from '@material-ui/icons/Reddit';
-import TwitterIcon from '@material-ui/icons/Twitter';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
 import Hero from '../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
+import OldPostAlert from '../components/OldPostAlert';
 import PostCard from '../components/PostCard';
 import SEO from '../components/SEO';
+import ShareButtons from '../components/ShareButtons';
 import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
 import useWaitCursor from '../lib/useWaitCursor';
@@ -100,75 +88,15 @@ const PostOrPage = ({ data, html, fbShareCount, monthsOld }) => {
         <LayoutMain>
           <div className="px-4 md:px-8 xl:pl-20 text-lg">
             <div className="max-w-3xl mx-auto xl:mx-0">
-              <div className="flex flex-wrap text-white mt-8 dark:mt-0">
-                <FacebookShareButton
-                  className="rounded mr-2 mb-2"
-                  style={{ backgroundColor: '#1877f2', fontSize: '12px' }}
+              {!data.contentNode.isRestricted && (
+                <ShareButtons
+                  fbShareCount={fbShareCount}
+                  image={data.contentNode.featuredImage?.node.sourceUrl}
+                  link={data.contentNode.link}
                   title={data.contentNode.title}
-                  url={data.contentNode.link}>
-                  <span className="flex items-center px-2">
-                    <FacebookIcon className="w-4 h-4" fontSize="small" />
-                    <span className="mx-1 font-medium">Share</span>{' '}
-                    {fbShareCount > 0 ? fbShareCount.toLocaleString() : ''}
-                  </span>
-                </FacebookShareButton>
-                <TwitterShareButton
-                  className="rounded mr-2 mb-2"
-                  style={{ backgroundColor: '#1da1f2', fontSize: '12px' }}
-                  title={data.contentNode.title}
-                  url={data.contentNode.link}>
-                  <span className="flex items-center px-2 font-medium">
-                    <TwitterIcon className="w-4 h-4" fontSize="small" />
-                    <span className="ml-1">Tweet</span>
-                  </span>
-                </TwitterShareButton>
-                <PinterestShareButton
-                  className="rounded mr-2 mb-2"
-                  media={data.contentNode.featuredImage?.node.sourceUrl}
-                  style={{ backgroundColor: '#e60023', fontSize: '12px' }}
-                  title={data.contentNode.title}
-                  url={data.contentNode.link}>
-                  <span className="flex items-center px-2 font-medium">
-                    <PinterestIcon className="w-4 h-4" />
-                    <span className="ml-1">Pin</span>
-                  </span>
-                </PinterestShareButton>
-                <RedditShareButton
-                  className="rounded mr-2 mb-2"
-                  style={{ backgroundColor: '#ff4500', fontSize: '12px' }}
-                  title={data.contentNode.title}
-                  url={data.contentNode.link}>
-                  <span className="flex items-center px-2 font-medium">
-                    <RedditIcon className="relative w-4 h-4 top-[-1px]" />
-                    <span className="ml-1">Share</span>
-                  </span>
-                </RedditShareButton>
-                <EmailShareButton
-                  body=""
-                  className="rounded mr-2 mb-2"
-                  style={{ fontSize: '12px' }}
-                  subject={data.contentNode.title}
-                  url={data.contentNode.link}>
-                  <span className="rounded bg-gray-500 flex items-center px-2 font-medium">
-                    <EmailIcon className="w-4 h-4" fontSize="small" />
-                    <span className="ml-1">Email</span>
-                  </span>
-                </EmailShareButton>
-              </div>
-              {monthsOld > 24 && (
-                <div className="flex items-center py-3 px-2 mt-8 mb-4 text-sm rounded bg-yellow-100 dark:bg-yellow-900  dark:bg-opacity-25 dark:border dark:border-yellow-500">
-                  <ClockIcon className="w-5 h-5 text-yellow-600 dark:text-yellow-500" />
-                  <div className="flex-auto ml-2 leading-tight">
-                    This article was last updated more than{' '}
-                    {Math.floor(monthsOld / 12)} years ago.{' '}
-                    <Link href="/updates-and-accuracy">
-                      <a className="link">
-                        Read more about accuracy &amp; updates
-                      </a>
-                    </Link>
-                  </div>
-                </div>
+                />
               )}
+              {monthsOld > 24 && <OldPostAlert monthsOld={monthsOld} />}
               <article
                 className="post"
                 dangerouslySetInnerHTML={{
@@ -224,6 +152,7 @@ export async function getStaticProps({ params: { node }, preview = false }) {
       contentNode(id: $slug, idType: URI) {
         ... on ContentNode {
           databaseId
+          isRestricted
           link
         }
         ... on NodeWithComments {

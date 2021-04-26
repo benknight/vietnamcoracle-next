@@ -1,6 +1,7 @@
 import cx from 'classnames';
 import _keyBy from 'lodash/keyBy';
 import _mapValues from 'lodash/mapValues';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
 import ElsewhereLinks from './ElsewhereLinks';
@@ -13,6 +14,7 @@ interface Props {
 export default function Subscribe({ data: block }: Props) {
   const [email, setEmail] = useState('');
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const messages = _mapValues(_keyBy(block.messages, 'key'), 'value');
 
   useWaitCursor(loading);
@@ -28,13 +30,12 @@ export default function Subscribe({ data: block }: Props) {
     })
       .then(res => res.json())
       .then(data => {
-        let message = '';
         if (data.success) {
-          message =
-            messages['subscribe_success'] ||
-            'Thanks for subscribing to Vietnam Coracle.';
-          setEmail('');
+          router.push(
+            block.link.url.replace('https://www.vietnamcoracle.com', ''),
+          );
         } else {
+          let message = '';
           message =
             messages['subscribe_error'] ||
             'Something went wrong. Please try again later.';
@@ -43,8 +44,8 @@ export default function Subscribe({ data: block }: Props) {
               messages['already_subscribed'] ||
               'There is already an existing subcription for the provided email addresss';
           }
+          window.alert(message);
         }
-        window.alert(message);
         setLoading(false);
       });
   };

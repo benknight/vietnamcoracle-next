@@ -21,34 +21,18 @@ import GraphQLClient from '../../lib/GraphQLClient';
 const Browse = ({ data, swatches }) => {
   const router = useRouter();
   const isHome = !router.query.browse;
-  const { category, categoryPage, subcategory } = data;
+  const { category, subcategory } = data;
   const coverImgSm =
-    (subcategory ? subcategory.cover.small : category?.cover.small) ||
-    category?.parent.node.cover.small;
+    (subcategory ? subcategory.cover.small : category.cover.small) ||
+    category.parent.node.cover.small;
   const coverImgLg =
-    (subcategory ? subcategory.cover.large : category?.cover.large) ||
+    (subcategory ? subcategory.cover.large : category.cover.large) ||
     category?.parent.node.cover.large;
   return (
     <SwatchesContext.Provider value={swatches}>
-      <SEO
-        {...(category?.seo || {
-          metaDesc: data.seo.openGraph.frontPage.description,
-          canonical: 'https://www.vietnamcoracle.com',
-          opengraphDescription: data.seo.openGraph.frontPage.description,
-          opengraphImage: data.seo.openGraph.frontPage.image,
-          title: data.seo.openGraph.frontPage.title,
-        })}
-      />
-      {/* <title>
-          {!category
-            ? 'Vietnam Coracle – Independent Travel Guides to Vietnam'
-            : subcategory
-            ? `${category.name} > ${subcategory.name}`
-            : category.name}
-          {!isHome ? ' – Vietnam Coracle' : ''}
-        </title> */}
+      <SEO {...category.seo} />
       {isHome ? (
-        <Slider data={categoryPage.slider} />
+        <Slider data={category.slider} />
       ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
           <div className="pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end justify-between">
@@ -69,7 +53,7 @@ const Browse = ({ data, swatches }) => {
                 </div>
               )}
             </h1>
-            {categoryPage?.map && !subcategory && (
+            {category.map && !subcategory && (
               <a
                 className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 items-end text-sm hover:underline"
                 href="#map">
@@ -107,16 +91,15 @@ const Browse = ({ data, swatches }) => {
       )}
       <Layout>
         <LayoutMain>
-          {categoryPage && !subcategory ? (
-            categoryPage.collections?.items.map(item => (
+          {category && !subcategory ? (
+            category.collections?.items.map(item => (
               <section className="my-6 md:my-10" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
                   <h3 className="mb-1 font-display text-lg xs:text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl">
                     {item.title}
                   </h3>
                   {item.category && (
-                    <Link
-                      href={item.category.uri.replace('category', 'browse')}>
+                    <Link href={getCategoryLink(item.category.uri)}>
                       <a className="link ml-4 text-sm font-serif whitespace-nowrap">
                         See all
                       </a>
@@ -133,9 +116,9 @@ const Browse = ({ data, swatches }) => {
               ))}
             </div>
           )}
-          {categoryPage?.map && (
+          {category.map && (
             <section className="mt-8 lg:mb-8 lg:px-8 xl:pl-12 xl:pr-0">
-              <Map data={categoryPage.map} isHome={isHome} />
+              <Map data={category.map} isHome={isHome} />
             </section>
           )}
         </LayoutMain>
@@ -192,25 +175,13 @@ export const getStaticPaths = async () => {
   return result;
 };
 
-// TODO: It's not possible to previews via the `asPreview` argument with slugs or uri's as IDs, hence this mapping.
-// Tracking issue: https://github.com/wp-graphql/wp-graphql/issues/1673
-const catPageIds = {
-  'food-and-drink': 'cG9zdDozODc2NA==',
-  home: 'cG9zdDozNjExNQ==',
-  'hotel-reviews': 'cG9zdDozODQ2OQ==',
-  destinations: 'cG9zdDozODUxNw==',
-  'motorbike-guides': 'cG9zdDozODUxMQ==',
-};
-
 export const getStaticProps: GetStaticProps = async ({
   params,
   preview = false,
 }) => {
   const query = gql`
     query Browse(
-      $categoryPageId: ID!
       $categorySlug: ID!
-      $hasCategoryPage: Boolean!
       $hasSubcategory: Boolean!
       $preview: Boolean!
       $skipCategoryPosts: Boolean!
@@ -229,21 +200,6 @@ export const getStaticProps: GetStaticProps = async ({
             }
           }
         }
-        parent {
-          node {
-            ...CategoryData
-          }
-        }
-        posts(first: 1000) @skip(if: $skipCategoryPosts) {
-          nodes {
-            slug
-            ...PostCardPostData
-          }
-        }
-        ...CategoryData
-      }
-      categoryPage(id: $categoryPageId, asPreview: $preview)
-        @include(if: $hasCategoryPage) {
         collections {
           items {
             title
@@ -257,9 +213,21 @@ export const getStaticProps: GetStaticProps = async ({
         map {
           ...MapComponentData
         }
+        parent {
+          node {
+            ...CategoryData
+          }
+        }
+        posts(first: 1000) @skip(if: $skipCategoryPosts) {
+          nodes {
+            slug
+            ...PostCardPostData
+          }
+        }
         slider {
           ...SliderComponentData
         }
+        ...CategoryData
       }
       seo {
         openGraph {
@@ -312,27 +280,24 @@ export const getStaticProps: GetStaticProps = async ({
     ${Slider.fragments}
   `;
 
-  const categorySlug = params.browse?.[0] ?? '';
-  const categoryPageId = catPageIds[categorySlug || 'home'] || '';
+  const categorySlug = params.browse?.[0] ?? 'features-guides';
   const subcategorySlug = params.browse?.[1] ?? '';
 
   // Fire the request
   const data = await GraphQLClient.request(query, {
-    categoryPageId,
     categorySlug,
-    hasCategoryPage: Boolean(categoryPageId),
+    subcategorySlug,
     hasSubcategory: Boolean(subcategorySlug),
     preview,
     skipCategoryPosts:
       Boolean(subcategorySlug) ||
       [
-        'home',
+        'features-guides',
         'motorbike-guides',
         'food-and-drink',
         'hotel-reviews',
         'destinations',
       ].includes(categorySlug),
-    subcategorySlug,
   });
 
   let swatches = {};

@@ -48,7 +48,7 @@ const Collection = ({ data }) => {
 };
 
 Collection.fragments = gql`
-  fragment CollectionComponentData on CategoryPage_Collections_items {
+  fragment CollectionComponentData on Category_Collections_items {
     posts {
       ... on Post {
         slug

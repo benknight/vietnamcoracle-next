@@ -115,7 +115,7 @@ export default function Header({ preview = false }: Props) {
               'flex items-center h-14 lg:h-16 px-2 lg:px-4 text-gray-400',
             )}>
             <SearchForm
-              className={cx('ring-2 ring-white dark:ring-gray-900', {
+              className={cx('ring-2 ring-white md:ring-0 dark:ring-gray-900', {
                 'w-32 md:w-44': !searchFocused,
                 'w-full md:w-60': searchFocused,
               })}

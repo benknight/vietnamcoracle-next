@@ -136,7 +136,7 @@ export default function Post({ data, html, fbShareCount, monthsOld }) {
                   title={content.title}
                 />
               )}
-              {content.type === 'post' && monthsOld > 24 && (
+              {content.type === 'post' && monthsOld > 36 && (
                 <OldPostAlert monthsOld={monthsOld} />
               )}
               <article

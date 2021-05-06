@@ -1,4 +1,7 @@
 module.exports = {
+  future: {
+    webpack5: true,
+  },
   images: {
     domains: ['www.vietnamcoracle.com', 'res.cloudinary.com'],
   },

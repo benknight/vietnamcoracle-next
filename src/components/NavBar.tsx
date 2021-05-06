@@ -75,25 +75,18 @@ export default function NavBar({ preview = false }: Props) {
               <Link href={to} key={to}>
                 <a
                   className={cx(
-                    'group w-1/5 md:w-24 lg:w-auto h-10 mx-1 sm:px-3 lg:px-3 lg:py-0 flex flex-col lg:flex-row items-center justify-center text-center rounded-full lg:bg-gray-100 lg:dark:bg-gray-800',
+                    'w-1/5 md:w-24 lg:w-auto h-10 mx-1 sm:px-3 lg:px-3 lg:py-0 flex flex-col lg:flex-row items-center justify-center text-center rounded-full transition-colors duration-200 ease lg:bg-gray-100 lg:hover:bg-blue-100 lg:dark:bg-gray-800 lg:dark:hover:bg-gray-700',
                     {
                       'bg-gradient-to-b dark:shadow text-blue-500 dark:text-blue-400': isCurrent,
                     },
                   )}
                   key={link.url}>
-                  <div className="lg:mr-2">
-                    {cloneElement(isCurrent ? link.icon : link.iconAlt, {
-                      className: 'w-5 h-5 mb-1',
-                    })}
-                  </div>
-                  <div
-                    className={cx(
-                      'w-full text-shadow lg:border-b break-words group-hover:border-gray-500 dark:group-hover:border-gray-600',
-                      isCurrent
-                        ? 'border-blue-500 dark:border-blue-400 group-hover:border-blue-500 dark:group-hover:border-blue-400'
-                        : 'border-transparent',
-                    )}>
-                    <div className="xl:hidden text-xxxs xs:text-xxs lg:text-xs">
+                  {cloneElement(isCurrent ? link.icon : link.iconAlt, {
+                    className:
+                      'w-5 h-5 lg:w-4 lg:h-4 xl:w-5 xl:h-5 lg:mr-2 mb-1 lg:mb-0 flex-shrink-0',
+                  })}
+                  <div className="w-full break-words">
+                    <div className="xl:hidden text-xxxs xs:text-xxs lg:text-sm">
                       {link.titleShort}
                     </div>
                     <div className="hidden xl:block text-sm">{link.title}</div>

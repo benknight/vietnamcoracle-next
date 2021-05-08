@@ -9,6 +9,7 @@ import { Fragment } from 'react';
 import { useSWRInfinite } from 'swr';
 import SearchForm from '../components/SearchForm';
 import GraphQLClient from '../lib/GraphQLClient';
+import RestClient from '../lib/RestClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
 const PAGE_SIZE = 10;
@@ -57,9 +58,9 @@ const SEARCH_RESULTS_QUERY = gql`
 `;
 
 const resultsFetcher = async (query: string, page: number) => {
-  const results = await fetch(
-    `/api/search?query=${query}&page=${page}&pageSize=${PAGE_SIZE}`,
-  ).then(res => res.json());
+  const { data: results } = await RestClient.get(
+    `/search?search=${query}&page=${page}&pageSize=10`,
+  );
   if (results.length === 0) {
     return [];
   }

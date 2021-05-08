@@ -20,6 +20,77 @@ import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
+const POST_QUERY = gql`
+  query Post($preview: Boolean!, $slug: ID!) {
+    contentNode(id: $slug, idType: URI) {
+      ... on ContentNode {
+        databaseId
+        isRestricted
+        link
+        contentType {
+          node {
+            name
+          }
+        }
+      }
+      ... on NodeWithComments {
+        commentCount
+      }
+      ... on NodeWithContentEditor {
+        content
+      }
+      ... on NodeWithFeaturedImage {
+        featuredImage {
+          node {
+            ...HeroImageData
+          }
+        }
+      }
+      ... on NodeWithTitle {
+        title
+      }
+      ... on Page {
+        comments(first: 1000) {
+          nodes {
+            ...CommentThreadCommentData
+          }
+        }
+        seo {
+          ...SEOPostData
+        }
+      }
+      ... on Post {
+        comments(first: 1000) {
+          nodes {
+            ...CommentThreadCommentData
+          }
+        }
+        customRelatedPosts(first: 6) {
+          nodes {
+            ...PostCardPostData
+          }
+        }
+        seo {
+          ...SEOPostData
+        }
+        thumbnails {
+          thumbnailHeader {
+            ...HeroImageData
+          }
+        }
+      }
+    }
+    ...FooterData
+    ...SidebarDefaultData
+  }
+  ${CommentThread.fragments}
+  ${Hero.fragments}
+  ${Footer.fragments}
+  ${PostCard.fragments}
+  ${SEO.fragments.post}
+  ${SidebarDefault.fragments}
+`;
+
 function cleanPostHTML(html: string): string {
   let result = html;
   // Force https
@@ -32,32 +103,39 @@ function cleanPostHTML(html: string): string {
   return result;
 }
 
-export default function Post({ data, html, fbShareCount, monthsOld }) {
+export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
 
   const asyncRequest = useSWR(
     data?.contentNode.isRestricted && router.query?.secret
-      ? `/api/post?id=${data.contentNode.databaseId}&password=${router.query?.secret}`
+      ? [router.query.slug, router.query.secret]
       : null,
-    url => axios.get(url).then(res => res.data),
+    (slug, secret) => {
+      return GraphQLClient.request(
+        POST_QUERY,
+        { preview, slug },
+        { 'X-Coracle-Post-Password': secret },
+      );
+    },
     {
       revalidateOnFocus: false,
     },
   );
 
   const content = useMemo(() => {
-    return data
+    return data || asyncRequest.data
       ? {
-          ...data.contentNode,
+          ...data?.contentNode,
+          ...asyncRequest.data?.contentNode,
           get showHero() {
             return this.featuredImage?.node && this.thumbnails?.thumbnailHeader;
           },
           type: data.contentNode.contentType?.node.name,
         }
       : null;
-  }, [data]);
+  }, [data, asyncRequest.data]);
 
   useEffect(() => {
     const crpList = document.querySelector('.crp-list');
@@ -67,6 +145,11 @@ export default function Post({ data, html, fbShareCount, monthsOld }) {
       crpList.nextSibling,
     );
   }, []);
+  let articleHTML = html;
+
+  if (asyncRequest.data) {
+    articleHTML = cleanPostHTML(asyncRequest.data.contentNode.content);
+  }
 
   useWaitCursor(router.isFallback || asyncRequest.isValidating);
 
@@ -74,18 +157,15 @@ export default function Post({ data, html, fbShareCount, monthsOld }) {
     return null;
   }
 
-  if (!data) {
+  if (!content) {
     return;
   }
 
-  let articleHTML = html;
-
-  // TODO: Show a loading state
   if (typeof window !== 'undefined' && content.isRestricted) {
-    if (!router.query?.secret) {
-      return <NotFound />;
+    if (router.query?.secret) {
+      return <div className="text-center py-12">Loading…</div>;
     }
-    articleHTML = asyncRequest.data?.content.rendered;
+    return <NotFound />;
   }
 
   const heading = (
@@ -193,78 +273,7 @@ export function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug }, preview = false }) {
-  const query = gql`
-    query PageOrPost($preview: Boolean!, $slug: ID!) {
-      contentNode(id: $slug, idType: URI) {
-        ... on ContentNode {
-          databaseId
-          isRestricted
-          link
-          contentType {
-            node {
-              name
-            }
-          }
-        }
-        ... on NodeWithComments {
-          commentCount
-        }
-        ... on NodeWithContentEditor {
-          content
-        }
-        ... on NodeWithFeaturedImage {
-          featuredImage {
-            node {
-              ...HeroImageData
-            }
-          }
-        }
-        ... on NodeWithTitle {
-          title
-        }
-        ... on Page {
-          comments(first: 1000) {
-            nodes {
-              ...CommentThreadCommentData
-            }
-          }
-          seo {
-            ...SEOPostData
-          }
-        }
-        ... on Post {
-          comments(first: 1000) {
-            nodes {
-              ...CommentThreadCommentData
-            }
-          }
-          customRelatedPosts(first: 6) {
-            nodes {
-              ...PostCardPostData
-            }
-          }
-          seo {
-            ...SEOPostData
-          }
-          thumbnails {
-            thumbnailHeader {
-              ...HeroImageData
-            }
-          }
-        }
-      }
-      ...FooterData
-      ...SidebarDefaultData
-    }
-    ${CommentThread.fragments}
-    ${Hero.fragments}
-    ${Footer.fragments}
-    ${PostCard.fragments}
-    ${SEO.fragments.post}
-    ${SidebarDefault.fragments}
-  `;
-
-  const data = await GraphQLClient.request(query, {
+  const data = await GraphQLClient.request(POST_QUERY, {
     preview,
     slug,
   });

@@ -42,7 +42,7 @@
     "@graphql-cli/coverage": "2.1.0",
     "@graphql-cli/validate": "2.1.0",
     "@types/lodash": "^4.14.168",
-    "@types/node": "^14.14.17",
+    "@types/node": "^15.0.2",
     "autoprefixer": "^10.2.5",
     "graphql-cli": "4.1.0",
     "postcss": "^8.2.8",

@@ -104,14 +104,17 @@ export default function SearchPage() {
         </title>
       </Head>
       <div className="px-3 pb-24 max-w-5xl mx-auto">
-        <div className="lg:max-w-sm my-4 lg:my-12 xl:mb-12 xl:mt-16">
-          <SearchForm />
+        <div className="text-center lg:text-left my-8 xl:mt-12 xl:font-display xl:text-lg">
+          {isLoadingInitialData ? (
+            'Searching…'
+          ) : (
+            <>
+              Search results for <em>{query}</em>
+            </>
+          )}
         </div>
-        {isLoadingInitialData && (
-          <div className="text-center lg:text-left my-8">Searching…</div>
-        )}
         {isEmpty && (
-          <div className="text-center lg:text-left my-8">
+          <div className="text-center lg:text-left my-8 lg:my-12 xl:mb-12 xl:mt-16">
             No results found for <em>{query}</em>
           </div>
         )}

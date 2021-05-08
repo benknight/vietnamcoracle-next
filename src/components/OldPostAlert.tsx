@@ -1,4 +1,4 @@
-import Link from 'next/link';
+// import Link from 'next/link';
 import { ClockIcon } from '@heroicons/react/outline';
 
 export default function OldPostAlert({ monthsOld = 0 }) {
@@ -12,12 +12,12 @@ export default function OldPostAlert({ monthsOld = 0 }) {
           <a className="link" href="#comments">
             comments
           </a>{' '}
-          section below for possible updates.{' '}
-          <Link href="/updates-and-accuracy">
+          section below for possible updates.
+          {/* <Link href="/updates-and-accuracy">
             <a className="block mt-2 md:inline md:mt-0 link">
               Read more about accuracy &amp; updates
             </a>
-          </Link>
+          </Link> */}
         </p>
       </div>
     </div>

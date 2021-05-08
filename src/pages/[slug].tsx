@@ -4,7 +4,7 @@ import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef } from 'react';
+import { useMemo, useRef } from 'react';
 import useSWR from 'swr';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
@@ -137,14 +137,6 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
       : null;
   }, [data, asyncRequest.data]);
 
-  useEffect(() => {
-    const crpList = document.querySelector('.crp-list');
-    if (!crpList) return;
-    articleRef.current.insertBefore(
-      relatedPostsRef.current,
-      crpList.nextSibling,
-    );
-  }, []);
   let articleHTML = html;
 
   if (asyncRequest.data) {

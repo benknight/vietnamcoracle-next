@@ -87,9 +87,7 @@ export default function Header({ preview = false }: Props) {
               </div>
             </Menu>
             <Link href="/" shallow={router.pathname === '/[[...slug]]'}>
-              <a
-                className="flex items-center hover:text-black dark:hover:text-white"
-                id="top">
+              <a className="flex items-center hover:text-black dark:hover:text-white">
                 <Transition
                   enter="transform transition duration-300"
                   enterFrom="opacity-0 -translate-x-4"

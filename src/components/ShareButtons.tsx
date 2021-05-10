@@ -20,7 +20,7 @@ export default function ShareButtons({
   return (
     <div className="flex flex-wrap text-white mt-8 dark:mt-0">
       <FacebookShareButton
-        className="rounded mr-2 mb-2 !text-xs !leading-loose"
+        className="rounded mr-1 mb-2 !text-xs !leading-loose"
         style={{ backgroundColor: '#1877f2' }}
         title={title}
         url={link}>
@@ -31,7 +31,7 @@ export default function ShareButtons({
         </span>
       </FacebookShareButton>
       <TwitterShareButton
-        className="rounded mr-2 mb-2 !text-xs !leading-loose"
+        className="rounded mr-1 mb-2 !text-xs !leading-loose"
         style={{ backgroundColor: '#1da1f2' }}
         title={title}
         url={link}>
@@ -41,7 +41,7 @@ export default function ShareButtons({
         </span>
       </TwitterShareButton>
       <PinterestShareButton
-        className="rounded mr-2 mb-2 !text-xs !leading-loose"
+        className="rounded mr-1 mb-2 !text-xs !leading-loose"
         media={image}
         style={{ backgroundColor: '#e60023' }}
         title={title}
@@ -52,7 +52,7 @@ export default function ShareButtons({
         </span>
       </PinterestShareButton>
       <RedditShareButton
-        className="rounded mr-2 mb-2 !text-xs !leading-loose"
+        className="rounded mr-1 mb-2 !text-xs !leading-loose"
         style={{ backgroundColor: '#ff4500' }}
         title={title}
         url={link}>
@@ -63,7 +63,7 @@ export default function ShareButtons({
       </RedditShareButton>
       <EmailShareButton
         body=""
-        className="rounded mr-2 mb-2 !text-xs !leading-loose"
+        className="rounded mr-1 mb-2 !text-xs !leading-loose"
         subject={title}
         url={link}>
         <span className="rounded bg-gray-500 flex items-center px-2 font-medium">

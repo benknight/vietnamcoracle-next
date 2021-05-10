@@ -10,7 +10,7 @@ const SidebarDefault = ({ className = '', data }) => (
   <SlidingSticky>
     <div
       className={cx(
-        'py-8 xl:bg-gray-100 dark:xl:bg-gray-950 xl:border border-transparent dark:border-gray-800 rounded-lg',
+        'py-8 dark:xl:bg-gray-950 xl:border border-transparent dark:border-gray-800 rounded-lg',
         className,
       )}>
       <About data={data.about.block} />

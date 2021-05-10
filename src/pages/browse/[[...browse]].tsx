@@ -35,7 +35,7 @@ const Browse = ({ data, swatches }) => {
         <Slider data={category.slider} />
       ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
-          <div className="pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end justify-between">
+          <div className="page-wrap pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end justify-between">
             <h1 className="mt-8 sm:mr-6 font-display">
               {subcategory ? (
                 <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import cheerio from 'cheerio';
+import cx from 'classnames';
 import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
 import Head from 'next/head';
@@ -72,6 +73,9 @@ const POST_QUERY = gql`
         }
         seo {
           ...SEOPostData
+        }
+        settings {
+          useNextStyles
         }
         thumbnails {
           thumbnailHeader {
@@ -162,7 +166,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
 
   const heading = (
     <h1
-      className="max-w-3xl xl:max-w-none mx-auto xl:mx-0 mt-16 mb-2 text-3xl xs:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight"
+      className="mt-16 text-3xl md:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight"
       id="top">
       {content.title}
     </h1>
@@ -192,13 +196,19 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
         <Hero
           imgSm={content.featuredImage?.node}
           imgLg={content.thumbnails?.thumbnailHeader}>
-          <div className="xl:px-8">{heading}</div>
+          <div className="max-w-screen-2xl mx-auto">
+            <div className="xl:w-2/3 px-4 md:px-8">
+              <div className="max-w-3xl mx-auto">
+                <div className="xl:absolute xl:bottom-6 xl:pr-8">{heading}</div>
+              </div>
+            </div>
+          </div>
         </Hero>
       )}
       <Layout className="max-w-screen-2xl">
         <LayoutMain>
-          <div className="px-4 md:px-8 xl:pl-20 text-lg">
-            <div className="max-w-3xl mx-auto xl:mx-0">
+          <div className="px-4 md:px-8 text-lg">
+            <div className="max-w-3xl mx-auto">
               {!content.showHero && heading}
               {content.type === 'post' && !content.isRestricted && (
                 <ShareButtons
@@ -212,7 +222,10 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
                 <OldPostAlert monthsOld={monthsOld} />
               )}
               <article
-                className="post"
+                className={cx(
+                  'post',
+                  content.settings?.useNextStyles ? 'post-next' : 'post-legacy',
+                )}
                 dangerouslySetInnerHTML={{
                   __html: articleHTML,
                 }}
@@ -248,7 +261,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
             </div>
           </div>
         </LayoutMain>
-        <LayoutSidebar>
+        <LayoutSidebar className="border-l border-gray-100 dark:border-transparent">
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>

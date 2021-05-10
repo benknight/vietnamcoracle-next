@@ -54,7 +54,7 @@
   }
   .form-field {
     @apply outline-none leading-none font-sans
-      bg-gray-50 dark:bg-black focus:bg-white dark:focus:bg-black
+      bg-white dark:bg-black focus:bg-white dark:focus:bg-black
       text-gray-500 focus:text-gray-800 dark:focus:text-gray-200
       border border-gray-400 dark:border-gray-700
       focus:border-gray-500 dark:focus:border-gray-600

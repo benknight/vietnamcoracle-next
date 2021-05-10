@@ -25,7 +25,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
         });
       }}>
       <div className="absolute top-0 left-0 bottom-0 w-10 flex items-center justify-center pointer-events-none">
-        <SearchIcon className="w-5 h-5" />
+        <SearchIcon className="w-[18px] h-[18px]" />
       </div>
       <input
         {...inputProps}

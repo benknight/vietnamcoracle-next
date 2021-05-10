@@ -8,11 +8,7 @@ import SlidingSticky from './SlidingSticky';
 
 const SidebarDefault = ({ className = '', data }) => (
   <SlidingSticky>
-    <div
-      className={cx(
-        'py-8 dark:xl:bg-gray-950 xl:border border-transparent dark:border-gray-800 rounded-lg',
-        className,
-      )}>
+    <div className={cx('py-8 dark:xl:bg-gray-950', className)}>
       <About data={data.about.block} />
       <Support data={data.support.block} />
       <Subscribe data={data.subscribe.block} />

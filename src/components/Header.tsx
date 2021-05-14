@@ -143,7 +143,7 @@ export default function Header({ preview = false }: Props) {
               />
             </a>
           </Link>
-          <h1 className="my-2 text-2xl xs:text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased">
+          <h1 className="my-2 text-2xl xs:text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased tracking-tight">
             Vietnam Coracle
           </h1>
           <h2 className="text-xxxxs xl:text-xxxs text-gray-600 dark:text-gray-500 uppercase tracking-widest font-display">

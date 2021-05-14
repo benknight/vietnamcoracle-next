@@ -261,7 +261,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
             </div>
           </div>
         </LayoutMain>
-        <LayoutSidebar className="border-l border-gray-100 dark:border-gray-800">
+        <LayoutSidebar className="border-l border-gray-200 dark:border-gray-800">
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>

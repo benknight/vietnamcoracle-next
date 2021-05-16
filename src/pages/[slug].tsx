@@ -10,7 +10,7 @@ import useSWR from 'swr';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
-import Hero from '../components/Hero';
+import Hero, { HeroContent } from '../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
 import NotFound from '../components/NotFound';
 import OldPostAlert from '../components/OldPostAlert';
@@ -166,7 +166,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
 
   const heading = (
     <h1
-      className="mt-16 text-3xl md:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight"
+      className="text-3xl md:text-4xl xl:text-[2.75rem] text-white leading-tight xl:leading-tight font-display tracking-tight"
       id="top">
       {content.title}
     </h1>
@@ -196,13 +196,13 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
         <Hero
           imgSm={content.featuredImage?.node}
           imgLg={content.thumbnails?.thumbnailHeader}>
-          <div className="max-w-screen-2xl mx-auto">
-            <div className="xl:w-2/3 px-4 md:px-8">
-              <div className="max-w-3xl mx-auto">
-                <div className="xl:absolute xl:bottom-6 xl:pr-8">{heading}</div>
+          <HeroContent>
+            <div className="max-w-screen-2xl mx-auto">
+              <div className="xl:w-2/3 px-4 md:px-8">
+                <div className="max-w-3xl mx-auto">{heading}</div>
               </div>
             </div>
-          </div>
+          </HeroContent>
         </Hero>
       )}
       <Layout className="max-w-screen-2xl">

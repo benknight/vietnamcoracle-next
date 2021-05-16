@@ -8,7 +8,7 @@ import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
-import Hero from '../../components/Hero';
+import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
 import PostCard, { SwatchesContext } from '../../components/PostCard';
@@ -35,58 +35,60 @@ const Browse = ({ data, swatches }) => {
         <Slider data={category.slider} />
       ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
-          <div className="page-wrap pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end justify-between">
-            <h1 className="mt-8 sm:mr-6 font-display">
-              {subcategory ? (
-                <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
-                  <span className="inline-block text-gray-300 opacity-90">
-                    <Link href={getCategoryLink(category.uri)}>
-                      {category.name}
-                    </Link>
-                    &nbsp;&gt;&nbsp;
-                  </span>
-                  <span className="inline-block">{subcategory.name}</span>
-                </div>
-              ) : (
-                <div className="text-4xl md:text-3xl lg:text-5xl leading-tight">
-                  {category.name}
+          <HeroContent>
+            <div className="page-wrap pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end justify-between">
+              <h1 className="mt-8 sm:mr-6 font-display">
+                {subcategory ? (
+                  <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
+                    <span className="inline-block text-gray-300 opacity-90">
+                      <Link href={getCategoryLink(category.uri)}>
+                        {category.name}
+                      </Link>
+                      &nbsp;&gt;&nbsp;
+                    </span>
+                    <span className="inline-block">{subcategory.name}</span>
+                  </div>
+                ) : (
+                  <div className="text-4xl md:text-3xl lg:text-5xl leading-tight">
+                    {category.name}
+                  </div>
+                )}
+              </h1>
+              {category.map && !subcategory && (
+                <a
+                  className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 items-end text-sm hover:underline"
+                  href="#map">
+                  <MapIcon className="w-5 h-5 mr-2" />
+                  Jump to map
+                </a>
+              )}
+              {category.children.nodes.length > 0 && (
+                <div className="flex-auto w-full md:w-auto">
+                  <div className="relative inline-flex items-center justify-between w-full md:w-auto h-10 mt-3 p-3 rounded text-sm border bg-black bg-opacity-50 tracking-wide leading-none whitespace-nowrap">
+                    Browse subcategories…
+                    <ChevronDownIcon className="w-4 h-4 ml-2" />
+                    <select
+                      className="absolute inset-0 opacity-0 cursor-pointer w-full text-black"
+                      onChange={event =>
+                        router.push(getCategoryLink(event.target.value))
+                      }
+                      value={subcategory?.uri ?? 'default'}>
+                      <option disabled value="default">
+                        Browse subcategories…
+                      </option>
+                      {category.children.nodes
+                        .filter(node => node.posts.nodes.length > 0)
+                        .map(node => (
+                          <option key={node.uri} value={node.uri}>
+                            {node.name}
+                          </option>
+                        ))}
+                    </select>
+                  </div>
                 </div>
               )}
-            </h1>
-            {category.map && !subcategory && (
-              <a
-                className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 items-end text-sm hover:underline"
-                href="#map">
-                <MapIcon className="w-5 h-5 mr-2" />
-                Jump to map
-              </a>
-            )}
-            {category.children.nodes.length > 0 && (
-              <div className="flex-auto w-full md:w-auto">
-                <div className="relative inline-flex items-center justify-between w-full md:w-auto h-10 mt-3 p-3 rounded text-sm border bg-black bg-opacity-50 tracking-wide leading-none whitespace-nowrap">
-                  Browse subcategories…
-                  <ChevronDownIcon className="w-4 h-4 ml-2" />
-                  <select
-                    className="absolute inset-0 opacity-0 cursor-pointer w-full text-black"
-                    onChange={event =>
-                      router.push(getCategoryLink(event.target.value))
-                    }
-                    value={subcategory?.uri ?? 'default'}>
-                    <option disabled value="default">
-                      Browse subcategories…
-                    </option>
-                    {category.children.nodes
-                      .filter(node => node.posts.nodes.length > 0)
-                      .map(node => (
-                        <option key={node.uri} value={node.uri}>
-                          {node.name}
-                        </option>
-                      ))}
-                  </select>
-                </div>
-              </div>
-            )}
-          </div>
+            </div>
+          </HeroContent>
         </Hero>
       )}
       <Layout>

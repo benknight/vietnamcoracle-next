@@ -4,7 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 
-const Map = ({ data, isHome = false }) => {
+const Map = ({ data }) => {
   const router = useRouter();
   const { browse } = router.query;
   return (
@@ -50,14 +50,11 @@ const Map = ({ data, isHome = false }) => {
       </div>
       <div className="relative">
         <div className="overflow-hidden">
-          <div
-            className={cx('h-[75vh] mb-[-14px]', { 'min-h-[850px]': isHome })}>
+          <div className="h-[75vh] mb-[-14px] min-h-[850px]">
             <iframe
               className="absolute inset-0 w-full h-full"
               height="650"
-              src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=${
-                isHome ? '6' : '5'
-              }&hl=en`}
+              src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=6&hl=en`}
               title={data.title}
               width="800"></iframe>
           </div>

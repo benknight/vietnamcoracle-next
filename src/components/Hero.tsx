@@ -69,7 +69,7 @@ export function HeroContent({ children }) {
           'pointer-events-none',
         )}
       />
-      <div className="relative -mt-16 sm:-mt-12 pointer-events-auto">
+      <div className="text-white relative -mt-16 sm:-mt-12 pointer-events-auto">
         {children}
       </div>
     </div>

@@ -166,7 +166,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
 
   const heading = (
     <h1
-      className="text-3xl md:text-4xl xl:text-[2.75rem] text-white leading-tight xl:leading-tight font-display tracking-tight"
+      className="text-3xl md:text-4xl xl:text-[2.75rem]leading-tight xl:leading-tight font-display tracking-tight"
       id="top">
       {content.title}
     </h1>
@@ -209,7 +209,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
         <LayoutMain>
           <div className="px-4 md:px-8 text-lg">
             <div className="max-w-3xl mx-auto">
-              {!content.showHero && heading}
+              {!content.showHero && <div className="mt-12">{heading}</div>}
               {content.type === 'post' && !content.isRestricted && (
                 <ShareButtons
                   fbShareCount={fbShareCount}

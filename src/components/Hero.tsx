@@ -20,7 +20,7 @@ interface Props {
 
 export default function Hero({ children, imgSm, imgLg }: Props) {
   return (
-    <div className="relative bg-gray-950">
+    <div className="bg-gray-950">
       <div className="cover-img flex md:hidden">
         <Image
           alt={imgSm.altText}

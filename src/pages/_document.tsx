@@ -18,7 +18,7 @@ class CustomDocument extends Document {
         <Head>
           <noscript id="jss-insertion-point" />
         </Head>
-        <body>
+        <body id="top">
           <Main />
           <NextScript />
         </body>

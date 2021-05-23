@@ -104,7 +104,7 @@ export default function SearchPage() {
         </title>
       </Head>
       <div className="px-3 pb-24 max-w-5xl mx-auto">
-        <div className="text-center lg:text-left my-8 xl:mt-12 xl:font-display xl:text-lg">
+        <div className="text-center lg:text-left my-8 xl:mt-24 xl:font-display xl:text-lg">
           {isLoadingInitialData ? (
             'Searching…'
           ) : (
@@ -193,11 +193,11 @@ function SearchResult({ data }) {
           )}
         </div>
         <div
-          className="my-1 text-sm sm:text-base lg:font-serif"
+          className="my-1 text-sm sm:text-base lg:font-serif xl:tracking-wider"
           dangerouslySetInnerHTML={{ __html: data.excerpt }}
         />
         {data.categories?.nodes.length > 0 && (
-          <div className="hidden sm:block text-gray-500 lg:font-serif">
+          <div className="hidden sm:block text-gray-500 dark:text-gray-400 lg:font-serif xl:tracking-wider">
             Posted in{' '}
             {data.categories.nodes.map((cat, i) => (
               <Fragment key={cat.uri}>

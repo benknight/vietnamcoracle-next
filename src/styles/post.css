@@ -1,3 +1,7 @@
+/**
+ * Base styles
+ */
+
 .post {
   @apply pt-4 text-base font-display leading-relaxed dark:text-gray-300;
 }
@@ -12,8 +16,8 @@
   @apply sm:mt-8 pb-4 lg:pb-8 font-display tracking-wider leading-loose;
 }
 .post hr {
-  @apply my-6 dark:border-gray-800;
-  border-width: 0 0 0 1px;
+  @apply my-6 border border-gray-200 dark:border-gray-800;
+  border-width: 0 0 1px;
 }
 .post iframe {
   width: 100%;
@@ -89,7 +93,7 @@
   @apply block text-center mb-3 font-bold;
 } */
 .post .wp-block-buttons {
-  @apply mb-3;
+  @apply my-3;
 }
 .post .wp-block-button {
   @apply p-0 m-0;
@@ -99,9 +103,13 @@
   @apply inline-block h-3 w-[2px] mx-4 bg-black dark:bg-white opacity-20;
 }
 .post .wp-block-button__link {
-  @apply link p-0 bg-transparent text-lg tracking-widest leading-loose uppercase;
-  text-underline-offset: 3px;
+  @apply link p-0 bg-transparent text-lg tracking-widest leading-relaxed uppercase;
 }
+
+/**
+ * Legacy styles
+ */
+
 .post-legacy *[style*='color: #3366ff'] {
   @apply link;
 }
@@ -138,6 +146,11 @@
 .post-legacy p > a[href$='.jpg'] ~ * {
   @apply text-sm block text-center;
 }
+
+/**
+ * "Next" styles
+ */
+
 .post-next h2 {
   @apply my-6 pb-0;
   @apply uppercase text-2xl text-center text-black dark:text-white;
@@ -145,16 +158,18 @@
 }
 .post-next h3 {
   @apply my-6 pb-0;
-  @apply text-4xl text-black dark:text-white;
+  @apply text-xl text-black dark:text-white;
 }
 .post-next h2,
 .post-next h3 {
-  scroll-margin-top: 8rem;
+  scroll-margin-top: 6rem;
 }
-.post-next .wp-block-image,
 .post-next p,
 .post-next ul {
-  @apply text-lg mb-10;
+  @apply mb-4;
+}
+.post-next .wp-block-image {
+  @apply my-8;
 }
 .post-next .wp-block-button__link {
   @apply text-lg;

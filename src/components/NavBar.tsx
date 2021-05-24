@@ -75,7 +75,11 @@ export default function NavBar({ preview = false }: Props) {
               <Link href={to} key={to}>
                 <a
                   className={cx(
-                    'w-1/5 md:w-24 lg:w-auto h-10 mx-1 sm:px-3 lg:px-3 lg:py-0 flex flex-col lg:flex-row items-center justify-center text-center rounded-full transition-colors duration-200 ease lg:bg-gray-100 lg:dark:bg-gray-800 lg:hover:bg-gray-200  lg:dark:hover:bg-gray-700 lg:hover:bg-opacity-75',
+                    'w-1/5 md:w-24 lg:w-auto h-10 mx-1 sm:px-3 lg:px-3 lg:py-0',
+                    'flex flex-col lg:flex-row items-center justify-center text-center',
+                    'border dark:border-none',
+                    'rounded-full transition-colors duration-200 ease',
+                    'lg:dark:bg-gray-800 lg:hover:bg-gray-100  lg:dark:hover:bg-gray-700 lg:hover:bg-opacity-75',
                     {
                       'bg-gradient-to-b dark:shadow text-blue-500 dark:text-blue-400': isCurrent,
                     },

@@ -51,16 +51,15 @@
     }
   }
   .link {
-    @apply text-blue-700 dark:text-blue-400 hover:underline;
-  }
-  .link:visited {
-    @apply text-purple-600 dark:text-purple-400;
+    @apply text-blue-700 dark:text-blue-400;
+    @apply visited:text-purple-600 dark:visited:text-purple-400;
+    @apply hover:underline hover:text-red-600;
   }
   .form-field {
     @apply outline-none leading-none font-sans
       bg-white dark:bg-black focus:bg-white dark:focus:bg-black
       text-gray-500 focus:text-gray-800 dark:focus:text-gray-200
-      border border-gray-400 dark:border-gray-700
+      border border-gray-300 dark:border-gray-700
       focus:border-gray-500 dark:focus:border-gray-600
       hover:border-gray-500 dark:hover:border-gray-600;
   }

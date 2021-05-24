@@ -110,7 +110,7 @@ export default function Header({ preview = false }: Props) {
                 'left-12 md:left-auto': !showMini,
                 '!left-0 md:!left-auto': searchFocused,
               },
-              'flex items-center h-14 lg:h-16 px-2 lg:px-4 text-gray-400',
+              'flex items-center h-14 lg:h-16 px-2 lg:px-4',
             )}>
             <SearchForm
               className={cx('ring-2 ring-white md:ring-0 dark:ring-gray-900', {

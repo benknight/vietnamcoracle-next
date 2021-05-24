@@ -193,11 +193,11 @@ function SearchResult({ data }) {
           )}
         </div>
         <div
-          className="my-1 text-sm sm:text-base lg:font-serif xl:tracking-wider"
+          className="my-1 text-sm sm:text-base lg:font-serif"
           dangerouslySetInnerHTML={{ __html: data.excerpt }}
         />
         {data.categories?.nodes.length > 0 && (
-          <div className="hidden sm:block text-gray-500 dark:text-gray-400 lg:font-serif xl:tracking-wider">
+          <div className="hidden sm:block text-gray-500 dark:text-gray-400 lg:font-serif">
             Posted in{' '}
             {data.categories.nodes.map((cat, i) => (
               <Fragment key={cat.uri}>

@@ -7,7 +7,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { useSWRInfinite } from 'swr';
-import SearchForm from '../components/SearchForm';
 import GraphQLClient from '../lib/GraphQLClient';
 import RestClient from '../lib/RestClient';
 import useWaitCursor from '../lib/useWaitCursor';

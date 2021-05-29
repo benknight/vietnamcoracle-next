@@ -55,11 +55,9 @@ export default function Header({ preview = false }: Props) {
       <Headroom className="relative lg:fixed z-30 w-full" disable={isLG}>
         <div
           className={cx(
-            'relative h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900',
+            'relative top-0 h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900',
             {
               shadow: scrolled,
-              'top-0': !preview,
-              'top-8': preview,
             },
           )}>
           <div

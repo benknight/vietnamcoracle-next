@@ -4,11 +4,7 @@ const config = {
   headers: {},
 };
 
-if (
-  typeof window === 'undefined' &&
-  process.env.WORDPRESS_API_USERNAME &&
-  process.env.WORDPRESS_API_PASSWORD
-) {
+if (typeof window === 'undefined') {
   config.headers = {
     Authorization: `Basic ${Buffer.from(
       `${process.env.WORDPRESS_API_USERNAME}:${process.env.WORDPRESS_API_PASSWORD}`,

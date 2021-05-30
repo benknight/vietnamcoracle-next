@@ -69,7 +69,7 @@ const resultsFetcher = async (query: string, page: number) => {
   return data.contentNodes.nodes;
 };
 
-export default function SearchPage() {
+export default function SearchPage({ preview = false }) {
   const router = useRouter();
   const { query } = router.query;
   const initialSize = router.query.size
@@ -211,4 +211,12 @@ function SearchResult({ data }) {
       </div>
     </div>
   );
+}
+
+export async function getStaticProps({ preview = false }) {
+  return {
+    props: {
+      preview,
+    },
+  };
 }

@@ -22,8 +22,8 @@ import GraphQLClient from '../lib/GraphQLClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
 const POST_QUERY = gql`
-  query Post($preview: Boolean!, $slug: ID!) {
-    contentNode(id: $slug, idType: URI) {
+  query Post($preview: Boolean!, $id: ID!) {
+    contentNode(id: $id, idType: URI) {
       ... on ContentNode {
         databaseId
         isRestricted
@@ -56,6 +56,12 @@ const POST_QUERY = gql`
             ...CommentThreadCommentData
           }
         }
+        preview @include(if: $preview) {
+          node {
+            content
+            title
+          }
+        }
         seo {
           ...SEOPostData
         }
@@ -69,6 +75,12 @@ const POST_QUERY = gql`
         customRelatedPosts(first: 6) {
           nodes {
             ...PostCardPostData
+          }
+        }
+        preview @include(if: $preview) {
+          node {
+            content
+            title
           }
         }
         seo {
@@ -280,8 +292,15 @@ export function getStaticPaths() {
 export async function getStaticProps({ params: { slug }, preview = false }) {
   const data = await GraphQLClient.request(POST_QUERY, {
     preview,
-    slug,
+    id: slug,
   });
+
+  if (preview) {
+    data.contentNode = {
+      ...data.contentNode,
+      ...data.contentNode.preview,
+    };
+  }
 
   let fbShareCount = 0;
 

@@ -58,7 +58,7 @@ export default function Header({ preview = false }: Props) {
             'relative top-0 h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900',
             {
               shadow: scrolled,
-              'top-8': preview,
+              'top-6': preview,
             },
           )}>
           <div
@@ -126,7 +126,7 @@ export default function Header({ preview = false }: Props) {
         className={cx(
           'relative py-12 sm:py-16 px-3 xl:py-16 text-center',
           'bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
-          { 'mt-8': preview },
+          { 'mt-6': preview },
           { hidden: !isHome },
         )}
         ref={ref}>

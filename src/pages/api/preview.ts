@@ -19,8 +19,6 @@ export default async function preview(
   res.setPreviewData({});
 
   // Redirect to the path provided
-  if (redirect) {
-    res.writeHead(307, { Location: redirect });
-  }
+  res.writeHead(307, { Location: redirect || '/' });
   res.end();
 }

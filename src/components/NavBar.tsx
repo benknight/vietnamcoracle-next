@@ -61,7 +61,7 @@ export default function NavBar({ preview = false }: Props) {
       <nav
         className={cx(
           'fixed lg:sticky lg:top-0 bottom-0 lg:bottom-auto z-20 flex justify-center w-full h-14 lg:h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black lg:shadow',
-          { 'lg:top-8': preview },
+          { 'lg:top-6': preview },
         )}>
         <div className="flex justify-center items-center flex-auto mt-[-1px] px-1 xl:px-16 font-sans lg:font-display tracking-wide leading-tight border-t border-gray-300 dark:border-gray-700">
           {links.map(link => {

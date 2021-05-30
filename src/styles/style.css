@@ -53,7 +53,7 @@
   .link {
     @apply text-blue-700 dark:text-blue-400;
     @apply visited:text-purple-600 dark:visited:text-purple-400;
-    @apply hover:underline hover:text-red-600;
+    @apply hover:underline hover:text-red-600 dark:hover:text-red-400;
   }
   .form-field {
     @apply outline-none leading-none font-sans

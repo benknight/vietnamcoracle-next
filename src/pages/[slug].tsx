@@ -96,6 +96,16 @@ const POST_QUERY = gql`
         }
       }
     }
+    defaultImages {
+      cover {
+        large {
+          ...HeroImageData
+        }
+        small {
+          ...HeroImageData
+        }
+      }
+    }
     ...FooterData
     ...SidebarDefaultData
   }
@@ -144,9 +154,6 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
       ? {
           ...data?.contentNode,
           ...asyncRequest.data?.contentNode,
-          get showHero() {
-            return this.featuredImage?.node && this.thumbnails?.thumbnailHeader;
-          },
           type: data.contentNode.contentType?.node.name,
         }
       : null;
@@ -200,26 +207,25 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
           src="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
         />
       </Head>
-      {content.showHero && (
-        <Hero
-          imgSm={content.featuredImage?.node}
-          imgLg={content.thumbnails?.thumbnailHeader}>
-          <HeroContent>
-            <div className="max-w-screen-2xl mx-auto">
-              <div className="xl:w-2/3 px-4 md:px-8">
-                <div className="max-w-3xl mx-auto">
-                  <div className="xl:w-[150%]">{heading}</div>
-                </div>
+      <Hero
+        imgSm={content.featuredImage?.node ?? data.defaultImages?.cover.small}
+        imgLg={
+          content.thumbnails?.thumbnailHeader ?? data.defaultImages?.cover.large
+        }>
+        <HeroContent>
+          <div className="max-w-screen-2xl mx-auto">
+            <div className="xl:w-2/3 px-4 md:px-8">
+              <div className="max-w-3xl mx-auto">
+                <div className="xl:w-[150%]">{heading}</div>
               </div>
             </div>
-          </HeroContent>
-        </Hero>
-      )}
+          </div>
+        </HeroContent>
+      </Hero>
       <Layout className="relative max-w-screen-2xl">
         <LayoutMain>
           <div className="px-4 md:px-8 text-lg">
             <div className="max-w-3xl mx-auto">
-              {!content.showHero && <div className="mt-12 mb-8">{heading}</div>}
               {content.type === 'post' && !content.isRestricted && (
                 <ShareButtons
                   fbShareCount={fbShareCount}

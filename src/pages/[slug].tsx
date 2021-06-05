@@ -3,6 +3,7 @@ import cheerio from 'cheerio';
 import cx from 'classnames';
 import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
+import htmlToReact from 'html-react-parser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useMemo, useRef } from 'react';
@@ -15,7 +16,6 @@ import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
 import NotFound from '../components/NotFound';
 import OldPostAlert from '../components/OldPostAlert';
 import PostCard from '../components/PostCard';
-import SEO from '../components/SEO';
 import ShareButtons from '../components/ShareButtons';
 import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
@@ -63,7 +63,7 @@ const POST_QUERY = gql`
           }
         }
         seo {
-          ...SEOPostData
+          fullHead
         }
       }
       ... on Post {
@@ -84,7 +84,7 @@ const POST_QUERY = gql`
           }
         }
         seo {
-          ...SEOPostData
+          fullHead
         }
         settings {
           useNextStyles
@@ -103,7 +103,6 @@ const POST_QUERY = gql`
   ${Hero.fragments}
   ${Footer.fragments}
   ${PostCard.fragments}
-  ${SEO.fragments.post}
   ${SidebarDefault.fragments}
 `;
 
@@ -184,11 +183,10 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
 
   return (
     <>
-      <SEO {...content.seo}>
+      <Head>
+        {htmlToReact(content.seo.fullHead)}
         <meta name="twitter:label1" content="Written by" />
         <meta name="twitter:data1" content="Vietnam Coracle" />
-      </SEO>
-      <Head>
         <link
           href="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.css"
           rel="stylesheet"

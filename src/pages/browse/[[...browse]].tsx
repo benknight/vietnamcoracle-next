@@ -1,6 +1,8 @@
 import { gql } from 'graphql-request';
+import htmlToReact from 'html-react-parser';
 import _ from 'lodash';
 import type { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import vibrant from 'node-vibrant';
@@ -12,7 +14,6 @@ import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
 import PostCard, { SwatchesContext } from '../../components/PostCard';
-import SEO from '../../components/SEO';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
 import getCategoryLink from '../../lib/getCategoryLink';
@@ -30,7 +31,7 @@ const Browse = ({ data, swatches }) => {
     category?.parent.node.cover.large;
   return (
     <SwatchesContext.Provider value={swatches}>
-      <SEO {...category.seo} />
+      <Head>{htmlToReact(category.seo.fullHead)}</Head>
       {isHome ? (
         <Slider data={category.slider} />
       ) : (
@@ -271,13 +272,12 @@ export const getStaticProps: GetStaticProps = async ({
         }
       }
       seo {
-        ...SEOCategoryData
+        fullHead
       }
     }
     ${Collection.fragments}
     ${Footer.fragments}
     ${Map.fragments}
-    ${SEO.fragments.category}
     ${SidebarDefault.fragments}
     ${Slider.fragments}
   `;

@@ -25,10 +25,10 @@ const Browse = ({ data, swatches }) => {
   const { category, subcategory } = data;
   const coverImgSm =
     (subcategory ? subcategory.cover.small : category.cover.small) ||
-    category.parent.node.cover.small;
+    data.defaultImages?.cover.small;
   const coverImgLg =
     (subcategory ? subcategory.cover.large : category.cover.large) ||
-    category?.parent.node.cover.large;
+    data.defaultImages?.cover.large;
   return (
     <SwatchesContext.Provider value={swatches}>
       <Head>{htmlToReact(category.seo.fullHead)}</Head>
@@ -254,6 +254,16 @@ export const getStaticProps: GetStaticProps = async ({
           nodes {
             slug
             ...PostCardPostData
+          }
+        }
+      }
+      defaultImages {
+        cover {
+          large {
+            ...HeroImageData
+          }
+          small {
+            ...HeroImageData
           }
         }
       }

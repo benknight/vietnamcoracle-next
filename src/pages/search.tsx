@@ -18,12 +18,27 @@ const SEARCH_RESULTS_QUERY = gql`
     contentNodes(where: { in: $in }) {
       nodes {
         uri
-        ... on Page {
+        ... on NodeWithExcerpt {
+          excerpt
+        }
+        ... on NodeWithFeaturedImage {
+          featuredImage {
+            node {
+              altText
+              sourceUrl(size: MEDIUM)
+              slug
+            }
+          }
+        }
+        ... on NodeWithTitle {
           title
         }
+        ... on Page {
+          seo {
+            metaDesc
+          }
+        }
         ... on Post {
-          excerpt
-          title
           categories(
             where: {
               exclude: "154" # Exclude top-level category
@@ -32,13 +47,6 @@ const SEARCH_RESULTS_QUERY = gql`
             nodes {
               name
               uri
-            }
-          }
-          featuredImage {
-            node {
-              altText
-              sourceUrl(size: MEDIUM)
-              slug
             }
           }
         }
@@ -193,7 +201,9 @@ function SearchResult({ data }) {
         </div>
         <div
           className="my-1 text-sm sm:text-base lg:font-serif"
-          dangerouslySetInnerHTML={{ __html: data.excerpt }}
+          dangerouslySetInnerHTML={{
+            __html: data.excerpt || data.seo?.metaDesc,
+          }}
         />
         {data.categories?.nodes.length > 0 && (
           <div className="hidden sm:block text-gray-500 dark:text-gray-400 lg:font-serif">

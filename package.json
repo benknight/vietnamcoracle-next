@@ -37,7 +37,8 @@
     "react-headroom": "^3.1.0",
     "react-helmet": "latest",
     "react-share": "^4.4.0",
-    "swr": "^0.5.4"
+    "swr": "^0.5.4",
+    "url-parse": "^1.5.1"
   },
   "devDependencies": {
     "@graphql-cli/coverage": "2.1.0",

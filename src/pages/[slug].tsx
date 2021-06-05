@@ -6,7 +6,7 @@ import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import useSWR from 'swr';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
@@ -19,6 +19,7 @@ import PostCard from '../components/PostCard';
 import ShareButtons from '../components/ShareButtons';
 import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
+import internalizeUrl, { internalHostnames } from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
 
 const POST_QUERY = gql`
@@ -164,6 +165,18 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
   if (asyncRequest.data) {
     articleHTML = cleanPostHTML(asyncRequest.data.contentNode.content);
   }
+
+  useEffect(() => {
+    articleRef.current.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', event => {
+        const internal = internalizeUrl(link.href);
+        if (internal !== link.href) {
+          event.preventDefault();
+          router.push(internal);
+        }
+      });
+    });
+  }, [router.asPath]);
 
   useWaitCursor(router.isFallback || asyncRequest.isValidating);
 

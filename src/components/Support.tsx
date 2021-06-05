@@ -1,4 +1,6 @@
 import Image from 'next/image';
+import Link from 'next/link';
+import internalizeUrl from '../lib/internalizeUrl';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
 
 interface Props {
@@ -12,13 +14,13 @@ export default function Support({ data: block }: Props) {
       <BlockContent>
         <p>
           {block.description}{' '}
-          <a className="link whitespace-nowrap" href={block.link.url}>
-            Read more ›
-          </a>
+          <Link href={internalizeUrl(block.link.url)}>
+            <a className="link whitespace-nowrap">Read more ›</a>
+          </Link>
         </p>
       </BlockContent>
       <div className="flex justify-center">
-        <a href={block.link.url}>
+        <a href="https://patreon.com/vietnamcoracle">
           <Image
             alt=""
             layout="fixed"

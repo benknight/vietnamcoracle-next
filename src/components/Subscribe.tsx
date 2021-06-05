@@ -3,9 +3,10 @@ import _keyBy from 'lodash/keyBy';
 import _mapValues from 'lodash/mapValues';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+import internalizeUrl from '../lib/internalizeUrl';
+import useWaitCursor from '../lib/useWaitCursor';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
 import ElsewhereLinks from './ElsewhereLinks';
-import useWaitCursor from '../lib/useWaitCursor';
 
 interface Props {
   data: BlockType;
@@ -31,9 +32,7 @@ export default function Subscribe({ data: block }: Props) {
       .then(res => res.json())
       .then(data => {
         if (data.success) {
-          router.push(
-            block.link.url.replace('https://www.vietnamcoracle.com', ''),
-          );
+          router.push(internalizeUrl(block.link.url));
         } else {
           let message = '';
           message =

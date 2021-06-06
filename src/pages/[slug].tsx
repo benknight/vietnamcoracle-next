@@ -19,7 +19,7 @@ import PostCard from '../components/PostCard';
 import ShareButtons from '../components/ShareButtons';
 import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
-import internalizeUrl, { internalHostnames } from '../lib/internalizeUrl';
+import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
 
 const POST_QUERY = gql`

@@ -1,10 +1,11 @@
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { SearchIcon } from '@heroicons/react/solid';
 
 export default function SearchInput({ className = '', ...inputProps }) {
+  const inputRef = useRef<HTMLInputElement>();
   const router = useRouter();
   const [value, setValue] = useState('');
 
@@ -19,6 +20,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
       className={cx('relative flex-auto', className)}
       onSubmit={event => {
         event.preventDefault();
+        inputRef.current?.blur();
         router.push({
           pathname: '/search',
           query: { query: value },
@@ -34,6 +36,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
           setValue(event.target.value);
         }}
         placeholder="Search"
+        ref={inputRef}
         type="search"
         value={value}
       />

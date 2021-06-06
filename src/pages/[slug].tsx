@@ -315,7 +315,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
   if (preview && data.contentNode) {
     data.contentNode = {
       ...data.contentNode,
-      ...data.contentNode.preview.node,
+      ...data.contentNode.preview?.node,
     };
   }
 

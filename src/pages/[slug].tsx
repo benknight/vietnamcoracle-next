@@ -312,7 +312,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
     id: slug,
   });
 
-  if (preview) {
+  if (preview && data.contentNode) {
     data.contentNode = {
       ...data.contentNode,
       ...data.contentNode.preview.node,

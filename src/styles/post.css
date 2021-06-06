@@ -45,14 +45,17 @@
 .post figure {
   @apply max-w-full !important;
 }
-.post span[style*='#333333'],
-.post span[style*='#000000'] {
+.post *[style*='#3366ff'] {
+  @apply text-blue-700 dark:text-blue-400 !important;
+}
+.post *[style*='#333333'],
+.post *[style*='#000000'] {
   @apply dark:text-white !important;
 }
-.post span[style*='#808080'] {
+.post *[style*='#808080'] {
   @apply text-gray-400 !important;
 }
-.post span[style*='#ff0000'] {
+.post *[style*='#ff0000'] {
   @apply text-red-600 dark:text-red-500 !important;
 }
 .post ul {
@@ -113,8 +116,8 @@
  * Legacy styles
  */
 
-.post-legacy *[style*='color: #3366ff'] {
-  @apply link;
+.post-legacy a > span {
+  color: inherit !important;
 }
 .post-legacy h2 strong {
   line-height: 0;

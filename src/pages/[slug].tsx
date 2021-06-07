@@ -19,6 +19,7 @@ import PostCard from '../components/PostCard';
 import ShareButtons from '../components/ShareButtons';
 import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
+import cleanPostHTML from '../lib/cleanPostHTML';
 import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
 
@@ -117,23 +118,12 @@ const POST_QUERY = gql`
   ${SidebarDefault.fragments}
 `;
 
-function cleanPostHTML(html: string): string {
-  let result = html;
-  // Force https
-  result = result.replace(/(http)\:\/\//gm, 'https://');
-  // Set language to English on all embeded maps
-  result = result.replace(
-    /(google\.com\/maps\/d\/embed([\?&][\w-\.]+=[\w-\.]+)+)/g,
-    '$1&hl=en',
-  );
-  return result;
-}
-
 export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
 
+  // Client-side query when content is restricted
   const asyncRequest = useSWR(
     data?.contentNode.isRestricted && router.query?.secret
       ? [router.query.slug, router.query.secret]
@@ -150,6 +140,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
     },
   );
 
+  // Combine server data with client data
   const content = useMemo(() => {
     return data || asyncRequest.data
       ? {
@@ -160,12 +151,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
       : null;
   }, [data, asyncRequest.data]);
 
-  let articleHTML = html;
-
-  if (asyncRequest.data) {
-    articleHTML = cleanPostHTML(asyncRequest.data.contentNode.content);
-  }
-
+  // Internalize in-article links for client-side transitions
   useEffect(() => {
     articleRef.current.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', event => {
@@ -195,11 +181,11 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
     return <NotFound />;
   }
 
-  const heading = (
-    <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
-      {content.title}
-    </h1>
-  );
+  let articleHTML = html;
+
+  if (asyncRequest.data) {
+    articleHTML = cleanPostHTML(asyncRequest.data.contentNode.content);
+  }
 
   return (
     <>
@@ -229,7 +215,11 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
           <div className="max-w-screen-2xl mx-auto">
             <div className="xl:w-2/3 px-4 md:px-8">
               <div className="max-w-3xl mx-auto">
-                <div className="xl:w-[150%]">{heading}</div>
+                <div className="xl:w-[150%]">
+                  <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
+                    {content.title}
+                  </h1>
+                </div>
               </div>
             </div>
           </div>

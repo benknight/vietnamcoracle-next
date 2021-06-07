@@ -126,7 +126,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
   // Client-side query when content is restricted
   const asyncRequest = useSWR(
     data?.contentNode.isRestricted && router.query?.secret
-      ? [router.query.slug, router.query.secret]
+      ? [router.query.post, router.query.secret]
       : null,
     (slug, secret) => {
       return GraphQLClient.request(
@@ -296,7 +296,10 @@ export function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({ params: { slug }, preview = false }) {
+export async function getStaticProps({
+  params: { post: slug },
+  preview = false,
+}) {
   const data = await GraphQLClient.request(POST_QUERY, {
     preview,
     id: slug,

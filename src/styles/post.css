@@ -37,7 +37,7 @@
 .post p,
 .post ul,
 .post figure {
-  @apply mb-5 font-sans md:font-serif;
+  @apply mb-5 font-serif;
 }
 .post figcaption {
   @apply block py-2 leading-tight font-bold text-sm text-center;

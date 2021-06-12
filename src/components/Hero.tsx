@@ -21,7 +21,7 @@ interface Props {
 export default function Hero({ children, imgSm, imgLg }: Props) {
   return (
     <div className="bg-gray-950">
-      <div className="cover-img flex md:hidden">
+      <div className="cover-img flex lg:hidden">
         <Image
           alt={imgSm.altText}
           height={imgSm.mediaDetails.height}
@@ -30,7 +30,7 @@ export default function Hero({ children, imgSm, imgLg }: Props) {
           width={imgSm.mediaDetails.width}
         />
       </div>
-      <div className="cover-img hidden md:block">
+      <div className="cover-img hidden lg:block">
         <Image
           alt={imgLg.altText}
           height={imgLg.mediaDetails.height}

@@ -64,7 +64,7 @@ export function HeroContent({ children }) {
       <div
         className={cx(
           'absolute bottom-full w-full -mb-16 sm:-mb-12',
-          'h-80 md:h-48',
+          'h-52 md:h-48',
           'bg-gradient-to-t from-gray-950 via-black-25 to-transparent',
           'pointer-events-none',
         )}

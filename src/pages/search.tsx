@@ -50,11 +50,6 @@ const SEARCH_RESULTS_QUERY = gql`
             }
           }
         }
-        contentType {
-          node {
-            name
-          }
-        }
       }
       pageInfo {
         endCursor
@@ -193,11 +188,6 @@ function SearchResult({ data }) {
               {data.title}
             </a>
           </Link>
-          {data.contentType.node.name !== 'post' && (
-            <div className="ml-2 italic opacity-50">
-              {_upperFirst(data.contentType.node.name)}
-            </div>
-          )}
         </div>
         <div
           className="my-1 text-sm sm:text-base lg:font-serif"

@@ -2,7 +2,7 @@ import cx from 'classnames';
 import _keyBy from 'lodash/keyBy';
 import _mapValues from 'lodash/mapValues';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
@@ -12,15 +12,20 @@ interface Props {
   data: BlockType;
 }
 
-export default function Subscribe({ data: block }: Props) {
-  const [email, setEmail] = useState('');
+interface HookOptions {
+  messages?: {
+    alreadySubscribed?: string;
+    error?: string;
+    success?: string;
+  };
+  successRedirectUrl?: string;
+}
+
+export function useSubscribeForm(opts?: HookOptions) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const messages = _mapValues(_keyBy(block.messages, 'key'), 'value');
-
   useWaitCursor(loading);
-
-  const onSubmit = () => {
+  const onSubmit = useCallback(email => {
     setLoading(true);
     fetch('/api/subscribe', {
       method: 'post',
@@ -31,24 +36,45 @@ export default function Subscribe({ data: block }: Props) {
     })
       .then(res => res.json())
       .then(data => {
+        let message = '';
         if (data.success) {
-          router.push(internalizeUrl(block.link.url));
+          if (opts?.successRedirectUrl) {
+            router.push(internalizeUrl(opts.successRedirectUrl));
+          } else {
+            message =
+              opts?.messages?.success ||
+              'Thank you for subscribing to Vietnam Coracle';
+          }
         } else {
-          let message = '';
           message =
-            messages['subscribe_error'] ||
+            opts?.messages?.error ||
             'Something went wrong. Please try again later.';
           if (data.code === 'ERR_ALREADY_SUBSCRIBED') {
             message =
-              messages['already_subscribed'] ||
+              opts?.messages?.alreadySubscribed ||
               'There is already an existing subcription for the provided email addresss';
           }
+        }
+        if (message) {
           window.alert(message);
         }
         setLoading(false);
       });
-  };
+  }, []);
+  return { isLoading: loading, onSubmit };
+}
 
+export default function Subscribe({ data: block }: Props) {
+  const [email, setEmail] = useState('');
+  const messages = _mapValues(_keyBy(block.messages, 'key'), 'value');
+  const { isLoading, onSubmit } = useSubscribeForm({
+    messages: {
+      alreadySubscribed: messages['already_subscribed'],
+      error: messages['subscribe_error'],
+      success: messages['subscibe_success'],
+    },
+    successRedirectUrl: block.link.url,
+  });
   return (
     <Block>
       <BlockTitle>{block.title}</BlockTitle>
@@ -58,17 +84,18 @@ export default function Subscribe({ data: block }: Props) {
           className="flex justify-center max-w-xs mt-4 mb-8 mx-auto"
           onSubmit={event => {
             event.preventDefault();
-            onSubmit();
+            onSubmit(email);
           }}>
           <input
             className="form-field flex-auto h-8 mr-2 p-2 text-sm rounded"
             onChange={event => setEmail(event.target.value)}
+            required
             type="email"
             value={email}
           />
           <button
-            className={cx('btn', { 'opacity-50': loading })}
-            disabled={loading}
+            className={cx('btn', { 'opacity-50': isLoading })}
+            disabled={isLoading}
             type="submit">
             Subscribe
           </button>

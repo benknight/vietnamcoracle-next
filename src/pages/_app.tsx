@@ -11,6 +11,10 @@ import NavBar from '../components/NavBar';
 import useWaitCursor from '../lib/useWaitCursor';
 import '../styles/style.css';
 
+if (typeof window !== 'undefined') {
+  require('../config/custom-elements');
+}
+
 const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
 
 function MyApp({ Component, pageProps }: AppProps) {

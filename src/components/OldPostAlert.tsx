@@ -19,9 +19,8 @@ export default function OldPostAlert({ monthsOld = 0 }) {
           years ago.
         </p>
         <p className="text-sm">
-          Check the{' '}
           <a className="link" href="#comments">
-            comments
+            Check the comments
           </a>{' '}
           section below for possible updates.{' '}
           <Link href="/updates-accuracy">

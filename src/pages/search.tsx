@@ -105,7 +105,7 @@ export default function SearchPage({ preview = false }) {
           {router.query.query ? ` for ${router.query.query}` : ''}
         </title>
       </Head>
-      <div className="px-3 pb-24 max-w-5xl mx-auto">
+      <div className="px-1 pb-24 max-w-5xl mx-auto">
         <div className="text-center lg:text-left my-8 xl:mt-24 xl:font-display xl:text-lg">
           {isLoadingInitialData ? (
             'Searching…'

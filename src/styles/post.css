@@ -89,15 +89,6 @@
 .post .crp-list + div p {
   margin-bottom: 0 !important;
 }
-/* .post .wp-block-buttons {
-  @apply block mb-6 py-4 px-6 md:w-80;
-  @apply bg-gray-100 dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded;
-  @apply text-lg font-serif tracking-wide;
-}
-.post .wp-block-buttons::before {
-  content: 'Contents';
-  @apply block text-center mb-3 font-bold;
-} */
 .post .wp-block-buttons {
   @apply block md:flex md:mt-3 mb-4;
 }
@@ -115,11 +106,16 @@
 .post .wp-block-button__link {
   @apply link p-0 bg-transparent text-lg tracking-widest leading-relaxed uppercase;
 }
+/* Necessary to style /vietnam-coracle-video-library */
+.post .wp-block-gallery a {
+  @apply text-white !important;
+}
 
 /**
  * Legacy styles
  */
 
+/* Override inline colors set in WYSIWYG */
 .post-legacy a > span {
   color: inherit !important;
 }
@@ -146,9 +142,6 @@
 .post-legacy span[style*='28px'] {
   @apply font-display !important;
 }
-/* .post > p:first-of-type {
-  @apply text-base font-serif mt-4 dark:text-gray-400;
-} */
 /* Images & captions */
 .post-legacy p > a[href$='.jpg'] {
   @apply block mb-2;

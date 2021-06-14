@@ -18,7 +18,7 @@ export default function ShareButtons({
   fbShareCount = 0,
 }) {
   return (
-    <div className="flex flex-wrap text-white mt-8 dark:mt-0">
+    <div className="flex text-white">
       <FacebookShareButton
         className="rounded mr-1 mb-2 !text-xs !leading-loose"
         style={{ backgroundColor: '#1877f2' }}
@@ -63,7 +63,7 @@ export default function ShareButtons({
       </RedditShareButton>
       <EmailShareButton
         body=""
-        className="rounded mr-1 mb-2 !text-xs !leading-loose"
+        className="rounded mb-2 !text-xs !leading-loose"
         subject={title}
         url={link}>
         <span className="rounded bg-gray-500 flex items-center px-2 font-medium">

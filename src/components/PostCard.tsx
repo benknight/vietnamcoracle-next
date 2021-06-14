@@ -12,7 +12,8 @@ interface Props {
   post: any;
 }
 
-export const SwatchesContext = createContext({});
+const SwatchesContext = createContext({});
+export const SwatchesProvider = SwatchesContext.Provider;
 
 const PostCard = ({ inGrid = false, post }: Props) => {
   const swatches = useContext(SwatchesContext);

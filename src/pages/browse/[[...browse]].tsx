@@ -13,7 +13,7 @@ import Footer from '../../components/Footer';
 import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
-import PostCard, { SwatchesContext } from '../../components/PostCard';
+import PostCard, { SwatchesProvider } from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
 import getCategoryLink from '../../lib/getCategoryLink';
@@ -30,7 +30,7 @@ const Browse = ({ data, swatches }) => {
     (subcategory ? subcategory.cover.large : category.cover.large) ||
     data.defaultImages?.cover.large;
   return (
-    <SwatchesContext.Provider value={swatches}>
+    <SwatchesProvider value={swatches}>
       <Head>{htmlToReact(category.seo.fullHead)}</Head>
       {isHome ? (
         <Slider data={category.slider} />
@@ -130,7 +130,7 @@ const Browse = ({ data, swatches }) => {
           <Footer data={data} />
         </LayoutSidebar>
       </Layout>
-    </SwatchesContext.Provider>
+    </SwatchesProvider>
   );
 };
 

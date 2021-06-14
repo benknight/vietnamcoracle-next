@@ -39,9 +39,10 @@ const InlineSubscribeForm = () => {
           onSubmit(email);
         }}>
         <input
+          placeholder="Email"
           onChange={event => setEmail(event.target.value)}
           required
-          type="text"
+          type="email"
         />
         <button disabled={isLoading} type="submit">
           Subscribe

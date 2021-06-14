@@ -43,7 +43,9 @@ const InlineSubscribeForm = () => {
           required
           type="text"
         />
-        <button type="submit">Subscribe</button>
+        <button disabled={isLoading} type="submit">
+          Subscribe
+        </button>
       </form>
     </>
   );
@@ -54,7 +56,6 @@ class MailChimpShortcode extends HTMLElement {
     const root = document.createElement('div');
     this.attachShadow({ mode: 'open' }).appendChild(root);
     // const name = this.getAttribute('name');
-    // const url = 'https://www.google.com/search?q=' + encodeURIComponent(name);
     render(<InlineSubscribeForm />, root);
   }
 }

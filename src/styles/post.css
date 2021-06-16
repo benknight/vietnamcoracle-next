@@ -104,7 +104,7 @@
   }
 }
 .post .wp-block-button__link {
-  @apply link p-0 bg-transparent text-lg tracking-widest leading-relaxed uppercase;
+  @apply link p-0 bg-transparent text-base tracking-widest leading-relaxed uppercase;
 }
 /* Necessary to style /vietnam-coracle-video-library */
 .post .wp-block-gallery a {
@@ -154,13 +154,16 @@
  * "Next" styles
  */
 
-.post-next h2 {
+.post-next h2,
+.post-next h3,
+.post-next h4 {
   @apply my-6 pb-0;
+}
+.post-next h2 {
   @apply uppercase text-2xl text-center text-black dark:text-white;
   letter-spacing: 0.2em;
 }
 .post-next h3 {
-  @apply my-6 pb-0;
   @apply text-xl text-black dark:text-white;
 }
 .post-next h2,
@@ -179,7 +182,4 @@
 }
 .post-next .wp-block-image {
   @apply my-8;
-}
-.post-next .wp-block-button__link {
-  @apply text-lg;
 }

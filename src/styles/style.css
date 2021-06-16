@@ -33,9 +33,6 @@
   .btn {
     @apply h-8 px-4 text-sm text-white bg-blue-500 rounded subpixel-antialiased font-sans;
   }
-  /* .cover-img > div > div:first-child {
-    min-height: 16rem;
-  } */
   .comment {
     @apply text-sm leading-snug;
   }

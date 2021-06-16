@@ -21,16 +21,16 @@ interface Props {
 export default function Hero({ children, imgSm, imgLg }: Props) {
   return (
     <div className="bg-gray-950">
-      <div className="cover-img flex lg:hidden">
+      <div className="block aspect-w-1 aspect-h-1 md:aspect-w-3 md:aspect-h-2 lg:hidden">
         <Image
           alt={imgSm.altText}
-          height={imgSm.mediaDetails.height}
           key={imgSm.id}
+          layout="fill"
+          objectFit="cover"
           src={imgSm.sourceUrl}
-          width={imgSm.mediaDetails.width}
         />
       </div>
-      <div className="cover-img hidden lg:block">
+      <div className="hidden lg:block">
         <Image
           alt={imgLg.altText}
           height={imgLg.mediaDetails.height}
@@ -63,13 +63,13 @@ export function HeroContent({ children }) {
     <div className="relative text-gray-100 pb-4">
       <div
         className={cx(
-          'absolute bottom-full w-full -mb-16 sm:-mb-12',
+          'absolute bottom-full w-full -mb-16 sm:-mb-12 lg:-mb-6',
           'h-52 md:h-48',
           'bg-gradient-to-t from-gray-950 via-black-25 to-transparent',
           'pointer-events-none',
         )}
       />
-      <div className="text-white relative -mt-16 sm:-mt-12 pointer-events-auto">
+      <div className="text-white relative -mt-16 sm:-mt-12 lg:-mt-6 pointer-events-auto">
         {children}
       </div>
     </div>

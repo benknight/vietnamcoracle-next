@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 
 export const BlockTitle = props => (
-  <h3 className="text-base xs:text-xl lg:text-2xl xl:text-xl mb-3">
+  <h3 className="text-base font-bold xs:text-xl lg:text-2xl xl:text-xl mb-3">
     {props.children}
   </h3>
 );

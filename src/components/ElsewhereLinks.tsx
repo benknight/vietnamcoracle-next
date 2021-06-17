@@ -7,7 +7,7 @@ import YouTubeIcon from '@material-ui/icons/YouTube';
 
 export default function ElsewhereLinks({ useBrandColors = false }) {
   return (
-    <div className="flex items-center justify-center text-gray-400">
+    <div className="flex items-center justify-center text-gray-600 dark:text-gray-400">
       <a href="https://www.facebook.com/vietnamcoracle">
         <Tooltip
           title="Vietnam Coracle on Facebook"

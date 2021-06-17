@@ -35,7 +35,7 @@ const Browse = ({ data, swatches }) => {
       {isHome ? (
         <Slider data={category.slider} />
       ) : (
-        <Hero imgSm={coverImgSm} imgLg={coverImgLg}>
+        <Hero imgSm={coverImgSm} imgLg={coverImgLg} theme="dark">
           <HeroContent>
             <div className="page-wrap pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end justify-between">
               <h1 className="mt-8 sm:mr-6 font-display">

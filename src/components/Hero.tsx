@@ -89,7 +89,7 @@ export function HeroContent({ children }) {
         className={cx(
           'absolute bottom-full w-full -mb-16 sm:-mb-12 lg:-mb-7',
           'h-52 md:h-48 xl:h-32',
-          'bg-gradient-to-t via-black-25 to-transparent',
+          'bg-gradient-to-t via-transparent dark:via-black-25 to-transparent',
           'pointer-events-none',
           {
             'from-white dark:from-gray-950': theme === 'auto',

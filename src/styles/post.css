@@ -177,7 +177,8 @@
   }
 }
 .post-next p,
-.post-next ul {
+.post-next ul,
+.post-next ol {
   @apply mb-4;
 }
 .post-next .wp-block-image {

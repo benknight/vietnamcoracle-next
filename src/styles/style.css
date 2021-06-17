@@ -9,7 +9,6 @@
   body {
     @apply overscroll-x-none;
     @apply text-gray-800 dark:text-gray-200;
-    @apply bg-white dark:bg-gray-950;
     @apply dark:antialiased;
   }
   @media (min-resolution: 320dpi) and (prefers-color-scheme: dark) {

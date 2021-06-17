@@ -63,14 +63,14 @@ export function HeroContent({ children }) {
     <div className="relative pb-4">
       <div
         className={cx(
-          'absolute bottom-full w-full -mb-16 sm:-mb-12 lg:-mb-6',
+          'absolute bottom-full w-full -mb-16 sm:-mb-12 lg:-mb-7',
           'h-52 md:h-48 lg:h-32',
           'bg-gradient-to-t to-transparent',
           'from-white dark:from-gray-950 via-black-25',
           'pointer-events-none',
         )}
       />
-      <div className="relative -mt-16 sm:-mt-12 lg:-mt-6 pointer-events-auto">
+      <div className="relative -mt-16 sm:-mt-12 lg:-mt-7 pointer-events-auto">
         {children}
       </div>
     </div>

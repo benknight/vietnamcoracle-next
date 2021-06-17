@@ -227,7 +227,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
       </Hero>
       <Layout className="relative max-w-screen-2xl">
         <LayoutMain>
-          <div className="px-3 sm:px-4 md:px-8 text-lg pt-4 dark:pt-0">
+          <div className="px-3 sm:px-4 md:px-8 text-lg">
             <div className="max-w-3xl mx-auto">
               {content.type === 'post' && !content.isRestricted && (
                 <ShareButtons

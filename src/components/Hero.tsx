@@ -20,7 +20,7 @@ interface Props {
 
 export default function Hero({ children, imgSm, imgLg }: Props) {
   return (
-    <div className="bg-gray-950">
+    <div className="bg-white dark:bg-gray-950">
       <div className="block aspect-w-1 aspect-h-1 md:aspect-w-3 md:aspect-h-2 lg:hidden">
         <Image
           alt={imgSm.altText}
@@ -60,16 +60,17 @@ Hero.fragments = gql`
 
 export function HeroContent({ children }) {
   return (
-    <div className="relative text-gray-100 pb-4">
+    <div className="relative pb-4">
       <div
         className={cx(
           'absolute bottom-full w-full -mb-16 sm:-mb-12 lg:-mb-6',
-          'h-52 md:h-48',
-          'bg-gradient-to-t from-gray-950 via-black-25 to-transparent',
+          'h-52 md:h-48 lg:h-32',
+          'bg-gradient-to-t to-transparent',
+          'from-white dark:from-gray-950 via-black-25',
           'pointer-events-none',
         )}
       />
-      <div className="text-white relative -mt-16 sm:-mt-12 lg:-mt-6 pointer-events-auto">
+      <div className="relative -mt-16 sm:-mt-12 lg:-mt-6 pointer-events-auto">
         {children}
       </div>
     </div>

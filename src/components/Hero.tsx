@@ -17,7 +17,7 @@ interface Props {
   children?: JSX.Element[] | JSX.Element;
   imgSm: HeroImage;
   imgLg: HeroImage;
-  theme: 'light' | 'dark' | 'auto';
+  theme?: 'light' | 'dark' | 'auto';
 }
 
 const HeroContext = createContext({

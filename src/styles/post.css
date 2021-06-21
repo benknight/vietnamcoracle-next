@@ -141,6 +141,7 @@
 .post-legacy span[style*='27px'],
 .post-legacy span[style*='28px'] {
   @apply font-display !important;
+  @apply leading-normal !important;
 }
 /* Images & captions */
 .post-legacy p > a[href$='.jpg'] {

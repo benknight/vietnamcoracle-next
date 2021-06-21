@@ -3,7 +3,7 @@
  */
 
 .post {
-  @apply pt-4 text-base font-display leading-relaxed dark:text-gray-300;
+  @apply pt-2 text-base font-display leading-relaxed dark:text-gray-300;
 }
 .post a {
   @apply link;

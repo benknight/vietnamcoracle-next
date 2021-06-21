@@ -13,7 +13,7 @@ export default function cleanPostHTML(html: string): string {
   // Replace raw shortcodes with custom HTML elements
   // Regex: https://regexr.com/39upv
   result = result.replace(
-    /\[([\w-_]*?)(?=\s|\])(.*?)]((.*?)\[\/\1])?/g,
+    /\[(mc4wp_form)(?=\s|\])(.*?)]((.*?)\[\/\1])?/g,
     '<shortcode-$1 $2>$4</shortcode-$1>',
   );
 

@@ -80,25 +80,30 @@ export function HeroContent({ children }) {
   const { theme } = useContext(HeroContext);
   return (
     <div
-      className={cx('relative pb-4', {
-        'text-gray-900 dark:text-white': theme === 'auto',
+      className={cx('relative pb-8', {
+        'text-gray-800 dark:text-white': theme === 'auto',
         'text-white': theme === 'dark',
-        'text-gray-900': theme === 'light',
+        'text-gray-800': theme === 'light',
       })}>
       <div
         className={cx(
-          'absolute bottom-full w-full mb-1 dark:-mb-16 sm:dark:-mb-12 lg:dark:-mb-7',
-          'h-52 md:h-48 xl:h-32',
-          'bg-gradient-to-t via-transparent dark:via-black-25 to-transparent',
-          'pointer-events-none',
+          'absolute bottom-full w-full h-52 md:h-48 xl:h-32',
+          'bg-gradient-to-t to-transparent from-gray-950 via-black-25 pointer-events-none',
           {
-            'from-white dark:from-gray-950': theme === 'auto',
-            'from-gray-950': theme === 'dark',
-            'from-white': theme === 'light',
+            'mb-5 sm:mb-7 dark:-mb-16 sm:dark:-mb-12 lg:dark:-mb-7 opacity-50 dark:opacity-100':
+              theme === 'auto',
+            '-mb-16 sm:-mb-12 lg:-mb-7 opacity-100': theme === 'dark',
+            'mb-5 sm:mb-7 opacity-50': theme === 'light',
           },
         )}
       />
-      <div className="relative mt-1 dark:-mt-16 sm:dark:-mt-12 lg:dark:-mt-7 pointer-events-auto">
+      <div
+        className={cx('relative pointer-events-auto', {
+          'mt-5 sm:mt-7 dark:-mt-16 sm:dark:-mt-12 lg:dark:-mt-7':
+            theme === 'auto',
+          '-mt-16 sm:-mt-12 lg:-mt-7': theme === 'dark',
+          'mt-5 sm:mt-7': theme === 'light',
+        })}>
         {children}
       </div>
     </div>

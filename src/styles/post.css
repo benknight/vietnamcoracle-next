@@ -185,3 +185,6 @@
 .post-next .wp-block-image {
   @apply my-8;
 }
+.post-next .wp-block-button__link {
+  @apply text-lg font-bold;
+}

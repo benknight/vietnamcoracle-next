@@ -7,7 +7,7 @@ export default function OldPostAlert({ monthsOld = 0 }) {
   return (
     <div
       className={cx(
-        'flex items-center py-4 px-2 mt-2',
+        'flex items-center py-4 px-2 my-2',
         'dark:text-yellow-200 dark:text-opacity-75 rounded',
         'bg-yellow-100 bg-opacity-50 dark:bg-yellow-500 dark:bg-opacity-10',
         'border border-yellow-300 dark:border-yellow-500 dark:border-opacity-30',

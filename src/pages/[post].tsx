@@ -280,8 +280,8 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
             </div>
           </div>
         </LayoutMain>
-        <LayoutSidebar className="relative border-l border-gray-200 dark:border-gray-800">
-          <div className="absolute top-0 -left-px w-px h-48 bg-gradient-to-b from-white dark:from-gray-950 to-transparent" />
+        <LayoutSidebar className="relative xl:border-l border-gray-200 dark:border-gray-800">
+          <div className="hidden xl:block absolute top-0 -left-px w-px h-48 bg-gradient-to-b from-white dark:from-gray-950 to-transparent" />
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>

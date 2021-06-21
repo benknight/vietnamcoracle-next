@@ -19,7 +19,7 @@ const InlineSubscribeForm = () => {
           height: ${height[8]};
         }
         input {
-          border: 0;
+          border: 1px solid ${colors.gray['200']};
           border-radius: ${borderRadius.DEFAULT};
           font-size: 1rem;
           margin-right: 0.5rem;

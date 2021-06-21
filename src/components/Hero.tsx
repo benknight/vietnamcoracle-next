@@ -87,7 +87,7 @@ export function HeroContent({ children }) {
       })}>
       <div
         className={cx(
-          'absolute bottom-full w-full -mb-16 sm:-mb-12 lg:-mb-7',
+          'absolute bottom-full w-full mb-1 dark:-mb-16 sm:dark:-mb-12 lg:dark:-mb-7',
           'h-52 md:h-48 xl:h-32',
           'bg-gradient-to-t via-transparent dark:via-black-25 to-transparent',
           'pointer-events-none',
@@ -98,7 +98,7 @@ export function HeroContent({ children }) {
           },
         )}
       />
-      <div className="relative -mt-16 sm:-mt-12 lg:-mt-7 pointer-events-auto">
+      <div className="relative mt-1 dark:-mt-16 sm:dark:-mt-12 lg:dark:-mt-7 pointer-events-auto">
         {children}
       </div>
     </div>

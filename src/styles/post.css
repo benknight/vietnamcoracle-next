@@ -16,7 +16,7 @@
   letter-spacing: 0.2em;
 }
 .post h2 {
-  @apply sm:mt-8 pb-4 lg:pb-8 font-display tracking-wider leading-loose;
+  @apply sm:mt-8 pb-4 lg:pb-4 font-display tracking-wider leading-loose;
 }
 .post hr {
   @apply my-6 border border-gray-200 dark:border-gray-800;
@@ -90,7 +90,7 @@
   margin-bottom: 0 !important;
 }
 .post .wp-block-buttons {
-  @apply block md:flex md:mt-3 mb-4;
+  @apply block md:flex md:mt-3;
 }
 .post .wp-block-button {
   @apply block p-0 mx-0 mt-0 mb-2;
@@ -158,14 +158,14 @@
 .post-next h2,
 .post-next h3,
 .post-next h4 {
-  @apply my-6 pb-0;
+  @apply my-6 pb-0 font-bold;
 }
 .post-next h2 {
-  @apply uppercase text-2xl text-center text-black dark:text-white;
+  @apply uppercase text-2xl text-center dark:text-white;
   letter-spacing: 0.2em;
 }
 .post-next h3 {
-  @apply text-xl text-black dark:text-white;
+  @apply text-xl dark:text-white;
 }
 .post-next h2,
 .post-next h3 {

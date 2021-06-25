@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import {
   EmailShareButton,
   FacebookShareButton,
@@ -12,13 +13,14 @@ import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
 
 export default function ShareButtons({
+  className = '',
   image = '',
   link = '',
   title = '',
   fbShareCount = 0,
 }) {
   return (
-    <div className="flex text-white">
+    <div className={cx(className, 'flex text-white')}>
       <FacebookShareButton
         className="rounded mr-1 mb-2 !text-xs !leading-loose"
         style={{ backgroundColor: '#1877f2' }}

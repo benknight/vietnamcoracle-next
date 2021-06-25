@@ -229,6 +229,9 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
         <LayoutMain>
           <div className="px-3 sm:px-4 md:px-8 text-lg">
             <div className="max-w-3xl mx-auto">
+              {content.type === 'post' && monthsOld > 36 && (
+                <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />
+              )}
               {content.type === 'post' && !content.isRestricted && (
                 <ShareButtons
                   fbShareCount={fbShareCount}
@@ -236,9 +239,6 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
                   link={content.link}
                   title={content.title}
                 />
-              )}
-              {content.type === 'post' && monthsOld > 36 && (
-                <OldPostAlert monthsOld={monthsOld} />
               )}
               <article
                 className={cx(
@@ -344,6 +344,7 @@ export async function getStaticProps({
       "p:first-of-type:contains('Last updated'), p:first-of-type:contains('First published')",
     );
     if (lastUpdated) {
+      lastUpdated.addClass('!font-display text-sm');
       const date = lastUpdated
         .text()
         .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]
@@ -353,6 +354,7 @@ export async function getStaticProps({
         monthsOld = differenceInMonths(new Date(), parsed);
       }
     }
+    html = $.html();
   }
 
   return {

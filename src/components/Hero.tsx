@@ -17,6 +17,7 @@ interface Props {
   children?: JSX.Element[] | JSX.Element;
   imgSm: HeroImage;
   imgLg: HeroImage;
+  preserveAspectRatio: boolean;
   theme?: 'light' | 'dark' | 'auto';
 }
 
@@ -28,6 +29,7 @@ export default function Hero({
   children,
   imgSm,
   imgLg,
+  preserveAspectRatio = false,
   theme = 'auto',
 }: Props) {
   return (
@@ -38,7 +40,10 @@ export default function Hero({
           'bg-white': theme === 'light',
           'bg-gray-950': theme === 'dark',
         })}>
-        <div className="block aspect-w-1 aspect-h-1 md:aspect-w-3 md:aspect-h-2 lg:hidden">
+        <div
+          className={cx('block aspect-w-1 aspect-h-1 lg:hidden', {
+            'md:aspect-w-3 md:aspect-h-2': !preserveAspectRatio,
+          })}>
           <Image
             alt={imgSm.altText}
             key={imgSm.id}
@@ -80,7 +85,7 @@ export function HeroContent({ children }) {
   const { theme } = useContext(HeroContext);
   return (
     <div
-      className={cx('relative pb-8', {
+      className={cx('relative pb-4', {
         'text-gray-800 dark:text-white': theme === 'auto',
         'text-white': theme === 'dark',
         'text-gray-800': theme === 'light',

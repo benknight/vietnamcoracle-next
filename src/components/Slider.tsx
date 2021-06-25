@@ -20,6 +20,7 @@ const Slider = ({ data }) => {
             <Hero
               imgSm={post.thumbnails.thumbnailSlideSquare}
               imgLg={post.thumbnails.thumbnailSlideWidescreen}
+              preserveAspectRatio
             />
           </CarouselSlide>
         ))}

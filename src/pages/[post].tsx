@@ -18,9 +18,10 @@ import OldPostAlert from '../components/OldPostAlert';
 import PostCard from '../components/PostCard';
 import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
-import getPostHTML from '../lib/getPostHTML';
+import cleanPostHTML from '../lib/cleanPostHTML';
 import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
+import { contents } from 'cheerio/lib/api/traversing';
 
 const POST_QUERY = gql`
   query Post($preview: Boolean!, $id: ID!) {
@@ -191,8 +192,8 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
     return <NotFound />;
   }
 
-  const articleHTML = asyncRequest.data
-    ? getPostHTML(asyncRequest.data.contentNode, fbShareCount)
+  const articleHTML = asyncRequest.data?.contentNode?.content
+    ? cleanPostHTML(asyncRequest.data.contentNode.content)
     : html;
 
   return (
@@ -243,14 +244,6 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
             <div className="max-w-3xl mx-auto">
               {content.type === 'post' && monthsOld > 36 && (
                 <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />
-              )}
-              {!content.isRestricted && (
-                <share-buttons
-                  data-share-count={fbShareCount}
-                  data-image={content.featuredImage?.node.sourceUrl}
-                  data-link={content.link}
-                  data-title={content.title}
-                />
               )}
               <article
                 className={cx(
@@ -345,8 +338,8 @@ export async function getStaticProps({
 
   let html = '';
 
-  if (data.contentNode) {
-    html = getPostHTML(data.contentNode, fbShareCount);
+  if (data.contentNode?.content) {
+    html = cleanPostHTML(data.contentNode.content);
   }
 
   let monthsOld: number = null;
@@ -356,6 +349,7 @@ export async function getStaticProps({
     const lastUpdated = $(
       "p:first-of-type:contains('Last updated'), p:first-of-type:contains('First published')",
     );
+
     if (lastUpdated) {
       lastUpdated.addClass('!font-display text-sm');
       const date = lastUpdated
@@ -367,6 +361,23 @@ export async function getStaticProps({
         monthsOld = differenceInMonths(new Date(), parsed);
       }
     }
+
+    if (!data.contentNode.isRestricted) {
+      if (lastUpdated) {
+        $('<share-buttons />').insertAfter(lastUpdated);
+      } else {
+        $.root().prepend('<share-buttons />');
+      }
+    }
+
+    // Share Buttons
+    $('share-buttons').attr('data-share-count', String(fbShareCount));
+    $('share-buttons').attr('data-title', data.contentNode.title);
+    $('share-buttons').attr('data-link', data.contentNode.link);
+    $('share-buttons').attr(
+      'data-image',
+      data.contentNode.featuredImage?.node.sourceUrl,
+    );
 
     // Remove "Back Top" link after related posts
     const relatedPosts = $('related-posts');

@@ -1,5 +1,5 @@
-export default function getPostHTML(contentNode, fbShareCount: number): string {
-  let result = contentNode.content;
+export default function cleanPostHTML(html: string): string {
+  let result = html;
 
   // Force https
   result = result.replace(/(http)\:\/\//gm, 'https://');
@@ -18,16 +18,10 @@ export default function getPostHTML(contentNode, fbShareCount: number): string {
   );
 
   // Replace shareaholic shorcode with <share-buttons>
-  if (!contentNode.isRestricted) {
-    result = result.replace(
-      /\[(shareaholic)(?=\s|\])(.*?)]((.*?)\[\/\1])?/g,
-      `<share-buttons
-        data-share-count="${fbShareCount}"
-        data-title="${contentNode.title}"
-        data-link="${contentNode.link}"
-        data-image="${contentNode.featuredImage?.node.sourceUrl}" $2>$4</share-buttons>`,
-    );
-  }
+  result = result.replace(
+    /\[(shareaholic)(?=\s|\])(.*?)]((.*?)\[\/\1])?/g,
+    `<share-buttons $2>$4</share-buttons>`,
+  );
 
   // Replace custom-related-posts shorcode with <related-posts>
   result = result.replace(

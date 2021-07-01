@@ -29,18 +29,26 @@ const {
 
 // console.log(resolveConfig(tailwindConfig));
 
+interface Props {
+  image: string;
+  link: string;
+  shareCount: number;
+  title: string;
+}
+
 export default function ShareButtons({
-  image = '',
-  link = '',
-  title = '',
-  fbShareCount = 0,
-}) {
+  image,
+  link,
+  shareCount,
+  title,
+}: Props) {
   return (
     <>
       <style>{`
         div {
           color: ${colors['white']};
           font-family: ${fontFamily.sans.join(',')};
+          margin-bottom: ${margin[4]};
         }
         button {
           border-radius: ${borderRadius.DEFAULT};
@@ -74,7 +82,7 @@ export default function ShareButtons({
           <span>
             <FacebookIcon fontSize="small" />
             <span>Share</span>{' '}
-            {fbShareCount > 0 ? fbShareCount.toLocaleString() : ''}
+            {shareCount > 0 ? shareCount.toLocaleString() : ''}
           </span>
         </FacebookShareButton>
         <TwitterShareButton

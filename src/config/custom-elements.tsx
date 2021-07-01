@@ -31,12 +31,15 @@ if (typeof window !== 'undefined') {
       this.attachShadow({ mode: 'open' }).appendChild(root);
       // const name = this.getAttribute('name');
       const props = {
-        fbShareCount:
+        shareCount:
           parseInt(this.getAttribute('data-share-count')) || undefined,
         image: this.getAttribute('data-image'),
         link: this.getAttribute('data-link'),
         title: this.getAttribute('data-name'),
       };
+      if (!props.link) {
+        return;
+      }
       render(<ShareButtons {...props} />, root);
     }
   }

@@ -265,6 +265,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
               {data?.contentNode.customRelatedPosts && (
                 <div
                   className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
+                  id="related-posts"
                   ref={relatedPostsRef}>
                   {content.customRelatedPosts.nodes.map(post => (
                     <PostCard key={post.slug} post={post} inGrid />
@@ -365,6 +366,12 @@ export async function getStaticProps({
         const parsed = parse(date, 'LLLL yyyy', new Date());
         monthsOld = differenceInMonths(new Date(), parsed);
       }
+    }
+
+    // Remove "Back Top" link after related posts
+    const relatedPosts = $('related-posts');
+    if (relatedPosts) {
+      relatedPosts.parent().next('p:has(a[href="#top"])').remove();
     }
     html = $.html();
   }

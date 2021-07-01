@@ -232,7 +232,7 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
               {content.type === 'post' && monthsOld > 36 && (
                 <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />
               )}
-              {content.type === 'post' && !content.isRestricted && (
+              {!content.isRestricted && (
                 <ShareButtons
                   fbShareCount={fbShareCount}
                   image={content.featuredImage?.node.sourceUrl}

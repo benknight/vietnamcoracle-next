@@ -248,11 +248,11 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
                 <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />
               )}
               {!content.isRestricted && (
-                <ShareButtons
-                  fbShareCount={fbShareCount}
-                  image={content.featuredImage?.node.sourceUrl}
-                  link={content.link}
-                  title={content.title}
+                <share-buttons
+                  data-share-count={fbShareCount}
+                  data-image={content.featuredImage?.node.sourceUrl}
+                  data-link={content.link}
+                  data-title={content.title}
                 />
               )}
               <article

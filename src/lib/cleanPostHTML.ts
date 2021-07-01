@@ -16,6 +16,12 @@ export default function cleanPostHTML(html: string): string {
     /\[(mc4wp_form)(?=\s|\])(.*?)]((.*?)\[\/\1])?/g,
     '<subscribe-form $2>$4</subscribe-form>',
   );
+
+  // Replace shareaholic shorcode with <share-buttons>
+  // Regex: https://regexr.com/39upv
+  result = result.replace(
+    /\[(shareaholic)(?=\s|\])(.*?)]((.*?)\[\/\1])?/g,
+    '<share-buttons $2>$4</share-buttons>',
   );
 
   return result;

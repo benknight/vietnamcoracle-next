@@ -10,11 +10,12 @@ export default function cleanPostHTML(html: string): string {
     '$1&hl=en',
   );
 
-  // Replace raw shortcodes with custom HTML elements
+  // Replace mc4wp_form shorcode with <subscribe-form>
   // Regex: https://regexr.com/39upv
   result = result.replace(
     /\[(mc4wp_form)(?=\s|\])(.*?)]((.*?)\[\/\1])?/g,
-    '<shortcode-$1 $2>$4</shortcode-$1>',
+    '<subscribe-form $2>$4</subscribe-form>',
+  );
   );
 
   return result;

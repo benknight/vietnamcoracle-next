@@ -9,11 +9,8 @@ import { StylesProvider, jssPreset } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import useWaitCursor from '../lib/useWaitCursor';
+import '../config/custom-elements';
 import '../styles/style.css';
-
-if (typeof window !== 'undefined') {
-  require('../config/custom-elements');
-}
 
 const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
 

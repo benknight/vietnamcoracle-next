@@ -1,66 +1,45 @@
-import { useState } from 'react';
 import { render } from 'react-dom';
-import resolveConfig from 'tailwindcss/resolveConfig';
-import { useSubscribeForm } from '../components/Subscribe';
-import tailwindConfig from '../../tailwind.config.js';
+import ShareButtons from '../components/ShareButtons';
+import SubscribeForm from '../components/SubscribeForm';
 
-const {
-  theme: { borderRadius, colors, height, padding, width },
-} = resolveConfig(tailwindConfig);
-
-const InlineSubscribeForm = () => {
-  const [email, setEmail] = useState('');
-  const { isLoading, onSubmit } = useSubscribeForm();
-  return (
-    <>
-      <style>{`
-        form {
-          display: flex;
-          height: ${height[8]};
-        }
-        input {
-          border: 1px solid ${colors.gray['200']};
-          border-radius: ${borderRadius.DEFAULT};
-          font-size: 1rem;
-          margin-right: 0.5rem;
-          width: ${width[48]};
-        }
-        button {
-          border: 0;
-          color: white;
-          cursor: pointer;
-          background-color: ${colors.blue['500']};
-          border-radius: ${borderRadius.DEFAULT};
-          padding-left: ${padding[4]};
-          padding-right: ${padding[4]};
-        }
-      `}</style>
-      <form
-        onSubmit={event => {
-          event.preventDefault();
-          onSubmit(email);
-        }}>
-        <input
-          placeholder="Email"
-          onChange={event => setEmail(event.target.value)}
-          required
-          type="email"
-        />
-        <button disabled={isLoading} type="submit">
-          Subscribe
-        </button>
-      </form>
-    </>
-  );
-};
-
-class MailChimpShortcode extends HTMLElement {
-  connectedCallback() {
-    const root = document.createElement('div');
-    this.attachShadow({ mode: 'open' }).appendChild(root);
-    // const name = this.getAttribute('name');
-    render(<InlineSubscribeForm />, root);
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'share-buttons': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
+    }
   }
 }
 
-customElements.define('shortcode-mc4wp_form', MailChimpShortcode);
+if (typeof window !== 'undefined') {
+  class SubscribeFormCustomElement extends HTMLElement {
+    connectedCallback() {
+      const root = document.createElement('div');
+      this.attachShadow({ mode: 'open' }).appendChild(root);
+      // const name = this.getAttribute('name');
+      render(<SubscribeForm />, root);
+    }
+  }
+
+  customElements.define('subscribe-form', SubscribeFormCustomElement);
+
+  class ShareButtonsCustomElement extends HTMLElement {
+    connectedCallback() {
+      const root = document.createElement('div');
+      this.attachShadow({ mode: 'open' }).appendChild(root);
+      // const name = this.getAttribute('name');
+      const props = {
+        fbShareCount:
+          parseInt(this.getAttribute('data-share-count')) || undefined,
+        image: this.getAttribute('data-image'),
+        link: this.getAttribute('data-link'),
+        title: this.getAttribute('data-name'),
+      };
+      render(<ShareButtons {...props} />, root);
+    }
+  }
+
+  customElements.define('share-buttons', ShareButtonsCustomElement);
+}

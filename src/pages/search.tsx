@@ -106,7 +106,7 @@ export default function SearchPage() {
         </title>
       </Head>
       <div className="px-1 pb-24 max-w-5xl mx-auto">
-        <div className="text-center lg:text-left my-4 xl:mt-24 xl:font-display xl:text-lg">
+        <div className="text-center lg:text-left my-4 lg:my-8 xl:mt-24 xl:font-display xl:text-lg">
           {isLoadingInitialData ? (
             'Searching…'
           ) : (

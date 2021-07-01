@@ -67,6 +67,14 @@ const POST_QUERY = gql`
         seo {
           fullHead
         }
+        thumbnails {
+          thumbnailHeader {
+            ...HeroImageData
+          }
+          thumbnailHeaderSquare {
+            ...HeroImageData
+          }
+        }
       }
       ... on Post {
         comments(first: 1000) {
@@ -93,6 +101,9 @@ const POST_QUERY = gql`
         }
         thumbnails {
           thumbnailHeader {
+            ...HeroImageData
+          }
+          thumbnailHeaderSquare {
             ...HeroImageData
           }
         }
@@ -207,7 +218,11 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
         />
       </Head>
       <Hero
-        imgSm={content.featuredImage?.node ?? data.defaultImages?.cover.small}
+        imgSm={
+          content.thumbnails?.thumbnailHeaderSquare ??
+          content.featuredImage?.node ??
+          data.defaultImages?.cover.small
+        }
         imgLg={
           content.thumbnails?.thumbnailHeader ?? data.defaultImages?.cover.large
         }>

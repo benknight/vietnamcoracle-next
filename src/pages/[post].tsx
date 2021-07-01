@@ -16,10 +16,9 @@ import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
 import NotFound from '../components/NotFound';
 import OldPostAlert from '../components/OldPostAlert';
 import PostCard from '../components/PostCard';
-import ShareButtons from '../components/ShareButtons';
 import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
-import cleanPostHTML from '../lib/cleanPostHTML';
+import getPostHTML from '../lib/getPostHTML';
 import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
 
@@ -192,11 +191,9 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
     return <NotFound />;
   }
 
-  let articleHTML = html;
-
-  if (asyncRequest.data) {
-    articleHTML = cleanPostHTML(asyncRequest.data.contentNode.content);
-  }
+  const articleHTML = asyncRequest.data
+    ? getPostHTML(asyncRequest.data.contentNode, fbShareCount)
+    : html;
 
   return (
     <>
@@ -347,8 +344,8 @@ export async function getStaticProps({
 
   let html = '';
 
-  if (data.contentNode?.content) {
-    html = cleanPostHTML(data.contentNode.content);
+  if (data.contentNode) {
+    html = getPostHTML(data.contentNode, fbShareCount);
   }
 
   let monthsOld: number = null;

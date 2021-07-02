@@ -6,8 +6,9 @@ import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
+import { MenuAlt1Icon } from '@heroicons/react/outline';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
@@ -21,118 +22,27 @@ import GraphQLClient from '../lib/GraphQLClient';
 import cleanPostHTML from '../lib/cleanPostHTML';
 import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
-import { contents } from 'cheerio/lib/api/traversing';
 
-const POST_QUERY = gql`
-  query Post($preview: Boolean!, $id: ID!) {
-    contentNode(id: $id, idType: URI) {
-      ... on ContentNode {
-        databaseId
-        isRestricted
-        link
-        contentType {
-          node {
-            name
-          }
-        }
-      }
-      ... on NodeWithComments {
-        commentCount
-      }
-      ... on NodeWithContentEditor {
-        content
-      }
-      ... on NodeWithFeaturedImage {
-        featuredImage {
-          node {
-            ...HeroImageData
-          }
-        }
-      }
-      ... on NodeWithTitle {
-        title
-      }
-      ... on Page {
-        comments(first: 1000) {
-          nodes {
-            ...CommentThreadCommentData
-          }
-        }
-        preview @include(if: $preview) {
-          node {
-            content
-            title
-          }
-        }
-        seo {
-          fullHead
-        }
-        thumbnails {
-          thumbnailHeader {
-            ...HeroImageData
-          }
-          thumbnailHeaderSquare {
-            ...HeroImageData
-          }
-        }
-      }
-      ... on Post {
-        comments(first: 1000) {
-          nodes {
-            ...CommentThreadCommentData
-          }
-        }
-        customRelatedPosts(first: 6) {
-          nodes {
-            ...PostCardPostData
-          }
-        }
-        preview @include(if: $preview) {
-          node {
-            content
-            title
-          }
-        }
-        seo {
-          fullHead
-        }
-        settings {
-          useNextStyles
-        }
-        thumbnails {
-          thumbnailHeader {
-            ...HeroImageData
-          }
-          thumbnailHeaderSquare {
-            ...HeroImageData
-          }
-        }
-      }
-    }
-    defaultImages {
-      cover {
-        large {
-          ...HeroImageData
-        }
-        small {
-          ...HeroImageData
-        }
-      }
-    }
-    ...FooterData
-    ...SidebarDefaultData
-  }
-  ${CommentThread.fragments}
-  ${Hero.fragments}
-  ${Footer.fragments}
-  ${PostCard.fragments}
-  ${SidebarDefault.fragments}
-`;
+type NavLinks = string[][];
+interface Props {
+  data: any;
+  html: string;
+  monthsOld?: number;
+  postNav?: NavLinks;
+  preview: boolean;
+}
 
-export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
+export default function Post({
+  data,
+  html,
+  monthsOld,
+  postNav,
+  preview,
+}: Props) {
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
+  const [showPostNav, setShowPostNav] = useState(false);
 
   // Client-side query when content is restricted
   const asyncRequest = useSWR(
@@ -245,6 +155,28 @@ export default function Post({ data, html, fbShareCount, monthsOld, preview }) {
               {content.type === 'post' && monthsOld > 36 && (
                 <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />
               )}
+              {postNav?.length > 0 && (
+                <nav className="fixed z-10 bottom-14 right-0 xl:right-auto xl:left-0 lg:bottom-0 text-base bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-600 dark:to-gray-700 rounded-tl-lg xl:rounded-tr-lg xl:rounded-tl-none ring-1 ring-gray-400">
+                  <button
+                    className="w-full flex items-center py-2 px-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 font-medium"
+                    onClick={() => setShowPostNav(value => !value)}>
+                    <MenuAlt1Icon className="w-5 h-5" />
+                    <span className="mx-2">
+                      {showPostNav ? 'Hide' : 'Show'} Contents
+                    </span>
+                  </button>
+                  <ul
+                    className={cx('mb-4 p-3 pr-12', { hidden: !showPostNav })}>
+                    {postNav.map(link => (
+                      <li>
+                        <a className="link" href={link[0]}>
+                          {link[1]}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              )}
               <article
                 className={cx(
                   'post',
@@ -306,7 +238,11 @@ export function getStaticPaths() {
 export async function getStaticProps({
   params: { post: slug },
   preview = false,
-}) {
+}): Promise<{
+  notFound: boolean;
+  props: Props;
+  revalidate: 1;
+}> {
   const data = await GraphQLClient.request(POST_QUERY, {
     preview,
     id: slug,
@@ -336,13 +272,13 @@ export async function getStaticProps({
     }
   }
 
+  let postNav: NavLinks = null;
   let html = '';
+  let monthsOld: number = null;
 
   if (data.contentNode?.content) {
     html = cleanPostHTML(data.contentNode.content);
   }
-
-  let monthsOld: number = null;
 
   if (html) {
     const $ = cheerio.load(html);
@@ -370,20 +306,30 @@ export async function getStaticProps({
       }
     }
 
-    // Share Buttons
-    $('share-buttons').attr('data-share-count', String(fbShareCount));
-    $('share-buttons').attr('data-title', data.contentNode.title);
-    $('share-buttons').attr('data-link', data.contentNode.link);
-    $('share-buttons').attr(
-      'data-image',
-      data.contentNode.featuredImage?.node.sourceUrl,
-    );
+    // Pass post data to share buttons
+    $('share-buttons').attr({
+      'data-share-count': String(fbShareCount),
+      'data-title': data.contentNode.title,
+      'data-link': data.contentNode.link,
+      'data-image': data.contentNode.featuredImage?.node.sourceUrl ?? '',
+    });
+
+    // Generate contents menu
+    const internalLinks = $('h2 strong a');
+    if (internalLinks) {
+      postNav = [
+        ...internalLinks
+          .toArray()
+          .map(element => [$(element).attr('href'), $(element).text()]),
+      ];
+    }
 
     // Remove "Back Top" link after related posts
     const relatedPosts = $('related-posts');
     if (relatedPosts) {
       relatedPosts.parent().next('p:has(a[href="#top"])').remove();
     }
+
     html = $.html();
   }
 
@@ -393,9 +339,115 @@ export async function getStaticProps({
       data,
       html,
       monthsOld,
+      postNav,
       preview,
-      fbShareCount,
     },
     revalidate: 1,
   };
 }
+
+const POST_QUERY = gql`
+  query Post($preview: Boolean!, $id: ID!) {
+    contentNode(id: $id, idType: URI) {
+      ... on ContentNode {
+        databaseId
+        isRestricted
+        link
+        contentType {
+          node {
+            name
+          }
+        }
+      }
+      ... on NodeWithComments {
+        commentCount
+      }
+      ... on NodeWithContentEditor {
+        content
+      }
+      ... on NodeWithFeaturedImage {
+        featuredImage {
+          node {
+            ...HeroImageData
+          }
+        }
+      }
+      ... on NodeWithTitle {
+        title
+      }
+      ... on Page {
+        comments(first: 1000) {
+          nodes {
+            ...CommentThreadCommentData
+          }
+        }
+        preview @include(if: $preview) {
+          node {
+            content
+            title
+          }
+        }
+        seo {
+          fullHead
+        }
+        thumbnails {
+          thumbnailHeader {
+            ...HeroImageData
+          }
+          thumbnailHeaderSquare {
+            ...HeroImageData
+          }
+        }
+      }
+      ... on Post {
+        comments(first: 1000) {
+          nodes {
+            ...CommentThreadCommentData
+          }
+        }
+        customRelatedPosts(first: 6) {
+          nodes {
+            ...PostCardPostData
+          }
+        }
+        preview @include(if: $preview) {
+          node {
+            content
+            title
+          }
+        }
+        seo {
+          fullHead
+        }
+        settings {
+          useNextStyles
+        }
+        thumbnails {
+          thumbnailHeader {
+            ...HeroImageData
+          }
+          thumbnailHeaderSquare {
+            ...HeroImageData
+          }
+        }
+      }
+    }
+    defaultImages {
+      cover {
+        large {
+          ...HeroImageData
+        }
+        small {
+          ...HeroImageData
+        }
+      }
+    }
+    ...FooterData
+    ...SidebarDefaultData
+  }
+  ${CommentThread.fragments}
+  ${Hero.fragments}
+  ${Footer.fragments}
+  ${PostCard.fragments}
+  ${SidebarDefault.fragments}
+`;

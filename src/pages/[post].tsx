@@ -6,8 +6,9 @@ import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import useSWR from 'swr';
+import { Popover, Transition } from '@headlessui/react';
 import { MenuAlt1Icon } from '@heroicons/react/outline';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
@@ -42,7 +43,6 @@ export default function Post({
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
-  const [showPostNav, setShowPostNav] = useState(false);
 
   // Client-side query when content is restricted
   const asyncRequest = useSWR(
@@ -156,26 +156,25 @@ export default function Post({
                 <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />
               )}
               {postNav?.length > 0 && (
-                <nav className="fixed z-10 bottom-14 right-0 xl:right-auto xl:left-0 lg:bottom-0 text-base bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-600 dark:to-gray-700 rounded-tl-lg xl:rounded-tr-lg xl:rounded-tl-none ring-1 ring-gray-400">
-                  <button
-                    className="w-full flex items-center py-2 px-3 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 font-medium"
-                    onClick={() => setShowPostNav(value => !value)}>
+                <Popover className="fixed z-10 bottom-16 right-2 xl:right-auto xl:left-2 lg:bottom-2 bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-600 dark:to-gray-700 rounded-lg ring-1 ring-gray-400 shadow-md">
+                  <Popover.Button className="flex items-center w-full py-2 px-4 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                     <MenuAlt1Icon className="w-5 h-5" />
-                    <span className="mx-2">
-                      {showPostNav ? 'Hide' : 'Show'} Contents
-                    </span>
-                  </button>
-                  <ul
-                    className={cx('mb-4 p-3 pr-12', { hidden: !showPostNav })}>
-                    {postNav.map(link => (
-                      <li>
-                        <a className="link" href={link[0]}>
-                          {link[1]}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
+                    <span className="mx-2">Contents</span>
+                  </Popover.Button>
+                  <Popover.Panel>
+                    <nav>
+                      <ul className="pt-1 pr-12 pb-4 pl-4">
+                        {postNav.map(link => (
+                          <li>
+                            <a className="link" href={link[0]}>
+                              {link[1]}
+                            </a>
+                          </li>
+                        ))}
+                      </ul>
+                    </nav>
+                  </Popover.Panel>
+                </Popover>
               )}
               <article
                 className={cx(

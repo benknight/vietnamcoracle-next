@@ -13,6 +13,9 @@ module.exports = {
   mode: 'jit',
   theme: {
     extend: {
+      boxShadow: {
+        heavy: '5px 5px 5px rgb(0 0 0 / 25%)',
+      },
       colors: {
         amber: colors.amber,
         'black-25': 'rgba(0, 0, 0, 0.25)',

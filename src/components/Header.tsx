@@ -61,10 +61,7 @@ export default function Header({ preview = false }: Props) {
               'top-6': preview,
             },
           )}>
-          <div
-            className="
-              z-20 absolute top-0 left-0
-              flex items-center h-14 lg:h-16 px-2">
+          <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-2">
             <Menu className="transform scale-90 lg:scale-100">
               <MenuIcon className="w-5 h-5 mx-3" />
               <div
@@ -114,7 +111,7 @@ export default function Header({ preview = false }: Props) {
             <SearchForm
               className={cx('ring-2 ring-white md:ring-0 dark:ring-gray-900', {
                 'w-32 md:w-44': !searchFocused,
-                'w-full md:w-60 lg:w-44 xl:w-60': searchFocused,
+                'w-full md:w-44 2xl:w-60': searchFocused,
               })}
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}

@@ -139,13 +139,13 @@ export default function Post({
           <div className="h-14" />
           <div className="absolute top-14 lg:top-auto lg:left-0 lg:bottom-0 w-full lg:w-auto">
             <Popover className="text-sm lg:text-base tracking-wide bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 ring-1 ring-gray-300 dark:ring-gray-800 shadow-xl lg:rounded-tr-xl">
-              <Popover.Button className="flex items-center justify-center w-full p-3 lg:px-8 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+              <Popover.Button className="flex items-center justify-center lg:justify-start w-full p-3 lg:px-8 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                 <MenuAlt1Icon className="w-4 h-4" />
                 <span className="pl-2 pr-2">Contents</span>
               </Popover.Button>
               <Popover.Panel>
                 <nav>
-                  <ul className="pt-1 px-12 pb-4 font-display text-center">
+                  <ul className="pt-1 px-12 lg:px-8 pb-4 font-display text-center lg:text-left">
                     {postNav.map(link => (
                       <li className="my-3" key={link[0]}>
                         <a className="link" href={link[0]}>

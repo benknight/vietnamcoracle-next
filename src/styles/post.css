@@ -25,10 +25,13 @@
 .post iframe {
   width: 100%;
 }
+.post img {
+  @apply shadow-heavy;
+  @apply dark:shadow-none !important;
+}
 .post img,
 .post iframe {
-  @apply block rounded-sm shadow-heavy;
-  @apply dark:shadow-none !important;
+  @apply block rounded-sm;
 }
 .post img.size-large {
   @apply mt-8;

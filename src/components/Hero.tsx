@@ -15,6 +15,7 @@ type HeroImage = {
 
 interface Props {
   children?: JSX.Element[] | JSX.Element;
+  className?: string;
   imgSm: HeroImage;
   imgLg: HeroImage;
   preserveAspectRatio?: boolean;
@@ -27,6 +28,7 @@ const HeroContext = createContext({
 
 export default function Hero({
   children,
+  className,
   imgSm,
   imgLg,
   preserveAspectRatio = false,
@@ -35,7 +37,7 @@ export default function Hero({
   return (
     <HeroContext.Provider value={{ theme }}>
       <div
-        className={cx({
+        className={cx(className, {
           'bg-white dark:bg-gray-950': theme === 'auto',
           'bg-white': theme === 'light',
           'bg-gray-950': theme === 'dark',

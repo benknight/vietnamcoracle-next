@@ -6,10 +6,12 @@ import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import Headroom from 'react-headroom';
 import useSWR from 'swr';
-import { Popover, Transition } from '@headlessui/react';
+import { Popover } from '@headlessui/react';
 import { MenuAlt1Icon } from '@heroicons/react/outline';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CommentForm from '../components/CommentForm';
 import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
@@ -19,6 +21,7 @@ import NotFound from '../components/NotFound';
 import OldPostAlert from '../components/OldPostAlert';
 import PostCard from '../components/PostCard';
 import SidebarDefault from '../components/SidebarDefault';
+import breakpoints from '../config/breakpoints';
 import GraphQLClient from '../lib/GraphQLClient';
 import cleanPostHTML from '../lib/cleanPostHTML';
 import internalizeUrl from '../lib/internalizeUrl';
@@ -43,6 +46,7 @@ export default function Post({
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
+  const isLG = useMediaQuery(`(min-width: ${breakpoints.lg})`);
 
   // Client-side query when content is restricted
   const asyncRequest = useSWR(
@@ -125,7 +129,39 @@ export default function Post({
           src="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
         />
       </Head>
+      {postNav?.length > 0 && (
+        <Headroom
+          className={cx(
+            'z-10 absolute lg:fixed top-0 lg:top-auto lg:bottom-0 lg:left-0 w-full',
+          )}
+          disable={isLG}
+          pinStart={1000}>
+          <div className="h-14" />
+          <div className="absolute top-14 lg:top-auto lg:left-0 lg:bottom-0 w-full lg:w-auto">
+            <Popover className="text-sm lg:text-base tracking-wide bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 ring-1 ring-gray-300 dark:ring-gray-800 shadow-xl lg:rounded-tr-xl">
+              <Popover.Button className="flex items-center justify-center w-full p-3 lg:px-8 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+                <MenuAlt1Icon className="w-4 h-4" />
+                <span className="pl-2 pr-2">Contents</span>
+              </Popover.Button>
+              <Popover.Panel>
+                <nav>
+                  <ul className="pt-1 px-12 pb-4 font-display text-center">
+                    {postNav.map(link => (
+                      <li className="my-3" key={link[0]}>
+                        <a className="link" href={link[0]}>
+                          {link[1]}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              </Popover.Panel>
+            </Popover>
+          </div>
+        </Headroom>
+      )}
       <Hero
+        className="relative z-10"
         imgSm={
           content.thumbnails?.thumbnailHeaderSquare ??
           content.featuredImage?.node ??
@@ -154,27 +190,6 @@ export default function Post({
             <div className="max-w-3xl mx-auto">
               {content.type === 'post' && monthsOld > 36 && (
                 <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />
-              )}
-              {postNav?.length > 0 && (
-                <Popover className="fixed z-10 bottom-16 right-2 xl:right-auto xl:left-2 lg:bottom-2 bg-gradient-to-b from-gray-100 to-gray-200 dark:from-gray-600 dark:to-gray-700 rounded-lg ring-1 ring-gray-400 shadow-md">
-                  <Popover.Button className="flex items-center w-full py-2 px-4 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
-                    <MenuAlt1Icon className="w-5 h-5" />
-                    <span className="mx-2">Contents</span>
-                  </Popover.Button>
-                  <Popover.Panel>
-                    <nav>
-                      <ul className="pt-1 pr-12 pb-4 pl-4">
-                        {postNav.map(link => (
-                          <li>
-                            <a className="link" href={link[0]}>
-                              {link[1]}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </nav>
-                  </Popover.Panel>
-                </Popover>
               )}
               <article
                 className={cx(

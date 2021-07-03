@@ -60,10 +60,10 @@ export default function NavBar({ preview = false }: Props) {
     <>
       <nav
         className={cx(
-          'fixed lg:sticky lg:top-0 bottom-0 lg:bottom-auto z-20 flex justify-center w-full h-14 lg:h-16 bg-white dark:bg-gray-900 border-b border-white dark:border-black lg:shadow',
+          'fixed lg:sticky lg:top-0 bottom-0 lg:bottom-auto z-20 flex justify-center w-full h-16 bg-white bg-gradient-to-b from-gray-100 to-gray-200 md:bg-none dark:bg-none dark:bg-gray-900 border-b border-white dark:border-black lg:shadow',
           { 'lg:top-6': preview },
         )}>
-        <div className="flex justify-center items-center flex-auto mt-[-1px] px-1 xl:px-16 font-sans lg:font-display tracking-wide leading-tight border-t border-gray-300 dark:border-gray-700">
+        <div className="flex justify-center items-center flex-auto px-1 xl:px-16 font-sans lg:font-display tracking-wide leading-tight ring-1 ring-gray-300 dark:ring-gray-700">
           {links.map(link => {
             const path = router.asPath;
             const isCurrent =
@@ -75,13 +75,14 @@ export default function NavBar({ preview = false }: Props) {
               <Link href={to} key={to}>
                 <a
                   className={cx(
-                    'w-1/5 md:w-24 lg:w-auto h-10 mx-1 sm:px-3 lg:px-3 lg:py-0',
+                    'w-1/5 md:w-24 lg:w-auto h-10 mx-1 sm:px-3 lg:px-3',
                     'flex flex-col lg:flex-row items-center justify-center text-center',
                     'lg:border dark:border-none',
                     'rounded-full transition-colors duration-200 ease',
                     'lg:dark:bg-gray-800 lg:hover:bg-gray-100  lg:dark:hover:bg-gray-700 lg:hover:bg-opacity-75',
                     {
-                      'bg-gradient-to-b dark:shadow text-blue-500 lg:bg-blue-100 lg:border-blue-100 dark:text-white lg:dark:bg-blue-900 lg:dark:border-blue-600 lg:dark:bg-opacity-50': isCurrent,
+                      'bg-gradient-to-b dark:shadow text-blue-500 lg:bg-blue-100 lg:border-blue-100 dark:text-white lg:dark:bg-blue-900 lg:dark:border-blue-600 lg:dark:bg-opacity-50':
+                        isCurrent,
                     },
                   )}
                   key={link.url}>

@@ -27,8 +27,6 @@ const {
   },
 } = resolveConfig(tailwindConfig);
 
-// console.log(resolveConfig(tailwindConfig));
-
 interface Props {
   image: string;
   link: string;
@@ -45,7 +43,7 @@ export default function ShareButtons({
   return (
     <>
       <style>{`
-        div {
+        main {
           color: ${colors['white']};
           font-family: ${fontFamily.sans.join(',')};
           margin-bottom: ${margin[4]};
@@ -54,7 +52,7 @@ export default function ShareButtons({
           border-radius: ${borderRadius.DEFAULT};
           font-size: ${fontSize['xs'][0]} !important;
           height: ${height[7]};
-          margin: 0 ${margin[1]} ${margin[2]} 0;
+          margin: 0 ${margin[1]} ${margin[1]} 0;
         }
         button > span {
           align-items: center;
@@ -70,11 +68,8 @@ export default function ShareButtons({
           fill: currentColor;
           width: ${width[4]};
         }
-        button.email {
-          background-color: ${backgroundColor.gray['500']} !important;
-        }
       `}</style>
-      <div>
+      <main>
         <FacebookShareButton
           style={{ backgroundColor: '#1877f2' }}
           title={title}
@@ -113,13 +108,17 @@ export default function ShareButtons({
             <span>Share</span>
           </span>
         </RedditShareButton>
-        <EmailShareButton body="" className="email" subject={title} url={link}>
+        <EmailShareButton
+          body=""
+          style={{ backgroundColor: backgroundColor.gray['500'] }}
+          subject={title}
+          url={link}>
           <span>
             <EmailIcon fontSize="small" />
             <span>Email</span>
           </span>
         </EmailShareButton>
-      </div>
+      </main>
     </>
   );
 }

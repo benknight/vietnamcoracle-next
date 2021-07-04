@@ -38,7 +38,7 @@ export default function Menu({ children, className = '' }) {
           <Popover.Button
             className={cx(
               className,
-              'flex items-center justify-center h-11 min-w-[2.5rem] uppercase text-xs rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 hover:dark:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
+              'flex items-center justify-center h-11 min-w-[2.5rem] uppercase text-xs rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500',
             )}
             id="menu-button">
             {children}
@@ -133,12 +133,13 @@ function MenuNav({ items = [], open = false }) {
             <li>
               <Link href={byId[key].path || byId[key].url}>
                 <a
-                  className="flex items-center h-12 px-4 text-base font-bold rounded hover:bg-gray-100 hover:dark:bg-gray-700"
+                  className="flex items-center h-12 px-4 text-base font-bold rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:"
                   onClick={event => {
                     event.preventDefault();
                     setCursor(byId[key].parentId);
                     setDirection('backwards');
-                  }}>
+                  }}
+                  style={{ WebkitTapHighlightColor: 'transparent' }}>
                   <div className="flex items-center justify-center mr-3">
                     <ArrowLeftIcon className="w-5 h-5" />
                   </div>
@@ -151,7 +152,7 @@ function MenuNav({ items = [], open = false }) {
             <li key={item.url}>
               <Link href={item.path || item.url}>
                 <a
-                  className="flex items-center h-12 px-4 rounded hover:bg-gray-100 hover:dark:bg-gray-700"
+                  className="flex items-center h-12 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700"
                   onClick={event => {
                     if (grouped[item.id]) {
                       event.preventDefault();
@@ -160,7 +161,8 @@ function MenuNav({ items = [], open = false }) {
                     } else {
                       document.getElementById('top').focus();
                     }
-                  }}>
+                  }}
+                  style={{ WebkitTapHighlightColor: 'transparent' }}>
                   <div className="flex-auto">{item.label}</div>
                   {grouped[item.id] && <ChevronRightIcon className="w-4 h-4" />}
                 </a>

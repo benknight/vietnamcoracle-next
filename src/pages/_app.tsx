@@ -18,18 +18,6 @@ function MyApp({ Component, pageProps }: AppProps) {
   const { preview } = pageProps;
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const jss = useMemo(
-    () =>
-      create({
-        ...jssPreset(),
-        // Define a custom insertion point that JSS will look for when injecting the styles into the DOM.
-        insertionPoint:
-          typeof window !== 'undefined'
-            ? window.document.getElementById('jss-insertion-point')
-            : undefined,
-      }),
-    [],
-  );
 
   useEffect(() => {
     const routeChangeStart = () => setLoading(true);
@@ -48,7 +36,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useWaitCursor(loading);
 
   return (
-    <StylesProvider jss={jss}>
+    <StylesProvider>
       <div
         className={cx(
           'fixed z-40 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center p-3 bg-white dark:bg-gray-700 shadow rounded-full',

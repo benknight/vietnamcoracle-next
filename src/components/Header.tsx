@@ -61,8 +61,8 @@ export default function Header({ preview = false }: Props) {
               'top-6': preview,
             },
           )}>
-          <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-2">
-            <Menu className="transform scale-90 lg:scale-100">
+          <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
+            <Menu className="transform scale-90 lg:scale-100 origin-left">
               <MenuIcon className="w-5 h-5 mx-3" />
               <div
                 className={
@@ -103,7 +103,7 @@ export default function Header({ preview = false }: Props) {
               'z-30 absolute top-0 right-0',
               {
                 'left-auto': !searchFocused && showMini,
-                'left-12 md:left-auto': !showMini,
+                'left-10 md:left-auto': !showMini,
                 '!left-0 md:!left-auto': searchFocused,
               },
               'flex items-center h-14 lg:h-16 px-2 lg:px-4',

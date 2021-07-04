@@ -145,7 +145,7 @@ export default function Post({
               </Popover.Button>
               <Popover.Panel>
                 <nav>
-                  <ul className="pt-1 px-12 lg:px-8 pb-4 font-display text-center lg:text-left">
+                  <ul className="pt-1 lg:pl-8 lg:pr-12 pb-4 font-display text-center lg:text-left">
                     {postNav.map(link => (
                       <li className="my-3" key={link[0]}>
                         <a className="link" href={link[0]}>

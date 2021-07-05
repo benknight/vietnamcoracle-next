@@ -1,6 +1,8 @@
 import cx from 'classnames';
 import _keyBy from 'lodash/keyBy';
 import _mapValues from 'lodash/mapValues';
+import Image from 'next/image';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
 import internalizeUrl from '../lib/internalizeUrl';
@@ -77,6 +79,20 @@ export default function Subscribe({ data: block }: Props) {
   });
   return (
     <Block>
+      <div className="my-4 flex justify-center">
+        <Link href="/subscribe">
+          <a>
+            <Image
+              alt=""
+              className="h-full rounded-full object-cover"
+              height="120"
+              layout="fixed"
+              src={block.image.sourceUrl}
+              width="120"
+            />
+          </a>
+        </Link>
+      </div>
       <BlockTitle>{block.title}</BlockTitle>
       <BlockContent>
         <p>{block.description}</p>
@@ -88,7 +104,6 @@ export default function Subscribe({ data: block }: Props) {
           }}>
           <input
             className="form-field flex-auto h-8 mr-2 p-2 text-sm rounded"
-            placeholder="Email"
             onChange={event => setEmail(event.target.value)}
             required
             type="email"

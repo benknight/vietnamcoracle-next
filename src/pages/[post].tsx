@@ -297,7 +297,7 @@ export async function getStaticProps({
   if (html) {
     const $ = cheerio.load(html);
     const lastUpdated = $(
-      "p:first-of-type:contains('Last updated'), p:first-of-type:contains('First published')",
+      "p:first-of-type:contains('Last updated'), p:first-of-type:contains('Last Updated'), p:first-of-type:contains('First published'), p:first-of-type:contains('First Published')",
     );
 
     if (lastUpdated) {

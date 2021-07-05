@@ -5,6 +5,7 @@
 @layer base {
   html {
     @apply bg-gray-100 dark:bg-black;
+    touch-action: manipulation;
   }
   body {
     @apply overscroll-x-none;

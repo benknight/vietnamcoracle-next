@@ -8,7 +8,6 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Headroom from 'react-headroom';
-import useSWR from 'swr';
 import { Popover } from '@headlessui/react';
 import { MenuAlt1Icon } from '@heroicons/react/outline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -17,7 +16,6 @@ import CommentThread from '../components/CommentThread';
 import Footer from '../components/Footer';
 import Hero, { HeroContent } from '../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
-import NotFound from '../components/NotFound';
 import OldPostAlert from '../components/OldPostAlert';
 import PostCard from '../components/PostCard';
 import SidebarDefault from '../components/SidebarDefault';
@@ -48,33 +46,15 @@ export default function Post({
   const router = useRouter();
   const isLG = useMediaQuery(`(min-width: ${breakpoints.lg})`);
 
-  // Client-side query when content is restricted
-  const asyncRequest = useSWR(
-    data?.contentNode.isRestricted && router.query?.secret
-      ? [router.query.post, router.query.secret]
-      : null,
-    (slug, secret) => {
-      return GraphQLClient.request(
-        POST_QUERY,
-        { preview, slug },
-        { 'X-Coracle-Post-Password': secret },
-      );
-    },
-    {
-      revalidateOnFocus: false,
-    },
-  );
-
   // Combine server data with client data
   const content = useMemo(() => {
-    return data || asyncRequest.data
+    return data
       ? {
           ...data?.contentNode,
-          ...asyncRequest.data?.contentNode,
           type: data.contentNode.contentType?.node.name,
         }
       : null;
-  }, [data, asyncRequest.data]);
+  }, [data]);
 
   // Internalize in-article links for client-side transitions
   useEffect(() => {
@@ -89,7 +69,7 @@ export default function Post({
     });
   }, [router.asPath]);
 
-  useWaitCursor(router.isFallback || asyncRequest.isValidating);
+  useWaitCursor(router.isFallback);
 
   if (router.isFallback) {
     return null;
@@ -98,17 +78,6 @@ export default function Post({
   if (!content) {
     return;
   }
-
-  if (typeof window !== 'undefined' && content.isRestricted) {
-    if (router.query?.secret) {
-      return <div className="text-center py-12">Loading…</div>;
-    }
-    return <NotFound />;
-  }
-
-  const articleHTML = asyncRequest.data?.contentNode?.content
-    ? cleanPostHTML(asyncRequest.data.contentNode.content)
-    : html;
 
   return (
     <>
@@ -197,7 +166,7 @@ export default function Post({
                   content.settings?.useNextStyles ? 'post-next' : 'post-legacy',
                 )}
                 dangerouslySetInnerHTML={{
-                  __html: articleHTML,
+                  __html: html,
                 }}
                 ref={articleRef}
               />
@@ -211,7 +180,7 @@ export default function Post({
                   ))}
                 </div>
               )}
-              {articleHTML && (
+              {html && (
                 <>
                   <div className="page-heading mt-8 md:mt-12 mb-4">
                     Leave a Comment

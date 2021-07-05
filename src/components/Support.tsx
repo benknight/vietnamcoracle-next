@@ -30,17 +30,17 @@ export default function Support({ data: block }: Props) {
             <span className="pr-4">Donate</span>
           </a>
         </Link>
-        <a
-          className={`${btnClassName} border-white dark:border-black hover:bg-[#FF424D] h-10`}
-          href="https://www.patreon.com/vietnamcoracle"
-          target="_blank">
-          <img
-            alt=""
-            className="w-4 h-4 mr-2"
-            src="/Digital-Patreon-Logo_FieryCoral.png"
-          />
-          Become a Patron
-        </a>
+        <Link href="/become-a-patron-of-vietnam-coracle">
+          <a
+            className={`${btnClassName} border-white dark:border-black hover:bg-[#FF424D] h-10`}>
+            <img
+              alt=""
+              className="w-4 h-4 mr-2"
+              src="/Digital-Patreon-Logo_FieryCoral.png"
+            />
+            Become a Patron
+          </a>
+        </Link>
         <div className="flex text-xs">
           <Link href="/book-your-accommodation">
             <a

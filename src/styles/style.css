@@ -31,7 +31,7 @@
     content: none;
   }
   .btn {
-    @apply h-8 px-4 text-sm text-white bg-blue-500 rounded subpixel-antialiased font-sans;
+    @apply h-8 px-4 text-sm text-white bg-blue-400 dark:bg-opacity-25 rounded-lg subpixel-antialiased font-sans;
   }
   .comment {
     @apply text-sm leading-snug;

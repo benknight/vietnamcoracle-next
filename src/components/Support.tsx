@@ -8,7 +8,7 @@ interface Props {
 }
 
 const btnClassName =
-  'flex items-center justify-center h-10 mt-2 border bg-gray-100 dark:bg-opacity-10 dark:hover:bg-opacity-50 dark:text-white hover:text-white rounded-full transition duration-100 ease-in-out transform hover:scale-105';
+  'flex items-center justify-center h-10 mt-2 border bg-gray-100 dark:bg-opacity-10 dark:hover:bg-opacity-50 dark:text-white hover:text-white rounded-full transition-colors duration-100 ease-in-out transform hover:scale-105';
 
 export default function Support({ data: block }: Props) {
   return (

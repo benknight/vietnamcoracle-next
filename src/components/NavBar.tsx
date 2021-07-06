@@ -81,7 +81,7 @@ export default function NavBar({ preview = false }: Props) {
                     'rounded-full transition-colors duration-200 ease',
                     'lg:dark:bg-gray-800 lg:hover:bg-gray-100  lg:dark:hover:bg-gray-700 lg:hover:bg-opacity-75',
                     {
-                      'dark:shadow text-blue-500 lg:bg-blue-100 lg:border-blue-100 dark:text-white lg:dark:bg-blue-900 lg:dark:border-blue-600 lg:dark:bg-opacity-50':
+                      'dark:shadow text-purple-500 lg:bg-purple-100 lg:border-purple-100 dark:text-white lg:dark:bg-purple-900 lg:dark:border-purple-600 lg:dark:bg-opacity-50':
                         isCurrent,
                     },
                   )}

@@ -38,7 +38,7 @@ export default function Menu({ children, className = '' }) {
           <Popover.Button
             className={cx(
               className,
-              'flex items-center justify-center h-11 min-w-[2.5rem] uppercase text-xs rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500',
+              'flex items-center justify-center h-11 min-w-[2.5rem] uppercase text-xs rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500',
             )}
             id="menu-button">
             {children}
@@ -159,7 +159,7 @@ function MenuNav({ items = [], open = false }) {
                       setCursor(item.id);
                       setDirection('forwards');
                     } else {
-                      document.getElementById('top').focus();
+                      document.getElementById('top')?.focus();
                     }
                   }}
                   style={{ WebkitTapHighlightColor: 'transparent' }}>

@@ -319,7 +319,7 @@ export async function getStaticProps({
       relatedPosts.parent().next('p:has(a[href="#top"])').remove();
     }
 
-    const agodaWidgets = $('div[id^="adgshp"]').each((_i, element) => {
+    $('div[id^="adgshp"]').each((_i, element) => {
       const scriptTags = [
         ...$(element).nextAll('script').toArray(),
         ...$(element).next('p').find('script').toArray(),

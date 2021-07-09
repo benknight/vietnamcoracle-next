@@ -8,7 +8,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Headroom from 'react-headroom';
-import { Popover } from '@headlessui/react';
+import { Menu } from '@headlessui/react';
 import { MenuAlt1Icon } from '@heroicons/react/outline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CommentForm from '../components/CommentForm';
@@ -107,25 +107,31 @@ export default function Post({
           pinStart={1000}>
           <div className="h-14" />
           <div className="absolute top-14 lg:top-auto lg:left-0 lg:bottom-0 w-full lg:w-auto">
-            <Popover className="text-sm lg:text-base tracking-wide bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 ring-1 ring-gray-300 dark:ring-gray-800 shadow-xl lg:rounded-tr-xl">
-              <Popover.Button className="flex items-center justify-center lg:justify-start w-full p-3 lg:px-8 font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+            <Menu
+              as="nav"
+              className="text-sm lg:text-base tracking-widest ring-1 ring-gray-300 dark:ring-gray-800 shadow-xl lg:rounded-tr-xl overflow-hidden">
+              <Menu.Button className="flex items-center justify-center lg:justify-start w-full p-3 lg:px-8 font-medium bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                 <MenuAlt1Icon className="w-4 h-4" />
                 <span className="pl-2 pr-2">Contents</span>
-              </Popover.Button>
-              <Popover.Panel>
-                <nav>
-                  <ul className="pt-1 lg:pl-8 lg:pr-12 pb-4 font-display text-center lg:text-left">
-                    {postNav.map(link => (
-                      <li className="my-3" key={link[0]}>
-                        <a className="link" href={link[0]}>
-                          {link[1]}
-                        </a>
-                      </li>
-                    ))}
-                  </ul>
-                </nav>
-              </Popover.Panel>
-            </Popover>
+              </Menu.Button>
+              <Menu.Items
+                as="ul"
+                className="px-8 py-4 lg:pr-12 font-display text-center lg:text-left bg-gray-200 dark:bg-gray-700">
+                {postNav.map(link => (
+                  <Menu.Item as="li" className="my-3" key={link[0]}>
+                    {({ active }) => (
+                      <a
+                        className={cx('block -mx-4 -my-2 px-4 py-2 rounded', {
+                          'bg-gray-300 dark:bg-gray-600': active,
+                        })}
+                        href={link[0]}>
+                        {link[1]}
+                      </a>
+                    )}
+                  </Menu.Item>
+                ))}
+              </Menu.Items>
+            </Menu>
           </div>
         </Headroom>
       )}

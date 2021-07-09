@@ -52,6 +52,11 @@
     @apply visited:text-purple-600 dark:visited:text-purple-400 !important;
     @apply hover:underline hover:text-red-600 dark:hover:text-red-500 !important;
   }
+  @media (min-width: 1200px) and (max-width: 1300px) {
+    .nav-items {
+      @apply transform scale-90;
+    }
+  }
   .form-field {
     @apply outline-none leading-none font-sans
       bg-white dark:bg-black focus:bg-white dark:focus:bg-black

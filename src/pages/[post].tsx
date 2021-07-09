@@ -319,6 +319,22 @@ export async function getStaticProps({
       relatedPosts.parent().next('p:has(a[href="#top"])').remove();
     }
 
+    const agodaWidgets = $('div[id^="adgshp"]').each((_i, element) => {
+      const scriptTags = [
+        ...$(element).nextAll('script').toArray(),
+        ...$(element).next('p').find('script').toArray(),
+      ];
+      const html = $('div')
+        .append($(element).clone(), $(scriptTags).clone())
+        .html();
+      $(element).replaceWith(
+        `<iframe src="/api/iframe-service?html=${encodeURIComponent(
+          html,
+        )}" height="420" title="Book your accommodation"></iframe>`,
+      );
+      $(scriptTags).remove();
+    });
+
     html = $.html();
   }
 

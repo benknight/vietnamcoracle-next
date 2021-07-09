@@ -75,7 +75,7 @@ const PostCard = ({ inGrid = false, post }: Props) => {
             <div
               className={cx(
                 'post-card-excerpt',
-                'mt-2 font-sans text-sm text-gray-100 xl:text-gray-300',
+                'mt-2 font-serif text-sm text-gray-100 xl:text-gray-300',
                 {
                   'hidden sm:block sm:line-clamp-3 xl:line-clamp-none': !inGrid,
                 },

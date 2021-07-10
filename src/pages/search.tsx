@@ -109,17 +109,16 @@ export default function SearchPage() {
         <div className="text-center lg:text-left my-4 lg:my-8 xl:mt-24 xl:font-display xl:text-lg">
           {isLoadingInitialData ? (
             'Searching…'
+          ) : isEmpty ? (
+            <>
+              No results found for <em>{query}</em>
+            </>
           ) : (
             <>
               Search results for <em>{query}</em>
             </>
           )}
         </div>
-        {isEmpty && (
-          <div className="text-center lg:text-left my-8 lg:my-12 xl:mb-12 xl:mt-16">
-            No results found for <em>{query}</em>
-          </div>
-        )}
         {data?.map(results =>
           results.map(result => (
             <SearchResult data={result} key={result.uri} />

@@ -146,11 +146,9 @@
   @apply leading-normal !important;
 }
 /* Images & captions */
-.post-legacy p > a[href$='.jpg'] {
-  @apply block mb-2;
-}
-.post-legacy p > a[href$='.jpg'] ~ * {
-  @apply text-sm block text-center;
+.legacy-caption em::after,
+.legacy-caption em::before {
+  content: ' ';
 }
 
 /**

@@ -335,6 +335,16 @@ export async function getStaticProps({
       $(scriptTags).remove();
     });
 
+    // Fix captions
+    $('p > a[href$=".jpg"]:first-child').each((_i, element) => {
+      $(element).addClass('block mb-2');
+      $(element)
+        .nextAll()
+        .wrapAll(
+          '<span class="block text-sm text-center legacy-caption"></span>',
+        );
+    });
+
     html = $.html();
   }
 

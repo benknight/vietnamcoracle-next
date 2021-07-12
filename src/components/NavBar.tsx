@@ -63,7 +63,7 @@ export default function NavBar({ preview = false }: Props) {
           'fixed lg:sticky lg:top-0 bottom-0 lg:bottom-auto z-20 flex justify-center w-full h-16 bg-white bg-gradient-to-b from-gray-100 to-gray-200 md:bg-none dark:bg-none dark:bg-gray-900 border-b border-white dark:border-black lg:shadow',
           { 'lg:top-6': preview },
         )}>
-        <div className="nav-items flex justify-center items-center flex-auto px-1 xl:px-16 font-sans lg:font-display tracking-wide leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
+        <div className="flex justify-center items-center flex-auto px-1 xl:px-16 font-sans lg:font-display tracking-wide leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
           {links.map(link => {
             const path = router.asPath;
             const isCurrent =
@@ -91,10 +91,10 @@ export default function NavBar({ preview = false }: Props) {
                       'w-5 h-5 lg:w-4 lg:h-4 xl:w-5 xl:h-5 lg:mr-2 mb-1 lg:mb-0 flex-shrink-0',
                   })}
                   <div className="w-full break-words">
-                    <div className="xl:hidden text-xxxs xs:text-xxs lg:text-xs xl:text-sm">
+                    <div className="nav-title-short text-xxxs xs:text-xxs lg:text-sm">
                       {link.titleShort}
                     </div>
-                    <div className="hidden xl:block text-sm">{link.title}</div>
+                    <div className="nav-title-long text-sm">{link.title}</div>
                   </div>
                 </a>
               </Link>

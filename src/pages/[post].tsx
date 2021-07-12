@@ -5,6 +5,7 @@ import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import Headroom from 'react-headroom';
@@ -183,6 +184,34 @@ export default function Post({
                   ref={relatedPostsRef}>
                   {content.customRelatedPosts.nodes.map(post => (
                     <PostCard key={post.slug} post={post} inGrid />
+                  ))}
+                </div>
+              )}
+              {content.type === 'post' && (
+                <div className="text-sm italic">
+                  Posted in{' '}
+                  {content.categories.nodes.map((cat, index) => (
+                    <>
+                      {index > 0 && ', '}
+                      <Link href={cat.uri}>
+                        <a
+                          className="link"
+                          dangerouslySetInnerHTML={{ __html: cat.name }}
+                        />
+                      </Link>
+                    </>
+                  ))}
+                  . Tagged{' '}
+                  {content.tags.nodes.map((tag, index) => (
+                    <>
+                      {index > 0 && ', '}
+                      <Link href={tag.uri}>
+                        <a
+                          className="link"
+                          dangerouslySetInnerHTML={{ __html: tag.name }}
+                        />
+                      </Link>
+                    </>
                   ))}
                 </div>
               )}
@@ -415,6 +444,16 @@ const POST_QUERY = gql`
         }
       }
       ... on Post {
+        categories(
+          where: {
+            exclude: "154" # Exclude top-level category
+          }
+        ) {
+          nodes {
+            name
+            uri
+          }
+        }
         comments(first: 1000) {
           nodes {
             ...CommentThreadCommentData
@@ -436,6 +475,12 @@ const POST_QUERY = gql`
         }
         settings {
           useNextStyles
+        }
+        tags {
+          nodes {
+            name
+            uri
+          }
         }
         thumbnails {
           thumbnailHeader {

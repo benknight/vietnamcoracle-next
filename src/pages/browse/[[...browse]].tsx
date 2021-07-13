@@ -1,11 +1,10 @@
 import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
 import _ from 'lodash';
-import type { GetStaticPaths, GetStaticProps } from 'next';
+import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import vibrant from 'node-vibrant';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import Collection from '../../components/Collection';
@@ -16,10 +15,14 @@ import Map from '../../components/Map';
 import PostCard, { SwatchesProvider } from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
+import generateSwatches from '../../lib/generateSwatches';
 import getCategoryLink from '../../lib/getCategoryLink';
 import GraphQLClient from '../../lib/GraphQLClient';
 
-const Browse = ({ data, swatches }) => {
+const Browse = ({
+  data,
+  swatches,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const isHome = !router.query.browse;
   const { category, subcategory } = data;
@@ -178,10 +181,7 @@ export const getStaticPaths = async () => {
   return result;
 };
 
-export const getStaticProps: GetStaticProps = async ({
-  params,
-  preview = false,
-}) => {
+export const getStaticProps = async ({ params, preview = false }) => {
   const query = gql`
     query Browse(
       $categorySlug: ID!
@@ -312,33 +312,12 @@ export const getStaticProps: GetStaticProps = async ({
       ].includes(categorySlug),
   });
 
-  let swatches = {};
-
-  // Generate swatches
-  if (process.env.NODE_ENV === 'production') {
-    const thumbnails = (
-      JSON.stringify(data).match(
-        /\{[^\{]*"__typename":\s*"MediaItem"[^\}]*\}/g,
-      ) || []
-    ).map(match => JSON.parse(match));
-    const results = (
-      await Promise.all(
-        thumbnails.map(t =>
-          vibrant
-            .from(
-              `https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${t.sourceUrlFx}`,
-            )
-            .getPalette(),
-        ),
-      )
-    ).map(palette => palette.DarkMuted.hex);
-    for (let i = 0; i < thumbnails.length; i++) {
-      swatches[thumbnails[i].id] = results[i];
-    }
-  }
-
   return {
-    props: { data, preview, swatches },
+    props: {
+      data,
+      preview,
+      swatches: await generateSwatches(JSON.stringify(data)),
+    },
     revalidate: 1,
   };
 };

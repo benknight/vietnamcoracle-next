@@ -4,6 +4,7 @@ import cx from 'classnames';
 import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
+import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -27,21 +28,13 @@ import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
 
 type NavLinks = string[][];
-interface Props {
-  data: any;
-  html: string;
-  monthsOld?: number;
-  postNav?: NavLinks;
-  preview: boolean;
-}
 
 export default function Post({
   data,
   html,
   monthsOld,
   postNav,
-  preview,
-}: Props) {
+}: InferGetStaticPropsType<typeof getStaticProps>) {
   const articleRef = useRef<HTMLDivElement>();
   const relatedPostsRef = useRef<HTMLDivElement>();
   const router = useRouter();
@@ -256,11 +249,7 @@ export function getStaticPaths() {
 export async function getStaticProps({
   params: { post: slug },
   preview = false,
-}): Promise<{
-  notFound: boolean;
-  props: Props;
-  revalidate: 1;
-}> {
+}) {
   const data = await GraphQLClient.request(POST_QUERY, {
     preview,
     id: slug,

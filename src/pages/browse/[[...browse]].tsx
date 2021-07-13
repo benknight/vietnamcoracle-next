@@ -116,7 +116,7 @@ const Browse = ({
               </section>
             ))
           ) : (
-            <div className="page-wrap pt-8 lg:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
+            <div className="page-wrap pt-8 xl:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
               {(subcategory || category).posts.nodes.map(post => (
                 <PostCard key={post.slug} post={post} inGrid />
               ))}

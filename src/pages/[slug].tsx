@@ -8,7 +8,7 @@ import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, Fragment } from 'react';
 import Headroom from 'react-headroom';
 import { Menu } from '@headlessui/react';
 import { MenuAlt1Icon } from '@heroicons/react/outline';
@@ -57,7 +57,13 @@ export default function Post({
         const internal = internalizeUrl(link.href);
         if (internal !== link.href) {
           event.preventDefault();
-          router.push(internal);
+          const url = new URL(link.href);
+          const params = new URLSearchParams(url.search);
+          if (params.has('p')) {
+            router.push(`/post?p=${params.get('p')}`);
+          } else {
+            router.push(internal);
+          }
         }
       });
     });
@@ -184,7 +190,7 @@ export default function Post({
                 <div className="text-sm italic">
                   Posted in{' '}
                   {content.categories.nodes.map((cat, index) => (
-                    <>
+                    <Fragment key={cat.uri}>
                       {index > 0 && ', '}
                       <Link href={cat.uri}>
                         <a
@@ -192,11 +198,11 @@ export default function Post({
                           dangerouslySetInnerHTML={{ __html: cat.name }}
                         />
                       </Link>
-                    </>
+                    </Fragment>
                   ))}
                   . Tagged{' '}
                   {content.tags.nodes.map((tag, index) => (
-                    <>
+                    <Fragment key={tag.uri}>
                       {index > 0 && ', '}
                       <Link href={tag.uri}>
                         <a
@@ -204,7 +210,7 @@ export default function Post({
                           dangerouslySetInnerHTML={{ __html: tag.name }}
                         />
                       </Link>
-                    </>
+                    </Fragment>
                   ))}
                 </div>
               )}
@@ -246,10 +252,7 @@ export function getStaticPaths() {
   };
 }
 
-export async function getStaticProps({
-  params: { post: slug },
-  preview = false,
-}) {
+export async function getStaticProps({ params: { slug }, preview = false }) {
   const data = await GraphQLClient.request(POST_QUERY, {
     preview,
     id: slug,

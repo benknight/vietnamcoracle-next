@@ -245,11 +245,30 @@ export default function Post({
   );
 }
 
-export function getStaticPaths() {
-  return {
-    paths: [],
+export async function getStaticPaths() {
+  const query = gql`
+    {
+      contentNodes(first: 1000) {
+        nodes {
+          ... on ContentNode {
+            uri
+          }
+        }
+      }
+    }
+  `;
+  const data = await GraphQLClient.request(query);
+  const result = {
+    paths: [
+      ...data.contentNodes.nodes.map(node => ({
+        params: {
+          slug: node.uri.split('/').filter(token => Boolean(token))[0],
+        },
+      })),
+    ],
     fallback: 'blocking',
   };
+  return result;
 }
 
 export async function getStaticProps({ params: { slug }, preview = false }) {

@@ -15,17 +15,18 @@ export default function OldPostAlert({ className = '', monthsOld = 0 }) {
       )}>
       <Icon className="fill-current self-start flex-shrink-0 w-16 h-16 mr-2 -mb-2 md:ml-2" />
       <div className="flex-auto">
-        <p className="text-xs sm:text-sm">
+        <p className="text-sm sm:text-base">
           <span className="font-bold md:block">
             This post was last updated more than {Math.floor(monthsOld / 12)}{' '}
             years ago.
           </span>{' '}
+          Please{' '}
           <a className="link" href="#comments">
-            Check the comments
+            check the comments
           </a>{' '}
-          section below for possible updates.{' '}
+          section below for possible updates, or{' '}
           <Link href="/updates-accuracy">
-            <a className="link">Read more</a>
+            <a className="link">read more</a>
           </Link>{' '}
           about updates &amp; accuracy.
         </p>

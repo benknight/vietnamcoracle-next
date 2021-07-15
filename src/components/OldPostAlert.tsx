@@ -13,9 +13,9 @@ export default function OldPostAlert({ className = '', monthsOld = 0 }) {
         'bg-yellow-100 bg-opacity-50 dark:bg-yellow-500 dark:bg-opacity-10',
         'border border-yellow-300 dark:border-yellow-500 dark:border-opacity-30',
       )}>
-      <Icon className="fill-current self-start flex-shrink-0 w-16 h-16 mr-2 -mb-2 md:ml-2" />
+      <Icon className="fill-current self-start flex-shrink-0 w-12 h-12 mr-2 -mb-2 md:ml-1" />
       <div className="flex-auto">
-        <p className="text-sm sm:text-base">
+        <p className="text-[12px] leading-normal sm:text-sm xl:tracking-wide">
           <span className="font-bold md:block">
             This post was last updated more than {Math.floor(monthsOld / 12)}{' '}
             years ago.

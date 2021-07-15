@@ -125,7 +125,7 @@ export default function Post({
       {postNav?.length > 0 && (
         <Headroom
           className={cx(
-            'z-10 absolute lg:fixed top-[-9999px] lg:top-auto lg:bottom-0 lg:left-0 w-full',
+            'z-10 absolute lg:fixed top-[-9999px] lg:top-auto lg:bottom-0 lg:left-0 w-full lg:w-auto',
           )}
           disable={isLG}
           pinStart={1000}>
@@ -145,9 +145,12 @@ export default function Post({
                   <Menu.Item as="li" className="my-3" key={link[0]}>
                     {({ active }) => (
                       <a
-                        className={cx('block -mx-4 -my-2 px-4 py-2 rounded', {
-                          'bg-gray-300 dark:bg-gray-600': active,
-                        })}
+                        className={cx(
+                          'block -mx-4 -my-2 px-4 py-2 rounded whitespace-nowrap',
+                          {
+                            'bg-gray-300 dark:bg-gray-600': active,
+                          },
+                        )}
                         href={link[0]}>
                         {link[1]}
                       </a>

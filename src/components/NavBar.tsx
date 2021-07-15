@@ -79,7 +79,7 @@ export default function NavBar({ preview = false }: Props) {
                     'flex flex-col lg:flex-row items-center justify-center text-center',
                     'lg:border dark:border-none',
                     'rounded-full transition-colors duration-200 ease',
-                    'lg:dark:bg-gray-800 lg:hover:bg-gray-100  lg:dark:hover:bg-gray-700 lg:dark:hover:bg-opacity-50 lg:hover:bg-opacity-75',
+                    'lg:dark:bg-gray-800 lg:hover:bg-indigo-100 lg:hover:border-indigo-100  lg:dark:hover:bg-indigo-400 lg:dark:hover:bg-opacity-30 lg:hover:bg-opacity-50',
                     {
                       'dark:shadow text-indigo-500 lg:bg-indigo-100 lg:border-indigo-100 dark:text-white lg:dark:bg-indigo-400 lg:dark:bg-opacity-20 lg:dark:border-indigo-600':
                         isCurrent,

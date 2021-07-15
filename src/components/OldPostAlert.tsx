@@ -16,10 +16,10 @@ export default function OldPostAlert({ className = '', monthsOld = 0 }) {
       <Icon className="fill-current self-start flex-shrink-0 w-12 h-12 mr-2 -mb-2 md:ml-1" />
       <div className="flex-auto">
         <p className="text-[12px] leading-normal sm:text-sm xl:tracking-wide">
-          <span className="font-bold md:block">
+          <b className="font-bold">
             This post was last updated more than {Math.floor(monthsOld / 12)}{' '}
             years ago.
-          </span>{' '}
+          </b>{' '}
           Please{' '}
           <a className="link" href="#comments">
             check the comments

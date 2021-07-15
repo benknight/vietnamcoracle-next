@@ -42,7 +42,7 @@
   .link {
     @apply text-blue-700 dark:text-blue-400 !important;
     @apply visited:text-purple-600 dark:visited:text-purple-400 !important;
-    @apply hover:underline hover:text-red-600 dark:hover:text-red-500 !important;
+    @apply hover:underline active:text-red-600 dark:active:text-red-500 !important;
   }
   .nav-title-long {
     @apply hidden;

@@ -39,7 +39,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <StylesProvider>
       <div
         className={cx(
-          'fixed z-40 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center p-3 bg-white dark:bg-gray-700 shadow rounded-full',
+          'fixed z-40 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center p-3',
           {
             'block pointer:hidden': true,
             hidden: !loading,

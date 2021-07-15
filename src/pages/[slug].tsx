@@ -98,10 +98,34 @@ export default function Post({
           src="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
         />
       </Head>
+      <Hero
+        className="relative"
+        imgSm={
+          content.thumbnails?.thumbnailHeaderSquare ??
+          content.featuredImage?.node ??
+          data.defaultImages?.cover.small
+        }
+        imgLg={
+          content.thumbnails?.thumbnailHeader ?? data.defaultImages?.cover.large
+        }>
+        <HeroContent>
+          <div className="max-w-screen-2xl mx-auto">
+            <div className="xl:w-2/3 px-3 sm:px-4 md:px-8">
+              <div className="max-w-3xl mx-auto">
+                <div className="xl:w-[150%]">
+                  <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
+                    {content.title}
+                  </h1>
+                </div>
+              </div>
+            </div>
+          </div>
+        </HeroContent>
+      </Hero>
       {postNav?.length > 0 && (
         <Headroom
           className={cx(
-            'z-10 absolute lg:fixed top-0 lg:top-auto lg:bottom-0 lg:left-0 w-full',
+            'z-10 absolute lg:fixed top-[-9999px] lg:top-auto lg:bottom-0 lg:left-0 w-full',
           )}
           disable={isLG}
           pinStart={1000}>
@@ -135,30 +159,6 @@ export default function Post({
           </div>
         </Headroom>
       )}
-      <Hero
-        className="relative z-10"
-        imgSm={
-          content.thumbnails?.thumbnailHeaderSquare ??
-          content.featuredImage?.node ??
-          data.defaultImages?.cover.small
-        }
-        imgLg={
-          content.thumbnails?.thumbnailHeader ?? data.defaultImages?.cover.large
-        }>
-        <HeroContent>
-          <div className="max-w-screen-2xl mx-auto">
-            <div className="xl:w-2/3 px-3 sm:px-4 md:px-8">
-              <div className="max-w-3xl mx-auto">
-                <div className="xl:w-[150%]">
-                  <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
-                    {content.title}
-                  </h1>
-                </div>
-              </div>
-            </div>
-          </div>
-        </HeroContent>
-      </Hero>
       <Layout className="relative max-w-screen-2xl">
         <LayoutMain>
           <div className="px-3 sm:px-4 md:px-8 text-lg">

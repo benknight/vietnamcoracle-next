@@ -77,7 +77,6 @@ export default function NavBar({ preview = false }: Props) {
                   className={cx(
                     'w-1/5 md:w-24 lg:w-auto h-10 mx-1 lg:mx-[2px] sm:px-3 lg:px-3',
                     'flex flex-col lg:flex-row items-center justify-center text-center',
-                    'lg:border dark:border-none',
                     'rounded-full transition-colors duration-200 ease',
                     'lg:dark:bg-gray-800 lg:hover:bg-indigo-100 lg:hover:border-indigo-100  lg:dark:hover:bg-indigo-400 lg:dark:hover:bg-opacity-30 lg:hover:bg-opacity-50',
                     {

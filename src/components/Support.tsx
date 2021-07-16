@@ -27,7 +27,7 @@ export default function Support({ data: block }: Props) {
       <div className="max-w-xs mx-auto text-sm tracking-wider">
         <Link href="/donations-page">
           <a
-            className={`${btnClassName} border-white dark:border-indigo-400 dark:border-opacity-50 bg-indigo-400 hover:bg-opacity-100 dark:hover:bg-opacity-75 text-white h-12`}>
+            className={`${btnClassName} bg-indigo-500 hover:bg-indigo-400 border-indigo-500 hover:border-indigo-400 dark:border-opacity-50 hover:bg-opacity-100 text-white h-12`}>
             <CurrencyDollarIcon className="w-6 h-6 mr-1" />{' '}
             <span className="pr-4">Donate</span>
           </a>

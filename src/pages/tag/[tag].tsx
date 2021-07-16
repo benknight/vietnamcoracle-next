@@ -31,7 +31,7 @@ const Tag = ({
       </Hero>
       <Layout>
         <LayoutMain>
-          <div className="page-wrap pt-4 xl:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
+          <div className="page-wrap pt-8 dark:pt-4 xl:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
             {data.tag.posts.nodes.map(post => (
               <PostCard key={post.slug} post={post} inGrid />
             ))}

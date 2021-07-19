@@ -2,6 +2,32 @@ import format from 'date-fns/format';
 import parseJSON from 'date-fns/parseJSON';
 import { gql } from 'graphql-request';
 
+export default function CommentThread({ comments }) {
+  return (
+    <ol>
+      {comments
+        .filter(c => c.parentId === null)
+        .sort()
+        .map(comment => (
+          <li
+            className="
+              my-8 px-4 md:px-7 py-6 font-sans
+              bg-gray-100 dark:bg-gray-900 dark:text-gray-300 rounded-lg"
+            key={comment.id}>
+            <CommentHeader comment={comment} />
+            <div
+              className="comment"
+              dangerouslySetInnerHTML={{
+                __html: comment.content,
+              }}
+            />
+            <CommentReplies comment={comment} all={comments} />
+          </li>
+        ))}
+    </ol>
+  );
+}
+
 function formatDate(value: string): string {
   const date = parseJSON(value);
   return format(date, "MMMM d, yyyy 'at' p");
@@ -9,7 +35,7 @@ function formatDate(value: string): string {
 
 const CommentHeader = ({ comment, isReply = false }) => (
   <div className="flex items-center mb-4 font-display text-sm">
-    {comment.author.node?.avatar?.url && (
+    {comment.author.node?.email === 'vietnamcoracle@gmail.com' && (
       <img
         className="w-11 h-11 mr-2 rounded-full"
         src={comment.author.node.avatar.url}
@@ -24,7 +50,7 @@ const CommentHeader = ({ comment, isReply = false }) => (
         }}
       />{' '}
       <span className="italic">says:</span>
-      <div className="mt-2 text-xs opacity-75">
+      <div className="mt-1 text-xs opacity-75">
         {formatDate(comment.dateGmt)}
       </div>
     </div>
@@ -55,32 +81,6 @@ const CommentReplies = ({ all, comment }) => {
     </ol>
   );
 };
-
-export default function CommentThread({ comments }) {
-  return (
-    <ol>
-      {comments
-        .filter(c => c.parentId === null)
-        .sort()
-        .map(comment => (
-          <li
-            className="
-              my-8 px-4 md:px-7 py-6 font-sans
-              bg-gray-100 dark:bg-gray-900 dark:text-gray-300 rounded-lg"
-            key={comment.id}>
-            <CommentHeader comment={comment} />
-            <div
-              className="comment"
-              dangerouslySetInnerHTML={{
-                __html: comment.content,
-              }}
-            />
-            <CommentReplies comment={comment} all={comments} />
-          </li>
-        ))}
-    </ol>
-  );
-}
 
 CommentThread.fragments = gql`
   fragment CommentThreadCommentData on Comment {

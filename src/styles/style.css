@@ -36,6 +36,9 @@
   .comment {
     @apply text-sm leading-snug;
   }
+  .comment a {
+    @apply link;
+  }
   .comment p {
     @apply mb-4;
   }

@@ -46,10 +46,10 @@ const Tag = ({
   );
 };
 
-export const getStaticPaths: GetStaticPaths = async () => {
+export const getStaticPaths = async () => {
   const query = gql`
     {
-      tags(first: 1000) {
+      tags(first: 10, where: { orderby: COUNT, order: DESC }) {
         nodes {
           uri
         }
@@ -63,7 +63,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
         params: { tag: tag.uri.split('/').filter(token => Boolean(token))[1] },
       })),
     ],
-    fallback: false,
+    fallback: 'blocking',
   };
   return result;
 };

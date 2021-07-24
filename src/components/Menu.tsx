@@ -9,6 +9,7 @@ import { Popover, Transition } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/outline';
 import { ArrowLeftIcon } from '@heroicons/react/solid';
 import GraphQLClient from '../lib/GraphQLClient';
+import { CircularProgress } from '@material-ui/core';
 
 export default function Menu({ children, className = '' }) {
   const { data } = useSWR(
@@ -63,7 +64,19 @@ export default function Menu({ children, className = '' }) {
                 shadow-lg
                 rounded-lg
                 transition">
-              <MenuNav items={data?.menuItems.nodes ?? []} open={open} />
+              {data?.menuItems?.nodes ? (
+                <MenuNav items={data.menuItems.nodes} open={open} />
+              ) : (
+                <div className="h-60 flex items-center justify-center cursor-wait">
+                  <CircularProgress
+                    classes={{
+                      colorPrimary: 'opacity-50 text-black dark:text-white',
+                    }}
+                    size={32}
+                    thickness={2}
+                  />
+                </div>
+              )}
             </Popover.Panel>
           </Transition>
         </>

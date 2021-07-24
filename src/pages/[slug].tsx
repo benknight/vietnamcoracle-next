@@ -323,7 +323,8 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
       const date = lastUpdated
         .text()
         .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]
-        ?.trim();
+        ?.trim()
+        .replace(/\s+/g, ' ');
       if (date) {
         const parsed = parse(date, 'LLLL yyyy', new Date());
         monthsOld = differenceInMonths(new Date(), parsed);

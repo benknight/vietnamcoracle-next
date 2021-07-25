@@ -368,7 +368,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
         ...$(element).nextAll('script').toArray(),
         ...$(element).next('p').find('script').toArray(),
       ];
-      const html = $('div')
+      const html = $('<div />')
         .append($(element).clone(), $(scriptTags).clone())
         .html();
       $(element).replaceWith(

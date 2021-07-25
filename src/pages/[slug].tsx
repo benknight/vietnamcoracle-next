@@ -381,12 +381,8 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
 
     // Fix captions
     $('p > a[href$=".jpg"]:first-child').each((_i, element) => {
-      $(element).addClass('block mb-2');
-      $(element)
-        .nextAll()
-        .wrapAll(
-          '<span class="block text-sm text-center legacy-caption"></span>',
-        );
+      $(element.parent).addClass('text-sm text-center legacy-caption');
+      $(element).addClass('block mb-2').insertBefore(element.parent);
     });
 
     html = $.html();

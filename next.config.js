@@ -1,4 +1,4 @@
-const { redirects } = require('./redirection-plugin-export.json');
+const axios = require('axios');
 
 module.exports = {
   future: {
@@ -9,6 +9,20 @@ module.exports = {
     domains: ['www.vietnamcoracle.com', 'res.cloudinary.com'],
   },
   async redirects() {
+    const api = axios.create({
+      auth: {
+        username: process.env.WORDPRESS_API_USERNAME,
+        password: process.env.WORDPRESS_API_PASSWORD,
+      },
+      baseURL: 'https://www.vietnamcoracle.com/wp-json/redirection/v1',
+    });
+    let cmsRedirects;
+    try {
+      const response = await api.get('/export/all/json');
+      cmsRedirects = JSON.parse(response.data.data)?.redirects;
+    } catch (error) {
+      cmsRedirects = [];
+    }
     return [
       {
         destination: '/browse/:path*',
@@ -31,7 +45,7 @@ module.exports = {
           },
         ],
       },
-      ...redirects.map(config => ({
+      ...cmsRedirects.map(config => ({
         destination: config.action_data.url.replace(
           /https?\:\/\/(www\.)?vietnamcoracle\.com/g,
           '',

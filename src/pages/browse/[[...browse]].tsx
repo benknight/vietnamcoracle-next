@@ -106,7 +106,7 @@ const Browse = ({
                   </h3>
                   {item.category && (
                     <Link href={getCategoryLink(item.category.uri)}>
-                      <a className="link ml-4 text-sm font-serif whitespace-nowrap">
+                      <a className="link ml-4 text-sm font-sans whitespace-nowrap">
                         See all
                       </a>
                     </Link>

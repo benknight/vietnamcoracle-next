@@ -63,7 +63,7 @@ export default function NavBar({ preview = false }: Props) {
           'fixed lg:sticky lg:top-0 bottom-0 lg:bottom-auto z-20 flex justify-center w-full h-16 bg-white bg-gradient-to-b from-gray-100 to-gray-200 md:bg-none dark:bg-none dark:bg-gray-900 border-b border-white dark:border-black lg:shadow',
           { 'lg:top-6': preview },
         )}>
-        <div className="flex justify-center items-center flex-auto px-1 xl:px-16 font-sans lg:font-display tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
+        <div className="flex justify-center items-center flex-auto px-1 xl:px-16 font-sans font-medium tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
           {links.map(link => {
             const path = router.asPath;
             const isCurrent =
@@ -78,9 +78,9 @@ export default function NavBar({ preview = false }: Props) {
                     'w-1/5 md:w-24 lg:w-auto h-10 mx-1 lg:mx-[2px] sm:px-3 lg:px-3',
                     'flex flex-col lg:flex-row items-center justify-center text-center',
                     'rounded-full transition-colors duration-200 ease',
-                    'lg:dark:bg-gray-800 lg:hover:bg-indigo-100 lg:hover:border-indigo-100  lg:dark:hover:bg-indigo-400 lg:dark:hover:bg-opacity-30 lg:hover:bg-opacity-50',
+                    'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-gray-800',
                     {
-                      'dark:shadow text-indigo-500 lg:bg-indigo-100 lg:border-indigo-100 dark:text-white lg:dark:bg-indigo-400 lg:dark:bg-opacity-20 lg:dark:border-indigo-600':
+                      'dark:shadow text-indigo-500 dark:text-indigo-400':
                         isCurrent,
                     },
                   )}
@@ -93,7 +93,7 @@ export default function NavBar({ preview = false }: Props) {
                     <div className="nav-title-short text-xxxs xs:text-xxs lg:text-sm">
                       {link.titleShort}
                     </div>
-                    <div className="nav-title-long text-sm">{link.title}</div>
+                    <div className="nav-title-long">{link.title}</div>
                   </div>
                 </a>
               </Link>

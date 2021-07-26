@@ -58,7 +58,7 @@ export default function Menu({ children, className = '' }) {
               className="
                 absolute z-10
                 w-72 xs:w-80 max-h-[87vh] mt-1 lg:mt-2 overflow-auto
-                font-medium font-sans md:font-display text-base md:text-sm
+                font-medium font-sans text-base
                 bg-white dark:bg-gray-800
                 border border-gray-200 dark:border-gray-700
                 shadow-lg

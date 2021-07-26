@@ -24,7 +24,7 @@ export default function Support({ data: block }: Props) {
           </Link>
         </p>
       </BlockContent>
-      <div className="max-w-xs mx-auto text-sm tracking-wider">
+      <div className="max-w-xs mx-auto tracking-wider font-sans font-medium">
         <Link href="/donations-page">
           <a
             className={`${btnClassName} bg-indigo-500 hover:bg-indigo-400 border-indigo-500 hover:border-indigo-400 dark:border-opacity-50 hover:bg-opacity-100 text-white h-12`}>

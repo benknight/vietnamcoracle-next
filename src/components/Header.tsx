@@ -121,7 +121,7 @@ export default function Header({ preview = false }: Props) {
       </Headroom>
       <header
         className={cx(
-          'relative py-12 sm:py-16 px-3 xl:py-16 text-center',
+          'relative py-12 sm:py-16 px-3 xl:py-16 text-center border-b border-gray-300 dark:border-gray-700',
           'bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
           { 'mt-6': preview },
           { hidden: !isHome },

@@ -86,11 +86,10 @@ export default function NavBar({ preview = false }: Props) {
                   )}
                   key={link.url}>
                   {cloneElement(isCurrent ? link.icon : link.iconAlt, {
-                    className:
-                      'w-5 h-5 lg:w-4 lg:h-4 xl:w-5 xl:h-5 lg:mr-2 mb-1 lg:mb-0 flex-shrink-0',
+                    className: 'w-5 h-5 lg:mr-2 mb-1 lg:mb-0 flex-shrink-0',
                   })}
                   <div className="w-full break-words">
-                    <div className="nav-title-short text-xxxs xs:text-xxs lg:text-sm">
+                    <div className="nav-title-short text-xxxs xs:text-xxs lg:text-base">
                       {link.titleShort}
                     </div>
                     <div className="nav-title-long">{link.title}</div>

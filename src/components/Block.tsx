@@ -28,9 +28,9 @@ export const BlockContent = props => (
   <div
     className="
       mx-auto mb-8 px-6
-      max-w-sm lg:max-w-md xl:max-w-sm
+      max-w-sm lg:max-w-md xl:max-w-[401px]
       text-sm xs:text-base lg:text-lg xl:text-base font-serif
-      dark:text-gray-400">
+      text-gray-500 dark:text-gray-400">
     {props.children}
   </div>
 );

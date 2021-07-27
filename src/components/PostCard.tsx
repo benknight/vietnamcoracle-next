@@ -64,7 +64,7 @@ const PostCard = ({ inGrid = false, post }: Props) => {
           <div className="relative">
             <h3
               className={cx(
-                'text-sm md:text-2xl tracking-tightest lg:tracking-tight',
+                'text-sm md:text-2xl tracking-tightest lg:tracking-tight group-hover:underline',
                 {
                   'sm:text-lg sm:leading-snug': !inGrid,
                   'font-display text-2xl text-gray-100': inGrid || isSmall,

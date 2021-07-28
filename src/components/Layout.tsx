@@ -11,7 +11,7 @@ const Layout = ({ children, className = '' }) => (
 );
 
 export const LayoutMain = ({ children }) => (
-  <main className="overflow-hidden xl:w-2/3 2xl:w-auto 2xl:flex-auto">
+  <main className="overflow-hidden xl:w-[70%] 2xl:w-auto 2xl:flex-auto">
     {children}
   </main>
 );
@@ -21,7 +21,7 @@ export const LayoutSidebar = ({ children, className = '' }) => {
     <div
       className={cx(
         className,
-        'xl:w-1/3 2xl:w-[32rem] xl:flex xl:flex-col flex-shrink-0',
+        'xl:w-[30%] 2xl:w-[32rem] xl:flex xl:flex-col flex-shrink-0',
       )}>
       {children}
     </div>

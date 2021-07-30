@@ -111,7 +111,7 @@ export default function Post({
         <HeroContent>
           <div className="max-w-screen-2xl mx-auto">
             <div className="xl:w-[70%] px-3 sm:px-4 md:px-8">
-              <div className="max-w-3xl mx-auto">
+              <div className="max-w-[52rem] mx-auto">
                 <div className="xl:w-[150%]">
                   <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
                     {content.title}
@@ -165,7 +165,7 @@ export default function Post({
       <Layout className="relative max-w-screen-2xl">
         <LayoutMain>
           <div className="px-3 sm:px-4 md:px-8 text-lg">
-            <div className="max-w-3xl mx-auto">
+            <div className="max-w-[52rem] mx-auto">
               {content.type === 'post' && monthsOld > 36 && (
                 <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />
               )}
@@ -238,8 +238,7 @@ export default function Post({
             </div>
           </div>
         </LayoutMain>
-        <LayoutSidebar className="relative xl:border-l border-gray-200 dark:border-gray-800">
-          <div className="hidden xl:block absolute top-0 -left-px w-px h-48 bg-gradient-to-b from-white dark:from-gray-950 to-transparent" />
+        <LayoutSidebar showBorder>
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>
@@ -381,8 +380,10 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
 
     // Fix captions
     $('p > a[href$=".jpg"]:first-child').each((_i, element) => {
-      $(element.parent).addClass('text-sm text-center legacy-caption');
-      $(element).addClass('block mb-2').insertBefore(element.parent);
+      $(element.parent).addClass('text-sm text-center legacy-caption mb-8');
+      $(element)
+        .addClass('block mt-8 mb-2 -mx-3 sm:-mx-4 md:mx-0')
+        .insertBefore(element.parent);
     });
 
     html = $.html();

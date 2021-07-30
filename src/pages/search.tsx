@@ -7,6 +7,9 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment } from 'react';
 import { useSWRInfinite } from 'swr';
+import Footer from '../components/Footer';
+import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
+import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
 import RestClient from '../lib/RestClient';
 import useWaitCursor from '../lib/useWaitCursor';
@@ -72,7 +75,7 @@ const resultsFetcher = async (query: string, page: number) => {
   return data.contentNodes.nodes;
 };
 
-export default function SearchPage() {
+export default function SearchPage(props) {
   const router = useRouter();
   const { query } = router.query;
   const initialSize = router.query.size
@@ -105,47 +108,55 @@ export default function SearchPage() {
           {router.query.query ? ` for ${router.query.query}` : ''}
         </title>
       </Head>
-      <div className="px-1 pb-24 max-w-5xl mx-auto">
-        <div className="text-center lg:text-left my-4 lg:my-8 xl:mt-24 xl:font-display xl:text-lg">
-          {isLoadingInitialData ? (
-            'Searching…'
-          ) : isEmpty ? (
-            <>
-              No results found for <em>{query}</em>
-            </>
-          ) : (
-            <>
-              Search results for <em>{query}</em>
-            </>
-          )}
-        </div>
-        {data?.map(results =>
-          results.map(result => (
-            <SearchResult data={result} key={result.uri} />
-          )),
-        )}
-        <div className="text-center lg:my-8">
-          <button
-            className={cx('btn w-full h-12 lg:h-10 lg:w-auto', {
-              'opacity-50': isLoadingMore,
-              hidden: isLoadingInitialData || isReachingEnd,
-            })}
-            disabled={isLoadingMore}
-            onClick={() => {
-              router.replace(
-                {
-                  pathname: '/search',
-                  query: { query, size: size + 1 },
-                },
-                null,
-                { scroll: false },
-              );
-              setSize(size + 1);
-            }}>
-            Load More Results
-          </button>
-        </div>
-      </div>
+      <Layout className="relative max-w-screen-2xl">
+        <LayoutMain>
+          <div className="page-wrap">
+            <div className="text-center lg:text-left mx-auto my-4 lg:mt-8 xl:mt-16 lg:font-display lg:text-xl max-w-screen-md">
+              {isLoadingInitialData ? (
+                'Searching…'
+              ) : isEmpty ? (
+                <>
+                  No results found for <em>{query}</em>
+                </>
+              ) : (
+                <>
+                  Search results for <em>{query}</em>
+                </>
+              )}
+            </div>
+            {data?.map(results =>
+              results.map(result => (
+                <SearchResult data={result} key={result.uri} />
+              )),
+            )}
+            <div className="text-center lg:my-8 xl:mb-32">
+              <button
+                className={cx('btn w-full h-12 lg:h-10 lg:w-auto', {
+                  'opacity-50': isLoadingMore,
+                  hidden: isLoadingInitialData || isReachingEnd,
+                })}
+                disabled={isLoadingMore}
+                onClick={() => {
+                  router.replace(
+                    {
+                      pathname: '/search',
+                      query: { query, size: size + 1 },
+                    },
+                    null,
+                    { scroll: false },
+                  );
+                  setSize(size + 1);
+                }}>
+                Load More Results
+              </button>
+            </div>
+          </div>
+        </LayoutMain>
+        <LayoutSidebar showBorder>
+          <SidebarDefault data={props.data} />
+          <Footer data={props.data} />
+        </LayoutSidebar>
+      </Layout>
     </>
   );
 }
@@ -154,8 +165,8 @@ function SearchResult({ data }) {
   return (
     <div
       className="
-        relative sm:flex my-2 p-4 lg:px-0 rounded overflow-hidden
-        bg-white dark:bg-gray-900 lg:bg-transparent shadow lg:shadow-none"
+        relative sm:flex mx-auto my-2 p-4 lg:px-0 lg:my-0 rounded overflow-hidden
+        bg-white dark:bg-gray-900 lg:bg-transparent shadow lg:shadow-none max-w-screen-md"
       key={data.uri}>
       <Link href={data.uri}>
         <a className="absolute inset-0 sm:hidden" />
@@ -213,8 +224,22 @@ function SearchResult({ data }) {
 }
 
 export async function getStaticProps({ preview = false }) {
+  const data = await GraphQLClient.request(
+    gql`
+      query SearchPage($preview: Boolean!) {
+        ...FooterData
+        ...SidebarDefaultData
+      }
+      ${Footer.fragments}
+      ${SidebarDefault.fragments}
+    `,
+    {
+      preview,
+    },
+  );
   return {
     props: {
+      data,
       preview,
     },
   };

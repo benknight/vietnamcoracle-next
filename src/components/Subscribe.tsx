@@ -85,10 +85,10 @@ export default function Subscribe({ data: block }: Props) {
             <Image
               alt=""
               className="h-full rounded-full object-cover"
-              height="120"
+              height="100"
               layout="fixed"
               src={block.image.sourceUrl}
-              width="120"
+              width="100"
             />
           </a>
         </Link>

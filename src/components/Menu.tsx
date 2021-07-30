@@ -57,7 +57,7 @@ export default function Menu({ children, className = '' }) {
               static
               className="
                 absolute z-10
-                w-72 xs:w-80 max-h-[87vh] mt-1 lg:mt-2 overflow-auto
+                w-72 xs:w-96 max-h-[87vh] mt-1 lg:mt-2 overflow-auto
                 font-medium font-sans text-base
                 bg-white dark:bg-gray-800
                 border border-gray-200 dark:border-gray-700
@@ -146,7 +146,7 @@ function MenuNav({ items = [], open = false }) {
             <li>
               <Link href={byId[key].path || byId[key].url}>
                 <a
-                  className="flex items-center h-12 px-4 text-base font-bold rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
+                  className="flex items-center h-14 px-6 text-lg font-bold rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
                   onClick={event => {
                     event.preventDefault();
                     setCursor(byId[key].parentId);
@@ -165,7 +165,7 @@ function MenuNav({ items = [], open = false }) {
             <li key={item.url}>
               <Link href={item.path || item.url}>
                 <a
-                  className="flex items-center h-12 px-4 rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
+                  className="flex items-center h-14 px-6 rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
                   onClick={event => {
                     if (grouped[item.id]) {
                       event.preventDefault();

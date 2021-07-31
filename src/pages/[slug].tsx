@@ -112,7 +112,7 @@ export default function Post({
           <div className="max-w-screen-2xl mx-auto">
             <div className="xl:w-[70%] px-3 sm:px-4 md:px-8">
               <div className="max-w-[52rem] mx-auto">
-                <div className="xl:w-[150%]">
+                <div className="xl:w-[145%]">
                   <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
                     {content.title}
                   </h1>

@@ -27,6 +27,7 @@ module.exports = {
         'lp-blue': '#297CBB',
         'near-black': 'hsl(0deg 0% 2%)',
         purple: colors.purple,
+        primary: colors.indigo,
       },
       fontFamily: {
         display: ['Libre Baskerville', ...defaultTheme.fontFamily.serif],

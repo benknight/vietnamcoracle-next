@@ -80,7 +80,7 @@ export default function NavBar({ preview = false }: Props) {
                     'rounded-full transition-colors duration-200 ease',
                     'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-gray-800',
                     {
-                      'dark:shadow text-indigo-500 dark:text-indigo-400':
+                      'dark:shadow text-primary-500 dark:text-primary-400':
                         isCurrent,
                     },
                   )}

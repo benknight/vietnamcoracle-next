@@ -34,20 +34,23 @@ const Tag = ({
       </Hero>
       <Layout>
         <LayoutMain>
-          <Tab.Group manual>
-            <div className="page-wrap pt-6 flex justify-center lg:justify-start">
+          <Tab.Group
+            as="div"
+            className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent"
+            manual>
+            <div className="pt-8 md:pt-6 px-8 flex justify-center lg:justify-start">
               <GridListTabs />
             </div>
             <Tab.Panels>
               <Tab.Panel>
-                <div className="page-wrap pt-3">
+                <div className="px-2 py-4 lg:px-8">
                   {data.tag.posts.nodes.map(post => (
                     <PostMediaBlock key={post.slug} data={post} />
                   ))}
                 </div>
               </Tab.Panel>
               <Tab.Panel>
-                <div className="page-wrap pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
+                <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
                   {data.tag.posts.nodes.map(post => (
                     <PostCard key={post.slug} data={post} inGrid />
                   ))}

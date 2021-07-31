@@ -88,7 +88,7 @@ export default function SearchPage(props) {
           <Tab.Group manual>
             <div className="px-2 lg:px-8">
               <div className="flex justify-between items-baseline my-2 lg:mt-8">
-                <div className="mr-8 lg:font-display lg:text-xl">
+                <div className="ml-4 md:ml-0 mr-8 lg:font-display lg:text-xl">
                   {isLoadingInitialData ? (
                     'Searching…'
                   ) : isEmpty ? (

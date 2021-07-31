@@ -121,20 +121,23 @@ const Browse = ({
               </section>
             ))
           ) : (
-            <Tab.Group manual>
-              <div className="page-wrap pt-6 dark:pt-0 flex justify-center md:justify-start">
+            <Tab.Group
+              as="div"
+              className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent"
+              manual>
+              <div className="pt-6 px-8 flex justify-center lg:justify-start">
                 <GridListTabs />
               </div>
               <Tab.Panels>
                 <Tab.Panel>
-                  <div className="page-wrap pt-3">
+                  <div className="px-2 py-4 lg:px-8">
                     {(subcategory || category).posts.nodes.map(post => (
                       <PostMediaBlock key={post.slug} data={post} />
                     ))}
                   </div>
                 </Tab.Panel>
                 <Tab.Panel>
-                  <div className="page-wrap pt-6 xl:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
+                  <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
                     {(subcategory || category).posts.nodes.map(post => (
                       <PostCard key={post.slug} data={post} inGrid />
                     ))}
@@ -144,7 +147,7 @@ const Browse = ({
             </Tab.Group>
           )}
           {category.map && (
-            <section className="mt-8 lg:mb-8 lg:px-8">
+            <section className="lg:mb-8 lg:px-8">
               <Map data={category.map} />
             </section>
           )}

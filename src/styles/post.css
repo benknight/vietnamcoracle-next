@@ -26,7 +26,7 @@
   width: 100%;
 }
 .post img {
-  @apply shadow-heavy;
+  @apply md:shadow-heavy;
 }
 .post img,
 .post iframe {

@@ -37,7 +37,7 @@ const Collection = ({ data }) => {
             <li
               className="flex flex-shrink-0 w-3/7 max-w-[10rem] sm:max-w-none lg:w-3/8 xl:w-3/7 xl:min-w-[23rem] xl:max-w-[25rem] pr-3 lg:pr-4 xl:pr-3 2xl:pr-6"
               key={post.slug}>
-              <PostCard post={post} />
+              <PostCard data={post} />
             </li>
           ))}
         </ol>
@@ -51,7 +51,7 @@ Collection.fragments = gql`
     posts {
       ... on Post {
         slug
-        ...PostCardPostData
+        ...PostCardData
       }
     }
   }

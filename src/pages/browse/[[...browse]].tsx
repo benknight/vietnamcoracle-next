@@ -7,12 +7,15 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
+import { Tab } from '@headlessui/react';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
+import GridListTabs from '../../components/GridListTabs';
 import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
 import PostCard, { SwatchesProvider } from '../../components/PostCard';
+import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
 import generateSwatches from '../../lib/generateSwatches';
@@ -99,7 +102,9 @@ const Browse = ({
         <LayoutMain>
           {category && !subcategory ? (
             category.collections?.items.map(item => (
-              <section className="my-6 md:my-12 md:dark:mt-4" key={item.title}>
+              <section
+                className="my-6 md:my-12 md:dark:mt-4 xl:pr-8"
+                key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
                   <h3 className="mb-1 font-display text-lg xs:text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl">
                     {item.title}
@@ -116,19 +121,35 @@ const Browse = ({
               </section>
             ))
           ) : (
-            <div className="page-wrap pt-8 xl:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
-              {(subcategory || category).posts.nodes.map(post => (
-                <PostCard key={post.slug} post={post} inGrid />
-              ))}
-            </div>
+            <Tab.Group manual>
+              <div className="page-wrap pt-6 dark:pt-0 flex justify-center md:justify-start">
+                <GridListTabs />
+              </div>
+              <Tab.Panels>
+                <Tab.Panel>
+                  <div className="page-wrap pt-3">
+                    {(subcategory || category).posts.nodes.map(post => (
+                      <PostMediaBlock key={post.slug} data={post} />
+                    ))}
+                  </div>
+                </Tab.Panel>
+                <Tab.Panel>
+                  <div className="page-wrap pt-6 xl:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
+                    {(subcategory || category).posts.nodes.map(post => (
+                      <PostCard key={post.slug} data={post} inGrid />
+                    ))}
+                  </div>
+                </Tab.Panel>
+              </Tab.Panels>
+            </Tab.Group>
           )}
           {category.map && (
-            <section className="mt-8 lg:mb-8 lg:px-8 xl:pr-0">
+            <section className="mt-8 lg:mb-8 lg:px-8">
               <Map data={category.map} />
             </section>
           )}
         </LayoutMain>
-        <LayoutSidebar>
+        <LayoutSidebar showBorder={Boolean(subcategory)}>
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>
@@ -224,7 +245,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
         posts(first: 1000) @skip(if: $skipCategoryPosts) {
           nodes {
             slug
-            ...PostCardPostData
+            ...PostCardData
           }
         }
         slider {
@@ -253,7 +274,8 @@ export const getStaticProps = async ({ params, preview = false }) => {
         posts(first: 1000) {
           nodes {
             slug
-            ...PostCardPostData
+            ...PostMediaBlockData
+            ...PostCardData
           }
         }
       }
@@ -288,6 +310,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
     ${Collection.fragments}
     ${Footer.fragments}
     ${Map.fragments}
+    ${PostMediaBlock.fragments}
     ${SidebarDefault.fragments}
     ${Slider.fragments}
   `;

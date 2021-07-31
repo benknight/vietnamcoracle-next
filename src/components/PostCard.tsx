@@ -9,21 +9,21 @@ import breakpoints from '../config/breakpoints';
 
 interface Props {
   inGrid?: boolean;
-  post: any;
+  data: any;
 }
 
 const SwatchesContext = createContext({});
 export const SwatchesProvider = SwatchesContext.Provider;
 
-const PostCard = ({ inGrid = false, post }: Props) => {
+const PostCard = ({ inGrid = false, data }: Props) => {
   const swatches = useContext(SwatchesContext);
   const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
-  if (!post.featuredImage) {
+  if (!data.featuredImage) {
     return null;
   }
-  const swatch = swatches[post.featuredImage.node.id];
+  const swatch = swatches[data.featuredImage.node.id];
   return (
-    <Link href={`/${post.slug}`}>
+    <Link href={`/${data.slug}`}>
       <a
         className={cx(
           'group relative overflow-hidden flex flex-col sm:shadow w-full rounded-lg',
@@ -38,11 +38,11 @@ const PostCard = ({ inGrid = false, post }: Props) => {
             backgroundColor: swatch,
           }}>
           <Image
-            alt={post.featuredImage.node.altText}
+            alt={data.featuredImage.node.altText}
             layout="fill"
             loading="lazy"
             objectFit="cover"
-            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.featuredImage.node.sourceUrl}`}
+            src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.srcLg}`}
           />
           <div
             className={cx(
@@ -70,7 +70,7 @@ const PostCard = ({ inGrid = false, post }: Props) => {
                   'font-display text-2xl text-gray-100': inGrid || isSmall,
                 },
               )}>
-              {post.title}
+              {data.title}
             </h3>
             <div
               className={cx(
@@ -80,7 +80,7 @@ const PostCard = ({ inGrid = false, post }: Props) => {
                   'hidden sm:block sm:line-clamp-3 xl:line-clamp-none': !inGrid,
                 },
               )}
-              dangerouslySetInnerHTML={{ __html: post.excerpt }}></div>
+              dangerouslySetInnerHTML={{ __html: data.excerpt }}></div>
           </div>
         </div>
       </a>
@@ -89,19 +89,25 @@ const PostCard = ({ inGrid = false, post }: Props) => {
 };
 
 PostCard.fragments = gql`
-  fragment PostCardPostData on Post {
-    excerpt
+  fragment PostCardData on ContentNode {
+    uri
     slug
-    title
-    featuredImage {
-      node {
-        __typename
-        altText
-        id
-        sourceUrl(size: LARGE)
-        sourceUrlFx: sourceUrl(size: MEDIUM)
-        slug
+    ... on NodeWithExcerpt {
+      excerpt
+    }
+    ... on NodeWithFeaturedImage {
+      featuredImage {
+        node {
+          __typename
+          altText
+          id
+          srcLg: sourceUrl(size: LARGE)
+          slug
+        }
       }
+    }
+    ... on NodeWithTitle {
+      title
     }
   }
 `;

@@ -1,12 +1,15 @@
 import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
 import _ from 'lodash';
-import type { GetStaticPaths, InferGetStaticPropsType } from 'next';
+import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
+import { Tab } from '@headlessui/react';
 import Footer from '../../components/Footer';
+import GridListTabs from '../../components/GridListTabs';
 import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import PostCard, { SwatchesProvider } from '../../components/PostCard';
+import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
 import GraphQLClient from '../../lib/GraphQLClient';
 import generateSwatches from '../../lib/generateSwatches';
@@ -31,13 +34,29 @@ const Tag = ({
       </Hero>
       <Layout>
         <LayoutMain>
-          <div className="page-wrap pt-8 dark:pt-4 xl:pr-0 grid gap-4 xl:gap-6 md:grid-cols-2">
-            {data.tag.posts.nodes.map(post => (
-              <PostCard key={post.slug} post={post} inGrid />
-            ))}
-          </div>
+          <Tab.Group manual>
+            <div className="page-wrap pt-6 flex justify-center lg:justify-start">
+              <GridListTabs />
+            </div>
+            <Tab.Panels>
+              <Tab.Panel>
+                <div className="page-wrap pt-3">
+                  {data.tag.posts.nodes.map(post => (
+                    <PostMediaBlock key={post.slug} data={post} />
+                  ))}
+                </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                <div className="page-wrap pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
+                  {data.tag.posts.nodes.map(post => (
+                    <PostCard key={post.slug} data={post} inGrid />
+                  ))}
+                </div>
+              </Tab.Panel>
+            </Tab.Panels>
+          </Tab.Group>
         </LayoutMain>
-        <LayoutSidebar>
+        <LayoutSidebar showBorder>
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>
@@ -85,7 +104,8 @@ export const getStaticProps = async ({ params, preview = false }) => {
         posts(first: 1000) {
           nodes {
             slug
-            ...PostCardPostData
+            ...PostCardData
+            ...PostMediaBlockData
           }
         }
         seo {
@@ -108,6 +128,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
     ${Footer.fragments}
     ${Hero.fragments}
     ${PostCard.fragments}
+    ${PostMediaBlock.fragments}
     ${SidebarDefault.fragments}
   `;
 

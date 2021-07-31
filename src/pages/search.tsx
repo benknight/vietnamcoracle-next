@@ -1,14 +1,16 @@
 import cx from 'classnames';
 import { gql } from 'graphql-request';
+import _flatten from 'lodash/flatten';
 import _upperFirst from 'lodash/upperFirst';
 import Head from 'next/head';
-import Image from 'next/image';
-import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { Fragment } from 'react';
 import { useSWRInfinite } from 'swr';
+import { Tab } from '@headlessui/react';
 import Footer from '../components/Footer';
+import GridListTabs from '../components/GridListTabs';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
+import PostCard from '../components/PostCard';
+import PostMediaBlock from '../components/PostMediaBlock';
 import SidebarDefault from '../components/SidebarDefault';
 import GraphQLClient from '../lib/GraphQLClient';
 import RestClient from '../lib/RestClient';
@@ -20,39 +22,8 @@ const SEARCH_RESULTS_QUERY = gql`
   query SearchResults($in: [ID]) {
     contentNodes(where: { in: $in }) {
       nodes {
-        uri
-        ... on NodeWithExcerpt {
-          excerpt
-        }
-        ... on NodeWithFeaturedImage {
-          featuredImage {
-            node {
-              altText
-              sourceUrl(size: MEDIUM)
-              slug
-            }
-          }
-        }
-        ... on NodeWithTitle {
-          title
-        }
-        ... on Page {
-          seo {
-            metaDesc
-          }
-        }
-        ... on Post {
-          categories(
-            where: {
-              exclude: "154" # Exclude top-level category
-            }
-          ) {
-            nodes {
-              name
-              uri
-            }
-          }
-        }
+        ...PostCardData
+        ...PostMediaBlockData
       }
       pageInfo {
         endCursor
@@ -60,6 +31,8 @@ const SEARCH_RESULTS_QUERY = gql`
       }
     }
   }
+  ${PostCard.fragments}
+  ${PostMediaBlock.fragments}
 `;
 
 const resultsFetcher = async (query: string, page: number) => {
@@ -100,6 +73,8 @@ export default function SearchPage(props) {
 
   useWaitCursor(isLoadingInitialData || isLoadingMore);
 
+  const posts = data ? _flatten(data) : [];
+
   return (
     <>
       <Head>
@@ -109,47 +84,65 @@ export default function SearchPage(props) {
         </title>
       </Head>
       <Layout className="relative max-w-screen-2xl">
-        <LayoutMain>
-          <div className="page-wrap">
-            <div className="text-center lg:text-left mx-auto my-4 lg:mt-8 xl:mt-16 lg:font-display lg:text-xl max-w-screen-md">
-              {isLoadingInitialData ? (
-                'Searching…'
-              ) : isEmpty ? (
-                <>
-                  No results found for <em>{query}</em>
-                </>
-              ) : (
-                <>
-                  Search results for <em>{query}</em>
-                </>
-              )}
+        <LayoutMain className="min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent">
+          <Tab.Group manual>
+            <div className="px-2 lg:px-8">
+              <div className="flex justify-between items-baseline my-2 lg:mt-8">
+                <div className="mr-8 lg:font-display lg:text-xl">
+                  {isLoadingInitialData ? (
+                    'Searching…'
+                  ) : isEmpty ? (
+                    <>
+                      No results found for <em>{query}</em>
+                    </>
+                  ) : (
+                    <>
+                      Search results for <em>{query}</em>
+                    </>
+                  )}
+                </div>
+                <div className={isLoadingInitialData ? 'invisible' : ''}>
+                  <GridListTabs />
+                </div>
+              </div>
             </div>
-            {data?.map(results =>
-              results.map(result => (
-                <SearchResult data={result} key={result.uri} />
-              )),
-            )}
-            <div className="text-center lg:my-8 xl:mb-32">
-              <button
-                className={cx('btn w-full h-12 lg:h-10 lg:w-auto', {
-                  'opacity-50': isLoadingMore,
-                  hidden: isLoadingInitialData || isReachingEnd,
-                })}
-                disabled={isLoadingMore}
-                onClick={() => {
-                  router.replace(
-                    {
-                      pathname: '/search',
-                      query: { query, size: size + 1 },
-                    },
-                    null,
-                    { scroll: false },
-                  );
-                  setSize(size + 1);
-                }}>
-                Load More Results
-              </button>
-            </div>
+            <Tab.Panels>
+              <Tab.Panel>
+                <div className="px-2 py-px lg:px-8">
+                  {posts.map(post => (
+                    <PostMediaBlock data={post} key={post.uri} />
+                  ))}
+                </div>
+              </Tab.Panel>
+              <Tab.Panel>
+                <div className="px-2 lg:px-8 lg:pt-4 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
+                  {posts.map(post => (
+                    <PostCard data={post} inGrid key={post.uri} />
+                  ))}
+                </div>
+              </Tab.Panel>
+            </Tab.Panels>
+          </Tab.Group>
+          <div className="px-2 lg:px-8 text-center my-4 lg:my-8 xl:mb-32">
+            <button
+              className={cx('btn w-full h-12 lg:h-10 lg:w-auto', {
+                'opacity-50': isLoadingMore,
+                hidden: isLoadingInitialData || isReachingEnd,
+              })}
+              disabled={isLoadingMore}
+              onClick={() => {
+                router.replace(
+                  {
+                    pathname: '/search',
+                    query: { query, size: size + 1 },
+                  },
+                  null,
+                  { scroll: false },
+                );
+                setSize(size + 1);
+              }}>
+              Load More Results
+            </button>
           </div>
         </LayoutMain>
         <LayoutSidebar showBorder>
@@ -158,68 +151,6 @@ export default function SearchPage(props) {
         </LayoutSidebar>
       </Layout>
     </>
-  );
-}
-
-function SearchResult({ data }) {
-  return (
-    <div
-      className="
-        relative sm:flex mx-auto my-2 p-4 lg:px-0 lg:my-0 rounded overflow-hidden
-        bg-white dark:bg-gray-900 lg:bg-transparent shadow lg:shadow-none max-w-screen-md"
-      key={data.uri}>
-      <Link href={data.uri}>
-        <a className="absolute inset-0 sm:hidden" />
-      </Link>
-      {data.featuredImage && (
-        <div
-          className="
-            w-24 h-24 sm:w-auto sm:h-auto ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0
-            float-right flex-shrink-0">
-          <Link href={data.uri}>
-            <a>
-              <Image
-                alt={data.featuredImage.node.altText}
-                className="rounded"
-                height={150}
-                layout="intrinsic"
-                loading="lazy"
-                src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.sourceUrl}`}
-                width={150}
-              />
-            </a>
-          </Link>
-        </div>
-      )}
-      <div className="flex-auto">
-        <div className="flex items-baseline">
-          <Link href={data.uri}>
-            <a className="link sm:mt-1 text-base sm:text-2xl font-display">
-              {data.title}
-            </a>
-          </Link>
-        </div>
-        <div
-          className="my-1 text-sm sm:text-base lg:font-serif"
-          dangerouslySetInnerHTML={{
-            __html: data.excerpt || data.seo?.metaDesc,
-          }}
-        />
-        {data.categories?.nodes.length > 0 && (
-          <div className="hidden sm:block text-gray-500 dark:text-gray-400 lg:font-serif">
-            Posted in{' '}
-            {data.categories.nodes.map((cat, i) => (
-              <Fragment key={cat.uri}>
-                {i !== 0 && ', '}
-                <Link href={cat.uri}>
-                  <a className="italic hover:underline">{cat.name}</a>
-                </Link>
-              </Fragment>
-            ))}
-          </div>
-        )}
-      </div>
-    </div>
   );
 }
 

@@ -185,7 +185,7 @@ export default function Post({
                   id="related-posts"
                   ref={relatedPostsRef}>
                   {content.customRelatedPosts.nodes.map(post => (
-                    <PostCard key={post.slug} post={post} inGrid />
+                    <PostCard key={post.slug} data={post} inGrid />
                   ))}
                 </div>
               )}
@@ -318,7 +318,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
     );
 
     if (lastUpdated) {
-      lastUpdated.addClass('!font-display text-sm');
+      lastUpdated.addClass('!font-display text-sm -mt-1');
       const date = lastUpdated
         .text()
         .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]
@@ -473,7 +473,7 @@ const POST_QUERY = gql`
         }
         customRelatedPosts(first: 6) {
           nodes {
-            ...PostCardPostData
+            ...PostCardData
           }
         }
         preview @include(if: $preview) {

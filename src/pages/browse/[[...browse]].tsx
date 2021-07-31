@@ -8,6 +8,7 @@ import { useRouter } from 'next/router';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { Tab } from '@headlessui/react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
 import GridListTabs from '../../components/GridListTabs';
@@ -18,6 +19,7 @@ import PostCard, { SwatchesProvider } from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
+import breakpoints from '../../config/breakpoints';
 import generateSwatches from '../../lib/generateSwatches';
 import getCategoryLink from '../../lib/getCategoryLink';
 import GraphQLClient from '../../lib/GraphQLClient';
@@ -27,6 +29,7 @@ const Browse = ({
   swatches,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
+  const isMd = useMediaQuery(`(min-width: ${breakpoints.md})`);
   const isHome = !router.query.browse;
   const { category, subcategory } = data;
   const coverImgSm =
@@ -124,22 +127,23 @@ const Browse = ({
             <Tab.Group
               as="div"
               className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent"
+              defaultIndex={isMd ? 1 : 0}
               manual>
               <div className="pt-6 px-8 flex justify-center lg:justify-start">
                 <GridListTabs />
               </div>
               <Tab.Panels>
                 <Tab.Panel>
-                  <div className="px-2 py-4 lg:px-8">
+                  <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
                     {(subcategory || category).posts.nodes.map(post => (
-                      <PostMediaBlock key={post.slug} data={post} />
+                      <PostCard key={post.slug} data={post} inGrid />
                     ))}
                   </div>
                 </Tab.Panel>
                 <Tab.Panel>
-                  <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
+                  <div className="px-2 py-4 lg:px-8">
                     {(subcategory || category).posts.nodes.map(post => (
-                      <PostCard key={post.slug} data={post} inGrid />
+                      <PostMediaBlock key={post.slug} data={post} />
                     ))}
                   </div>
                 </Tab.Panel>

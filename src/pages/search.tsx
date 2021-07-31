@@ -85,7 +85,7 @@ export default function SearchPage(props) {
       </Head>
       <Layout className="relative max-w-screen-2xl">
         <LayoutMain className="min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent">
-          <Tab.Group manual>
+          <Tab.Group defaultIndex={1} manual>
             <div className="px-2 lg:px-8">
               <div className="flex justify-between items-baseline my-2 lg:mt-8">
                 <div className="ml-4 md:ml-0 mr-8 lg:font-display lg:text-xl">
@@ -108,16 +108,16 @@ export default function SearchPage(props) {
             </div>
             <Tab.Panels>
               <Tab.Panel>
-                <div className="px-2 py-px lg:px-8">
+                <div className="px-2 lg:px-8 lg:pt-4 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
                   {posts.map(post => (
-                    <PostMediaBlock data={post} key={post.uri} />
+                    <PostCard data={post} inGrid key={post.uri} />
                   ))}
                 </div>
               </Tab.Panel>
               <Tab.Panel>
-                <div className="px-2 lg:px-8 lg:pt-4 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
+                <div className="px-2 py-px lg:px-8">
                   {posts.map(post => (
-                    <PostCard data={post} inGrid key={post.uri} />
+                    <PostMediaBlock data={post} key={post.uri} />
                   ))}
                 </div>
               </Tab.Panel>

@@ -13,7 +13,7 @@ export default async function generateSwatches(
         thumbnails.map(t =>
           vibrant
             .from(
-              `https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${t.sourceUrlFx}`,
+              `https://res.cloudinary.com/vietnam-coracle/image/fetch/a_vflip,c_fill,e_blur:2000,g_north,h_75,w_150/${t.srcFx}`,
             )
             .getPalette(),
         ),

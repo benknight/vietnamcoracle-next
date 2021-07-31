@@ -47,6 +47,11 @@
     @apply visited:text-purple-600 dark:visited:text-purple-400;
     @apply hover:underline active:text-red-600 dark:active:text-red-500;
   }
+  @media (max-height: 500px) {
+    .nav-bar {
+      @apply hidden !important;
+    }
+  }
   .nav-title-long {
     @apply hidden;
   }

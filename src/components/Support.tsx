@@ -47,13 +47,13 @@ export default function Support({ data: block }: Props) {
           <Link href="/book-your-accommodation">
             <a
               className={`${btnClassName} border-white dark:border-black flex-auto hover:bg-blue-400 h-10`}>
-              <HotelIcon className="w-4 h-4 mr-2" /> Book Hotels
+              <HotelIcon className="!w-4 !h-4 mr-2" /> Book Hotels
             </a>
           </Link>
           <Link href="/book-your-transportation">
             <a
               className={`${btnClassName} border-white dark:border-black ml-1 flex-auto hover:bg-green-400 h-10`}>
-              <FlightIcon className="w-4 h-4 mr-1" /> Book Transport
+              <FlightIcon className="!w-4 !h-4 mr-1" /> Book Transport
             </a>
           </Link>
         </div>

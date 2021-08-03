@@ -52,6 +52,12 @@
       @apply hidden !important;
     }
   }
+  @screen lg {
+    .nav-bar {
+      @apply flex !important;
+      @apply justify-center;
+    }
+  }
   .nav-title-long {
     @apply hidden;
   }

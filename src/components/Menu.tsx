@@ -162,7 +162,7 @@ function MenuNav({ items = [], open = false }) {
             </li>
           )}
           {grouped[key].map(item => (
-            <li key={item.url}>
+            <li key={item.id}>
               <Link href={item.path || item.url}>
                 <a
                   className="flex items-center h-14 px-6 rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
@@ -172,7 +172,7 @@ function MenuNav({ items = [], open = false }) {
                       setCursor(item.id);
                       setDirection('forwards');
                     } else {
-                      document.getElementById('top')?.focus();
+                      document.getElementById('site-name')?.focus();
                     }
                   }}
                   style={{ WebkitTapHighlightColor: 'transparent' }}>

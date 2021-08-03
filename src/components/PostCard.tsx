@@ -39,6 +39,7 @@ const PostCard = ({ inGrid = false, data }: Props) => {
           }}>
           <Image
             alt={data.featuredImage.node.altText}
+            className="transition-transform ease-out duration-300 pointer:transform origin-top group-hover:scale-[1.02] group-hover:duration-[3s]"
             layout="fill"
             loading="lazy"
             objectFit="cover"

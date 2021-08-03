@@ -75,7 +75,7 @@ export default function NavBar({ preview = false }: Props) {
               <Link href={to} key={to}>
                 <a
                   className={cx(
-                    'w-1/5 md:w-24 lg:w-auto h-10 mx-1 lg:mx-[2px] sm:px-3 lg:px-3',
+                    'w-1/5 md:w-24 lg:w-auto h-16 lg:h-10 mx-1 lg:mx-[2px] sm:px-3 lg:px-3',
                     'flex flex-col lg:flex-row items-center justify-center text-center',
                     'rounded-full transition-colors duration-200 ease',
                     'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-gray-800',
@@ -84,7 +84,8 @@ export default function NavBar({ preview = false }: Props) {
                         isCurrent,
                     },
                   )}
-                  key={link.url}>
+                  key={link.url}
+                  style={{ WebkitTapHighlightColor: 'transparent' }}>
                   {cloneElement(isCurrent ? link.icon : link.iconAlt, {
                     className: 'w-5 h-5 lg:mr-2 mb-1 lg:mb-0 flex-shrink-0',
                   })}

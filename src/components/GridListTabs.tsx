@@ -12,20 +12,27 @@ const tabCx = (selected: boolean, className = '') =>
       : 'text-primary-400 text-opacity-75 hover:text-opacity-100',
   );
 
-export default function GridListTabs() {
+export default function GridListTabs({ hideLabels = false }) {
   return (
     <Tab.List className="flex p-1 -mx-1 bg-black dark:bg-white bg-opacity-5 dark:bg-opacity-10 rounded-xl">
       <Tab
         className={({ selected }) => tabCx(selected)}
         style={{ WebkitTapHighlightColor: 'transparent' }}>
         <ViewGridIcon className="w-5 h-5" />
-        <span className="hidden md:inline-block ml-1"> Grid</span>
+        <span className={cx('ml-1', { 'hidden md:inline-block': hideLabels })}>
+          {' '}
+          Grid
+        </span>
       </Tab>
       <Tab
         className={({ selected }) => tabCx(selected, 'ml-1')}
         style={{ WebkitTapHighlightColor: 'transparent' }}>
         <ViewListIcon className="w-5 h-5" />
-        <span className="hidden md:inline-block ml-1.5"> List</span>
+        <span
+          className={cx('ml-1.5', { 'hidden md:inline-block': hideLabels })}>
+          {' '}
+          List
+        </span>
       </Tab>
     </Tab.List>
   );

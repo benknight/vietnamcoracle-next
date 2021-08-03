@@ -129,12 +129,12 @@ const Browse = ({
               className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent"
               defaultIndex={isMd ? 1 : 0}
               manual>
-              <div className="pt-6 px-8 flex justify-center lg:justify-start">
+              <div className="flex items-start pt-4 px-3 lg:px-8">
                 <GridListTabs />
               </div>
               <Tab.Panels>
                 <Tab.Panel>
-                  <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
+                  <div className="px-2 lg:px-8 pt-4 grid gap-4 xl:gap-6 md:grid-cols-2">
                     {(subcategory || category).posts.nodes.map(post => (
                       <PostCard key={post.slug} data={post} inGrid />
                     ))}

@@ -6,12 +6,14 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useSWRInfinite } from 'swr';
 import { Tab } from '@headlessui/react';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Footer from '../components/Footer';
 import GridListTabs from '../components/GridListTabs';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
 import PostCard from '../components/PostCard';
 import PostMediaBlock from '../components/PostMediaBlock';
 import SidebarDefault from '../components/SidebarDefault';
+import breakpoints from '../config/breakpoints';
 import GraphQLClient from '../lib/GraphQLClient';
 import RestClient from '../lib/RestClient';
 import useWaitCursor from '../lib/useWaitCursor';
@@ -50,6 +52,7 @@ const resultsFetcher = async (query: string, page: number) => {
 
 export default function SearchPage(props) {
   const router = useRouter();
+  const isSm = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const { query } = router.query;
   const initialSize = router.query.size
     ? parseInt(String(router.query.size))
@@ -102,7 +105,7 @@ export default function SearchPage(props) {
                   )}
                 </div>
                 <div className={isLoadingInitialData ? 'invisible' : ''}>
-                  <GridListTabs />
+                  <GridListTabs hideLabels={!isSm} />
                 </div>
               </div>
             </div>

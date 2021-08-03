@@ -64,19 +64,25 @@ export default function Menu({ children, className = '' }) {
                 shadow-lg
                 rounded-lg
                 transition">
-              {data?.menuItems?.nodes ? (
-                <MenuNav items={data.menuItems.nodes} open={open} />
-              ) : (
-                <div className="h-60 flex items-center justify-center cursor-wait">
-                  <CircularProgress
-                    classes={{
-                      colorPrimary: 'opacity-50 text-black dark:text-white',
-                    }}
-                    size={32}
-                    thickness={2}
+              {({ close }) =>
+                data?.menuItems?.nodes ? (
+                  <MenuNav
+                    close={close}
+                    items={data.menuItems.nodes}
+                    open={open}
                   />
-                </div>
-              )}
+                ) : (
+                  <div className="h-60 flex items-center justify-center cursor-wait">
+                    <CircularProgress
+                      classes={{
+                        colorPrimary: 'opacity-50 text-black dark:text-white',
+                      }}
+                      size={32}
+                      thickness={2}
+                    />
+                  </div>
+                )
+              }
             </Popover.Panel>
           </Transition>
         </>
@@ -87,7 +93,7 @@ export default function Menu({ children, className = '' }) {
 
 const speed = 300;
 
-function MenuNav({ items = [], open = false }) {
+function MenuNav({ close = () => {}, items = [], open = false }) {
   const ref = useRef<HTMLElement>();
   const [cursor, setCursor] = useState(null);
   const [direction, setDirection] = useState('');
@@ -172,7 +178,7 @@ function MenuNav({ items = [], open = false }) {
                       setCursor(item.id);
                       setDirection('forwards');
                     } else {
-                      document.getElementById('site-name')?.focus();
+                      close();
                     }
                   }}
                   style={{ WebkitTapHighlightColor: 'transparent' }}>

@@ -7,7 +7,9 @@ export default function Footer({ data }) {
   return (
     <footer>
       <div className="block lg:pt-4 pb-16 mx-auto text-center">
-        <div className="uppercase text-xxs tracking-widest">Recommended by</div>
+        <div className="font-display text-xxs tracking-widest opacity-75">
+          Recommended by
+        </div>
         <a
           className="inline-block relative my-4 text-lp-blue dark:text-gray-500"
           href="https://www.lonelyplanet.com/vietnam/a/nar-gr/planning-tips/357846"

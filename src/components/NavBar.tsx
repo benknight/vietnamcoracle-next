@@ -21,6 +21,13 @@ const links = [
     url: '/',
   },
   {
+    icon: <WorkIcon />,
+    iconAlt: <WorkOutlineIcon />,
+    title: 'Destinations',
+    titleShort: 'Destinations',
+    url: '/browse/destinations',
+  },
+  {
     icon: <MotorcycleIcon />,
     iconAlt: <MotorcycleIcon />,
     title: 'Motorbike Guides',
@@ -33,13 +40,6 @@ const links = [
     title: 'Hotel Reviews',
     titleShort: 'Hotels',
     url: '/browse/hotel-reviews',
-  },
-  {
-    icon: <WorkIcon />,
-    iconAlt: <WorkOutlineIcon />,
-    title: 'Destinations',
-    titleShort: 'Travel',
-    url: '/browse/destinations',
   },
   {
     icon: <RestaurantIcon />,
@@ -82,6 +82,7 @@ export default function NavBar({ preview = false }: Props) {
                     {
                       'dark:shadow text-primary-500 dark:text-primary-400':
                         isCurrent,
+                      'lg:hidden xl:flex': link.url === '/',
                     },
                   )}
                   key={link.url}

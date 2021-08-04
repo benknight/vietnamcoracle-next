@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { gql } from 'graphql-request';
 
 export const BlockTitle = props => (
@@ -35,8 +36,10 @@ export const BlockContent = props => (
   </div>
 );
 
-const Block = props => (
-  <aside className="c-block text-center font-display">{props.children}</aside>
+const Block = ({ className = '', children }) => (
+  <aside className={cx(className, 'c-block text-center font-display')}>
+    {children}
+  </aside>
 );
 
 Block.fragments = gql`

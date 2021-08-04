@@ -8,7 +8,7 @@ import { useSWRInfinite } from 'swr';
 import { Tab } from '@headlessui/react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Footer from '../components/Footer';
-import GridListTabs from '../components/GridListTabs';
+import GridListTab from '../components/GridListTab';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
 import PostCard from '../components/PostCard';
 import PostMediaBlock from '../components/PostMediaBlock';
@@ -105,7 +105,7 @@ export default function SearchPage(props) {
                   )}
                 </div>
                 <div className={isLoadingInitialData ? 'invisible' : ''}>
-                  <GridListTabs hideLabels={!isSm} />
+                  <GridListTab.List hideLabels={!isSm} />
                 </div>
               </div>
             </div>

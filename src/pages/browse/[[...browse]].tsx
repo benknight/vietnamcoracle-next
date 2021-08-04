@@ -7,14 +7,13 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import { Tab } from '@headlessui/react';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
-import GridListTabs from '../../components/GridListTabs';
+import GridListTab from '../../components/GridListTab';
 import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
-import PostCard, { SwatchesProvider } from '../../components/PostCard';
+import { SwatchesProvider } from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
@@ -121,30 +120,7 @@ const Browse = ({
               </section>
             ))
           ) : (
-            <Tab.Group
-              as="div"
-              className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent"
-              manual>
-              <div className="flex items-start pt-4 px-3 lg:px-8">
-                <GridListTabs />
-              </div>
-              <Tab.Panels>
-                <Tab.Panel>
-                  <div className="px-2 lg:px-8 pt-4 grid gap-4 xl:gap-6 md:grid-cols-2">
-                    {(subcategory || category).posts.nodes.map(post => (
-                      <PostCard key={post.slug} data={post} inGrid />
-                    ))}
-                  </div>
-                </Tab.Panel>
-                <Tab.Panel>
-                  <div className="px-2 py-4 lg:px-8">
-                    {(subcategory || category).posts.nodes.map(post => (
-                      <PostMediaBlock key={post.slug} data={post} />
-                    ))}
-                  </div>
-                </Tab.Panel>
-              </Tab.Panels>
-            </Tab.Group>
+            <GridListTab.Group posts={(subcategory || category).posts.nodes} />
           )}
           {category.map && (
             <section className="lg:mb-8 lg:px-8">

@@ -3,13 +3,13 @@ import htmlToReact from 'html-react-parser';
 import _ from 'lodash';
 import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import { Tab } from '@headlessui/react';
+import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
-import GridListTabs from '../../components/GridListTabs';
+import GridListTab from '../../components/GridListTab';
 import Hero, { HeroContent } from '../../components/Hero';
-import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import PostCard, { SwatchesProvider } from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
+import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import SidebarDefault from '../../components/SidebarDefault';
 import GraphQLClient from '../../lib/GraphQLClient';
 import generateSwatches from '../../lib/generateSwatches';
@@ -18,6 +18,7 @@ const Tag = ({
   data,
   swatches,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
+  const router = useRouter();
   const coverImgSm = data.tag.cover?.small || data.defaultImages?.cover.small;
   const coverImgLg = data.tag.cover?.large || data.defaultImages?.cover.large;
   return (
@@ -34,30 +35,7 @@ const Tag = ({
       </Hero>
       <Layout>
         <LayoutMain>
-          <Tab.Group
-            as="div"
-            className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent"
-            manual>
-            <div className="pt-8 md:pt-6 px-8 flex justify-center lg:justify-start">
-              <GridListTabs />
-            </div>
-            <Tab.Panels>
-              <Tab.Panel>
-                <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
-                  {data.tag.posts.nodes.map(post => (
-                    <PostCard key={post.slug} data={post} inGrid />
-                  ))}
-                </div>
-              </Tab.Panel>
-              <Tab.Panel>
-                <div className="px-2 py-4 lg:px-8">
-                  {data.tag.posts.nodes.map(post => (
-                    <PostMediaBlock key={post.slug} data={post} />
-                  ))}
-                </div>
-              </Tab.Panel>
-            </Tab.Panels>
-          </Tab.Group>
+          <GridListTab.Group posts={data.tag.posts.nodes} />
         </LayoutMain>
         <LayoutSidebar showBorder>
           <SidebarDefault data={data} />

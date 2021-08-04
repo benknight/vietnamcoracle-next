@@ -25,14 +25,16 @@ export type BlockType = {
   ];
 };
 
-export const BlockContent = props => (
+export const BlockContent = ({ className = '', children }) => (
   <div
-    className="
-      mx-auto mb-8 px-4
-      max-w-sm lg:max-w-md xl:max-w-[350px]
-      text-sm xs:text-base xl:text-[15px] font-serif
-      text-gray-600 dark:text-gray-400">
-    {props.children}
+    className={cx(
+      className,
+      'mx-auto mb-8 px-4',
+      'max-w-sm lg:max-w-md',
+      'text-sm xs:text-base xl:text-[15px] font-serif',
+      'text-gray-600 dark:text-gray-400',
+    )}>
+    {children}
   </div>
 );
 

@@ -94,30 +94,32 @@ export default function Subscribe({ data: block }: Props) {
         </Link>
       </div>
       <BlockTitle>{block.title}</BlockTitle>
-      <BlockContent>
+      <BlockContent className="xl:max-w-[340px]">
         <p>{block.description}</p>
-        <form
-          className="flex justify-center max-w-xs mt-4 mb-8 mx-auto"
-          onSubmit={event => {
-            event.preventDefault();
-            onSubmit(email);
-          }}>
-          <input
-            className="form-field flex-auto h-8 mr-2 p-2 text-sm rounded"
-            onChange={event => setEmail(event.target.value)}
-            required
-            type="email"
-            value={email}
-          />
-          <button
-            className={cx('btn', { 'opacity-50': isLoading })}
-            disabled={isLoading}
-            type="submit">
-            Subscribe
-          </button>
-        </form>
-        <ElsewhereLinks />
       </BlockContent>
+      <form
+        className="flex justify-center max-w-xs mt-4 mb-8 mx-auto"
+        onSubmit={event => {
+          event.preventDefault();
+          onSubmit(email);
+        }}>
+        <input
+          className="form-field flex-auto h-8 mr-2 p-2 text-sm rounded"
+          onChange={event => setEmail(event.target.value)}
+          required
+          type="email"
+          value={email}
+        />
+        <button
+          className={cx('btn', { 'opacity-50': isLoading })}
+          disabled={isLoading}
+          type="submit">
+          Subscribe
+        </button>
+      </form>
+      <div className="mt-16">
+        <ElsewhereLinks />
+      </div>
     </Block>
   );
 }

@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import { Tab } from '@headlessui/react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
 import GridListTabs from '../../components/GridListTabs';
@@ -19,7 +18,6 @@ import PostCard, { SwatchesProvider } from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
 import Slider from '../../components/Slider';
-import breakpoints from '../../config/breakpoints';
 import generateSwatches from '../../lib/generateSwatches';
 import getCategoryLink from '../../lib/getCategoryLink';
 import GraphQLClient from '../../lib/GraphQLClient';
@@ -29,7 +27,6 @@ const Browse = ({
   swatches,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
-  const isMd = useMediaQuery(`(min-width: ${breakpoints.md})`);
   const isHome = !router.query.browse;
   const { category, subcategory } = data;
   const coverImgSm =
@@ -127,7 +124,6 @@ const Browse = ({
             <Tab.Group
               as="div"
               className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent"
-              defaultIndex={isMd ? 1 : 0}
               manual>
               <div className="flex items-start pt-4 px-3 lg:px-8">
                 <GridListTabs />

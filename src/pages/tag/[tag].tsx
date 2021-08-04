@@ -4,7 +4,6 @@ import _ from 'lodash';
 import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import { Tab } from '@headlessui/react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Footer from '../../components/Footer';
 import GridListTabs from '../../components/GridListTabs';
 import Hero, { HeroContent } from '../../components/Hero';
@@ -12,7 +11,6 @@ import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import PostCard, { SwatchesProvider } from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
-import breakpoints from '../../config/breakpoints';
 import GraphQLClient from '../../lib/GraphQLClient';
 import generateSwatches from '../../lib/generateSwatches';
 
@@ -20,7 +18,6 @@ const Tag = ({
   data,
   swatches,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const isMd = useMediaQuery(`(min-width: ${breakpoints.md})`);
   const coverImgSm = data.tag.cover?.small || data.defaultImages?.cover.small;
   const coverImgLg = data.tag.cover?.large || data.defaultImages?.cover.large;
   return (
@@ -40,7 +37,6 @@ const Tag = ({
           <Tab.Group
             as="div"
             className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent"
-            defaultIndex={isMd ? 1 : 0}
             manual>
             <div className="pt-8 md:pt-6 px-8 flex justify-center lg:justify-start">
               <GridListTabs />

@@ -6,7 +6,7 @@ export default function useCategoryRef() {
   const ref = useMemo(
     () =>
       router.pathname === '/browse/[[...browse]]'
-        ? router.query.browse[0]
+        ? router.query.browse?.[0] ?? null
         : null,
     [router.pathname],
   );

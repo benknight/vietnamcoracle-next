@@ -2,10 +2,10 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import _get from 'lodash/get';
 import Image from 'next/image';
-import Link from 'next/link';
 import { createContext, useContext } from 'react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import breakpoints from '../config/breakpoints';
+import PostLink from './PostLink';
 
 interface Props {
   inGrid?: boolean;
@@ -23,7 +23,7 @@ const PostCard = ({ inGrid = false, data }: Props) => {
   }
   const swatch = swatches[data.featuredImage.node.id];
   return (
-    <Link href={`/${data.slug}`}>
+    <PostLink post={data}>
       <a
         className={cx(
           'group relative overflow-hidden flex flex-col sm:shadow w-full rounded-lg',
@@ -85,7 +85,7 @@ const PostCard = ({ inGrid = false, data }: Props) => {
           </div>
         </div>
       </a>
-    </Link>
+    </PostLink>
   );
 };
 

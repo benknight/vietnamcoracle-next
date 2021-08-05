@@ -395,6 +395,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
       data,
       html,
       monthsOld,
+      navCategory: data.contentNode?.navCategory?.nodes?.[0]?.slug ?? null,
       postNav,
       preview,
     },
@@ -456,14 +457,17 @@ const POST_QUERY = gql`
         }
       }
       ... on Post {
-        categories(
-          where: {
-            exclude: "154" # Exclude top-level category
-          }
-        ) {
+        categories(where: { exclude: 154 }) {
           nodes {
             name
             uri
+          }
+        }
+        navCategory: categories(
+          where: { parent: 154, orderby: COUNT, order: DESC } # Pick first category with most posts
+        ) {
+          nodes {
+            slug
           }
         }
         comments(first: 1000) {

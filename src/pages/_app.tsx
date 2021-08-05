@@ -55,7 +55,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       </div>
       {preview && <PreviewAlert />}
       <Header preview={preview} />
-      <NavBar preview={preview} />
+      <NavBar navCategory={pageProps?.navCategory} preview={preview} />
       <Component {...pageProps} />
     </StylesProvider>
   );

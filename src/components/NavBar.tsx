@@ -2,7 +2,7 @@ import cx from 'classnames';
 import _defer from 'lodash/defer';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { cloneElement, useRef } from 'react';
+import { cloneElement, useCallback } from 'react';
 import { HomeIcon } from '@heroicons/react/solid';
 import { HomeIcon as HomeOutlinedIcon } from '@heroicons/react/outline';
 import HotelIcon from '@material-ui/icons/Hotel';
@@ -51,11 +51,28 @@ const links = [
 ];
 
 interface Props {
+  navCategory?: string;
   preview?: boolean;
 }
 
-export default function NavBar({ preview = false }: Props) {
+export default function NavBar({ navCategory, preview = false }: Props) {
   const router = useRouter();
+  const isCurrent = useCallback(
+    uri => {
+      const path = router.asPath;
+      if (uri === '/') {
+        return path === '/browse' || path === '/';
+      }
+      if (router.query.ref) {
+        return uri === `/browse/${router.query.ref}`;
+      }
+      if (navCategory) {
+        return uri === `/browse/${navCategory}`;
+      }
+      return path.startsWith(uri);
+    },
+    [navCategory, router.asPath, router.query.ref],
+  );
   return (
     <>
       <nav
@@ -66,10 +83,6 @@ export default function NavBar({ preview = false }: Props) {
         <div className="flex justify-center items-center flex-auto px-1 xl:px-16 font-sans font-medium tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
           {links.map(link => {
             const path = router.asPath;
-            const isCurrent =
-              link.url === '/'
-                ? path === '/browse' || path === '/'
-                : path.startsWith(link.url);
             const to = link.url.match(/\/$/) ? link.url : link.url + '/';
             return (
               <Link href={to} key={to}>
@@ -81,15 +94,18 @@ export default function NavBar({ preview = false }: Props) {
                     'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-gray-800',
                     {
                       'dark:shadow text-primary-500 dark:text-primary-400':
-                        isCurrent,
+                        isCurrent(link.url),
                       'lg:hidden xl:flex': link.url === '/',
                     },
                   )}
                   key={link.url}
                   style={{ WebkitTapHighlightColor: 'transparent' }}>
-                  {cloneElement(isCurrent ? link.icon : link.iconAlt, {
-                    className: 'w-5 h-5 lg:mr-2 mb-1 lg:mb-0 flex-shrink-0',
-                  })}
+                  {cloneElement(
+                    isCurrent(link.url) ? link.icon : link.iconAlt,
+                    {
+                      className: 'w-5 h-5 lg:mr-2 mb-1 lg:mb-0 flex-shrink-0',
+                    },
+                  )}
                   <div className="w-full break-words">
                     <div className="nav-title-short text-xxxs xs:text-xxs lg:text-base">
                       {link.titleShort}

@@ -3,6 +3,7 @@ import _get from 'lodash/get';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
+import PostLink from './PostLink';
 
 function PostMediaBlock({ data }) {
   return (
@@ -11,15 +12,15 @@ function PostMediaBlock({ data }) {
         relative sm:flex mb-2 p-4 lg:px-0 lg:my-0 rounded overflow-hidden
         bg-white dark:bg-gray-900 lg:bg-transparent shadow lg:shadow-none"
       key={data.uri}>
-      <Link href={data.uri}>
+      <PostLink post={data}>
         <a className="absolute inset-0 sm:hidden" />
-      </Link>
+      </PostLink>
       {data.featuredImage && (
         <div
           className="
             w-24 h-24 sm:w-auto sm:h-auto ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0
             float-right flex-shrink-0">
-          <Link href={data.uri}>
+          <PostLink post={data}>
             <a>
               <Image
                 alt={data.featuredImage.node.altText}
@@ -31,16 +32,16 @@ function PostMediaBlock({ data }) {
                 width={150}
               />
             </a>
-          </Link>
+          </PostLink>
         </div>
       )}
       <div className="flex-auto">
         <div className="flex items-baseline">
-          <Link href={data.uri}>
+          <PostLink post={data}>
             <a className="link sm:mt-1 text-base sm:text-2xl font-display">
               {data.title}
             </a>
-          </Link>
+          </PostLink>
         </div>
         <div
           className="my-1 text-sm sm:text-base lg:font-serif"
@@ -68,6 +69,7 @@ function PostMediaBlock({ data }) {
 
 PostMediaBlock.fragments = gql`
   fragment PostMediaBlockData on ContentNode {
+    slug
     uri
     ... on NodeWithExcerpt {
       excerpt
@@ -90,11 +92,7 @@ PostMediaBlock.fragments = gql`
       }
     }
     ... on Post {
-      categories(
-        where: {
-          exclude: "154" # Exclude top-level category
-        }
-      ) {
+      categories(where: { exclude: 154 }) {
         nodes {
           name
           uri

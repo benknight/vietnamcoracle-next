@@ -12,6 +12,7 @@ import PinterestIcon from '@material-ui/icons/Pinterest';
 import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import tailwindConfig from '../../tailwind.config.js';
+import breakpoints from '../config/breakpoints';
 
 const {
   theme: {
@@ -44,12 +45,14 @@ export default function ShareButtons({
     <>
       <style>{`
         main {
+          display: flex;
           color: ${colors['white']};
           font-family: ${fontFamily.sans.join(',')};
           margin-bottom: ${margin[4]};
         }
         button {
           border-radius: ${borderRadius.DEFAULT};
+          flex: 1 1 auto;
           font-size: ${fontSize['xs'][0]} !important;
           height: ${height[7]};
           margin: 0 ${margin[1]} ${margin[1]} 0;
@@ -57,7 +60,8 @@ export default function ShareButtons({
         button > span {
           align-items: center;
           display: flex;
-          padding: 0 ${padding[2]};
+          justify-content: center;
+          padding: 0 ${padding[1]};
         }
         button > span > span {
           margin: 0 ${margin[1]};
@@ -67,6 +71,14 @@ export default function ShareButtons({
           height: ${height[4]};
           fill: currentColor;
           width: ${width[4]};
+        }
+        @media (min-width: ${breakpoints.sm}) {
+          button {
+            flex: none;
+          }
+          button > span {
+            padding: 0 ${padding[2]};
+          }
         }
       `}</style>
       <main>

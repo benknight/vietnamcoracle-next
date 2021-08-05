@@ -114,7 +114,7 @@ export default function Post({
               <div className="max-w-[52rem] mx-auto">
                 <div className="xl:w-[145%]">
                   <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
-                    {content.title}
+                    {content.title.replace(/\s+(\S*)$/, '\u00A0$1')}
                   </h1>
                 </div>
               </div>

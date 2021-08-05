@@ -134,7 +134,7 @@ export default function Post({
             <Menu
               as="nav"
               className="text-sm lg:text-base tracking-widest ring-1 ring-gray-300 dark:ring-gray-800 shadow-xl lg:rounded-tr-xl overflow-hidden">
-              <Menu.Button className="flex items-center justify-center lg:justify-start w-full p-3 lg:px-8 font-medium bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
+              <Menu.Button className="flex items-center justify-center lg:justify-start w-full p-3 lg:px-8 lg:h-10 lg:text-sm font-medium bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
                 <MenuAlt1Icon className="w-4 h-4" />
                 <span className="pl-2 pr-2">Contents</span>
               </Menu.Button>

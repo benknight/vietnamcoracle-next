@@ -18,8 +18,8 @@ export default function Support({ data: block }: Props) {
     <Block className="group">
       <div className="flex justify-center -mt-6 mb-6">
         <Link href="/donations-page">
-          <a className="relative top-1 !w-14 !h-14 text-red-500 group-hover:text-red-500 dark:text-opacity-50">
-            <HeartIcon className="!w-full !h-full absolute inset-0 group-hover:animate-ping opacity-50" />
+          <a className="relative top-1 !w-14 !h-14 text-red-500">
+            <HeartIcon className="!w-full !h-full absolute inset-0 animate-ping xl:animate-none xl:group-hover:animate-ping opacity-50" />
             <HeartIcon className="!w-full !h-full absolute inset-0 " />
           </a>
         </Link>

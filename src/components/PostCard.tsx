@@ -26,7 +26,7 @@ const PostCard = ({ inGrid = false, data }: Props) => {
     <PostLink post={data}>
       <a
         className={cx(
-          'group relative overflow-hidden flex flex-col sm:shadow w-full rounded-lg',
+          'postcard group relative overflow-hidden flex flex-col sm:shadow w-full rounded-lg',
           { 'bg-gray-900': isSmall || inGrid },
         )}>
         <div
@@ -75,7 +75,7 @@ const PostCard = ({ inGrid = false, data }: Props) => {
             </h3>
             <div
               className={cx(
-                'post-card-excerpt',
+                'postcard-excerpt',
                 'mt-2 font-serif text-sm text-gray-100 xl:text-gray-300',
                 {
                   'hidden sm:block sm:line-clamp-3 xl:line-clamp-none': !inGrid,

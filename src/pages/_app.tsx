@@ -2,15 +2,16 @@ import cx from 'classnames';
 import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
-import { create } from 'jss';
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useState } from 'react';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { StylesProvider, jssPreset } from '@material-ui/core/styles';
+import { StylesProvider } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import NavBar from '../components/NavBar';
 import useWaitCursor from '../lib/useWaitCursor';
 import '../config/custom-elements';
-import '../styles/style.css';
+import '../styles/fonts.css';
+import '../styles/tailwind.css';
+import '../styles/post.css';
 
 const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
 

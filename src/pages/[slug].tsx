@@ -146,7 +146,7 @@ export default function Post({
                     {({ active }) => (
                       <a
                         className={cx(
-                          'block -mx-4 -my-2 px-4 py-2 rounded whitespace-nowrap',
+                          'block -mx-4 -my-2 px-4 py-2 rounded whitespace-nowrap uppercase',
                           {
                             'bg-gray-300 dark:bg-gray-600': active,
                           },
@@ -317,8 +317,8 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
       "p:first-of-type:contains('Last updated'), p:first-of-type:contains('Last Updated'), p:first-of-type:contains('First published'), p:first-of-type:contains('First Published')",
     );
 
-    if (lastUpdated) {
-      lastUpdated.addClass('!font-display text-sm -mt-1');
+    if (lastUpdated.length > 0) {
+      lastUpdated.addClass('!font-display text-sm !mb-3');
       const date = lastUpdated
         .text()
         .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]
@@ -331,7 +331,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
     }
 
     if (!data.contentNode.isRestricted) {
-      if (lastUpdated) {
+      if (lastUpdated.length > 0) {
         $('<share-buttons />').insertAfter(lastUpdated);
       } else {
         $.root().prepend('<share-buttons />');
@@ -347,8 +347,13 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
     });
 
     // Generate contents menu
-    const internalLinks = $('h2 strong a');
-    if (internalLinks) {
+    const internalLinks = $(
+      data.contentNode?.settings?.useNextStyles
+        ? '.wp-block-buttons:first-of-type .wp-block-button__link'
+        : 'h2 strong a',
+    );
+
+    if (internalLinks.length) {
       postNav = [
         ...internalLinks
           .toArray()

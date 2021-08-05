@@ -106,7 +106,7 @@ export default function NavBar({ navCategory, preview = false }: Props) {
                       className: 'w-5 h-5 lg:mr-2 mb-1 lg:mb-0 flex-shrink-0',
                     },
                   )}
-                  <div className="w-full break-words">
+                  <div className="w-full">
                     <div className="nav-title-short text-xxxs xs:text-xxs lg:text-base">
                       {link.titleShort}
                     </div>

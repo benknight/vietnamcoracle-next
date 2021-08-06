@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import internalizeUrl from '../lib/internalizeUrl';
 import { CurrencyDollarIcon } from '@heroicons/react/outline';
-import HeartIcon from '@material-ui/icons/Favorite';
-import HeartOutlineIcon from '@material-ui/icons/FavoriteBorder';
+import HeartIcon from '@material-ui/icons/FavoriteRounded';
+import HeartOutlineIcon from '@material-ui/icons/FavoriteBorderRounded';
 import FlightIcon from '@material-ui/icons/Flight';
 import HotelIcon from '@material-ui/icons/Hotel';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';

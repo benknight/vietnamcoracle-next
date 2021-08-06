@@ -33,7 +33,6 @@ type NavLinks = string[][];
 export default function Post({
   data,
   html,
-  monthsOld,
   postNav,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const articleRef = useRef<HTMLDivElement>();
@@ -325,11 +324,13 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
       if (date) {
         const parsed = parse(date, 'LLLL yyyy', new Date());
         monthsOld = differenceInMonths(new Date(), parsed);
-        $(
-          ReactDOMServer.renderToStaticMarkup(
-            <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />,
-          ),
-        ).insertAfter(lastUpdated);
+        if (monthsOld > 36) {
+          $(
+            ReactDOMServer.renderToStaticMarkup(
+              <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />,
+            ),
+          ).insertAfter(lastUpdated);
+        }
       }
     }
 

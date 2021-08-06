@@ -9,6 +9,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useRef, Fragment } from 'react';
+import ReactDOMServer from 'react-dom/server';
 import Headroom from 'react-headroom';
 import { Menu } from '@headlessui/react';
 import { MenuAlt1Icon } from '@heroicons/react/outline';
@@ -166,9 +167,6 @@ export default function Post({
         <LayoutMain>
           <div className="px-3 sm:px-4 md:px-8 text-lg">
             <div className="max-w-[52rem] mx-auto">
-              {content.type === 'post' && monthsOld > 36 && (
-                <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />
-              )}
               <article
                 className={cx(
                   'post',
@@ -327,6 +325,11 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
       if (date) {
         const parsed = parse(date, 'LLLL yyyy', new Date());
         monthsOld = differenceInMonths(new Date(), parsed);
+        $(
+          ReactDOMServer.renderToStaticMarkup(
+            <OldPostAlert className="mb-6 lg:mb-8" monthsOld={monthsOld} />,
+          ),
+        ).insertAfter(lastUpdated);
       }
     }
 

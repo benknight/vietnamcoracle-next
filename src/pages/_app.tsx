@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
 import { useEffect, useState } from 'react';
+import smoothscroll from 'smoothscroll-polyfill';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { StylesProvider } from '@material-ui/core/styles';
 import Header from '../components/Header';
@@ -12,6 +13,10 @@ import '../config/custom-elements';
 import '../styles/fonts.css';
 import '../styles/tailwind.css';
 import '../styles/post.css';
+
+if (typeof window !== 'undefined') {
+  smoothscroll.polyfill();
+}
 
 const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
 

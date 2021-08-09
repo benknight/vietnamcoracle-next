@@ -38,6 +38,7 @@
     "react-headroom": "^3.1.0",
     "react-helmet": "latest",
     "react-share": "^4.4.0",
+    "smoothscroll-polyfill": "^0.4.4",
     "swr": "^0.5.4"
   },
   "devDependencies": {

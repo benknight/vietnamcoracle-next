@@ -19,6 +19,7 @@ module.exports = {
       colors: {
         amber: colors.amber,
         'black-25': 'rgba(0, 0, 0, 0.25)',
+        'black-50': 'rgba(0, 0, 0, 0.5)',
         'black-75': 'rgba(0, 0, 0, 0.75)',
         gray: {
           ...colors.warmGray,

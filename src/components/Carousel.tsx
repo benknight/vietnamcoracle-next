@@ -1,32 +1,36 @@
 import cx from 'classnames';
 import { useCallback, useRef, useState, useEffect } from 'react';
 import { RadioGroup } from '@headlessui/react';
-import PauseIcon from '@material-ui/icons/PauseRounded';
-import PlayArrowIcon from '@material-ui/icons/PlayArrowRounded';
-import SkipNextIcon from '@material-ui/icons/SkipNextRounded';
-import SkipPrevIcon from '@material-ui/icons/SkipPreviousRounded';
-import PauseRounded from '@material-ui/icons/PauseRounded';
-
-let advance = () => {};
-
-const navIconClassName = '!w-6 !h-6';
+import PauseIcon from '@material-ui/icons/Pause';
+import PlayArrowIcon from '@material-ui/icons/PlayArrow';
+import SkipNextIcon from '@material-ui/icons/SkipNext';
+import SkipPrevIcon from '@material-ui/icons/SkipPrevious';
 
 export default function Carousel({ className, children, ...props }) {
   const rootRef = useRef<HTMLDivElement>();
   const intervalRef = useRef<number>();
+  const busyRef = useRef<boolean>();
+  const advanceRef = useRef<() => void>();
   const [play, setPlay] = useState(true);
   const [slideCount, setSlideCount] = useState(null);
   const [cursor, setCursor] = useState(0);
 
   const goTo = useCallback(
-    (destination: number, intent: 'auto' | 'manual' = 'manual') => {
+    (
+      destination: number,
+      intent: 'auto' | 'manual' = 'auto',
+      behavior: 'auto' | 'smooth' = 'auto',
+    ) => {
       const slides = rootRef.current?.querySelectorAll(':scope > a');
       if (intent === 'manual') {
         setPlay(false);
       }
+      if (intent === 'auto' && behavior === 'auto') {
+        behavior = 'smooth';
+      }
       rootRef.current.scrollTo({
         left: (slides[destination] as HTMLElement).offsetLeft,
-        behavior: intent === 'auto' ? 'smooth' : 'auto',
+        behavior,
       });
     },
     [],
@@ -36,12 +40,10 @@ export default function Carousel({ className, children, ...props }) {
     // Auto-play
     if (!slideCount) return;
     if (play && !intervalRef.current) {
-      // Advance immediately if the carousel was previously paused
-      if (intervalRef.current === null) {
-        advance();
-      }
       intervalRef.current = window.setInterval(() => {
-        advance();
+        busyRef.current = true;
+        advanceRef.current();
+        window.setTimeout(() => (busyRef.current = false), 500);
       }, 5000);
     }
     if (!play && intervalRef.current) {
@@ -52,20 +54,8 @@ export default function Carousel({ className, children, ...props }) {
 
   useEffect(() => {
     // Update the advance callback
-    advance = () => goTo((cursor + 1) % slideCount, 'auto');
+    advanceRef.current = () => goTo((cursor + 1) % slideCount);
   }, [cursor, slideCount]);
-
-  useEffect(() => {
-    // Pause when the user pans left/right
-    const onWheel = (event: WheelEvent) => {
-      // TODO: Improve this logic
-      if (Math.abs(event.deltaX) / Math.min(1, Math.abs(event.deltaY)) > 1) {
-        setPlay(false);
-      }
-    };
-    rootRef.current?.addEventListener('wheel', onWheel);
-    return () => rootRef.current?.removeEventListener('wheel', onWheel);
-  }, []);
 
   useEffect(() => {
     // Update cursor when user scrolls
@@ -79,6 +69,9 @@ export default function Carousel({ className, children, ...props }) {
             let child = entry.target;
             while ((child = child.previousSibling as HTMLElement)) index++;
             setCursor(index);
+            if (cursor !== index && !busyRef.current) {
+              setPlay(false);
+            }
           }
         });
       },
@@ -103,40 +96,42 @@ export default function Carousel({ className, children, ...props }) {
     <div {...props} className={cx(className, 'group')}>
       <div className="relative overflow-hidden">
         <div
-          className="relative snap snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full"
+          className="relative snap snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full -mb-4 pb-4"
           dir="ltr"
           ref={rootRef}>
           {children}
         </div>
         {slideCount > 0 && (
-          <nav className="hidden pointer:flex h-10 absolute left-1/2 top-full transform -translate-x-1/2 transition duration-300 ease opacity-0 group-hover:-translate-y-16 group-hover:opacity-100 bg-black text-white shadow-xl rounded-full">
+          <nav className="box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transform transition-opacity duration-100 ease opacity-0 group-hover:opacity-100 text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none">
             <button
               aria-title="Prev"
-              className="flex items-center pl-2 pr-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+              className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
               onClick={() => {
-                setPlay(false);
-                goTo((cursor - 1 + slideCount) % slideCount, 'auto');
+                goTo(
+                  (cursor - 1 + slideCount) % slideCount,
+                  'manual',
+                  'smooth',
+                );
               }}>
-              <SkipPrevIcon className={navIconClassName} />
+              <SkipPrevIcon className="!w-7 !h-7" />
             </button>
             <button
               aria-title={play ? 'Pause' : 'Play'}
-              className="flex items-center px-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+              className="flex items-center px-1 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
               onClick={() => setPlay(play => !play)}>
               {play ? (
-                <PauseIcon className={navIconClassName} />
+                <PauseIcon className="!w-8 !h-8" />
               ) : (
-                <PlayArrowIcon className={navIconClassName} />
+                <PlayArrowIcon className="!w-8 !h-8" />
               )}
             </button>
             <button
               aria-title="Next"
-              className="flex items-center pl-1 pr-2 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500"
+              className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
               onClick={() => {
-                setPlay(false);
-                goTo((cursor + 1) % slideCount, 'auto');
+                goTo((cursor + 1) % slideCount, 'manual', 'smooth');
               }}>
-              <SkipNextIcon className={navIconClassName} />
+              <SkipNextIcon className="!w-7 !h-7" />
             </button>
           </nav>
         )}
@@ -154,11 +149,9 @@ export default function Carousel({ className, children, ...props }) {
                 <>
                   <span
                     className={cx(
-                      'block bg-primary-700 dark:bg-white rounded-full shadow',
+                      'box-content w-1 h-1 block bg-primary-700 dark:bg-white border border-primary-700 dark:border-white rounded-full shadow',
                       {
-                        'w-2 h-2': checked,
-                        'w-1 h-1 border border-primary-700 dark:border-white opacity-50 box-content':
-                          !checked,
+                        'opacity-50': !checked,
                       },
                     )}
                   />
@@ -172,7 +165,7 @@ export default function Carousel({ className, children, ...props }) {
           <RadioGroup
             className="py-2 w-full flex justify-center items-center cursor-default"
             value={cursor}
-            onChange={i => goTo(i)}>
+            onChange={i => goTo(i, 'manual')}>
             <RadioGroup.Label className="sr-only">
               Slider Image Index
             </RadioGroup.Label>

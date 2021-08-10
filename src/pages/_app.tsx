@@ -11,8 +11,7 @@ import NavBar from '../components/NavBar';
 import useWaitCursor from '../lib/useWaitCursor';
 import '../config/custom-elements';
 import '../styles/fonts.css';
-import '../styles/tailwind.css';
-import '../styles/post.css';
+import '../styles/style.css';
 
 if (typeof window !== 'undefined') {
   smoothscroll.polyfill();

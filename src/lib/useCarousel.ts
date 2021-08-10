@@ -8,10 +8,14 @@ export default function useCarousel() {
   const [scrollPosition, setScrollPosition] = useState(null);
   const [showNav, setShowNav] = useState(null);
 
+  const getSlideWidth = useCallback(() => {
+    const childNode = scrollArea.current.querySelector(':scope > *');
+    return childNode?.getBoundingClientRect()?.width ?? null;
+  }, []);
+
   const navigate = useCallback(
     delta => {
       const { scrollLeft } = scrollArea.current;
-      console.log('left', scrollLeft + scrollBy * delta);
       scrollArea.current.scroll({
         behavior: 'smooth',
         left: scrollLeft + scrollBy * delta,
@@ -26,11 +30,12 @@ export default function useCarousel() {
     const calculateScrollPosition = () => {
       if (!scrollAreaNode) return;
       const { width } = scrollAreaNode.getBoundingClientRect();
-      if (scrollAreaNode.scrollLeft === 0) {
+      const slideWidth = getSlideWidth();
+      if (scrollAreaNode.scrollLeft < slideWidth / 2) {
         setScrollPosition('start');
       } else if (
-        scrollAreaNode.scrollLeft + width ===
-        scrollAreaNode.scrollWidth
+        scrollAreaNode.scrollLeft + width >
+        scrollAreaNode.scrollWidth - slideWidth / 2
       ) {
         setScrollPosition('end');
       } else {
@@ -47,10 +52,10 @@ export default function useCarousel() {
         parseFloat(computedStyle['padding-right']) -
         parseFloat(computedStyle['padding-left']);
       setShowNav(scrollAreaNode.scrollWidth > containerWidth);
-      const childNode = scrollAreaNode.querySelector(':scope > *');
-      if (!childNode) return;
-      const { width: childWidth } = childNode.getBoundingClientRect();
-      setScrollBy(childWidth * Math.floor(containerWidth / childWidth));
+      const slideWidth = getSlideWidth();
+      if (slideWidth) {
+        setScrollBy(slideWidth * Math.floor(containerWidth / slideWidth));
+      }
     };
 
     const observer = new MutationObserver(calculateScrollBy);

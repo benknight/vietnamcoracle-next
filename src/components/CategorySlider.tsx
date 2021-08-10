@@ -1,4 +1,6 @@
 import { gql } from 'graphql-request';
+import Link from 'next/link';
+import internalizeUrl from '../lib/internalizeUrl';
 import Slider, { SliderSlide } from './Slider';
 import Hero from './Hero';
 
@@ -12,17 +14,17 @@ const CategorySlider = ({ data }) => {
             Boolean(post.thumbnails.thumbnailSlideWidescreen),
         )
         .map(post => (
-          <SliderSlide
-            className="block relative w-full h-full flex-shrink-0"
-            component="a"
-            href={post.link}
-            key={post.link}>
-            <Hero
-              imgSm={post.thumbnails.thumbnailSlideSquare}
-              imgLg={post.thumbnails.thumbnailSlideWidescreen}
-              preserveAspectRatio
-            />
-          </SliderSlide>
+          <Link href={internalizeUrl(post.link)} key={post.link} passHref>
+            <SliderSlide
+              as="a"
+              className="block relative w-full h-full flex-shrink-0">
+              <Hero
+                imgSm={post.thumbnails.thumbnailSlideSquare}
+                imgLg={post.thumbnails.thumbnailSlideWidescreen}
+                preserveAspectRatio
+              />
+            </SliderSlide>
+          </Link>
         ))}
     </Slider>
   );

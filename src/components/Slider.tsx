@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { useCallback, useRef, useState, useEffect } from 'react';
+import { forwardRef, useCallback, useRef, useState, useEffect } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -177,12 +177,16 @@ export default function Slider({ className, children, ...props }) {
   );
 }
 
-export function SliderSlide({ className, component, ...props }) {
-  const Component = component;
+export const SliderSlide = forwardRef<
+  HTMLElement,
+  { as: any; children: React.ReactNode; className?: string }
+>(({ as, className = '', ...props }, ref) => {
+  const Component = as;
   return (
     <Component
       {...props}
       className={cx(className, 'snap-center always-stop')}
+      ref={ref}
     />
   );
-}
+});

@@ -1,4 +1,5 @@
 import cx from 'classnames';
+import { throttle } from 'lodash';
 import { forwardRef, useCallback, useRef, useState, useEffect } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import PauseIcon from '@material-ui/icons/Pause';
@@ -7,6 +8,7 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPrevIcon from '@material-ui/icons/SkipPrevious';
 
 export default function Slider({ className, children, ...props }) {
+  const parentRef = useRef<HTMLDivElement>();
   const rootRef = useRef<HTMLDivElement>();
   const intervalRef = useRef<number>();
   const busyRef = useRef<boolean>();
@@ -22,14 +24,14 @@ export default function Slider({ className, children, ...props }) {
       intent: 'auto' | 'manual' = 'auto',
       behavior: 'auto' | 'smooth' = 'auto',
     ) => {
-      const slides = rootRef.current?.querySelectorAll(':scope > a');
+      const slides = parentRef.current?.querySelectorAll(':scope > a');
       if (intent === 'manual') {
         setPlay(false);
       }
       if (intent === 'auto' && behavior === 'auto') {
         behavior = 'smooth';
       }
-      rootRef.current?.scrollTo({
+      parentRef.current?.scrollTo({
         left: (slides[destination] as HTMLElement).offsetLeft,
         behavior,
       });
@@ -60,7 +62,7 @@ export default function Slider({ className, children, ...props }) {
 
   useEffect(() => {
     // Update cursor when user scrolls
-    const slides = rootRef.current.querySelectorAll(':scope > a');
+    const slides = parentRef.current.querySelectorAll(':scope > a');
     setSlideCount(slides.length);
     const observer = new IntersectionObserver(
       entries => {
@@ -77,7 +79,7 @@ export default function Slider({ className, children, ...props }) {
         });
       },
       {
-        root: rootRef.current,
+        root: parentRef.current,
         threshold: 0.5,
       },
     );
@@ -95,21 +97,25 @@ export default function Slider({ className, children, ...props }) {
   }, []);
 
   useEffect(() => {
+    const timeout = throttle(
+      () => window.setTimeout(() => setShowNav(false), 2000),
+      2000,
+    );
     const listener = () => {
       setShowNav(true);
-      window.setTimeout(() => setShowNav(false), 2000);
+      timeout();
     };
     rootRef.current?.addEventListener('mousemove', listener);
     return () => rootRef.current?.removeEventListener('mousemove', listener);
   }, []);
 
   return (
-    <div {...props} className={className}>
+    <div {...props} className={className} ref={rootRef}>
       <div className="relative overflow-hidden">
         <div
           className="relative snap snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full -mb-4 pb-4"
           dir="ltr"
-          ref={rootRef}>
+          ref={parentRef}>
           {children}
         </div>
         {slideCount > 0 && (

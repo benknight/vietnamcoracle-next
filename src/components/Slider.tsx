@@ -28,7 +28,7 @@ export default function Slider({ className, children, ...props }) {
       if (intent === 'auto' && behavior === 'auto') {
         behavior = 'smooth';
       }
-      rootRef.current.scrollTo({
+      rootRef.current?.scrollTo({
         left: (slides[destination] as HTMLElement).offsetLeft,
         behavior,
       });
@@ -90,6 +90,7 @@ export default function Slider({ className, children, ...props }) {
     } else {
       window.addEventListener('load', observeSlides);
     }
+    return () => window.removeEventListener('load', observeSlides);
   }, []);
 
   return (
@@ -104,7 +105,7 @@ export default function Slider({ className, children, ...props }) {
         {slideCount > 0 && (
           <nav className="box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transform transition-opacity duration-100 ease opacity-0 group-hover:opacity-100 text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none">
             <button
-              aria-title="Prev"
+              aria-label="Prev"
               className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
               onClick={() => {
                 goTo(
@@ -116,7 +117,7 @@ export default function Slider({ className, children, ...props }) {
               <SkipPrevIcon className="!w-7 !h-7" />
             </button>
             <button
-              aria-title={play ? 'Pause' : 'Play'}
+              aria-label={play ? 'Pause' : 'Play'}
               className="flex items-center px-1 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
               onClick={() => setPlay(play => !play)}>
               {play ? (
@@ -126,7 +127,7 @@ export default function Slider({ className, children, ...props }) {
               )}
             </button>
             <button
-              aria-title="Next"
+              aria-label="Next"
               className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
               onClick={() => {
                 goTo((cursor + 1) % slideCount, 'manual', 'smooth');

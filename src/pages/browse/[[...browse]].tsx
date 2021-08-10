@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
+import CategorySlider from '../../components/CategorySlider';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
 import GridListTab from '../../components/GridListTab';
@@ -16,7 +17,6 @@ import Map from '../../components/Map';
 import { SwatchesProvider } from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
-import Slider from '../../components/Slider';
 import generateSwatches from '../../lib/generateSwatches';
 import getCategoryLink from '../../lib/getCategoryLink';
 import GraphQLClient from '../../lib/GraphQLClient';
@@ -38,7 +38,7 @@ const Browse = ({
     <SwatchesProvider value={swatches}>
       <Head>{htmlToReact(category.seo.fullHead)}</Head>
       {isHome ? (
-        <Slider data={category.slider} />
+        <CategorySlider data={category.slider} />
       ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg} theme="dark">
           <HeroContent>
@@ -228,7 +228,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
           }
         }
         slider {
-          ...SliderComponentData
+          ...CategorySliderComponentData
         }
         ...CategoryData
       }
@@ -286,12 +286,12 @@ export const getStaticProps = async ({ params, preview = false }) => {
         fullHead
       }
     }
+    ${CategorySlider.fragments}
     ${Collection.fragments}
     ${Footer.fragments}
     ${Map.fragments}
     ${PostMediaBlock.fragments}
     ${SidebarDefault.fragments}
-    ${Slider.fragments}
   `;
 
   const categorySlug = params.browse?.[0] ?? 'features-guides';

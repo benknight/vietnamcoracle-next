@@ -12,6 +12,7 @@ export default function Slider({ className, children, ...props }) {
   const busyRef = useRef<boolean>();
   const advanceRef = useRef<() => void>();
   const [play, setPlay] = useState(true);
+  const [showNav, setShowNav] = useState(false);
   const [slideCount, setSlideCount] = useState(null);
   const [cursor, setCursor] = useState(0);
 
@@ -93,8 +94,17 @@ export default function Slider({ className, children, ...props }) {
     return () => window.removeEventListener('load', observeSlides);
   }, []);
 
+  useEffect(() => {
+    const listener = () => {
+      setShowNav(true);
+      window.setTimeout(() => setShowNav(false), 2000);
+    };
+    rootRef.current?.addEventListener('mousemove', listener);
+    return () => rootRef.current?.removeEventListener('mousemove', listener);
+  }, []);
+
   return (
-    <div {...props} className={cx(className, 'group')}>
+    <div {...props} className={className}>
       <div className="relative overflow-hidden">
         <div
           className="relative snap snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full -mb-4 pb-4"
@@ -103,7 +113,11 @@ export default function Slider({ className, children, ...props }) {
           {children}
         </div>
         {slideCount > 0 && (
-          <nav className="box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transform transition-opacity duration-100 ease opacity-0 group-hover:opacity-100 text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none">
+          <nav
+            className={cx(
+              'box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transform transition-opacity duration-100 ease text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none',
+              showNav ? 'opacity-100' : 'opacity-0',
+            )}>
             <button
               aria-label="Prev"
               className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"

@@ -24,7 +24,7 @@
 
 @layer components {
   .btn {
-    @apply h-8 px-4 text-sm text-white bg-primary-500 hover:bg-primary-400 border border-primary-500 hover:border-primary-400 dark:border-opacity-50 dark:bg-opacity-10 hover:bg-opacity-100 focus:bg-opacity-100 focus:outline-none rounded-lg subpixel-antialiased font-sans transition-colors duration-100;
+    @apply inline-flex items-center h-8 px-4 text-sm text-white bg-primary-500 hover:bg-primary-400 border border-primary-500 hover:border-primary-400 dark:border-opacity-50 dark:bg-opacity-10 hover:bg-opacity-100 focus:bg-opacity-100 focus:outline-none rounded-lg subpixel-antialiased font-sans transition-colors duration-100;
   }
   .c-block::after {
     @apply block w-2/3 xl:w-1/3 mx-auto my-12 border-t border-gray-300 dark:border-gray-800;
@@ -97,6 +97,9 @@
   .page-wrap--right {
     @apply pl-0 !important;
   }
+  .page-wrap--center {
+    @apply mx-auto py-12 max-w-screen-lg;
+  }
   /* smartphones, touchscreens */
   @media (hover: none) and (pointer: coarse) {
     .pointer-only {
@@ -105,184 +108,6 @@
   }
   .postcard-excerpt a {
     @apply hidden;
-  }
-}
-
-/* Post styles */
-@layer components {
-  article {
-    @apply text-base font-display leading-relaxed dark:text-gray-300;
-  }
-  article a {
-    @apply link;
-  }
-  article a[name] {
-    scroll-margin-top: 6rem;
-  }
-  article h1 {
-    @apply mb-5 text-2xl;
-    letter-spacing: 0.2em;
-  }
-  article h2 {
-    @apply sm:mt-8 pb-4 lg:pb-4 font-display tracking-wider leading-loose;
-  }
-  article hr,
-  .wp-block-separator {
-    @apply my-6 border border-gray-200 dark:border-gray-800;
-    border-width: 0 0 1px;
-  }
-  article iframe {
-    width: 100%;
-  }
-  article img {
-    @apply md:shadow-heavy;
-  }
-  article img,
-  article iframe {
-    @apply block;
-  }
-  article img.size-large {
-    @apply mt-8;
-  }
-  article p,
-  article ul,
-  article figure {
-    @apply mb-5 font-serif;
-  }
-  article figcaption {
-    @apply block py-2 leading-tight font-bold text-sm text-center;
-  }
-  article figure {
-    @apply max-w-full !important;
-  }
-  article *[style*='#3366ff'] {
-    @apply text-blue-700 dark:text-blue-400 !important;
-  }
-  article *[style*='#333333'],
-  article *[style*='#000000'] {
-    @apply dark:text-white !important;
-  }
-  article *[style*='#808080'] {
-    @apply text-gray-400 !important;
-  }
-  article *[style*='#ff0000'] {
-    @apply text-red-600 dark:text-red-500 !important;
-  }
-  article ul {
-    @apply list-disc pl-8;
-  }
-  article .aligncenter {
-    @apply mx-auto mb-0;
-  }
-  article .alignleft {
-    @apply mx-auto mb-0 float-none md:float-left clear-both md:mr-8;
-  }
-  article .alignright {
-    @apply mx-auto mb-0 float-none md:float-right clear-both md:ml-8;
-  }
-  article .blocks-gallery-grid {
-    @apply list-none pl-0;
-  }
-  article .blocks-gallery-item img {
-    @apply block rounded;
-  }
-  article .crp-list-title {
-    @apply hidden;
-  }
-  article .crp-list {
-    @apply hidden;
-  }
-  article .crp-list + div > a {
-    color: inherit !important;
-    @apply hover:no-underline !important;
-  }
-  article .crp-list + div p {
-    margin-bottom: 0 !important;
-  }
-  /* Necessary to style /vietnam-coracle-video-library */
-  article .wp-block-gallery a {
-    @apply text-white !important;
-  }
-  /* Override inline colors set in WYSIWYG */
-  .post-legacy a > span {
-    color: inherit !important;
-  }
-  .post-legacy h2 strong {
-    line-height: 0;
-    font-size: 0;
-    @apply sm:text-base mt-4 sm:mt-8 flex flex-col items-start sm:block text-gray-500;
-  }
-  .post-legacy h2 strong a {
-    letter-spacing: 3px;
-    position: relative;
-    top: 1.5px;
-    @apply text-lg sm:text-lg leading-relaxed mb-2 sm:mx-2;
-  }
-  .post-legacy h2 strong a:first-child {
-    @apply ml-0;
-  }
-  .post-legacy span[style*='Georgia'] {
-    font-family: inherit !important;
-  }
-  .post-legacy span[style*='25px'],
-  .post-legacy span[style*='26px'],
-  .post-legacy span[style*='27px'],
-  .post-legacy span[style*='28px'] {
-    @apply font-display !important;
-    @apply leading-normal !important;
-  }
-  /* Images & captions */
-  .legacy-caption em::after,
-  .legacy-caption em::before {
-    content: ' ';
-  }
-  .post-next h2,
-  .post-next h3,
-  .post-next h4 {
-    @apply my-6 pb-0 font-bold;
-  }
-  .post-next h2 {
-    @apply uppercase text-2xl text-center dark:text-white;
-    letter-spacing: 0.2em;
-  }
-  .post-next h3 {
-    @apply text-xl dark:text-white;
-  }
-  .post-next h2,
-  .post-next h3 {
-    scroll-margin-top: 6rem;
-  }
-  @screen xl {
-    .post-next h2,
-    .post-next h3 {
-      scroll-margin-top: 8rem;
-    }
-  }
-  .post-next p,
-  .post-next ul,
-  .post-next ol {
-    @apply mb-4;
-  }
-  .post-next .wp-block-image {
-    @apply my-8;
-  }
-  .wp-block-buttons:nth-child(2) {
-    @apply block md:flex md:mt-8;
-  }
-  .wp-block-buttons:nth-child(2) .wp-block-button {
-    @apply block p-0 mx-0 mt-0 mb-2;
-  }
-  .wp-block-buttons:nth-child(2) .wp-block-button:not(:last-child)::after {
-    @apply inline-block h-3 w-[2px] mx-4 bg-black dark:bg-white opacity-20;
-  }
-  @screen md {
-    .wp-block-buttons:nth-child(2) .wp-block-button:not(:last-child)::after {
-      content: '';
-    }
-  }
-  .wp-block-buttons:nth-child(2) .wp-block-button__link {
-    @apply link p-0 bg-transparent text-base tracking-widest leading-relaxed uppercase;
-    @apply text-lg font-bold;
   }
 }
 

@@ -232,21 +232,6 @@ export const getStaticProps = async ({ params, preview = false }) => {
         }
         ...CategoryData
       }
-      seo {
-        openGraph {
-          frontPage {
-            title
-            description
-            image {
-              mediaDetails {
-                height
-                width
-              }
-              sourceUrl
-            }
-          }
-        }
-      }
       subcategory: category(id: $subcategorySlug, idType: SLUG)
         @include(if: $hasSubcategory) {
         ...CategoryData

@@ -17,6 +17,7 @@ export default function Slider({ className, children, ...props }) {
   const [showNav, setShowNav] = useState(false);
   const [slideCount, setSlideCount] = useState(null);
   const [cursor, setCursor] = useState(0);
+  const [parentHeight, setParentHeight] = useState(0);
 
   const goTo = useCallback(
     (
@@ -109,6 +110,15 @@ export default function Slider({ className, children, ...props }) {
     return () => rootRef.current?.removeEventListener('mousemove', listener);
   }, []);
 
+  useEffect(() => {
+    const updateParentHeight = () => {
+      setParentHeight(parentRef.current?.getBoundingClientRect()?.height);
+    };
+    updateParentHeight();
+    window.addEventListener('resize', updateParentHeight);
+    return () => window.removeEventListener('resize', updateParentHeight);
+  }, []);
+
   return (
     <div {...props} className={className} ref={rootRef}>
       <div className="relative overflow-hidden">
@@ -121,9 +131,13 @@ export default function Slider({ className, children, ...props }) {
         {slideCount > 0 && (
           <nav
             className={cx(
-              'box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transform transition-opacity duration-100 ease text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none',
+              'box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 transform transition-opacity duration-100 ease text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none',
               showNav ? 'opacity-100' : 'opacity-0',
-            )}>
+            )}
+            style={{
+              // Cannot position at bottom: 0 because of possible gap on some devices due to scrollbar hiding technique (-mb-4 pb-4)
+              top: `calc(${parentHeight}px - 5.75rem)`,
+            }}>
             <button
               aria-label="Prev"
               className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"

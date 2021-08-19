@@ -12,35 +12,31 @@ function PostMediaBlock({ data }) {
         relative sm:flex mb-2 p-4 lg:px-0 lg:my-0 rounded overflow-hidden
         bg-white dark:bg-gray-900 lg:bg-transparent shadow lg:shadow-none"
       key={data.uri}>
-      <PostLink post={data}>
-        <a className="absolute inset-0 sm:hidden" />
-      </PostLink>
+      <PostLink className="absolute inset-0 sm:hidden" post={data} />
       {data.featuredImage && (
         <div
           className="
             w-24 h-24 sm:w-auto sm:h-auto ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0
             float-right flex-shrink-0">
           <PostLink post={data}>
-            <a>
-              <Image
-                alt={data.featuredImage.node.altText}
-                className="rounded"
-                height={150}
-                layout="intrinsic"
-                loading="lazy"
-                src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.srcMd}`}
-                width={150}
-              />
-            </a>
+            <Image
+              alt={data.featuredImage.node.altText}
+              className="rounded"
+              height={150}
+              layout="intrinsic"
+              loading="lazy"
+              src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.srcMd}`}
+              width={150}
+            />
           </PostLink>
         </div>
       )}
       <div className="flex-auto">
         <div className="flex items-baseline">
-          <PostLink post={data}>
-            <a className="link sm:mt-1 text-base sm:text-2xl font-display">
-              {data.title}
-            </a>
+          <PostLink
+            className="link sm:mt-1 text-base sm:text-2xl font-display"
+            post={data}>
+            {data.title}
           </PostLink>
         </div>
         <div

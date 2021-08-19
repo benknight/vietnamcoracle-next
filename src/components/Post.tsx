@@ -15,7 +15,6 @@ import { MenuAlt1Icon } from '@heroicons/react/outline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import breakpoints from '../config/breakpoints';
 import cleanPostHTML from '../lib/cleanPostHTML';
-import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
 import CommentForm from './CommentForm';
 import CommentThread from './CommentThread';
@@ -43,25 +42,6 @@ export default function Post({ data, html, postNav }) {
         }
       : null;
   }, [data]);
-
-  // Internalize in-article links for client-side transitions
-  useEffect(() => {
-    articleRef.current.querySelectorAll('a').forEach(link => {
-      link.addEventListener('click', event => {
-        const internal = internalizeUrl(link.href);
-        if (internal !== link.href) {
-          event.preventDefault();
-          const url = new URL(link.href);
-          const params = new URLSearchParams(url.search);
-          if (params.has('p')) {
-            router.push(`/post?p=${params.get('p')}`);
-          } else {
-            router.push(internal);
-          }
-        }
-      });
-    });
-  }, [router.asPath]);
 
   useWaitCursor(router.isFallback);
 

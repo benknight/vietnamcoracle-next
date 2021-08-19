@@ -79,6 +79,9 @@
       @apply hidden;
     }
   }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
   .page-heading {
     scroll-margin-top: 6rem;
     @apply font-display text-2xl;

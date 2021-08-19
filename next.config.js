@@ -45,6 +45,17 @@ module.exports = {
           },
         ],
       },
+      {
+        destination: '/search?query=:s',
+        permanent: false,
+        source: '/',
+        has: [
+          {
+            type: 'query',
+            key: 's',
+          },
+        ],
+      },
       ...cmsRedirects.map(config => ({
         destination: config.action_data.url.replace(
           /https?\:\/\/(www\.)?vietnamcoracle\.com/g,

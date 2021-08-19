@@ -213,7 +213,6 @@ export default function Post({ data, html, postNav }) {
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>
-        2
       </Layout>
     </>
   );

@@ -12,7 +12,6 @@ import useWaitCursor from '../lib/useWaitCursor';
 import '../config/custom-elements';
 import '../styles/fonts.css';
 import '../styles/style.css';
-import '../styles/post.css';
 
 if (typeof window !== 'undefined') {
   smoothscroll.polyfill();

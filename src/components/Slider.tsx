@@ -14,7 +14,7 @@ export default function Slider({ className, children, ...props }) {
   const parentRef = useRef<HTMLDivElement>();
   const navRef = useRef<HTMLDivElement>();
   const rootRef = useRef<HTMLDivElement>();
-  const timeoutRef = useRef<number>();
+  const timeoutRef = useRef<boolean>();
   const [play, setPlay] = useState(true);
   const [showNav, setShowNav] = useState(false);
   const [slideCount, setSlideCount] = useState(null);
@@ -41,8 +41,8 @@ export default function Slider({ className, children, ...props }) {
     [],
   );
 
+  // Auto-play behavior
   useEffect(() => {
-    // Auto-play
     if (!slideCount) return;
     if (play && !intervalRef.current) {
       intervalRef.current = window.setInterval(() => {
@@ -57,13 +57,13 @@ export default function Slider({ className, children, ...props }) {
     }
   }, [play, slideCount]);
 
+  // Update the advance callback
   useEffect(() => {
-    // Update the advance callback
     advanceRef.current = () => goTo((cursor + 1) % slideCount);
   }, [cursor, slideCount]);
 
+  // Update cursor when user scrolls
   useEffect(() => {
-    // Update cursor when user scrolls
     const slides = parentRef.current.querySelectorAll(':scope > a');
     setSlideCount(slides.length);
     const observer = new IntersectionObserver(
@@ -98,24 +98,28 @@ export default function Slider({ className, children, ...props }) {
     return () => window.removeEventListener('load', observeSlides);
   }, []);
 
+  // Nav auto-hide behavior
   useEffect(() => {
     const timeout = throttle(
       () =>
-        (timeoutRef.current = window.setTimeout(() => setShowNav(false), 2000)),
+        window.setTimeout(() => {
+          if (timeoutRef.current !== false) {
+            setShowNav(false);
+            timeoutRef.current = true;
+          }
+        }, 2000),
       2000,
     );
     const mouseMoveListener = () => {
-      console.log('mousemove');
       setShowNav(true);
       timeout();
     };
     const mouseEnterListener = () => {
-      console.log('mouseenter');
+      timeoutRef.current = false;
       setShowNav(true);
-      window.clearTimeout(timeoutRef.current);
     };
     const mouseLeaveListener = () => {
-      console.log('mouseleave');
+      timeoutRef.current = true;
       setShowNav(false);
     };
     navRef.current?.querySelectorAll('button').forEach(node => {

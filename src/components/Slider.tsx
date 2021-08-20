@@ -8,11 +8,13 @@ import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPrevIcon from '@material-ui/icons/SkipPrevious';
 
 export default function Slider({ className, children, ...props }) {
-  const parentRef = useRef<HTMLDivElement>();
-  const rootRef = useRef<HTMLDivElement>();
-  const intervalRef = useRef<number>();
-  const busyRef = useRef<boolean>();
   const advanceRef = useRef<() => void>();
+  const busyRef = useRef<boolean>();
+  const intervalRef = useRef<number>();
+  const parentRef = useRef<HTMLDivElement>();
+  const navRef = useRef<HTMLDivElement>();
+  const rootRef = useRef<HTMLDivElement>();
+  const timeoutRef = useRef<number>();
   const [play, setPlay] = useState(true);
   const [showNav, setShowNav] = useState(false);
   const [slideCount, setSlideCount] = useState(null);
@@ -98,15 +100,40 @@ export default function Slider({ className, children, ...props }) {
 
   useEffect(() => {
     const timeout = throttle(
-      () => window.setTimeout(() => setShowNav(false), 2000),
+      () =>
+        (timeoutRef.current = window.setTimeout(() => setShowNav(false), 2000)),
       2000,
     );
-    const listener = () => {
+    const mouseMoveListener = () => {
+      console.log('mousemove');
       setShowNav(true);
       timeout();
     };
-    rootRef.current?.addEventListener('mousemove', listener);
-    return () => rootRef.current?.removeEventListener('mousemove', listener);
+    const mouseEnterListener = () => {
+      console.log('mouseenter');
+      setShowNav(true);
+      window.clearTimeout(timeoutRef.current);
+    };
+    const mouseLeaveListener = () => {
+      console.log('mouseleave');
+      setShowNav(false);
+    };
+    navRef.current?.querySelectorAll('button').forEach(node => {
+      node.addEventListener('mousemove', event => {
+        event.stopPropagation();
+        event.stopImmediatePropagation();
+      });
+      node.addEventListener('mouseenter', mouseEnterListener);
+      node.addEventListener('mouseleave', mouseLeaveListener);
+    });
+    parentRef.current?.addEventListener('mousemove', mouseMoveListener);
+    return () => {
+      navRef.current?.querySelectorAll('button').forEach(node => {
+        node.removeEventListener('mouseenter', mouseEnterListener);
+        node.removeEventListener('mouseleave', mouseLeaveListener);
+      });
+      parentRef.current?.removeEventListener('mousemove', mouseMoveListener);
+    };
   }, []);
 
   return (
@@ -118,44 +145,39 @@ export default function Slider({ className, children, ...props }) {
           ref={parentRef}>
           {children}
         </div>
-        {slideCount > 0 && (
-          <nav
-            className={cx(
-              'box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transform transition-opacity duration-100 ease text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none',
-              showNav ? 'opacity-100' : 'opacity-0',
-            )}>
-            <button
-              aria-label="Prev"
-              className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
-              onClick={() => {
-                goTo(
-                  (cursor - 1 + slideCount) % slideCount,
-                  'manual',
-                  'smooth',
-                );
-              }}>
-              <SkipPrevIcon className="!w-7 !h-7" />
-            </button>
-            <button
-              aria-label={play ? 'Pause' : 'Play'}
-              className="flex items-center px-1 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
-              onClick={() => setPlay(play => !play)}>
-              {play ? (
-                <PauseIcon className="!w-8 !h-8" />
-              ) : (
-                <PlayArrowIcon className="!w-8 !h-8" />
-              )}
-            </button>
-            <button
-              aria-label="Next"
-              className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
-              onClick={() => {
-                goTo((cursor + 1) % slideCount, 'manual', 'smooth');
-              }}>
-              <SkipNextIcon className="!w-7 !h-7" />
-            </button>
-          </nav>
-        )}
+        <nav
+          className={cx(
+            'box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transform transition-opacity duration-100 ease text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none',
+            showNav ? 'opacity-100' : 'opacity-0',
+          )}
+          ref={navRef}>
+          <button
+            aria-label="Prev"
+            className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
+            onClick={() => {
+              goTo((cursor - 1 + slideCount) % slideCount, 'manual', 'smooth');
+            }}>
+            <SkipPrevIcon className="!w-7 !h-7" />
+          </button>
+          <button
+            aria-label={play ? 'Pause' : 'Play'}
+            className="flex items-center px-1 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
+            onClick={() => setPlay(play => !play)}>
+            {play ? (
+              <PauseIcon className="!w-8 !h-8" />
+            ) : (
+              <PlayArrowIcon className="!w-8 !h-8" />
+            )}
+          </button>
+          <button
+            aria-label="Next"
+            className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
+            onClick={() => {
+              goTo((cursor + 1) % slideCount, 'manual', 'smooth');
+            }}>
+            <SkipNextIcon className="!w-7 !h-7" />
+          </button>
+        </nav>
       </div>
       {(() => {
         if (slideCount === 0) return null;

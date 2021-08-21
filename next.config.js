@@ -56,6 +56,11 @@ module.exports = {
           },
         ],
       },
+      {
+        destination: 'https://www.cms.vietnamcoracle.com/wp-content/:path*',
+        permanent: true,
+        source: '/wp-content/:path*',
+      },
       ...cmsRedirects.map(config => ({
         destination: config.action_data.url.replace(
           /https?\:\/\/(www\.)?vietnamcoracle\.com/g,

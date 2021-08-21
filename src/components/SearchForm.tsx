@@ -3,6 +3,7 @@ import _debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { SearchIcon } from '@heroicons/react/solid';
+import { gaEvent } from '../lib/GoogleAnalytics';
 
 export default function SearchInput({ className = '', ...inputProps }) {
   const inputRef = useRef<HTMLInputElement>();
@@ -21,6 +22,12 @@ export default function SearchInput({ className = '', ...inputProps }) {
       onSubmit={event => {
         event.preventDefault();
         inputRef.current?.blur();
+        gaEvent({
+          action: 'search',
+          params: {
+            query: value,
+          },
+        });
         router.push({
           pathname: '/search',
           query: { query: value },

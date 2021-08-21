@@ -45,6 +45,7 @@
   "devDependencies": {
     "@graphql-cli/coverage": "2.1.0",
     "@graphql-cli/validate": "2.1.0",
+    "@types/gtag.js": "^0.0.7",
     "@types/lodash": "^4.14.168",
     "@types/node": "^15.0.2",
     "autoprefixer": "^10.2.5",

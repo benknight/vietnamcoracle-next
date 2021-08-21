@@ -60,16 +60,16 @@ export default function Post({ data, html, postNav }) {
         <meta name="twitter:label1" content="Written by" />
         <meta name="twitter:data1" content="Vietnam Coracle" />
         <link
-          href="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.css"
+          href="https://www.cms.vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.css"
           rel="stylesheet"
         />
         <link
-          href="https://vietnamcoracle.com/wp-includes/css/dist/block-library/style.css"
+          href="https://www.cms.vietnamcoracle.com/wp-includes/css/dist/block-library/style.css"
           rel="stylesheet"
         />
         <script
           async
-          src="https://vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
+          src="https://www.cms.vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
         />
       </Head>
       <Hero

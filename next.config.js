@@ -6,7 +6,7 @@ module.exports = {
     // webpack5: true,
   },
   images: {
-    domains: ['www.vietnamcoracle.com', 'res.cloudinary.com'],
+    domains: ['www.cms.vietnamcoracle.com', 'res.cloudinary.com'],
   },
   async redirects() {
     const api = axios.create({
@@ -14,7 +14,7 @@ module.exports = {
         username: process.env.WORDPRESS_API_USERNAME,
         password: process.env.WORDPRESS_API_PASSWORD,
       },
-      baseURL: 'https://www.vietnamcoracle.com/wp-json/redirection/v1',
+      baseURL: 'https://www.cms.vietnamcoracle.com/wp-json/redirection/v1',
     });
     let cmsRedirects;
     try {

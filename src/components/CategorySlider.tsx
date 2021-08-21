@@ -14,7 +14,7 @@ const CategorySlider = ({ data }) => {
             Boolean(post.thumbnails.thumbnailSlideWidescreen),
         )
         .map(post => (
-          <Link href={internalizeUrl(post.link)} key={post.link} passHref>
+          <Link href={post.uri} key={post.link} passHref>
             <SliderSlide
               as="a"
               className="block relative w-full h-full flex-shrink-0">
@@ -34,8 +34,8 @@ CategorySlider.fragments = gql`
   fragment CategorySliderComponentData on Category_Slider {
     posts {
       ... on Post {
-        link
         title
+        uri
         thumbnails {
           thumbnailSlideSquare {
             ...HeroImageData

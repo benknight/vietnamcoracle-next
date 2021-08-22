@@ -194,6 +194,14 @@ export default function Post({ data, html, postNav }) {
                 <div className="page-heading mt-8 md:mt-12 mb-4">
                   Leave a Comment
                 </div>
+                <p className="mb-4 font-serif text-sm xl:text-base leading-snug">
+                  Questions, updates and trip reports are all welcome. However,
+                  please keep comments polite and on-topic. See{' '}
+                  <a className="link" href="/updates-accuracy#howtohelp2">
+                    commenting etiquette
+                  </a>
+                  for details.
+                </p>
                 <div className="mb-12">
                   <CommentForm post={content.databaseId} />
                 </div>

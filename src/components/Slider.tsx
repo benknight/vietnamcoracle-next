@@ -141,10 +141,13 @@ export default function Slider({ className, children, ...props }) {
   }, []);
 
   return (
-    <div {...props} className={className} ref={rootRef}>
+    <div
+      {...props}
+      className={cx(className, 'text-gray-900 bg-black')}
+      ref={rootRef}>
       <div className="relative overflow-hidden">
         <div
-          className="relative snap snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full no-scrollbar"
+          className="relative snap snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full no-scrollbar max-w-screen-2xl mx-auto"
           dir="ltr"
           ref={parentRef}>
           {children}
@@ -210,7 +213,7 @@ export default function Slider({ className, children, ...props }) {
         }
         return (
           <RadioGroup
-            className="py-2 w-full flex justify-center items-center cursor-default"
+            className="py-2 w-full flex justify-center items-center cursor-default bg-white dark:bg-gray-950"
             value={cursor}
             onChange={i => goTo(i, 'manual')}>
             <RadioGroup.Label className="sr-only">

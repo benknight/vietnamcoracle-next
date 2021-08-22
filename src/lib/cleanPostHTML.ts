@@ -1,3 +1,5 @@
+import cmsToNextUrls from './cmsToNextUrls';
+
 export default function cleanPostHTML(html: string): string {
   let result = html;
 
@@ -29,10 +31,7 @@ export default function cleanPostHTML(html: string): string {
     '<related-posts $2>$4</related-posts>',
   );
 
-  result = result.replace(
-    /cms\.vietnamcoracle\.com(?!\/wp-content)/g,
-    'vietnamcoracle.com',
-  );
+  result = cmsToNextUrls(result);
 
   return result;
 }

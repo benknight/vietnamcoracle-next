@@ -7,7 +7,7 @@ import htmlToReact from 'html-react-parser';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef, Fragment } from 'react';
+import { useMemo, useRef, Fragment } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import Headroom from 'react-headroom';
 import { Menu } from '@headlessui/react';
@@ -15,6 +15,7 @@ import { MenuAlt1Icon } from '@heroicons/react/outline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import breakpoints from '../config/breakpoints';
 import cleanPostHTML from '../lib/cleanPostHTML';
+import cmsToNextUrls from '../lib/cmsToNextUrls';
 import useWaitCursor from '../lib/useWaitCursor';
 import CommentForm from './CommentForm';
 import CommentThread from './CommentThread';
@@ -56,7 +57,7 @@ export default function Post({ data, html, postNav }) {
   return (
     <>
       <Head>
-        {htmlToReact(content.seo.fullHead)}
+        {htmlToReact(cmsToNextUrls(content.seo.fullHead))}
         <meta name="twitter:label1" content="Written by" />
         <meta name="twitter:data1" content="Vietnam Coracle" />
         <link
@@ -302,7 +303,7 @@ export async function getPostPageProps(
     $('share-buttons').attr({
       'data-share-count': String(fbShareCount),
       'data-title': data.contentNode.title,
-      'data-link': data.contentNode.link,
+      'data-link': cmsToNextUrls(data.contentNode.link),
       'data-image': data.contentNode.featuredImage?.node.sourceUrl ?? '',
     });
 

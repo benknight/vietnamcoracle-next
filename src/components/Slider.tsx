@@ -7,7 +7,7 @@ import PlayArrowIcon from '@material-ui/icons/PlayArrow';
 import SkipNextIcon from '@material-ui/icons/SkipNext';
 import SkipPrevIcon from '@material-ui/icons/SkipPrevious';
 
-export default function Slider({ className, children, ...props }) {
+export default function Slider({ className = '', children, ...props }) {
   const advanceRef = useRef<() => void>();
   const busyRef = useRef<boolean>();
   const intervalRef = useRef<number>();

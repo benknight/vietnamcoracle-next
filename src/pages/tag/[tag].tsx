@@ -33,7 +33,7 @@ const Tag = ({
           </div>
         </HeroContent>
       </Hero>
-      <Layout>
+      <Layout className="bg-white dark:bg-gray-950 pb-14 xl:pb-0">
         <LayoutMain>
           <GridListTab.Group posts={data.tag.posts.nodes} />
         </LayoutMain>

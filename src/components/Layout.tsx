@@ -1,13 +1,7 @@
 import cx from 'classnames';
 
 const Layout = ({ children, className = '' }) => (
-  <div
-    className={cx(
-      'mx-auto xl:flex bg-white dark:bg-gray-950 pb-14 xl:pb-0',
-      className,
-    )}>
-    {children}
-  </div>
+  <div className={cx('mx-auto xl:flex', className)}>{children}</div>
 );
 
 export const LayoutMain = ({ children, className = '' }) => (
@@ -21,7 +15,7 @@ export const LayoutMain = ({ children, className = '' }) => (
 );
 
 export const LayoutSidebar = ({
-  children,
+  children = null,
   className = '',
   showBorder = false,
 }) => {

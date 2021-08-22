@@ -97,7 +97,7 @@ const Browse = ({
           </HeroContent>
         </Hero>
       )}
-      <Layout>
+      <Layout className="bg-white dark:bg-gray-950 pb-14 xl:pb-0">
         <LayoutMain>
           {category && !subcategory ? (
             category.collections?.items.map(item => (

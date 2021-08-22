@@ -73,7 +73,7 @@ export default function Post({ data, html, postNav }) {
         />
       </Head>
       <Hero
-        className="relative"
+        className="relative max-w-screen-2xl mx-auto"
         imgSm={
           content.thumbnails?.thumbnailHeaderSquare ??
           content.featuredImage?.node ??
@@ -83,8 +83,8 @@ export default function Post({ data, html, postNav }) {
           content.thumbnails?.thumbnailHeader ?? data.defaultImages?.cover.large
         }>
         <HeroContent>
-          <div className="max-w-screen-2xl mx-auto">
-            <div className="xl:w-[70%] px-3 sm:px-4 md:px-8">
+          <Layout>
+            <LayoutMain>
               <div className="max-w-[52rem] mx-auto">
                 <div className="xl:w-[145%]">
                   <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
@@ -92,8 +92,9 @@ export default function Post({ data, html, postNav }) {
                   </h1>
                 </div>
               </div>
-            </div>
-          </div>
+            </LayoutMain>
+            <LayoutSidebar />
+          </Layout>
         </HeroContent>
       </Hero>
       {postNav?.length > 0 && (
@@ -136,7 +137,7 @@ export default function Post({ data, html, postNav }) {
           </div>
         </Headroom>
       )}
-      <Layout className="relative max-w-screen-2xl">
+      <Layout className="relative max-w-screen-2xl bg-white dark:bg-gray-950 pb-14 xl:pb-0">
         <LayoutMain>
           <div className="px-3 sm:px-4 md:px-8 text-lg">
             <div className="max-w-[52rem] mx-auto">

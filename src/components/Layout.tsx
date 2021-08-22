@@ -5,11 +5,7 @@ const Layout = ({ children, className = '' }) => (
 );
 
 export const LayoutMain = ({ children, className = '' }) => (
-  <main
-    className={cx(
-      className,
-      'overflow-hidden xl:w-[70%] 2xl:w-auto 2xl:flex-auto',
-    )}>
+  <main className={cx(className, 'xl:w-[70%] 2xl:w-auto 2xl:flex-auto')}>
     {children}
   </main>
 );

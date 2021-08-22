@@ -85,7 +85,7 @@ export default function Post({ data, html, postNav }) {
         }>
         <HeroContent>
           <Layout>
-            <LayoutMain>
+            <LayoutMain className="px-3 sm:px-4 md:px-8">
               <div className="max-w-[52rem] mx-auto">
                 <div className="xl:w-[145%]">
                   <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
@@ -139,76 +139,74 @@ export default function Post({ data, html, postNav }) {
         </Headroom>
       )}
       <Layout className="relative max-w-screen-2xl bg-white dark:bg-gray-950 pb-14 xl:pb-0">
-        <LayoutMain>
-          <div className="px-3 sm:px-4 md:px-8 text-lg">
-            <div className="max-w-[52rem] mx-auto">
-              <article
-                className={cx(
-                  'post',
-                  content.settings?.useNextStyles ? 'post-next' : 'post-legacy',
+        <LayoutMain className="px-3 sm:px-4 md:px-8 text-lg">
+          <div className="max-w-[52rem] mx-auto">
+            <article
+              className={cx(
+                'post',
+                content.settings?.useNextStyles ? 'post-next' : 'post-legacy',
+              )}
+              dangerouslySetInnerHTML={{
+                __html: html,
+              }}
+              ref={articleRef}
+            />
+            {data?.contentNode.customRelatedPosts && (
+              <div
+                className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
+                id="related-posts"
+                ref={relatedPostsRef}>
+                {content.customRelatedPosts.nodes.map(post => (
+                  <PostCard key={post.slug} data={post} inGrid />
+                ))}
+              </div>
+            )}
+            {content.type === 'post' && (
+              <div className="text-sm italic">
+                Posted in{' '}
+                {content.categories.nodes.map((cat, index) => (
+                  <Fragment key={cat.uri}>
+                    {index > 0 && ', '}
+                    <Link href={cat.uri}>
+                      <a
+                        className="link"
+                        dangerouslySetInnerHTML={{ __html: cat.name }}
+                      />
+                    </Link>
+                  </Fragment>
+                ))}
+                . Tagged{' '}
+                {content.tags.nodes.map((tag, index) => (
+                  <Fragment key={tag.uri}>
+                    {index > 0 && ', '}
+                    <Link href={tag.uri}>
+                      <a
+                        className="link"
+                        dangerouslySetInnerHTML={{ __html: tag.name }}
+                      />
+                    </Link>
+                  </Fragment>
+                ))}
+              </div>
+            )}
+            {html && (
+              <>
+                <div className="page-heading mt-8 md:mt-12 mb-4">
+                  Leave a Comment
+                </div>
+                <div className="mb-12">
+                  <CommentForm post={content.databaseId} />
+                </div>
+                {content.comments.nodes.length > 0 && (
+                  <>
+                    <div className="page-heading mb-4" id="comments">
+                      {content.commentCount} Comments
+                    </div>
+                    <CommentThread comments={content.comments.nodes} />
+                  </>
                 )}
-                dangerouslySetInnerHTML={{
-                  __html: html,
-                }}
-                ref={articleRef}
-              />
-              {data?.contentNode.customRelatedPosts && (
-                <div
-                  className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
-                  id="related-posts"
-                  ref={relatedPostsRef}>
-                  {content.customRelatedPosts.nodes.map(post => (
-                    <PostCard key={post.slug} data={post} inGrid />
-                  ))}
-                </div>
-              )}
-              {content.type === 'post' && (
-                <div className="text-sm italic">
-                  Posted in{' '}
-                  {content.categories.nodes.map((cat, index) => (
-                    <Fragment key={cat.uri}>
-                      {index > 0 && ', '}
-                      <Link href={cat.uri}>
-                        <a
-                          className="link"
-                          dangerouslySetInnerHTML={{ __html: cat.name }}
-                        />
-                      </Link>
-                    </Fragment>
-                  ))}
-                  . Tagged{' '}
-                  {content.tags.nodes.map((tag, index) => (
-                    <Fragment key={tag.uri}>
-                      {index > 0 && ', '}
-                      <Link href={tag.uri}>
-                        <a
-                          className="link"
-                          dangerouslySetInnerHTML={{ __html: tag.name }}
-                        />
-                      </Link>
-                    </Fragment>
-                  ))}
-                </div>
-              )}
-              {html && (
-                <>
-                  <div className="page-heading mt-8 md:mt-12 mb-4">
-                    Leave a Comment
-                  </div>
-                  <div className="mb-12">
-                    <CommentForm post={content.databaseId} />
-                  </div>
-                  {content.comments.nodes.length > 0 && (
-                    <>
-                      <div className="page-heading mb-4" id="comments">
-                        {content.commentCount} Comments
-                      </div>
-                      <CommentThread comments={content.comments.nodes} />
-                    </>
-                  )}
-                </>
-              )}
-            </div>
+              </>
+            )}
           </div>
         </LayoutMain>
         <LayoutSidebar showBorder>

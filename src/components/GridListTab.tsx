@@ -37,9 +37,16 @@ function Group({ posts }) {
       manual
       // @ts-ignore
       onChange={index => {
-        router.replace({ query: { tabIndex: index } }, undefined, {
-          shallow: true,
-        });
+        router.replace(
+          {
+            pathname: router.pathname,
+            query: { ...router.query, tabIndex: index },
+          },
+          undefined,
+          {
+            shallow: true,
+          },
+        );
       }}>
       <div className="pt-8 md:pt-6 px-8 flex justify-center lg:justify-start">
         <List />

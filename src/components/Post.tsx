@@ -254,7 +254,7 @@ export async function getPostPageProps(
         `https://graph.facebook.com/v10.0/?access_token=${
           process.env.FACEBOOK_ACCESS_TOKEN
         }&id=${encodeURIComponent(
-          data.contentNode.link,
+          cmsToNextUrls(data.contentNode.link),
         )}&fields=og_object{engagement}`,
       );
       fbShareCount = response.data?.og_object?.engagement?.count ?? 0;

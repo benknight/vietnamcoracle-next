@@ -16,7 +16,7 @@ export default function CommentThread({ comments }) {
             key={comment.id}>
             <CommentHeader comment={comment} />
             <div
-              className="comment"
+              className="comment break-words"
               dangerouslySetInnerHTML={{
                 __html: comment.content,
               }}

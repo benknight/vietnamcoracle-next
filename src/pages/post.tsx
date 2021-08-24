@@ -44,6 +44,7 @@ export async function getServerSideProps({
       query PostById($id: ID!) {
         contentNode(id: $id, idType: DATABASE_ID) {
           patreonLevel
+          isRestricted
           uri
         }
       }
@@ -59,6 +60,13 @@ export async function getServerSideProps({
       notFound: true,
     };
   }
+
+  // Determine if current user can view restricted content
+  let isRestricted =
+    data.contentNode.status !== 'publish' ||
+    data.contentNode.isRestricted ||
+    data.contentNode.patreonLevel > 0;
+  let userCanView = preview;
 
   // Patreon-only content requires OAuth token
   if (data.contentNode.patreonLevel > 0) {
@@ -79,15 +87,7 @@ export async function getServerSideProps({
           data.contentNode.patreonLevel * 100 >=
             result.data.included[0]?.attributes?.currently_entitled_amount_cents
         ) {
-          const postData = await GraphQLClient.request(POST_QUERY, {
-            preview: Boolean(preview),
-            id: data.contentNode.uri,
-          });
-          return {
-            props: {
-              post: await getPostPageProps(postData, Boolean(preview)),
-            },
-          };
+          userCanView = true;
         }
       } catch (error) {
         console.error(
@@ -95,10 +95,32 @@ export async function getServerSideProps({
           error.message,
         );
       }
+    } else {
+      // No token, show login with patreon button
+      return { props: { renderPatreonButton: true } };
     }
-    return { props: { renderPatreonButton: true } };
   }
 
+  if (isRestricted) {
+    if (userCanView) {
+      const postData = await GraphQLClient.request(POST_QUERY, {
+        preview: Boolean(preview),
+        id: data.contentNode.uri,
+      });
+      return {
+        props: {
+          post: await getPostPageProps(postData, Boolean(preview)),
+          preview: Boolean(preview),
+        },
+      };
+    } else {
+      return {
+        notFound: true,
+      };
+    }
+  }
+
+  // By default 301 to canonical post urls
   return {
     redirect: {
       destination: data.contentNode?.uri,

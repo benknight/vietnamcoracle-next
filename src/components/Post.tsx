@@ -246,23 +246,6 @@ export async function getPostPageProps(
     }
   }
 
-  let fbShareCount = 0;
-
-  if (data.contentNode) {
-    try {
-      const response = await axios.get(
-        `https://graph.facebook.com/v10.0/?access_token=${
-          process.env.FACEBOOK_ACCESS_TOKEN
-        }&id=${encodeURIComponent(
-          cmsToNextUrls(data.contentNode.link),
-        )}&fields=og_object{engagement}`,
-      );
-      fbShareCount = response.data?.og_object?.engagement?.count ?? 0;
-    } catch (error) {
-      // console.error(error);
-    }
-  }
-
   let postNav: NavLinks = null;
   let html = '';
   let monthsOld: number = null;
@@ -307,7 +290,6 @@ export async function getPostPageProps(
 
     // Pass post data to share buttons
     $('share-buttons').attr({
-      'data-share-count': String(fbShareCount),
       'data-title': data.contentNode.title,
       'data-link': cmsToNextUrls(data.contentNode.link),
       'data-image': data.contentNode.featuredImage?.node.sourceUrl ?? '',

@@ -5,6 +5,7 @@ import {
   RedditShareButton,
   TwitterShareButton,
 } from 'react-share';
+import useSWR from 'swr';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import EmailIcon from '@material-ui/icons/AlternateEmail';
 import FacebookIcon from '@material-ui/icons/Facebook';
@@ -13,6 +14,7 @@ import RedditIcon from '@material-ui/icons/Reddit';
 import TwitterIcon from '@material-ui/icons/Twitter';
 import tailwindConfig from '../../tailwind.config.js';
 import breakpoints from '../config/breakpoints';
+import cmsToNextUrls from '../lib/cmsToNextUrls';
 
 const {
   theme: {
@@ -31,16 +33,16 @@ const {
 interface Props {
   image: string;
   link: string;
-  shareCount: number;
   title: string;
 }
 
-export default function ShareButtons({
-  image,
-  link,
-  shareCount,
-  title,
-}: Props) {
+const fetcher = (link: string) =>
+  fetch(`/api/share-counts?link=${encodeURIComponent(link)}`).then(res =>
+    res.json(),
+  );
+
+export default function ShareButtons({ image, link, title }: Props) {
+  const { data: shareCountData } = useSWR(cmsToNextUrls(link), fetcher);
   return (
     <>
       <style>{`
@@ -89,7 +91,9 @@ export default function ShareButtons({
           <span>
             <FacebookIcon fontSize="small" />
             <span>Share</span>{' '}
-            {shareCount > 0 ? shareCount.toLocaleString() : ''}
+            {shareCountData?.facebook > 0
+              ? shareCountData.facebook.toLocaleString()
+              : ''}
           </span>
         </FacebookShareButton>
         <TwitterShareButton

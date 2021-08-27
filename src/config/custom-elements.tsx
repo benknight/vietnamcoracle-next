@@ -31,8 +31,6 @@ if (typeof window !== 'undefined') {
       this.attachShadow({ mode: 'open' }).appendChild(root);
       // const name = this.getAttribute('name');
       const props = {
-        shareCount:
-          parseInt(this.getAttribute('data-share-count')) || undefined,
         image: this.getAttribute('data-image'),
         link: this.getAttribute('data-link'),
         title: this.getAttribute('data-name'),

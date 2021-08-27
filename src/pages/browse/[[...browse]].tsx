@@ -60,7 +60,7 @@ const Browse = ({
                   </div>
                 )}
               </h1>
-              {category.map && !subcategory && (
+              {category.map?.mid && !subcategory && (
                 <a
                   className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 items-end text-sm hover:underline"
                   href="#map">
@@ -99,8 +99,8 @@ const Browse = ({
       )}
       <Layout className="bg-white dark:bg-gray-950 pb-14 xl:pb-0">
         <LayoutMain>
-          {category && !subcategory ? (
-            category.collections?.items.map(item => (
+          {category && !subcategory && category.collections?.items ? (
+            category.collections.items.map(item => (
               <section
                 className="my-6 md:my-12 md:dark:mt-4 xl:pr-8"
                 key={item.title}>
@@ -122,7 +122,7 @@ const Browse = ({
           ) : (
             <GridListTab.Group posts={(subcategory || category).posts.nodes} />
           )}
-          {category.map && (
+          {category.map?.mid && (
             <section className="lg:mb-8 lg:px-8">
               <Map data={category.map} />
             </section>

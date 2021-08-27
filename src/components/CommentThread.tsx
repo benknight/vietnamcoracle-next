@@ -70,7 +70,7 @@ const CommentReplies = ({ all, comment }) => {
         <li className="mt-12 md:pl-8" key={reply.id}>
           <CommentHeader comment={reply} isReply />
           <div
-            className="comment"
+            className="comment break-words"
             dangerouslySetInnerHTML={{
               __html: reply.content,
             }}

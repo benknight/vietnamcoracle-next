@@ -158,32 +158,40 @@ export default function Slider({ className = '', children, ...props }) {
             showNav ? 'opacity-100' : 'opacity-0',
           )}
           ref={navRef}>
-          <button
-            aria-label="Prev"
-            className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
-            onClick={() => {
-              goTo((cursor - 1 + slideCount) % slideCount, 'manual', 'smooth');
-            }}>
-            <SkipPrevIcon className="!w-7 !h-7" />
-          </button>
-          <button
-            aria-label={play ? 'Pause' : 'Play'}
-            className="flex items-center px-1 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
-            onClick={() => setPlay(play => !play)}>
-            {play ? (
-              <PauseIcon className="!w-8 !h-8" />
-            ) : (
-              <PlayArrowIcon className="!w-8 !h-8" />
-            )}
-          </button>
-          <button
-            aria-label="Next"
-            className="flex items-center hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto"
-            onClick={() => {
-              goTo((cursor + 1) % slideCount, 'manual', 'smooth');
-            }}>
-            <SkipNextIcon className="!w-7 !h-7" />
-          </button>
+          {(() => {
+            const btnClassName =
+              'flex items-center text-white opacity-60 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto transition ease duration-100 transform hover:scale-110';
+            return (
+              <>
+                <button
+                  aria-label="Prev"
+                  className={btnClassName}
+                  onClick={() => {
+                    goTo((cursor - 1 + slideCount) % slideCount, 'manual');
+                  }}>
+                  <SkipPrevIcon className="!w-7 !h-7" />
+                </button>
+                <button
+                  aria-label={play ? 'Pause' : 'Play'}
+                  className={btnClassName}
+                  onClick={() => setPlay(play => !play)}>
+                  {play ? (
+                    <PauseIcon className="!w-8 !h-8" />
+                  ) : (
+                    <PlayArrowIcon className="!w-8 !h-8" />
+                  )}
+                </button>
+                <button
+                  aria-label="Next"
+                  className={btnClassName}
+                  onClick={() => {
+                    goTo((cursor + 1) % slideCount, 'manual');
+                  }}>
+                  <SkipNextIcon className="!w-7 !h-7" />
+                </button>
+              </>
+            );
+          })()}
         </nav>
       </div>
       {(() => {

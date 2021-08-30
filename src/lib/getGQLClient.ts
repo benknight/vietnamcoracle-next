@@ -20,7 +20,7 @@ export default function getGQLClient(authType?: 'admin' | 'user') {
   if (authType === 'user') {
     config.headers = {
       Authorization: `Basic ${Buffer.from(
-        `${process.env.WORDPRESS_API_USERNAME_USER}:${process.env.WORDPRESS_API_PASSWORD_USER}`,
+        `${process.env.NEXT_PUBLIC_WORDPRESS_API_USERNAME}:${process.env.NEXT_PUBLIC_WORDPRESS_API_PASSWORD}`,
         'utf-8',
       ).toString('base64')}`,
     };

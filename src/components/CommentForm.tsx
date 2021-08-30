@@ -76,7 +76,7 @@ export default function CommentForm({ post }: Props) {
       }}
       onSubmit={onSubmit}>
       {({ isSubmitting }) => (
-        <Form className="p-4 bg-gray-100 dark:bg-gray-900 uppercase text-xs leading-loose rounded-lg">
+        <Form className="uppercase text-xs leading-loose rounded-lg">
           <label className="block py-1">
             Name
             <Field

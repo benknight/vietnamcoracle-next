@@ -1,5 +1,6 @@
 import { gql } from 'graphql-request';
 import type { InferGetStaticPropsType } from 'next';
+import { useEffect } from 'react';
 import Post, { getPostPageProps, POST_QUERY } from '../components/Post';
 import getGQLClient from '../lib/getGQLClient';
 
@@ -12,7 +13,7 @@ export default function SSGPost(
 export async function getStaticPaths() {
   const query = gql`
     {
-      contentNodes(first: 1000) {
+      contentNodes(first: 1000, where: { stati: [PUBLISH, PRIVATE] }) {
         nodes {
           ... on ContentNode {
             uri
@@ -42,10 +43,13 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
     preview,
     id: slug,
   });
-  if (data.contentNode?.patreonLevel > 0) {
+  if (
+    data.contentNode?.status === 'private' ||
+    data.contentNode?.patreonLevel > 0
+  ) {
     return {
       redirect: {
-        destination: `/post?id=${data.contentNode.databaseId}`,
+        destination: `/post?p=${data.contentNode.databaseId}`,
         permanent: false,
       },
     };

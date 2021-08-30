@@ -2,15 +2,30 @@ import axios from 'axios';
 import { gql } from 'graphql-request';
 import { GetServerSidePropsContext } from 'next';
 import nodeCookie from 'node-cookie';
+import { useEffect } from 'react';
 import PatronOnlyContentGate from '../components/PatronOnlyContentGate';
 import Post, { POST_QUERY, getPostPageProps } from '../components/Post';
 import getGQLClient from '../lib/getGQLClient';
 
 // This is a server-rendered page for posts for when logic is necessary in order to display the post or redirect
 export default function SSRPost(props) {
+  useEffect(() => {
+    if (props.post) {
+      window.history.replaceState(
+        null,
+        null,
+        `${window.location.origin}${props.post.data.contentNode.uri}`.replace(
+          /\/$/,
+          '',
+        ),
+      );
+    }
+  }, [props.post]);
+
   if (props.renderPatreonButton) {
     return <PatronOnlyContentGate />;
   }
+
   if (props.post) {
     return (
       <Post
@@ -47,6 +62,7 @@ export async function getServerSideProps({
           patreonLevel
           isRestricted
           uri
+          status
         }
       }
     `,
@@ -81,7 +97,6 @@ export async function getServerSideProps({
             headers: { Authorization: `Bearer ${token}` },
           },
         );
-        // console.log('data', JSON.stringify(result.data.data, null, 2));
         if (
           result.data.included[0]?.attributes?.patron_status ===
             'active_patron' &&

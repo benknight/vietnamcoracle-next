@@ -189,7 +189,7 @@ export default function Post({ data, html, postNav }) {
                 ))}
               </div>
             )}
-            {html && (
+            {html && data?.contentNode.commentStatus === 'open' && (
               <>
                 <div className="page-heading mt-8 md:mt-12 mb-4">
                   Leave a Comment
@@ -280,7 +280,7 @@ export async function getPostPageProps(
       }
     }
 
-    if (!data.contentNode.isRestricted && data.contentNode.patreonLevel <= 0) {
+    if (data.contentNode.status === 'publish') {
       if (lastUpdated.length > 0) {
         $('<share-buttons />').insertAfter(lastUpdated);
       } else {
@@ -361,6 +361,8 @@ export const POST_QUERY = gql`
         isRestricted
         link
         patreonLevel
+        status
+        uri
         contentType {
           node {
             name
@@ -384,6 +386,7 @@ export const POST_QUERY = gql`
         title
       }
       ... on Page {
+        commentStatus
         comments(first: 1000) {
           nodes {
             ...CommentThreadCommentData
@@ -408,6 +411,7 @@ export const POST_QUERY = gql`
         }
       }
       ... on Post {
+        commentStatus
         categories(where: { exclude: 154 }) {
           nodes {
             name

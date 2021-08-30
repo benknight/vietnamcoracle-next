@@ -13,7 +13,7 @@ export default function SSGPost(
 export async function getStaticPaths() {
   const query = gql`
     {
-      contentNodes(first: 1000, where: { stati: [PUBLISH, PRIVATE] }) {
+      contentNodes(first: 1000) {
         nodes {
           ... on ContentNode {
             uri

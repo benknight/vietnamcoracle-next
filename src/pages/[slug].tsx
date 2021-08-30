@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 import type { InferGetStaticPropsType } from 'next';
 import Post, { getPostPageProps, POST_QUERY } from '../components/Post';
-import GraphQLClient from '../lib/GraphQLClient';
+import getGQLClient from '../lib/getGQLClient';
 
 export default function SSGPost(
   props: InferGetStaticPropsType<typeof getStaticProps>,
@@ -21,7 +21,8 @@ export async function getStaticPaths() {
       }
     }
   `;
-  const data = await GraphQLClient.request(query);
+  const api = getGQLClient('admin');
+  const data = await api.request(query);
   const result = {
     paths: [
       ...data.contentNodes.nodes.map(node => ({
@@ -36,7 +37,8 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params: { slug }, preview = false }) {
-  const data = await GraphQLClient.request(POST_QUERY, {
+  const api = getGQLClient('admin');
+  const data = await api.request(POST_QUERY, {
     preview,
     id: slug,
   });

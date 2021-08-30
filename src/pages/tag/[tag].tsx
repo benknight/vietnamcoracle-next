@@ -11,7 +11,7 @@ import PostCard, { SwatchesProvider } from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import SidebarDefault from '../../components/SidebarDefault';
-import GraphQLClient from '../../lib/GraphQLClient';
+import getGQLClient from '../../lib/getGQLClient';
 import generateSwatches from '../../lib/generateSwatches';
 
 const Tag = ({
@@ -56,7 +56,8 @@ export const getStaticPaths = async () => {
       }
     }
   `;
-  const data = await GraphQLClient.request(query);
+  const api = getGQLClient('user');
+  const data = await api.request(query);
   const result = {
     paths: [
       ...data.tags.nodes.map(tag => ({
@@ -113,7 +114,9 @@ export const getStaticProps = async ({ params, preview = false }) => {
     ${SidebarDefault.fragments}
   `;
 
-  const data = await GraphQLClient.request(query, {
+  const api = getGQLClient('admin');
+
+  const data = await api.request(query, {
     preview,
     slug: params.tag,
   });

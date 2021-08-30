@@ -14,7 +14,7 @@ import PostCard from '../components/PostCard';
 import PostMediaBlock from '../components/PostMediaBlock';
 import SidebarDefault from '../components/SidebarDefault';
 import breakpoints from '../config/breakpoints';
-import GraphQLClient from '../lib/GraphQLClient';
+import getGQLClient from '../lib/getGQLClient';
 import RestClient from '../lib/RestClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
@@ -37,6 +37,8 @@ const SEARCH_RESULTS_QUERY = gql`
   ${PostMediaBlock.fragments}
 `;
 
+const gqlClient = getGQLClient();
+
 const resultsFetcher = async (query: string, page: number) => {
   const { data: results } = await RestClient.get(
     `/search?search=${query}&page=${page}&pageSize=10`,
@@ -44,7 +46,7 @@ const resultsFetcher = async (query: string, page: number) => {
   if (results.length === 0) {
     return [];
   }
-  const data = await GraphQLClient.request(SEARCH_RESULTS_QUERY, {
+  const data = await gqlClient.request(SEARCH_RESULTS_QUERY, {
     in: results.map(r => r.id),
   });
   return data.contentNodes.nodes;
@@ -158,7 +160,8 @@ export default function SearchPage(props) {
 }
 
 export async function getStaticProps({ preview = false }) {
-  const data = await GraphQLClient.request(
+  const api = getGQLClient('admin');
+  const data = await api.request(
     gql`
       query SearchPage($preview: Boolean!) {
         ...FooterData

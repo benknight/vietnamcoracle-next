@@ -19,7 +19,7 @@ import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
 import generateSwatches from '../../lib/generateSwatches';
 import getCategoryLink from '../../lib/getCategoryLink';
-import GraphQLClient from '../../lib/GraphQLClient';
+import getGQLClient from '../../lib/getGQLClient';
 
 const Browse = ({
   data,
@@ -154,7 +154,8 @@ export const getStaticPaths = async () => {
       }
     }
   `;
-  const data = await GraphQLClient.request(query);
+  const api = getGQLClient('user');
+  const data = await api.request(query);
   const getComponentsFromURI = (uri: string): string[] => {
     // "/category/blah/" => ["blah"]
     return uri
@@ -283,7 +284,8 @@ export const getStaticProps = async ({ params, preview = false }) => {
   const subcategorySlug = params.browse?.[1] ?? '';
 
   // Fire the request
-  const data = await GraphQLClient.request(query, {
+  const api = getGQLClient('user');
+  const data = await api.request(query, {
     categorySlug,
     subcategorySlug,
     hasSubcategory: Boolean(subcategorySlug),

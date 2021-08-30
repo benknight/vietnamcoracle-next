@@ -8,8 +8,11 @@ import useSWR from 'swr';
 import { Popover, Transition } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/outline';
 import { ArrowLeftIcon } from '@heroicons/react/solid';
-import GraphQLClient from '../lib/GraphQLClient';
 import { CircularProgress } from '@material-ui/core';
+import getGQLClient from '../lib/getGQLClient';
+
+const api = getGQLClient();
+const fetcher = query => api.request(query);
 
 export default function Menu({ children, className = '' }) {
   const { data } = useSWR(
@@ -26,7 +29,7 @@ export default function Menu({ children, className = '' }) {
         }
       }
     `,
-    query => GraphQLClient.request(query),
+    fetcher,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

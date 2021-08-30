@@ -11,8 +11,8 @@ module.exports = {
   async redirects() {
     const api = axios.create({
       auth: {
-        username: process.env.WORDPRESS_API_USERNAME,
-        password: process.env.WORDPRESS_API_PASSWORD,
+        username: process.env.WORDPRESS_API_USERNAME_ADMIN,
+        password: process.env.WORDPRESS_API_PASSWORD_ADMIN,
       },
       baseURL: 'https://www.cms.vietnamcoracle.com/wp-json/redirection/v1',
     });

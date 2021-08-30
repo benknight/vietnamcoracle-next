@@ -4,7 +4,7 @@ import { GetServerSidePropsContext } from 'next';
 import nodeCookie from 'node-cookie';
 import PatronOnlyContentGate from '../components/PatronOnlyContentGate';
 import Post, { POST_QUERY, getPostPageProps } from '../components/Post';
-import GraphQLClient from '../lib/GraphQLClient';
+import getGQLClient from '../lib/getGQLClient';
 
 // This is a server-rendered page for posts for when logic is necessary in order to display the post or redirect
 export default function SSRPost(props) {
@@ -39,7 +39,8 @@ export async function getServerSideProps({
     };
   }
 
-  const data = await GraphQLClient.request(
+  const api = getGQLClient('admin');
+  const data = await api.request(
     gql`
       query PostById($id: ID!) {
         contentNode(id: $id, idType: DATABASE_ID) {
@@ -103,7 +104,7 @@ export async function getServerSideProps({
 
   if (isRestricted) {
     if (userCanView) {
-      const postData = await GraphQLClient.request(POST_QUERY, {
+      const postData = await api.request(POST_QUERY, {
         preview: Boolean(preview),
         id: data.contentNode.uri,
       });

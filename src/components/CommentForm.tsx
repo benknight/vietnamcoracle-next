@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import { Formik, Field, Form } from 'formik';
 import _unescape from 'lodash/unescape';
-import GraphQLClient from '../lib/GraphQLClient';
+import getGQLClient from '../lib/getGQLClient';
 
 const CREATE_COMMENT_MUTATION = gql`
   mutation CreateComment(
@@ -41,7 +41,8 @@ export default function CommentForm({ post }: Props) {
   const onSubmit = async (values, actions) => {
     actions.setSubmitting(true);
     try {
-      const response = await GraphQLClient.request(CREATE_COMMENT_MUTATION, {
+      const api = getGQLClient();
+      const response = await api.request(CREATE_COMMENT_MUTATION, {
         post,
         ...values,
       });

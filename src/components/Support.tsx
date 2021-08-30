@@ -1,11 +1,10 @@
 import Link from 'next/link';
 import internalizeUrl from '../lib/internalizeUrl';
 import { CurrencyDollarIcon } from '@heroicons/react/outline';
-import HeartIcon from '@material-ui/icons/Favorite';
-import HeartOutlineIcon from '@material-ui/icons/FavoriteBorder';
 import FlightIcon from '@material-ui/icons/Flight';
 import HotelIcon from '@material-ui/icons/Hotel';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
+import HeartIcon from './HeartIcon';
 
 interface Props {
   data: BlockType;
@@ -20,9 +19,8 @@ export default function Support({ data: block }: Props) {
       <div className="flex justify-center -mt-6 mb-6">
         <Link href="/donations-page">
           <a className="relative top-1 !w-14 !h-14 text-red-500">
+            <HeartIcon className="!w-full !h-full absolute inset-0" />
             <HeartIcon className="!w-full !h-full absolute inset-0 xl:!hidden xl:group-hover:!block animate-ping opacity-60" />
-            <HeartIcon className="!w-full !h-full absolute inset-0 dark:!hidden" />
-            <HeartOutlineIcon className="!w-full !h-full absolute inset-0 !hidden dark:!block" />
           </a>
         </Link>
       </div>

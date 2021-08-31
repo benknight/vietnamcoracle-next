@@ -163,30 +163,40 @@ export default function Post({ data, html, postNav }) {
             )}
             {content.type === 'post' && (
               <div className="text-sm italic font-serif">
-                Posted in{' '}
-                {content.categories.nodes.map((cat, index) => (
-                  <Fragment key={cat.uri}>
-                    {index > 0 && ', '}
-                    <Link href={cat.uri}>
-                      <a
-                        className="link"
-                        dangerouslySetInnerHTML={{ __html: cat.name }}
-                      />
-                    </Link>
-                  </Fragment>
-                ))}
-                . Tagged{' '}
-                {content.tags.nodes.map((tag, index) => (
-                  <Fragment key={tag.uri}>
-                    {index > 0 && ', '}
-                    <Link href={tag.uri}>
-                      <a
-                        className="link"
-                        dangerouslySetInnerHTML={{ __html: tag.name }}
-                      />
-                    </Link>
-                  </Fragment>
-                ))}
+                {content.categories.nodes.length > 0 && (
+                  <>
+                    Posted in{' '}
+                    {content.categories.nodes.map((cat, index) => (
+                      <Fragment key={cat.uri}>
+                        {index > 0 && ', '}
+                        <Link href={cat.uri}>
+                          <a
+                            className="link"
+                            dangerouslySetInnerHTML={{ __html: cat.name }}
+                          />
+                        </Link>
+                      </Fragment>
+                    ))}
+                    .
+                  </>
+                )}
+                {content.tags.nodes.length > 0 && (
+                  <>
+                    {' '}
+                    Tagged{' '}
+                    {content.tags.nodes.map((tag, index) => (
+                      <Fragment key={tag.uri}>
+                        {index > 0 && ', '}
+                        <Link href={tag.uri}>
+                          <a
+                            className="link"
+                            dangerouslySetInnerHTML={{ __html: tag.name }}
+                          />
+                        </Link>
+                      </Fragment>
+                    ))}
+                  </>
+                )}
               </div>
             )}
             {html && data?.contentNode.commentStatus === 'open' && (

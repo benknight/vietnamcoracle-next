@@ -3,15 +3,27 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import nodeCookie from 'node-cookie';
 import { oauthRedirect } from '../../config/patreon';
 
+const cookieKey = 'patreon_token';
+
 export default async function patreonOauth(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { code, state } = req.query;
+  const { code, signout, state } = req.query;
+
+  const cookieOpts = {
+    httpOnly: true,
+    path: '/',
+    sameSite: 'Lax',
+    secure: process.env.NODE_ENV !== 'development',
+  };
 
   let redirect = String(req.query.redirect || '/');
 
-  if (code) {
+  if (signout) {
+    console.log('signout', signout);
+    nodeCookie.clear(res, cookieKey, cookieOpts);
+  } else if (code) {
     const result = await axios({
       data: new URLSearchParams({
         grant_type: 'authorization_code',
@@ -25,12 +37,8 @@ export default async function patreonOauth(
       url: 'https://www.patreon.com/api/oauth2/token',
     });
     if (result.data.access_token) {
-      nodeCookie.create(res, 'patreon_token', result.data.access_token, {
-        httpOnly: true,
-        path: '/',
-        sameSite: 'Lax',
-        secure: process.env.NODE_ENV !== 'development',
-      });
+      console.log('nodeCookie.create');
+      nodeCookie.create(res, cookieKey, result.data.access_token, cookieOpts);
     } else {
       // TODO: Handle failure
       // console.log(result, JSON.stringify(result, null, 2));

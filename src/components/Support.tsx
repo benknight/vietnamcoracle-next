@@ -45,7 +45,7 @@ export default function Support({ data: block }: Props) {
         </Link>
         <Link href="/become-a-patron-of-vietnam-coracle">
           <a
-            className={`${btnClassName} border-white dark:border-black hover:bg-[#FF424D] hover:bg-opacity-25 h-12`}>
+            className={`${btnClassName} btn-patreon border-white dark:border-black h-12`}>
             <img
               alt=""
               className="w-4 h-4 mr-2"

@@ -8,33 +8,37 @@ import Post, { POST_QUERY, getPostPageProps } from '../components/Post';
 import getGQLClient from '../lib/getGQLClient';
 
 // This is a server-rendered page for posts for when logic is necessary in order to display the post or redirect
-export default function SSRPost(props) {
+export default function SSRPost({
+  isLoggedIn,
+  post,
+  renderPatreonButton = false,
+}) {
   useEffect(() => {
-    if (props.post) {
+    if (post) {
       window.history.replaceState(
         null,
         null,
-        `${window.location.origin}${props.post.data.contentNode.uri}`.replace(
+        `${window.location.origin}${post.data.contentNode.uri}`.replace(
           /\/$/,
           '',
         ),
       );
     }
-  }, [props.post]);
+  }, [post]);
 
-  if (props.renderPatreonButton) {
-    return <PatronOnlyContentGate />;
-  }
-
-  if (props.post) {
+  if (renderPatreonButton) {
     return (
-      <Post
-        data={props.post.data}
-        html={props.post.html}
-        postNav={props.post.postNav}
+      <PatronOnlyContentGate
+        isLoggedIn={isLoggedIn}
+        patreonLevel={post?.data.contentNode.patreonLevel}
       />
     );
   }
+
+  if (post) {
+    return <Post data={post.data} html={post.html} postNav={post.postNav} />;
+  }
+
   return null;
 }
 
@@ -100,10 +104,20 @@ export async function getServerSideProps({
         if (
           result.data.included[0]?.attributes?.patron_status ===
             'active_patron' &&
-          data.contentNode.patreonLevel * 100 >=
+          data.contentNode.patreonLevel * 100 <=
             result.data.included[0]?.attributes?.currently_entitled_amount_cents
         ) {
           userCanView = true;
+        } else {
+          return {
+            props: {
+              isLoggedIn: true,
+              post: {
+                data,
+              },
+              renderPatreonButton: true,
+            },
+          };
         }
       } catch (error) {
         console.error(
@@ -113,7 +127,15 @@ export async function getServerSideProps({
       }
     } else {
       // No token, show login with patreon button
-      return { props: { renderPatreonButton: true } };
+      return {
+        props: {
+          isLoggedIn: false,
+          post: {
+            data,
+          },
+          renderPatreonButton: true,
+        },
+      };
     }
   }
 

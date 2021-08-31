@@ -284,7 +284,8 @@ export const getStaticProps = async ({ params, preview = false }) => {
   const subcategorySlug = params.browse?.[1] ?? '';
 
   // Fire the request
-  const api = getGQLClient('user');
+  // Important!: "admin" role is required for preview mode
+  const api = getGQLClient('admin');
   const data = await api.request(query, {
     categorySlug,
     subcategorySlug,

@@ -24,7 +24,15 @@
 
 @layer components {
   .btn {
-    @apply inline-flex items-center h-8 px-4 text-sm text-white bg-primary-500 hover:bg-primary-400 border border-primary-500 hover:border-primary-400 dark:border-opacity-50 dark:bg-opacity-10 hover:bg-opacity-100 focus:bg-opacity-100 focus:outline-none rounded-lg subpixel-antialiased font-sans transition-colors duration-100;
+    @apply h-8 px-4 inline-flex items-center justify-center;
+    @apply text-sm font-sans font-medium tracking-wider;
+    @apply bg-gray-100 hover:bg-gray-400 dark:hover:bg-primary-500;
+    @apply bg-opacity-100 hover:bg-opacity-25 dark:bg-opacity-10 dark:hover:bg-opacity-25;
+    @apply focus:outline-none rounded-lg subpixel-antialiased font-sans;
+    @apply transition-colors duration-100 ease-in-out;
+  }
+  .btn-full {
+    @apply flex;
   }
   .c-block::after {
     @apply block w-2/3 xl:w-1/3 mx-auto my-12 border-t border-gray-300 dark:border-gray-800;

@@ -10,8 +10,7 @@ interface Props {
   data: BlockType;
 }
 
-const btnClassName =
-  'flex items-center justify-center mt-2 border bg-gray-100 dark:bg-opacity-10 hover:bg-opacity-25 dark:hover:bg-opacity-33 dark:text-white rounded-xl transition-colors duration-100 ease-in-out';
+const btnClassName = 'btn btn-full mt-2 rounded-xl';
 
 export default function Support({ data: block }: Props) {
   return (
@@ -33,17 +32,20 @@ export default function Support({ data: block }: Props) {
           </Link>
         </p>
       </BlockContent>
-      <div className="max-w-xs mx-auto tracking-wider font-sans font-medium">
+      <div className="max-w-xs mx-auto">
         <Link href="/donations-page">
           <a
-            className={`${btnClassName} bg-primary-500 hover:bg-primary-400 border-primary-500 hover:border-primary-400 dark:border-opacity-50 hover:bg-opacity-100 text-white h-12`}>
+            className={`
+              ${btnClassName} text-white h-12
+              bg-primary-500 hover:bg-primary-400 hover:bg-opacity-100
+              border-primary-500 hover:border-primary-400 dark:border-opacity-50`}>
             <CurrencyDollarIcon className="w-6 h-6 mr-1" />{' '}
             <span className="pr-4">Donate</span>
           </a>
         </Link>
         <Link href="/become-a-patron-of-vietnam-coracle">
           <a
-            className={`${btnClassName} border-white dark:border-black hover:bg-[#FF424D] h-12`}>
+            className={`${btnClassName} border-white dark:border-black hover:bg-[#FF424D] hover:bg-opacity-25 h-12`}>
             <img
               alt=""
               className="w-4 h-4 mr-2"
@@ -55,13 +57,13 @@ export default function Support({ data: block }: Props) {
         <div className="flex text-xs">
           <Link href="/book-your-accommodation">
             <a
-              className={`${btnClassName} border-white dark:border-black flex-auto hover:bg-blue-400 h-10`}>
+              className={`${btnClassName} border-white dark:border-black flex-auto hover:bg-blue-400 hover:bg-opacity-25 h-10`}>
               <HotelIcon className="!w-4 !h-4 mr-2" /> Book Hotels
             </a>
           </Link>
           <Link href="/book-your-transportation">
             <a
-              className={`${btnClassName} border-white dark:border-black ml-1 flex-auto hover:bg-green-400 h-10`}>
+              className={`${btnClassName} border-white dark:border-black ml-1 flex-auto hover:bg-green-400 hover:bg-opacity-25 h-10`}>
               <FlightIcon className="!w-4 !h-4 mr-1" /> Book Transport
             </a>
           </Link>

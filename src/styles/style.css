@@ -198,6 +198,9 @@ article *[style*='#808080'] {
 article *[style*='#ff0000'] {
   @apply text-red-600 dark:text-red-500 !important;
 }
+article *[style*='#d8e0e6'] {
+  @apply dark:bg-gray-800 !important;
+}
 article ul {
   @apply list-disc pl-8;
 }

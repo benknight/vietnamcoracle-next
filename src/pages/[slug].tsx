@@ -1,6 +1,5 @@
 import { gql } from 'graphql-request';
 import type { InferGetStaticPropsType } from 'next';
-import { useEffect } from 'react';
 import Post, { getPostPageProps, POST_QUERY } from '../components/Post';
 import getGQLClient from '../lib/getGQLClient';
 

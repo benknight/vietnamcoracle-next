@@ -1,7 +1,8 @@
 import cx from 'classnames';
 import type { AppProps } from 'next/app';
-import { useRouter } from 'next/router';
 import dynamic from 'next/dynamic';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -58,6 +59,9 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   return (
     <StylesProvider>
+      <Head>
+        <title>Vietnam Coracle</title>
+      </Head>
       <div
         className={cx(
           'flex items-center p-3 fixed z-40 top-1/2 left-1/2',

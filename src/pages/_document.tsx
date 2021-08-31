@@ -16,7 +16,6 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Vietnam Coracle</title>
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <script
             async

@@ -10,7 +10,7 @@ interface Props {
 export default function About({ data: block }: Props) {
   return (
     <Block>
-      <div className="mt-4 mb-6 flex justify-center">
+      <div className="mb-6 flex justify-center">
         <Link href={internalizeUrl(block.link.url)}>
           <a>
             <Image

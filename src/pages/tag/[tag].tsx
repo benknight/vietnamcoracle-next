@@ -118,7 +118,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
 
   const data = await api.request(query, {
     preview,
-    slug: params.tag,
+    slug: encodeURIComponent(params.tag),
   });
 
   return {

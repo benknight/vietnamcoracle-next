@@ -68,7 +68,7 @@ export default function Header({ preview = false }: Props) {
                 className={
                   showMini
                     ? 'hidden'
-                    : 'hidden md:block text-xs tracking-widest uppercase -ml-1 mr-3'
+                    : 'text-xs tracking-widest uppercase -ml-1 mr-3'
                 }>
                 Menu
               </div>
@@ -91,7 +91,7 @@ export default function Header({ preview = false }: Props) {
                   leave="hidden"
                   show={showMini}
                   unmount={false}>
-                  <h1 className="hidden xs:block lg:ml-2 font-semibold font-display tracking-tight">
+                  <h1 className="lg:ml-2 font-semibold font-display tracking-tight">
                     Vietnam Coracle
                   </h1>
                 </Transition>
@@ -102,15 +102,14 @@ export default function Header({ preview = false }: Props) {
             className={cx(
               'z-30 absolute top-0 right-0',
               {
-                'left-auto': !searchFocused && showMini,
-                'left-10 md:left-auto': !showMini,
+                'left-auto': !searchFocused,
                 '!left-0 md:!left-auto': searchFocused,
               },
               'flex items-center h-14 lg:h-16 px-2 lg:px-4',
             )}>
             <SearchForm
               className={cx('ring-2 ring-white md:ring-0 dark:ring-gray-900', {
-                'w-32 md:w-44': !searchFocused,
+                'w-28 xs:w-32 md:w-44': !searchFocused,
                 'w-full md:w-44 2xl:w-60': searchFocused,
               })}
               onBlur={() => setSearchFocused(false)}

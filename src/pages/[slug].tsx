@@ -12,7 +12,7 @@ export default function SSGPost(
 export async function getStaticPaths() {
   const query = gql`
     {
-      contentNodes(first: 1000) {
+      contentNodes(first: 1000, where: { contentTypes: [PAGE, POST] }) {
         nodes {
           ... on ContentNode {
             uri
@@ -53,8 +53,15 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
       },
     };
   }
+  if (
+    !data.contentNode ||
+    !['post', 'page'].includes(data.contentNode.contentType?.node.name)
+  ) {
+    return {
+      notFound: true,
+    };
+  }
   return {
-    notFound: !data.contentNode,
     props: await getPostPageProps(data, preview),
     revalidate: 1,
   };

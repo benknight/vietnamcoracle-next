@@ -21,7 +21,6 @@ export default async function patreonOauth(
   let redirect = String(req.query.redirect || '/');
 
   if (signout) {
-    console.log('signout', signout);
     nodeCookie.clear(res, cookieKey, cookieOpts);
   } else if (code) {
     const result = await axios({
@@ -37,11 +36,7 @@ export default async function patreonOauth(
       url: 'https://www.patreon.com/api/oauth2/token',
     });
     if (result.data.access_token) {
-      console.log('nodeCookie.create');
       nodeCookie.create(res, cookieKey, result.data.access_token, cookieOpts);
-    } else {
-      // TODO: Handle failure
-      // console.log(result, JSON.stringify(result, null, 2));
     }
     redirect = String(state);
   }

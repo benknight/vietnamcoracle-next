@@ -8,11 +8,7 @@ import Post, { POST_QUERY, getPostPageProps } from '../components/Post';
 import getGQLClient from '../lib/getGQLClient';
 
 // This is a server-rendered page for posts for when logic is necessary in order to display the post or redirect
-export default function SSRPost({
-  isLoggedIn,
-  post,
-  renderPatreonButton = false,
-}) {
+export default function SSRPost({ patron, post, renderPatreonButton = false }) {
   useEffect(() => {
     if (post) {
       window.history.replaceState(
@@ -29,7 +25,7 @@ export default function SSRPost({
   if (renderPatreonButton) {
     return (
       <PatronOnlyContentGate
-        isLoggedIn={isLoggedIn}
+        patron={patron}
         patreonLevel={post?.data.contentNode.patreonLevel}
       />
     );
@@ -95,23 +91,30 @@ export async function getServerSideProps({
     if (token) {
       try {
         const result = await axios.get(
-          '/identity?include=memberships&fields%5Bmember%5D=currently_entitled_amount_cents,patron_status',
+          '/identity?include=memberships' +
+            '&fields%5Bmember%5D=currently_entitled_amount_cents,patron_status' +
+            '&fields%5Buser%5D=full_name,email',
           {
             baseURL: 'https://www.patreon.com/api/oauth2/v2',
             headers: { Authorization: `Bearer ${token}` },
           },
         );
+        console.log(JSON.stringify(result.data, null, 2));
         if (
-          result.data.included[0]?.attributes?.patron_status ===
+          result.data.included?.[0]?.attributes?.patron_status ===
             'active_patron' &&
-          data.contentNode.patreonLevel * 100 <=
-            result.data.included[0]?.attributes?.currently_entitled_amount_cents
+          result.data.included?.[0]?.attributes
+            ?.currently_entitled_amount_cents >=
+            data.contentNode.patreonLevel * 100
         ) {
           userCanView = true;
         } else {
           return {
             props: {
-              isLoggedIn: true,
+              patron: {
+                email: result.data.data.attributes?.email ?? null,
+                name: result.data.data.attributes?.full_name ?? null,
+              },
               post: {
                 data,
               },
@@ -126,10 +129,8 @@ export async function getServerSideProps({
         );
       }
     } else {
-      // No token, show login with patreon button
       return {
         props: {
-          isLoggedIn: false,
           post: {
             data,
           },

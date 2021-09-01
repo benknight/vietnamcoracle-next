@@ -99,7 +99,6 @@ export async function getServerSideProps({
             headers: { Authorization: `Bearer ${token}` },
           },
         );
-        console.log(JSON.stringify(result.data, null, 2));
         if (
           result.data.included?.[0]?.attributes?.patron_status ===
             'active_patron' &&

@@ -3,8 +3,6 @@ import { gql } from 'graphql-request';
 import _get from 'lodash/get';
 import Image from 'next/image';
 import { createContext, useContext } from 'react';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import breakpoints from '../config/breakpoints';
 import PostLink from './PostLink';
 
 interface Props {
@@ -17,23 +15,16 @@ export const SwatchesProvider = SwatchesContext.Provider;
 
 const PostCard = ({ inGrid = false, data }: Props) => {
   const swatches = useContext(SwatchesContext);
-  const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   if (!data.featuredImage) {
     return null;
   }
   const swatch = swatches[data.featuredImage.node.id];
   return (
     <PostLink
-      className={cx(
-        'postcard group relative overflow-hidden flex flex-col sm:shadow w-full rounded-lg',
-        { 'bg-gray-900': isSmall || inGrid },
-      )}
+      className="postcard group relative overflow-hidden flex flex-col shadow w-full rounded-lg bg-gray-900"
       post={data}>
       <div
-        className="
-            relative overflow-hidden block w-full
-            bg-opacity-10 aspect-w-1 aspect-h-1
-            rounded-b-lg sm:rounded-none"
+        className="relative overflow-hidden block w-full bg-opacity-10 aspect-w-1 aspect-h-1"
         style={{
           backgroundColor: swatch,
         }}>
@@ -45,30 +36,15 @@ const PostCard = ({ inGrid = false, data }: Props) => {
           objectFit="cover"
           src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.srcLg}`}
         />
-        <div
-          className={cx(
-            'absolute inset-0 top-auto h-1/2 pointer-events-none ',
-            {
-              'bg-gradient-to-t from-gray-900 via-black-50 to-transparent':
-                isSmall || inGrid,
-            },
-          )}
-        />
+        <div className="absolute inset-0 top-auto h-1/2 pointer-events-none bg-gradient-to-t from-gray-900 via-black-50 to-transparent" />
       </div>
-      <div
-        className={cx(
-          'relative flex-auto flex p-1 pt-2 md:px-5 md:py-6 font-medium',
-          {
-            'items-end -mt-24 px-4 pt-4 pb-6 rounded-b': inGrid || isSmall,
-          },
-        )}>
+      <div className="relative flex-auto flex items-end -mt-24 p-1 px-4 md:px-5 md:py-6 pt-4 pb-6 font-medium rounded-b">
         <div className="relative">
           <h3
             className={cx(
-              'font-display text-xs md:text-2xl tracking-tightest lg:tracking-tight',
+              'font-display text-2xl text-gray-100 tracking-tightest lg:tracking-tight',
               {
-                'sm:text-lg sm:leading-snug': !inGrid,
-                'text-2xl text-gray-100': inGrid || isSmall,
+                'text-lg md:text-2xl leading-snug': !inGrid,
               },
             )}>
             {data.title}
@@ -76,9 +52,9 @@ const PostCard = ({ inGrid = false, data }: Props) => {
           <div
             className={cx(
               'postcard-excerpt',
-              'mt-2 font-serif text-sm text-gray-100 xl:text-gray-300',
+              'mt-2 font-serif text-xs sm:text-sm text-gray-100 xl:text-gray-300',
               {
-                'hidden sm:block sm:line-clamp-3 xl:line-clamp-none': !inGrid,
+                'block line-clamp-3 xl:line-clamp-none': !inGrid,
               },
             )}
             dangerouslySetInnerHTML={{ __html: data.excerpt }}></div>

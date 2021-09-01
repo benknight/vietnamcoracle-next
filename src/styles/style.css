@@ -30,6 +30,7 @@
     @apply bg-opacity-10 hover:bg-opacity-25 dark:bg-opacity-25 dark:hover:bg-opacity-25;
     @apply focus:outline-none rounded-lg subpixel-antialiased font-sans;
     @apply transition-colors duration-100 ease-in-out;
+    @apply whitespace-nowrap;
   }
   .btn-patreon {
     @apply hover:bg-[#FF424D] hover:bg-opacity-25;

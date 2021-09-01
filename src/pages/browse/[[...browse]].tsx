@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
 import _ from 'lodash';
@@ -5,6 +6,7 @@ import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
@@ -29,6 +31,7 @@ const Browse = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
+  const [showSubcats, setShowSubcats] = useState(false);
   const isHome = !router.query.browse;
   const { category, subcategory } = data;
   const coverImgSm =
@@ -37,6 +40,17 @@ const Browse = ({
   const coverImgLg =
     (subcategory ? subcategory.cover.large : category.cover.large) ||
     data.defaultImages?.cover.large;
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      setShowSubcats(false);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
+
   return (
     <SwatchesProvider value={swatches}>
       <Head>{htmlToReact(category.seo.fullHead)}</Head>
@@ -72,31 +86,46 @@ const Browse = ({
                 </a>
               )}
               {category.children.nodes.length > 0 && (
-                <div className="flex-auto w-full md:w-auto">
-                  <div className="relative inline-flex items-center justify-between w-full md:w-auto h-10 mt-3 p-3 rounded text-sm border bg-black bg-opacity-50 tracking-wide leading-none whitespace-nowrap">
-                    Browse subcategories…
-                    <ChevronDownIcon className="w-4 h-4 ml-2" />
-                    <select
-                      className="absolute inset-0 opacity-0 cursor-pointer w-full text-black"
-                      onChange={event =>
-                        router.push(getCategoryLink(event.target.value))
-                      }
-                      value={subcategory?.uri ?? 'default'}>
-                      <option disabled value="default">
-                        Browse subcategories…
-                      </option>
-                      {category.children.nodes
-                        .filter(node => node.posts.nodes.length > 0)
-                        .map(node => (
-                          <option key={node.uri} value={node.uri}>
-                            {node.name}
-                          </option>
-                        ))}
-                    </select>
+                <>
+                  <div className="flex-auto w-full md:w-auto">
+                    <button
+                      className="relative btn justify-between h-11 w-full md:w-auto mt-3 rounded-full bg-opacity-25"
+                      onClick={() => setShowSubcats(value => !value)}>
+                      {showSubcats ? 'Hide' : 'Show'} subcategories…
+                      <ChevronDownIcon
+                        className={cx(
+                          'w-4 h-4 ml-2 transition-transform duration-100',
+                          showSubcats ? 'transform rotate-180' : 'rotate-0',
+                        )}
+                      />
+                    </button>
                   </div>
-                </div>
+                </>
               )}
             </div>
+            {category.children.nodes.length > 0 && (
+              <div
+                className={cx(
+                  'page-wrap pb-4 dark:pb-0 md:pr-24',
+                  showSubcats ? '' : 'hidden',
+                )}>
+                {category.children.nodes
+                  .filter(node => node.posts.nodes.length > 0)
+                  .map(node => (
+                    <Link key={node.uri} href={getCategoryLink(node.uri)}>
+                      <a
+                        className={cx(
+                          'inline-flex items-center h-8 sm:h-10 mt-3 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide',
+                          subcategory?.uri === node.uri
+                            ? 'border-primary-400 border-opacity-75 text-primary-400'
+                            : 'text-gray-300 hover:text-white border-white border-opacity-25',
+                        )}>
+                        {node.name}
+                      </a>
+                    </Link>
+                  ))}
+              </div>
+            )}
           </HeroContent>
         </Hero>
       )}

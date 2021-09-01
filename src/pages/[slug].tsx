@@ -1,11 +1,8 @@
 import { gql } from 'graphql-request';
-import type { InferGetStaticPropsType } from 'next';
 import Post, { getPostPageProps, POST_QUERY } from '../components/Post';
 import getGQLClient from '../lib/getGQLClient';
 
-export default function SSGPost(
-  props: InferGetStaticPropsType<typeof getStaticProps>,
-) {
+export default function SSGPost(props) {
   return <Post data={props.data} html={props.html} postNav={props.postNav} />;
 }
 

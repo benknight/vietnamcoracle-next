@@ -95,7 +95,7 @@ export default function NavBar({ navCategory, preview = false }: Props) {
                     {
                       'dark:shadow text-primary-500 dark:text-primary-400':
                         isCurrent(link.url),
-                      'lg:hidden xl:flex': link.url === '/',
+                      'nav-link-home': link.url === '/',
                     },
                   )}
                   key={link.url}
@@ -107,10 +107,10 @@ export default function NavBar({ navCategory, preview = false }: Props) {
                     },
                   )}
                   <div className="w-full">
-                    <div className="nav-title-short text-xxxs xs:text-xxs lg:text-base">
+                    <div className="xl:hidden text-xxxs xs:text-xxs lg:text-base">
                       {link.titleShort}
                     </div>
-                    <div className="nav-title-long">{link.title}</div>
+                    <div className="hidden xl:block">{link.title}</div>
                   </div>
                 </a>
               </Link>

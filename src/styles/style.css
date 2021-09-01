@@ -79,15 +79,12 @@
       @apply flex !important;
     }
   }
-  .nav-title-long {
-    @apply hidden;
+  .nav-link-home {
+    @apply lg:hidden !important;
   }
   @media (min-width: 1300px) {
-    .nav-title-long {
-      @apply block;
-    }
-    .nav-title-short {
-      @apply hidden;
+    .nav-link-home {
+      @apply flex !important;
     }
   }
   .no-scrollbar::-webkit-scrollbar {

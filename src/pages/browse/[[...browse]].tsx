@@ -7,6 +7,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CategorySlider from '../../components/CategorySlider';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
@@ -17,6 +18,7 @@ import Map from '../../components/Map';
 import { SwatchesProvider } from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
+import breakpoints from '../../config/breakpoints';
 import generateSwatches from '../../lib/generateSwatches';
 import getCategoryLink from '../../lib/getCategoryLink';
 import getGQLClient from '../../lib/getGQLClient';
@@ -26,6 +28,7 @@ const Browse = ({
   swatches,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
+  const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const isHome = !router.query.browse;
   const { category, subcategory } = data;
   const coverImgSm =
@@ -120,7 +123,10 @@ const Browse = ({
               </section>
             ))
           ) : (
-            <GridListTab.Group posts={(subcategory || category).posts.nodes} />
+            <GridListTab.Group
+              hideList={!isSmall}
+              posts={(subcategory || category).posts.nodes}
+            />
           )}
           {category.map?.mid && (
             <section className="lg:mb-8 lg:px-8">

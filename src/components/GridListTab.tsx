@@ -16,7 +16,7 @@ const tabCx = (selected: boolean, className = '') =>
       : 'text-primary-400 text-opacity-75 hover:text-opacity-100',
   );
 
-function Group({ posts }) {
+function Group({ hideList = false, posts }) {
   const router = useRouter();
   const searchParams = useMemo(
     () =>
@@ -48,7 +48,11 @@ function Group({ posts }) {
           },
         );
       }}>
-      <div className="pt-8 md:pt-6 px-8 flex justify-center lg:justify-start">
+      <div
+        className={cx(
+          'pt-8 md:pt-6 px-2 lg:px-8 justify-center lg:justify-start',
+          hideList ? 'hidden' : 'flex',
+        )}>
         <List />
       </div>
       <Tab.Panels>

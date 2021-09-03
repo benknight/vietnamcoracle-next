@@ -62,7 +62,7 @@
       hover:border-gray-500 dark:hover:border-gray-600;
   }
   .link {
-    @apply text-blue-700 dark:text-blue-400;
+    @apply text-blue-600 dark:text-blue-400;
     @apply visited:text-purple-600 dark:visited:text-purple-400;
     @apply hover:underline active:text-red-600 dark:active:text-red-500;
   }
@@ -186,7 +186,7 @@ article figure {
   @apply max-w-full !important;
 }
 article *[style*='#3366ff'] {
-  @apply text-blue-700 dark:text-blue-400 !important;
+  @apply text-blue-600 dark:text-blue-400 !important;
 }
 article *[style*='#333333'],
 article *[style*='#000000'] {

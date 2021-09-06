@@ -48,7 +48,7 @@ export default function CommentForm({ post }: Props) {
       });
       if (response.createComment.success) {
         if (values.subscribe === true) {
-          fetch('/api/subscribe', {
+          fetch('/api/subscribe/', {
             method: 'post',
             body: JSON.stringify({ email: values.email }),
             headers: {

@@ -36,7 +36,7 @@ module.exports = {
         source: '/category/:path*',
       },
       {
-        destination: '/post',
+        destination: '/post/',
         permanent: false,
         source: '/',
         has: [
@@ -47,7 +47,7 @@ module.exports = {
         ],
       },
       {
-        destination: '/search?query=:s',
+        destination: '/search/?query=:s',
         permanent: false,
         source: '/',
         has: [
@@ -75,7 +75,7 @@ module.exports = {
   async rewrites() {
     return [
       {
-        destination: '/browse',
+        destination: '/browse/',
         source: '/',
       },
     ];

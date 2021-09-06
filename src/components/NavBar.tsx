@@ -25,28 +25,28 @@ const links = [
     iconAlt: <WorkOutlineIcon />,
     title: 'Destinations',
     titleShort: 'Destinations',
-    url: '/browse/destinations',
+    url: '/browse/destinations/',
   },
   {
     icon: <MotorcycleIcon />,
     iconAlt: <MotorcycleIcon />,
     title: 'Motorbike Guides',
     titleShort: 'Motorbike',
-    url: '/browse/motorbike-guides',
+    url: '/browse/motorbike-guides/',
   },
   {
     icon: <HotelIcon />,
     iconAlt: <HotelOutlinedIcon />,
     title: 'Hotel Reviews',
     titleShort: 'Hotels',
-    url: '/browse/hotel-reviews',
+    url: '/browse/hotel-reviews/',
   },
   {
     icon: <RestaurantIcon />,
     iconAlt: <RestaurantIcon />,
     title: 'Food & Drink',
     titleShort: 'Food',
-    url: '/browse/food-and-drink',
+    url: '/browse/food-and-drink/',
   },
 ];
 
@@ -64,10 +64,10 @@ export default function NavBar({ navCategory, preview = false }: Props) {
         return path === '/browse' || path === '/';
       }
       if (router.query.ref) {
-        return uri === `/browse/${router.query.ref}`;
+        return uri === `/browse/${router.query.ref}/`;
       }
       if (navCategory) {
-        return uri === `/browse/${navCategory}`;
+        return uri === `/browse/${navCategory}/`;
       }
       return path.startsWith(uri);
     },
@@ -82,7 +82,6 @@ export default function NavBar({ navCategory, preview = false }: Props) {
         )}>
         <div className="flex justify-center items-center flex-auto sm:max-w-2xlpx-1 xl:px-16 font-sans font-medium tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
           {links.map(link => {
-            const path = router.asPath;
             const to = link.url.match(/\/$/) ? link.url : link.url + '/';
             return (
               <Link href={to} key={to}>

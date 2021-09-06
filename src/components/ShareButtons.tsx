@@ -37,7 +37,7 @@ interface Props {
 }
 
 const fetcher = (link: string) =>
-  fetch(`/api/share-counts?link=${encodeURIComponent(link)}`).then(res =>
+  fetch(`/api/share-counts/?link=${encodeURIComponent(link)}`).then(res =>
     res.json(),
   );
 

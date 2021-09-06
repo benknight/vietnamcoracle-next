@@ -335,7 +335,7 @@ export async function getPostPageProps(
         .append($(element).clone(), $(scriptTags).clone())
         .html();
       $(element).replaceWith(
-        `<iframe src="/api/iframe-service?html=${encodeURIComponent(
+        `<iframe src="/api/iframe-service/?html=${encodeURIComponent(
           html,
         )}" height="420" title="Book your accommodation"></iframe>`,
       );

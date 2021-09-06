@@ -29,7 +29,7 @@ export function useSubscribeForm(opts?: HookOptions) {
   useWaitCursor(loading);
   const onSubmit = useCallback(email => {
     setLoading(true);
-    fetch('/api/subscribe', {
+    fetch('/api/subscribe/', {
       method: 'post',
       body: JSON.stringify({ email }),
       headers: {

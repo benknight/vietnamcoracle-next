@@ -29,7 +29,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
           },
         });
         router.push({
-          pathname: '/search',
+          pathname: '/search/',
           query: { query: value },
         });
       }}>

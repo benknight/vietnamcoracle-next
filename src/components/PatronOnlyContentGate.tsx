@@ -55,7 +55,7 @@ export default function PatronOnlyContentGate({ patron, patreonLevel }: Props) {
           or{' '}
           <a
             className="link"
-            href={`/api/patreon-oauth?${signOutParams.toString()}`}>
+            href={`/api/patreon-oauth/?${signOutParams.toString()}`}>
             click here to sign out
           </a>
           .

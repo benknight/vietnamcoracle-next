@@ -14,10 +14,7 @@ export default function SSRPost({ patron, post, renderPatreonButton = false }) {
       window.history.replaceState(
         null,
         null,
-        `${window.location.origin}${post.data.contentNode.uri}`.replace(
-          /\/$/,
-          '',
-        ),
+        `${window.location.origin}${post.data.contentNode.uri}`,
       );
     }
   }, [post]);

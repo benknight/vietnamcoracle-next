@@ -8,6 +8,7 @@ module.exports = {
   images: {
     domains: ['www.cms.vietnamcoracle.com', 'res.cloudinary.com'],
   },
+  trailingSlash: true,
   async redirects() {
     const api = axios.create({
       auth: {

@@ -23,7 +23,7 @@ export default function Header({ preview = false }: Props) {
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
   const isLG = useMediaQuery(`(min-width: ${breakpoints.lg})`);
-  const isHome = router.asPath === '/' || router.asPath === '/browse';
+  const isHome = ['/', '/browse', '/browse/'].includes(router.asPath);
   const showMini = !isHome || pastThreshold;
 
   useEffect(() => {

@@ -59,8 +59,8 @@ export default function Menu({ children, className = '' }) {
             <Popover.Panel
               static
               className="
-                absolute z-10
-                w-72 xs:w-96 max-h-[87vh] mt-1 lg:mt-2 overflow-auto
+                z-10 absolute left-0 xs:left-auto
+                w-screen xs:w-[80vw] sm:w-96 max-h-[87vh] mt-1 lg:mt-2 overflow-auto
                 font-medium font-sans text-base
                 bg-white dark:bg-gray-800
                 border border-gray-200 dark:border-gray-700

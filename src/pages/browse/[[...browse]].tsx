@@ -130,7 +130,7 @@ const Browse = ({
         </Hero>
       )}
       <Layout className="bg-white dark:bg-gray-950 py-px pb-14 xl:pb-0">
-        <LayoutMain>
+        <LayoutMain className="overflow-hidden">
           {category && !subcategory && category.collections?.items ? (
             category.collections.items.map(item => (
               <section

@@ -31,6 +31,7 @@ module.exports = {
         primary: colors.indigo,
       },
       fontFamily: {
+        serif: ['Lora', ...defaultTheme.fontFamily.serif],
         display: ['Libre Baskerville', ...defaultTheme.fontFamily.serif],
       },
       fontSize: {

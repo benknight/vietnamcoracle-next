@@ -234,6 +234,9 @@ article .crp-list + div > a {
 article .crp-list + div p {
   margin-bottom: 0 !important;
 }
+article .has-drop-cap:not(:focus)::first-letter {
+  font-size: 6rem !important;
+}
 /* Necessary to style /vietnam-coracle-video-library */
 article .wp-block-gallery a {
   @apply text-white !important;

@@ -10,7 +10,7 @@ interface Props {
   data: BlockType;
 }
 
-const btnClassName = 'btn btn-full mt-2 rounded-xl';
+const btnClassName = 'btn flex mt-2 rounded-xl';
 
 export default function Support({ data: block }: Props) {
   return (

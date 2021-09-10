@@ -63,7 +63,7 @@ export default function PatronOnlyContentGate({ patron, patreonLevel }: Props) {
       ) : (
         <div className="block max-w-sm mx-auto">
           <a
-            className="btn btn-full btn-patreon h-12"
+            className="btn btn-patreon flex h-12"
             href={`https://www.patreon.com/oauth2/authorize?${oauthParams.toString()}`}>
             <img
               alt=""

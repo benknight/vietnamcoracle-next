@@ -52,7 +52,7 @@ const PostCard = ({ inGrid = false, data }: Props) => {
           <div
             className={cx(
               'postcard-excerpt',
-              'mt-2 font-serif text-xs sm:text-sm text-gray-100 xl:text-gray-300',
+              'mt-2 font-serif text-sm text-gray-100 xl:text-gray-300',
               {
                 'block line-clamp-3 xl:line-clamp-none': !inGrid,
               },

@@ -1,6 +1,14 @@
 import vibrant from 'node-vibrant';
 
+// NOTE: Temporarily disabling this function to avoid maxing out Cloudinary free plan bandwidth
+
 export default async function generateSwatches(
+  json: string,
+): Promise<{ [key: string]: string }> {
+  return {};
+}
+
+export async function _generateSwatches(
   json: string,
 ): Promise<{ [key: string]: string }> {
   let swatches = {};

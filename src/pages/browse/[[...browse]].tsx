@@ -17,18 +17,13 @@ import GridListTab from '../../components/GridListTab';
 import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
-import { SwatchesProvider } from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
 import breakpoints from '../../config/breakpoints';
-import generateSwatches from '../../lib/generateSwatches';
 import getCategoryLink from '../../lib/getCategoryLink';
 import getGQLClient from '../../lib/getGQLClient';
 
-const Browse = ({
-  data,
-  swatches,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Browse = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const [showSubcats, setShowSubcats] = useState(false);
@@ -52,7 +47,7 @@ const Browse = ({
   }, [router.events]);
 
   return (
-    <SwatchesProvider value={swatches}>
+    <>
       <Head>{htmlToReact(category.seo.fullHead)}</Head>
       {isHome ? (
         <CategorySlider data={category.slider} />
@@ -168,7 +163,7 @@ const Browse = ({
           <Footer data={data} />
         </LayoutSidebar>
       </Layout>
-    </SwatchesProvider>
+    </>
   );
 };
 
@@ -341,7 +336,6 @@ export const getStaticProps = async ({ params, preview = false }) => {
     props: {
       data,
       preview,
-      swatches: await generateSwatches(JSON.stringify(data)),
     },
     revalidate: 1,
   };

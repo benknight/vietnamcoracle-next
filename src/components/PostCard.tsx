@@ -2,7 +2,6 @@ import cx from 'classnames';
 import { gql } from 'graphql-request';
 import _get from 'lodash/get';
 import Image from 'next/image';
-import { createContext, useContext } from 'react';
 import PostLink from './PostLink';
 
 interface Props {
@@ -10,31 +9,22 @@ interface Props {
   data: any;
 }
 
-const SwatchesContext = createContext({});
-export const SwatchesProvider = SwatchesContext.Provider;
-
 const PostCard = ({ inGrid = false, data }: Props) => {
-  const swatches = useContext(SwatchesContext);
   if (!data.featuredImage) {
     return null;
   }
-  const swatch = swatches[data.featuredImage.node.id];
   return (
     <PostLink
       className="postcard group relative overflow-hidden flex flex-col shadow w-full rounded-lg bg-gray-900"
       post={data}>
-      <div
-        className="relative overflow-hidden block w-full bg-opacity-10 aspect-w-1 aspect-h-1"
-        style={{
-          backgroundColor: swatch,
-        }}>
+      <div className="relative overflow-hidden block w-full aspect-w-1 aspect-h-1">
         <Image
           alt={data.featuredImage.node.altText}
           className="transition-transform ease-out duration-300 pointer:transform origin-top group-hover:scale-[1.02] group-hover:duration-[3s]"
           layout="fill"
           loading="lazy"
           objectFit="cover"
-          src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.srcLg}`}
+          src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.srcLarge}`}
         />
         <div className="absolute inset-0 top-auto h-1/2 pointer-events-none bg-gradient-to-t from-gray-900 via-black-50 to-transparent" />
       </div>
@@ -77,8 +67,7 @@ PostCard.fragments = gql`
           __typename
           altText
           id
-          srcLg: sourceUrl(size: LARGE)
-          srcFx: sourceUrl(size: MEDIUM)
+          srcLarge: sourceUrl(size: LARGE)
           slug
         }
       }

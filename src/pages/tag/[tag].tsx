@@ -7,22 +7,18 @@ import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
 import GridListTab from '../../components/GridListTab';
 import Hero, { HeroContent } from '../../components/Hero';
-import PostCard, { SwatchesProvider } from '../../components/PostCard';
+import PostCard from '../../components/PostCard';
 import PostMediaBlock from '../../components/PostMediaBlock';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import SidebarDefault from '../../components/SidebarDefault';
 import getGQLClient from '../../lib/getGQLClient';
-import generateSwatches from '../../lib/generateSwatches';
 
-const Tag = ({
-  data,
-  swatches,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Tag = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const coverImgSm = data.tag.cover?.small || data.defaultImages?.cover.small;
   const coverImgLg = data.tag.cover?.large || data.defaultImages?.cover.large;
   return (
-    <SwatchesProvider value={swatches}>
+    <>
       <Head>{htmlToReact(data.tag.seo.fullHead)}</Head>
       <Hero imgSm={coverImgSm} imgLg={coverImgLg} theme="dark">
         <HeroContent>
@@ -42,7 +38,7 @@ const Tag = ({
           <Footer data={data} />
         </LayoutSidebar>
       </Layout>
-    </SwatchesProvider>
+    </>
   );
 };
 
@@ -125,7 +121,6 @@ export const getStaticProps = async ({ params, preview = false }) => {
     props: {
       data,
       preview,
-      swatches: await generateSwatches(JSON.stringify(data)),
     },
     revalidate: 1,
   };

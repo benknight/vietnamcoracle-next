@@ -25,7 +25,7 @@ function PostMediaBlock({ data }) {
               height={150}
               layout="intrinsic"
               loading="lazy"
-              src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.srcMd}`}
+              src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.featuredImage.node.srcMedium}`}
               width={150}
             />
           </PostLink>
@@ -74,7 +74,7 @@ PostMediaBlock.fragments = gql`
       featuredImage {
         node {
           altText
-          srcMd: sourceUrl(size: MEDIUM)
+          srcMedium: sourceUrl(size: MEDIUM)
           slug
         }
       }

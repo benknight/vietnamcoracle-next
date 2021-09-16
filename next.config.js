@@ -1,10 +1,6 @@
 const axios = require('axios');
 
 module.exports = {
-  future: {
-    // NOTE(2021-05-12): Disabling due to build issues
-    // webpack5: true,
-  },
   images: {
     domains: ['www.cms.vietnamcoracle.com', 'res.cloudinary.com'],
   },

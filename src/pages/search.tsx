@@ -4,7 +4,7 @@ import _flatten from 'lodash/flatten';
 import _upperFirst from 'lodash/upperFirst';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useSWRInfinite } from 'swr';
+import useSWRInfinite from 'swr/infinite';
 import { Tab } from '@headlessui/react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Footer from '../components/Footer';

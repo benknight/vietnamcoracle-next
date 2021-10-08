@@ -81,6 +81,7 @@ export async function getServerSideProps({
     data.contentNode.isRestricted ||
     data.contentNode.patreonLevel > 0;
   let userCanView = preview;
+  let renderPatreonButton = false;
 
   // Patreon-only content requires OAuth token
   if (data.contentNode.patreonLevel > 0) {
@@ -119,21 +120,22 @@ export async function getServerSideProps({
           };
         }
       } catch (error) {
-        console.error(
-          'Failed to request Patreon membership data:',
-          error.message,
-        );
+        renderPatreonButton = true;
       }
     } else {
-      return {
-        props: {
-          post: {
-            data,
-          },
-          renderPatreonButton: true,
-        },
-      };
+      renderPatreonButton = true;
     }
+  }
+
+  if (renderPatreonButton) {
+    return {
+      props: {
+        post: {
+          data,
+        },
+        renderPatreonButton: true,
+      },
+    };
   }
 
   if (isRestricted) {

@@ -333,6 +333,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
   });
 
   return {
+    notFound: !data.category,
     props: {
       data,
       preview,

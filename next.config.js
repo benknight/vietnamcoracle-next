@@ -20,7 +20,15 @@ module.exports = {
     } catch (error) {
       cmsRedirects = [];
     }
-    return [
+    const redirects = [
+      ...cmsRedirects.map(config => ({
+        destination: config.action_data.url.replace(
+          /https?\:\/\/(www\.)?(cms\.)?vietnamcoracle\.com/g,
+          '',
+        ),
+        permanent: true,
+        source: config.match_url,
+      })),
       {
         destination: '/browse/:path*',
         permanent: true,
@@ -58,15 +66,8 @@ module.exports = {
         permanent: true,
         source: '/wp-content/:path*',
       },
-      ...cmsRedirects.map(config => ({
-        destination: config.action_data.url.replace(
-          /https?\:\/\/(www\.)?vietnamcoracle\.com/g,
-          '',
-        ),
-        permanent: true,
-        source: config.match_url,
-      })),
     ];
+    return redirects;
   },
   async rewrites() {
     return [

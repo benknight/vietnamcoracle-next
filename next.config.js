@@ -25,7 +25,7 @@ module.exports = {
         source: config.match_url,
       })),
       {
-        desination: 'https://www.cms.vietnamcoracle.com/feed/',
+        destination: 'https://www.cms.vietnamcoracle.com/feed/',
         permanent: true,
         source: '/feed/',
       },

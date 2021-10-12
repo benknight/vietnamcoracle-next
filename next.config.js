@@ -13,13 +13,8 @@ module.exports = {
       },
       baseURL: 'https://www.cms.vietnamcoracle.com/wp-json/redirection/v1',
     });
-    let cmsRedirects;
-    try {
-      const response = await api.get('/export/all/json');
-      cmsRedirects = JSON.parse(response.data.data)?.redirects;
-    } catch (error) {
-      cmsRedirects = [];
-    }
+    const response = await api.get('/export/all/json');
+    const cmsRedirects = JSON.parse(response.data.data)?.redirects;
     const redirects = [
       ...cmsRedirects.map(config => ({
         destination: config.action_data.url.replace(
@@ -29,6 +24,11 @@ module.exports = {
         permanent: true,
         source: config.match_url,
       })),
+      {
+        desination: 'https://www.cms.vietnamcoracle.com/feed/',
+        permanent: true,
+        source: '/feed/',
+      },
       {
         destination: '/browse/:path*',
         permanent: true,

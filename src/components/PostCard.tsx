@@ -44,7 +44,7 @@ const PostCard = ({ inGrid = false, data }: Props) => {
               'postcard-excerpt',
               'mt-2 font-serif text-sm text-gray-100 xl:text-gray-300',
               {
-                'block line-clamp-3 xl:line-clamp-none': !inGrid,
+                'block line-clamp-3 xl:line-clamp-4': !inGrid,
               },
             )}
             dangerouslySetInnerHTML={{ __html: data.excerpt }}></div>

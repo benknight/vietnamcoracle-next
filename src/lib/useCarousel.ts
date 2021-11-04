@@ -91,9 +91,17 @@ export default function useCarousel() {
       setIsTouchDevice(!matches);
     };
     handleMql(mql);
-    mql.addEventListener('change', handleMql);
+    if (mql.addEventListener) {
+      mql.addEventListener('change', handleMql);
+    } else if (mql.addListener) {
+      mql.addListener(handleMql);
+    }
     return () => {
-      mql.removeEventListener('change', handleMql);
+      if (mql.removeEventListener) {
+        mql.removeEventListener('change', handleMql);
+      } else if (mql.removeListener) {
+        mql.removeListener(handleMql);
+      }
     };
   }, []);
 

@@ -60,6 +60,6 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
   }
   return {
     props: await getPostPageProps(data, preview),
-    revalidate: 10,
+    revalidate: 60,
   };
 }

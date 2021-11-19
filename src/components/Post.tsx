@@ -271,7 +271,7 @@ export async function getPostPageProps(
     );
 
     if (lastUpdated.length > 0) {
-      lastUpdated.addClass('!font-display text-sm !my-4');
+      lastUpdated.addClass('!font-display text-sm !py-4 !m-0');
       const date = lastUpdated
         .text()
         .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]

@@ -77,7 +77,7 @@ const Browse = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
                   className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 items-end text-sm hover:underline"
                   href="#map">
                   <MapIcon className="w-5 h-5 mr-2" />
-                  Jump to map
+                  Map
                 </a>
               )}
               {category.children.nodes.length > 0 && (

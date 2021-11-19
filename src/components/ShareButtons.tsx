@@ -50,9 +50,10 @@ export default function ShareButtons({ image, link, title }: Props) {
           display: flex;
           color: ${colors['white']};
           font-family: ${fontFamily.sans.join(',')};
-          margin-bottom: ${margin[4]};
         }
         button {
+          border-width: 1px !important;
+          border-style: solid !important;
           border-radius: ${borderRadius.DEFAULT};
           flex: 1 1 auto;
           font-size: ${fontSize['xs'][0]} !important;
@@ -74,6 +75,48 @@ export default function ShareButtons({ image, link, title }: Props) {
           fill: currentColor;
           width: ${width[4]};
         }
+        .fb {
+          background-color: #1877f2 !important;
+          border-color: #1877f2 !important;
+        }
+        .tw {
+          background-color: #1da1f2 !important;
+          border-color: #1da1f2 !important;
+        }
+        .pt {
+          background-color: #e60023 !important;
+          border-color: #e60023 !important;
+        }
+        .rd {
+          background-color: #ff4500 !important;
+          border-color: #ff4500 !important;
+        }
+        .em {
+          background-color: ${backgroundColor.gray['500']} !important;
+          border-color: ${backgroundColor.gray['500']} !important;
+        }
+        @media (prefers-color-scheme: dark) {
+          .fb {
+            background-color: #1877f280 !important;
+            border-color: #1877f2 !important;
+          }
+          .tw {
+            background-color: #1da1f280 !important;
+            border-color: #1da1f2 !important;
+          }
+          .pt {
+            background-color: #e6002380 !important;
+            border-color: #e60023 !important;
+          }
+          .rd {
+            background-color: #ff450080 !important;
+            border-color: #ff4500 !important;
+          }
+          .em {
+            background-color: ${backgroundColor.gray['500']}80 !important;
+            border-color: ${backgroundColor.gray['500']} !important;
+          }
+        }
         @media (min-width: ${breakpoints.sm}) {
           button {
             flex: none;
@@ -84,10 +127,7 @@ export default function ShareButtons({ image, link, title }: Props) {
         }
       `}</style>
       <main>
-        <FacebookShareButton
-          style={{ backgroundColor: '#1877f2' }}
-          title={title}
-          url={link}>
+        <FacebookShareButton className="fb" title={title} url={link}>
           <span>
             <FacebookIcon fontSize="small" />
             <span>Share</span>{' '}
@@ -96,18 +136,15 @@ export default function ShareButtons({ image, link, title }: Props) {
               : ''}
           </span>
         </FacebookShareButton>
-        <TwitterShareButton
-          style={{ backgroundColor: '#1da1f2' }}
-          title={title}
-          url={link}>
+        <TwitterShareButton className="tw" title={title} url={link}>
           <span>
             <TwitterIcon fontSize="small" />
             <span>Tweet</span>
           </span>
         </TwitterShareButton>
         <PinterestShareButton
+          className="pt"
           media={image}
-          style={{ backgroundColor: '#e60023' }}
           title={title}
           url={link}>
           <span>
@@ -115,20 +152,13 @@ export default function ShareButtons({ image, link, title }: Props) {
             <span>Pin</span>
           </span>
         </PinterestShareButton>
-        <RedditShareButton
-          style={{ backgroundColor: '#ff4500' }}
-          title={title}
-          url={link}>
+        <RedditShareButton className="rd" title={title} url={link}>
           <span>
             <RedditIcon style={{ position: 'relative', top: '-1px' }} />
             <span>Share</span>
           </span>
         </RedditShareButton>
-        <EmailShareButton
-          body=""
-          style={{ backgroundColor: backgroundColor.gray['500'] }}
-          subject={title}
-          url={link}>
+        <EmailShareButton body="" className="em" subject={title} url={link}>
           <span>
             <EmailIcon fontSize="small" />
             <span>Email</span>

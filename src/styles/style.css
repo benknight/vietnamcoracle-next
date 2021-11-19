@@ -175,7 +175,7 @@ article img.size-large {
 article p,
 article ul,
 article figure {
-  @apply mb-5 font-serif;
+  @apply mb-7 font-serif;
 }
 article figcaption {
   @apply block py-2 leading-tight font-bold text-sm text-center;

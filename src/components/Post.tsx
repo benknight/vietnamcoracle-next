@@ -88,7 +88,7 @@ export default function Post({ data, html, postNav }) {
             <LayoutMain className="px-3 sm:px-4 md:px-8">
               <div className="max-w-[52rem] mx-auto">
                 <div className="xl:w-[145%]">
-                  <h1 className="text-3xl sm:text-4xl xl:text-[2.75rem] leading-tight xl:leading-tight font-display tracking-tight">
+                  <h1 className="text-3xl sm:text-4xl xl:text-5xl leading-tight xl:leading-tight font-display tracking-tight">
                     {content.title.replace(/\s+(\S*)$/, '\u00A0$1')}
                   </h1>
                 </div>
@@ -271,7 +271,7 @@ export async function getPostPageProps(
     );
 
     if (lastUpdated.length > 0) {
-      lastUpdated.addClass('!font-display text-sm !mb-3');
+      lastUpdated.addClass('!font-display text-sm !my-4');
       const date = lastUpdated
         .text()
         .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]
@@ -291,10 +291,11 @@ export async function getPostPageProps(
     }
 
     if (data.contentNode.status === 'publish') {
+      const html = '<div class="mb-8"><share-buttons /></div>';
       if (lastUpdated.length > 0) {
-        $('<share-buttons />').insertAfter(lastUpdated);
+        $(html).insertAfter(lastUpdated);
       } else {
-        $.root().prepend('<share-buttons />');
+        $.root().prepend(html);
       }
     }
 

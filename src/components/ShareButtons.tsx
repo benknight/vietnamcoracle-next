@@ -155,7 +155,7 @@ export default function ShareButtons({ image, link, title }: Props) {
         <RedditShareButton className="rd" title={title} url={link}>
           <span>
             <RedditIcon style={{ position: 'relative', top: '-1px' }} />
-            <span>Share</span>
+            <span>Post</span>
           </span>
         </RedditShareButton>
         <EmailShareButton body="" className="em" subject={title} url={link}>

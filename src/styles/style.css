@@ -322,3 +322,7 @@ article .wp-block-gallery a {
   @apply link p-0 bg-transparent text-base tracking-widest leading-relaxed uppercase;
   @apply text-lg font-bold;
 }
+.post-image,
+.wp-block-image a {
+  @apply block mt-8 mb-2 -mx-3 sm:-mx-4 md:mx-0;
+}

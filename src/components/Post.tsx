@@ -346,9 +346,7 @@ export async function getPostPageProps(
     // Fix captions
     $('p > a[href$=".jpg"]:first-child').each((_i, element) => {
       $(element.parent).addClass('text-sm text-center legacy-caption mb-8');
-      $(element)
-        .addClass('block mt-8 mb-2 -mx-3 sm:-mx-4 md:mx-0')
-        .insertBefore(element.parent);
+      $(element).addClass('post-image').insertBefore(element.parent);
     });
 
     html = $.html();

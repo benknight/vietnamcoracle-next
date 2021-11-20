@@ -39,6 +39,9 @@ module.exports = {
         xxxs: '10px',
         xxs: '11px',
       },
+      letterSpacing: {
+        wide: '.01em',
+      },
       width: {
         '3/7': '42.8571429%',
         '3/8': '37.5%',

@@ -323,6 +323,6 @@ article .wp-block-gallery a {
   @apply text-lg font-bold;
 }
 .post-image,
-.wp-block-image a {
+.wp-block-image > a {
   @apply block mt-8 mb-2 -mx-3 sm:-mx-4 md:mx-0;
 }

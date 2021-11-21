@@ -97,22 +97,13 @@ export function HeroContent({ children }) {
           'absolute bottom-full w-full h-52 md:h-48 xl:h-32',
           'bg-gradient-to-t to-transparent from-gray-950 via-black-25 pointer-events-none',
           {
-            'mb-7 sm:mb-12 dark:-mb-16 sm:dark:-mb-12 lg:dark:-mb-7 opacity-50 dark:opacity-100':
-              theme === 'auto',
-            '-mb-16 sm:-mb-12 lg:-mb-7 opacity-100': theme === 'dark',
-            'mb-7 sm:mb-12 opacity-50': theme === 'light',
+            'opacity-50 dark:opacity-100': theme === 'auto',
+            'opacity-100': theme === 'dark',
+            'opacity-50': theme === 'light',
           },
         )}
       />
-      <div
-        className={cx('relative pointer-events-auto', {
-          'mt-7 sm:mt-12 dark:-mt-16 sm:dark:-mt-12 lg:dark:-mt-7':
-            theme === 'auto',
-          '-mt-16 sm:-mt-12 lg:-mt-7': theme === 'dark',
-          'mt-7 sm:mt-12': theme === 'light',
-        })}>
-        {children}
-      </div>
+      <div className="relative pointer-events-auto">{children}</div>
     </div>
   );
 }

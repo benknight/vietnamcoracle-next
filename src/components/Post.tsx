@@ -84,18 +84,24 @@ export default function Post({ data, html, postNav }) {
           content.thumbnails?.thumbnailHeader ?? data.defaultImages?.cover.large
         }>
         <HeroContent>
-          <Layout>
-            <LayoutMain className="px-3 sm:px-4 md:px-8">
-              <div className="max-w-[52rem] mx-auto">
-                <div className="xl:w-[145%]">
-                  <h1 className="text-3xl sm:text-4xl xl:text-5xl leading-tight xl:leading-tight font-display tracking-tight">
-                    {content.title.replace(/\s+(\S*)$/, '\u00A0$1')}
-                  </h1>
-                </div>
+          <div className="dark:grid grid-rows-[0.5fr] pt-7 sm:pt-12 dark:!pt-0">
+            <div className="min-h-0">
+              <div className="transform dark:-translate-y-1/2">
+                <Layout>
+                  <LayoutMain className="px-3 sm:px-4 md:px-8">
+                    <div className="max-w-[52rem] mx-auto">
+                      <div className="xl:w-[145%]">
+                        <h1 className="text-3xl sm:text-4xl xl:text-5xl leading-tight xl:leading-tight font-display tracking-tight">
+                          {content.title.replace(/\s+(\S*)$/, '\u00A0$1')}
+                        </h1>
+                      </div>
+                    </div>
+                  </LayoutMain>
+                  <LayoutSidebar />
+                </Layout>
               </div>
-            </LayoutMain>
-            <LayoutSidebar />
-          </Layout>
+            </div>
+          </div>
         </HeroContent>
       </Hero>
       {postNav?.length > 0 && (

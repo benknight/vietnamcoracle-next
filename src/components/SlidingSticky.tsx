@@ -8,7 +8,7 @@ export default function SlidingSticky({ children }) {
 
   useEffect(() => {
     scrollPosition.current = 0;
-    const topOffset = 56;
+    const topOffset = 64;
     const listener = () => {
       if (!sticky.current) return;
       const { top } = document.body.getBoundingClientRect();

@@ -15,7 +15,7 @@ const btnClassName = 'btn flex mt-2 rounded-xl';
 export default function Support({ data: block }: Props) {
   return (
     <Block className="group">
-      <div className="flex justify-center -mt-6 mb-6">
+      <div className="flex justify-center mb-6">
         <Link href="/donations-page">
           <a className="relative top-1 !w-14 !h-14 text-red-500">
             <HeartIcon className="!w-full !h-full absolute inset-0" />
@@ -58,13 +58,13 @@ export default function Support({ data: block }: Props) {
           <Link href="/book-your-accommodation">
             <a
               className={`${btnClassName} border-white dark:border-black flex-auto hover:bg-blue-400 hover:bg-opacity-25 h-10`}>
-              <HotelIcon className="!w-4 !h-4 mr-2" /> Book Hotels
+              <HotelIcon className="!w-[14px] !h-[14px] mr-2" /> Book Hotels
             </a>
           </Link>
           <Link href="/book-your-transportation">
             <a
               className={`${btnClassName} border-white dark:border-black ml-1 flex-auto hover:bg-green-400 hover:bg-opacity-25 h-10`}>
-              <FlightIcon className="!w-4 !h-4 mr-1" /> Book Transport
+              <FlightIcon className="!w-[14px] !h-[14px] mr-2" /> Book Transport
             </a>
           </Link>
         </div>

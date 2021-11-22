@@ -85,10 +85,10 @@ export default function Subscribe({ data: block }: Props) {
             <Image
               alt=""
               className="h-full rounded-full object-cover"
-              height="100"
+              height="80"
               layout="fixed"
               src={block.image.sourceUrl}
-              width="100"
+              width="80"
             />
           </a>
         </Link>
@@ -117,7 +117,7 @@ export default function Subscribe({ data: block }: Props) {
           Subscribe
         </button>
       </form>
-      <div className="mt-16">
+      <div className="mt-12">
         <ElsewhereLinks />
       </div>
     </Block>

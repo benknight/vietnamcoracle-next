@@ -10,8 +10,8 @@ const SidebarDefault = ({ className = '', data }) => (
   <SlidingSticky>
     <div className={cx('pt-4 pb-10', className)}>
       <About data={data.about.block} />
-      <Support data={data.support.block} />
       <Subscribe data={data.subscribe.block} />
+      <Support data={data.support.block} />
     </div>
   </SlidingSticky>
 );

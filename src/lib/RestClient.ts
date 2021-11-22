@@ -5,5 +5,5 @@ export default axios.create({
     username: process.env.NEXT_PUBLIC_WORDPRESS_API_USERNAME,
     password: process.env.NEXT_PUBLIC_WORDPRESS_API_PASSWORD,
   },
-  baseURL: 'https://www.cms.vietnamcoracle.com/wp-json/wp/v2',
+  baseURL: 'https://cms.vietnamcoracle.com/wp-json/wp/v2',
 });

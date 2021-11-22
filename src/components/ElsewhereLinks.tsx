@@ -65,7 +65,7 @@ export default function ElsewhereLinks({ useBrandColors = false }) {
             <EmailIcon classes={{ root: '!w-6 !h-6' }} />
           </Tooltip>
         </a>
-        <a className="ml-3" href="https://www.cms.vietnamcoracle.com/feed">
+        <a className="ml-3" href="https://cms.vietnamcoracle.com/feed">
           <Tooltip title="RSS Feed" aria-label="RSS Feed" arrow>
             <RssFeedIcon classes={{ root: '!w-6 !h-6' }} />
           </Tooltip>

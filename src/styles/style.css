@@ -326,3 +326,8 @@ article .wp-block-gallery a {
 .wp-block-image > a {
   @apply block mt-8 mb-2 -mx-3 sm:-mx-4 md:mx-0;
 }
+@screen lg {
+  #map {
+    scroll-margin-top: 5rem;
+  }
+}

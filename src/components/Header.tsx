@@ -28,6 +28,7 @@ export default function Header({ preview = false }: Props) {
 
   useEffect(() => {
     const update = _debounce(() => {
+      if (!ref.current) return;
       const { matches: isLarge } = window.matchMedia(
         `(min-width: ${breakpoints.lg})`,
       );

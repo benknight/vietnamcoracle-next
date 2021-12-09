@@ -66,6 +66,9 @@ export default function Slider({ className = '', children, ...props }) {
   useEffect(() => {
     const slides = parentRef.current.querySelectorAll(':scope > a');
     setSlideCount(slides.length);
+    if (!('IntersectionObserver' in window)) {
+      return;
+    }
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {

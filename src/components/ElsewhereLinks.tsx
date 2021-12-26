@@ -46,7 +46,7 @@ export default function ElsewhereLinks({ useBrandColors = false }) {
             />
           </Tooltip>
         </a>
-        <a className="ml-3" href="https://www.facebook.com/vietnamcoracle">
+        <a className="ml-3" href="https://www.youtube.com/c/Vietnamcoracle">
           <Tooltip
             title="Vietnam Coracle on YouTube"
             aria-label="Vietnam Coracle on YouTube"

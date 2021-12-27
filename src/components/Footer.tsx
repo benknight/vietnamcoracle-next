@@ -1,4 +1,3 @@
-import { gql } from 'graphql-request';
 import Link from 'next/link';
 // @ts-ignore
 import LonelyPlanetLogo from '../../public/lp-logo.svg';
@@ -38,16 +37,3 @@ export default function Footer({ data }) {
     </footer>
   );
 }
-
-Footer.fragments = gql`
-  fragment FooterData on RootQuery {
-    footerMenu: menu(id: "dGVybTo0MDk=") {
-      menuItems {
-        nodes {
-          path
-          label
-        }
-      }
-    }
-  }
-`;

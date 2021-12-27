@@ -1,6 +1,4 @@
-import { gql } from 'graphql-request';
 import Link from 'next/link';
-import internalizeUrl from '../lib/internalizeUrl';
 import Slider, { SliderSlide } from './Slider';
 import Hero from './Hero';
 
@@ -29,25 +27,5 @@ const CategorySlider = ({ data }) => {
     </Slider>
   );
 };
-
-CategorySlider.fragments = gql`
-  fragment CategorySliderComponentData on Category_Slider {
-    posts {
-      ... on Post {
-        title
-        uri
-        thumbnails {
-          thumbnailSlideSquare {
-            ...HeroImageData
-          }
-          thumbnailSlideWidescreen {
-            ...HeroImageData
-          }
-        }
-      }
-    }
-  }
-  ${Hero.fragments}
-`;
 
 export default CategorySlider;

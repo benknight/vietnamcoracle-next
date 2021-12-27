@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import { gql } from 'graphql-request';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
@@ -60,13 +59,5 @@ const Map = ({ data }) => {
     </div>
   );
 };
-
-Map.fragments = gql`
-  fragment MapComponentData on Category_Map {
-    description
-    title
-    mid
-  }
-`;
 
 export default Map;

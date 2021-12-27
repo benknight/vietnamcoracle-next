@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import { gql } from 'graphql-request';
 import _get from 'lodash/get';
 import Image from 'next/image';
 import PostLink from './PostLink';
@@ -53,29 +52,5 @@ const PostCard = ({ inGrid = false, data }: Props) => {
     </PostLink>
   );
 };
-
-PostCard.fragments = gql`
-  fragment PostCardData on ContentNode {
-    uri
-    slug
-    ... on NodeWithExcerpt {
-      excerpt
-    }
-    ... on NodeWithFeaturedImage {
-      featuredImage {
-        node {
-          __typename
-          altText
-          id
-          srcLarge: sourceUrl(size: LARGE)
-          slug
-        }
-      }
-    }
-    ... on NodeWithTitle {
-      title
-    }
-  }
-`;
 
 export default PostCard;

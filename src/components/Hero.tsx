@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import { gql } from 'graphql-request';
 import Image from 'next/image';
 import { createContext, useContext } from 'react';
 
@@ -70,18 +69,6 @@ export default function Hero({
     </HeroContext.Provider>
   );
 }
-
-Hero.fragments = gql`
-  fragment HeroImageData on MediaItem {
-    altText
-    id
-    sourceUrl
-    mediaDetails {
-      height
-      width
-    }
-  }
-`;
 
 export function HeroContent({ children }) {
   const { theme } = useContext(HeroContext);

@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import { gql } from 'graphql-request';
 
 export const BlockTitle = props => (
   <h3 className="text-base font-bold xs:text-xl lg:text-2xl xl:text-xl mb-3">
@@ -43,23 +42,5 @@ const Block = ({ className = '', children }) => (
     {children}
   </aside>
 );
-
-Block.fragments = gql`
-  fragment BlockComponentData on Block_Block {
-    description
-    title
-    image {
-      sourceUrl
-    }
-    link {
-      title
-      url
-    }
-    messages {
-      key
-      value
-    }
-  }
-`;
 
 export default Block;

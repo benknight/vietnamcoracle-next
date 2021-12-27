@@ -1,4 +1,3 @@
-import axios from 'axios';
 import cheerio from 'cheerio';
 import cx from 'classnames';
 import { differenceInMonths, parse } from 'date-fns';
@@ -13,6 +12,7 @@ import Headroom from 'react-headroom';
 import { Menu } from '@headlessui/react';
 import { MenuAlt1Icon } from '@heroicons/react/outline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
+import * as fragments from '../config/fragments';
 import breakpoints from '../config/breakpoints';
 import cleanPostHTML from '../lib/cleanPostHTML';
 import cmsToNextUrls from '../lib/cmsToNextUrls';
@@ -491,9 +491,10 @@ export const POST_QUERY = gql`
     ...FooterData
     ...SidebarDefaultData
   }
-  ${CommentThread.fragments}
-  ${Hero.fragments}
-  ${Footer.fragments}
-  ${PostCard.fragments}
-  ${SidebarDefault.fragments}
+  ${fragments.BlockData}
+  ${fragments.CommentThreadCommentData}
+  ${fragments.HeroImageData}
+  ${fragments.FooterData}
+  ${fragments.PostCardData}
+  ${fragments.SidebarDefaultData}
 `;

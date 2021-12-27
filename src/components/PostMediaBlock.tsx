@@ -1,4 +1,3 @@
-import { gql } from 'graphql-request';
 import _get from 'lodash/get';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -62,40 +61,5 @@ function PostMediaBlock({ data }) {
     </div>
   );
 }
-
-PostMediaBlock.fragments = gql`
-  fragment PostMediaBlockData on ContentNode {
-    slug
-    uri
-    ... on NodeWithExcerpt {
-      excerpt
-    }
-    ... on NodeWithFeaturedImage {
-      featuredImage {
-        node {
-          altText
-          srcMedium: sourceUrl(size: MEDIUM)
-          slug
-        }
-      }
-    }
-    ... on NodeWithTitle {
-      title
-    }
-    ... on Page {
-      seo {
-        metaDesc
-      }
-    }
-    ... on Post {
-      categories(where: { exclude: 154 }) {
-        nodes {
-          name
-          uri
-        }
-      }
-    }
-  }
-`;
 
 export default PostMediaBlock;

@@ -17,9 +17,9 @@ import GridListTab from '../../components/GridListTab';
 import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
-import PostMediaBlock from '../../components/PostMediaBlock';
 import SidebarDefault from '../../components/SidebarDefault';
 import breakpoints from '../../config/breakpoints';
+import * as fragments from '../../config/fragments';
 import getCategoryLink from '../../lib/getCategoryLink';
 import getGQLClient from '../../lib/getGQLClient';
 
@@ -241,11 +241,11 @@ export const getStaticProps = async ({ params, preview = false }) => {
               slug
               uri
             }
-            ...CollectionComponentData
+            ...CollectionData
           }
         }
         map {
-          ...MapComponentData
+          ...MapData
         }
         parent {
           node {
@@ -259,7 +259,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
           }
         }
         slider {
-          ...CategorySliderComponentData
+          ...CategorySliderData
         }
         ...CategoryData
       }
@@ -302,12 +302,15 @@ export const getStaticProps = async ({ params, preview = false }) => {
         fullHead
       }
     }
-    ${CategorySlider.fragments}
-    ${Collection.fragments}
-    ${Footer.fragments}
-    ${Map.fragments}
-    ${PostMediaBlock.fragments}
-    ${SidebarDefault.fragments}
+    ${fragments.BlockData}
+    ${fragments.CategorySliderData}
+    ${fragments.CollectionData}
+    ${fragments.FooterData}
+    ${fragments.HeroImageData}
+    ${fragments.MapData}
+    ${fragments.PostCardData}
+    ${fragments.PostMediaBlockData}
+    ${fragments.SidebarDefaultData}
   `;
 
   const categorySlug = params.browse?.[0] ?? 'features-guides';

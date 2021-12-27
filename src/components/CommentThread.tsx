@@ -1,6 +1,5 @@
 import format from 'date-fns/format';
 import parseJSON from 'date-fns/parseJSON';
-import { gql } from 'graphql-request';
 
 export default function CommentThread({ comments }) {
   return (
@@ -81,24 +80,3 @@ const CommentReplies = ({ all, comment }) => {
     </ol>
   );
 };
-
-CommentThread.fragments = gql`
-  fragment CommentThreadCommentData on Comment {
-    content
-    commentId
-    dateGmt
-    parentId
-    id
-    author {
-      node {
-        email
-        name
-        ... on User {
-          avatar {
-            url
-          }
-        }
-      }
-    }
-  }
-`;

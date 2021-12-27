@@ -14,6 +14,7 @@ import PostCard from '../components/PostCard';
 import PostMediaBlock from '../components/PostMediaBlock';
 import SidebarDefault from '../components/SidebarDefault';
 import breakpoints from '../config/breakpoints';
+import * as fragments from '../config/fragments';
 import getGQLClient from '../lib/getGQLClient';
 import RestClient from '../lib/RestClient';
 import useWaitCursor from '../lib/useWaitCursor';
@@ -33,8 +34,8 @@ const SEARCH_RESULTS_QUERY = gql`
       }
     }
   }
-  ${PostCard.fragments}
-  ${PostMediaBlock.fragments}
+  ${fragments.PostCardData}
+  ${fragments.PostMediaBlockData}
 `;
 
 const gqlClient = getGQLClient();
@@ -167,8 +168,9 @@ export async function getStaticProps({ preview = false }) {
         ...FooterData
         ...SidebarDefaultData
       }
-      ${Footer.fragments}
-      ${SidebarDefault.fragments}
+      ${fragments.BlockData}
+      ${fragments.FooterData}
+      ${fragments.SidebarDefaultData}
     `,
     {
       preview,

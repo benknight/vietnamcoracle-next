@@ -1,4 +1,3 @@
-import { gql } from 'graphql-request';
 import _shuffle from 'lodash/shuffle';
 import { RefObject } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
@@ -45,17 +44,5 @@ const Collection = ({ data }) => {
     </div>
   );
 };
-
-Collection.fragments = gql`
-  fragment CollectionComponentData on Category_Collections_items {
-    posts {
-      ... on Post {
-        slug
-        ...PostCardData
-      }
-    }
-  }
-  ${PostCard.fragments}
-`;
 
 export default Collection;

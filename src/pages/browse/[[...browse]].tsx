@@ -89,8 +89,8 @@ const Browse = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
                       {showSubcats ? 'Hide' : 'Show'} subcategories…
                       <ChevronDownIcon
                         className={cx(
-                          'w-4 h-4 ml-2 transition-transform duration-100',
-                          showSubcats ? 'transform rotate-180' : 'rotate-0',
+                          'w-4 h-4 ml-2 transition-duration-100',
+                          showSubcats ? 'rotate-180' : 'rotate-0',
                         )}
                       />
                     </button>

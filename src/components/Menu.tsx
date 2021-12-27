@@ -128,7 +128,7 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
           }}
           className="p-2"
           data-key={key}
-          enter={`transition-all ease duration-${speed} transform absolute w-full`}
+          enter={`transition-all ease duration-${speed} absolute w-full`}
           enterFrom={
             direction === 'backwards'
               ? '-translate-x-full'
@@ -138,7 +138,7 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
           }
           enterTo="translate-x-0"
           key={key}
-          leave={`transition-all ease duration-${speed} transform absolute w-full`}
+          leave={`transition-all ease duration-${speed} absolute w-full`}
           leaveFrom="translate-x-0"
           leaveTo={
             open

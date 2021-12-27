@@ -63,7 +63,7 @@ export default function Header({ preview = false }: Props) {
             },
           )}>
           <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
-            <Menu className="transform scale-90 lg:scale-100 origin-left">
+            <Menu className="scale-90 lg:scale-100 origin-left">
               <MenuIcon className="w-5 h-5 mx-3" />
               <div
                 className={
@@ -86,7 +86,7 @@ export default function Header({ preview = false }: Props) {
             <Link href="/">
               <a className="flex items-center hover:text-black dark:hover:text-white">
                 <Transition
-                  enter="transform transition duration-300"
+                  enter="transition duration-300"
                   enterFrom="opacity-0 -translate-x-4"
                   enterTo="opacity-100 traslate-x-0"
                   leave="hidden"

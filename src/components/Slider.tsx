@@ -150,20 +150,20 @@ export default function Slider({ className = '', children, ...props }) {
       ref={rootRef}>
       <div className="relative overflow-hidden">
         <div
-          className="relative snap snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full no-scrollbar max-w-screen-2xl mx-auto"
+          className="relative snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full no-scrollbar max-w-screen-2xl mx-auto"
           dir="ltr"
           ref={parentRef}>
           {children}
         </div>
         <nav
           className={cx(
-            'box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transform transition-opacity duration-100 ease text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none',
+            'box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transition-opacity duration-100 ease text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none',
             showNav ? 'opacity-100' : 'opacity-0',
           )}
           ref={navRef}>
           {(() => {
             const btnClassName =
-              'flex items-center text-white opacity-60 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto transition ease duration-100 transform hover:scale-110';
+              'flex items-center text-white opacity-60 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto transition ease duration-100 hover:scale-110';
             return (
               <>
                 <button

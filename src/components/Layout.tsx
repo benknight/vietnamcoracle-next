@@ -19,7 +19,7 @@ export const LayoutSidebar = ({
     <div
       className={cx(
         className,
-        'xl:w-[30%] 2xl:w-[32rem] xl:flex xl:flex-col flex-shrink-0',
+        'xl:w-[30%] 2xl:w-[32rem] xl:flex xl:flex-col shrink-0',
         showBorder &&
           'relative xl:border-l border-gray-200 dark:border-gray-800',
       )}>

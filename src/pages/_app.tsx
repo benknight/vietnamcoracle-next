@@ -65,7 +65,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       <div
         className={cx(
           'flex items-center p-3 fixed z-40 top-1/2 left-1/2',
-          'transform -translate-x-1/2 -translate-y-1/2',
+          '-translate-x-1/2 -translate-y-1/2',
           {
             'block pointer:hidden': true,
             hidden: !loading,

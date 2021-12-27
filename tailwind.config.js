@@ -3,14 +3,11 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const breakpoints = require('./src/config/breakpoints');
 
 module.exports = {
-  darkMode: 'media',
   plugins: [
     require('@tailwindcss/aspect-ratio'),
     require('@tailwindcss/line-clamp'),
-    require('tailwindcss-scroll-snap'),
   ],
-  purge: ['./src/**/*.{js,jsx,ts,tsx}'],
-  mode: 'jit',
+  content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {
       boxShadow: {
@@ -18,11 +15,12 @@ module.exports = {
       },
       colors: {
         amber: colors.amber,
+        current: 'currentColor',
         'black-25': 'rgba(0, 0, 0, 0.25)',
         'black-50': 'rgba(0, 0, 0, 0.5)',
         'black-75': 'rgba(0, 0, 0, 0.75)',
         gray: {
-          ...colors.warmGray,
+          ...colors.stone,
           950: 'hsl(0deg 0% 5%)',
         },
         'lp-blue': '#297CBB',
@@ -50,22 +48,6 @@ module.exports = {
     screens: {
       ...breakpoints,
       pointer: { raw: '(pointer: fine)' },
-    },
-  },
-  variants: {
-    extend: {
-      backgroundOpacity: [
-        'responsive',
-        'dark',
-        'group-hover',
-        'focus-within',
-        'hover',
-        'focus',
-      ],
-      fontSmoothing: ['dark'],
-      margin: ['dark', 'responsive'],
-      padding: ['dark', 'responsive'],
-      width: ['focus'],
     },
   },
 };

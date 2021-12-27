@@ -16,7 +16,7 @@ function PostMediaBlock({ data }) {
         <div
           className="
             w-24 h-24 sm:w-auto sm:h-auto ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0
-            float-right flex-shrink-0">
+            float-right shrink-0">
           <PostLink post={data}>
             <Image
               alt={data.featuredImage.node.altText}

@@ -15,7 +15,7 @@ const CategorySlider = ({ data }) => {
           <Link href={post.uri} key={post.uri} passHref>
             <SliderSlide
               as="a"
-              className="block relative w-full h-full flex-shrink-0">
+              className="block relative w-full h-full shrink-0">
               <Hero
                 imgSm={post.thumbnails.thumbnailSlideSquare}
                 imgLg={post.thumbnails.thumbnailSlideWidescreen}

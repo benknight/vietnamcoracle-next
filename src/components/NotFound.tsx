@@ -11,7 +11,7 @@ export default function NotFound() {
         <h1 className="text-3xl mb-2 text-center">Page Not Found</h1>
         Sorry, the resource requested at <em>{router.asPath}</em> was not found.
       </div>
-      <div className={cx(emojiClassName, 'transform scale-x-[-1]')}>👀…</div>
+      <div className={cx(emojiClassName, 'scale-x-[-1]')}>👀…</div>
     </div>
   );
 }

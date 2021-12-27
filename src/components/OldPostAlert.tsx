@@ -13,7 +13,7 @@ export default function OldPostAlert({ className = '', monthsOld = 0 }) {
         'bg-yellow-100 bg-opacity-50 dark:bg-transparent',
         'border border-yellow-300 dark:border-yellow-500 dark:border-opacity-30',
       )}>
-      <Icon className="fill-current self-start flex-shrink-0 w-12 h-12 mr-2 -mb-2 md:ml-1" />
+      <Icon className="fill-current self-start shrink-0 w-12 h-12 mr-2 -mb-2 md:ml-1" />
       <div className="flex-auto">
         <p className="font-display text-[12px] leading-normal sm:text-sm mb-0">
           <b className="font-bold">

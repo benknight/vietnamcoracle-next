@@ -102,7 +102,7 @@ export default function NavBar({ navCategory, preview = false }: Props) {
                   {cloneElement(
                     isCurrent(link.url) ? link.icon : link.iconAlt,
                     {
-                      className: 'w-5 h-5 lg:mr-2 mb-1 lg:mb-0 flex-shrink-0',
+                      className: 'w-5 h-5 lg:mr-2 mb-1 lg:mb-0 shrink-0',
                     },
                   )}
                   <div className="w-full">

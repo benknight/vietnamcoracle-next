@@ -3,18 +3,15 @@ import htmlToReact from 'html-react-parser';
 import _ from 'lodash';
 import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
 import Footer from '../../components/Footer';
 import GridListTab from '../../components/GridListTab';
 import Hero, { HeroContent } from '../../components/Hero';
-import PostCard from '../../components/PostCard';
-import PostMediaBlock from '../../components/PostMediaBlock';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import SidebarDefault from '../../components/SidebarDefault';
+import * as fragments from '../../config/fragments';
 import getGQLClient from '../../lib/getGQLClient';
 
 const Tag = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
-  const router = useRouter();
   const coverImgSm = data.tag.cover?.small || data.defaultImages?.cover.small;
   const coverImgLg = data.tag.cover?.large || data.defaultImages?.cover.large;
   return (
@@ -103,11 +100,12 @@ export const getStaticProps = async ({ params, preview = false }) => {
       ...FooterData
       ...SidebarDefaultData
     }
-    ${Footer.fragments}
-    ${Hero.fragments}
-    ${PostCard.fragments}
-    ${PostMediaBlock.fragments}
-    ${SidebarDefault.fragments}
+    ${fragments.BlockData}
+    ${fragments.FooterData}
+    ${fragments.HeroImageData}
+    ${fragments.PostCardData}
+    ${fragments.PostMediaBlockData}
+    ${fragments.SidebarDefaultData}
   `;
 
   const api = getGQLClient('admin');

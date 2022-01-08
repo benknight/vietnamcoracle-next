@@ -37,7 +37,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
   const api = getGQLClient('admin');
   const data = await api.request(POST_QUERY, {
     preview,
-    id: slug,
+    id: decodeURIComponent(slug),
   });
   if (
     data.contentNode?.status === 'private' ||

@@ -57,7 +57,7 @@ export const CommentThreadCommentData = gql`
     id
     author {
       node {
-        email
+        id
         name
         ... on User {
           avatar {

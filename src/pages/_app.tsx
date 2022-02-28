@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
+import { XCircleIcon } from '@heroicons/react/outline';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { StylesProvider } from '@material-ui/core/styles';
 import Header from '../components/Header';
@@ -22,8 +23,9 @@ if (typeof window !== 'undefined') {
 const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { preview } = pageProps;
+  const { ads, preview } = pageProps;
   const [loading, setLoading] = useState(false);
+  const [showAd, setShowAd] = useState(ads?.header?.enabled);
   const router = useRouter();
 
   useEffect(() => {
@@ -79,9 +81,33 @@ function MyApp({ Component, pageProps }: AppProps) {
           thickness={5}
         />
       </div>
+      {showAd && (
+        <div
+          className={cx(
+            'fixed left-0 right-0 bg-white dark:bg-gray-800 h-40 z-40 p-3 flex items-center justify-center',
+            preview ? 'top-8' : 'top-0',
+          )}>
+          <div
+            dangerouslySetInnerHTML={{
+              __html: ads.header.html,
+            }}
+          />
+          <button
+            aria-label="Close Ad"
+            className="absolute top-2 right-4 flex items-center text-xs opacity-75 hover:opacity-100"
+            onClick={() => setShowAd(false)}>
+            <XCircleIcon className="!w-5 !h-5 mr-1" />
+            Close Ad
+          </button>
+        </div>
+      )}
       {preview && <PreviewAlert />}
-      <Header preview={preview} />
-      <NavBar navCategory={pageProps?.navCategory} preview={preview} />
+      <Header advertisement={showAd} preview={preview} />
+      <NavBar
+        advertisement={showAd}
+        navCategory={pageProps?.navCategory}
+        preview={preview}
+      />
       <Component {...pageProps} />
     </StylesProvider>
   );

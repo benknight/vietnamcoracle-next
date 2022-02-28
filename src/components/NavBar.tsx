@@ -51,11 +51,16 @@ const links = [
 ];
 
 interface Props {
+  advertisement?: boolean;
   navCategory?: string;
   preview?: boolean;
 }
 
-export default function NavBar({ navCategory, preview = false }: Props) {
+export default function NavBar({
+  advertisement = false,
+  navCategory,
+  preview = false,
+}: Props) {
   const router = useRouter();
   const isCurrent = useCallback(
     uri => {
@@ -78,7 +83,12 @@ export default function NavBar({ navCategory, preview = false }: Props) {
       <nav
         className={cx(
           'nav-bar fixed lg:sticky lg:top-0 bottom-0 lg:bottom-auto z-20 w-full h-16 bg-gray-100 md:bg-white dark:bg-gray-900 md:dark:bg-gray-900 border-b border-white dark:border-black shadow-inner lg:shadow',
-          { 'lg:top-6': preview },
+          {
+            'lg:top-0': !advertisement && !preview,
+            'lg:top-8': preview && !advertisement,
+            'lg:top-40': advertisement && !preview,
+            'lg:top-48': advertisement && preview,
+          },
         )}>
         <div className="flex justify-center items-center flex-auto sm:max-w-2xlpx-1 xl:px-16 font-sans font-medium tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
           {links.map(link => {

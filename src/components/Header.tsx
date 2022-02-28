@@ -13,10 +13,14 @@ import Menu from './Menu';
 import SearchForm from './SearchForm';
 
 interface Props {
+  advertisement?: boolean;
   preview?: boolean;
 }
 
-export default function Header({ preview = false }: Props) {
+export default function Header({
+  advertisement = false,
+  preview = false,
+}: Props) {
   const ref = useRef<HTMLElement>();
   const [scrolled, setScolled] = useState(false);
   const [pastThreshold, setPastThreshold] = useState(false);
@@ -56,10 +60,13 @@ export default function Header({ preview = false }: Props) {
       <Headroom className="relative lg:fixed top-0 z-30 w-full" disable={isLG}>
         <div
           className={cx(
-            'relative top-0 h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900',
+            'relative h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900',
             {
               shadow: scrolled,
-              'top-6': preview,
+              'top-0': !advertisement && !preview,
+              'top-8': !advertisement && preview,
+              'top-40': advertisement && !preview,
+              'top-48': advertisement && preview,
             },
           )}>
           <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
@@ -119,36 +126,42 @@ export default function Header({ preview = false }: Props) {
           </div>
         </div>
       </Headroom>
-      <header
-        className={cx(
-          'relative py-12 sm:py-16 px-3 xl:py-16 text-center border-b border-gray-300 dark:border-gray-700',
-          'bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
-          { 'mt-6': preview },
-          { hidden: !isHome },
-        )}
-        ref={ref}>
-        <div className="inline-flex flex-col items-center">
-          <Link href="/">
-            <a className="flex">
-              <Image
-                className="rounded-full"
-                height={120}
-                loading="eager"
-                src="/logo.jpg"
-                width={120}
-              />
-            </a>
-          </Link>
-          <h1 className="my-2 text-2xl xs:text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased tracking-[-0.01em]">
-            Vietnam Coracle
-          </h1>
-          <h2
-            className="text-xxxxs xl:text-xxxs text-gray-600 dark:text-gray-400 uppercase tracking-widest font-display"
-            style={{ wordSpacing: '0.1em' }}>
-            Independent travel guides to Vietnam
-          </h2>
-        </div>
-      </header>
+      <div
+        className={cx({
+          'mt-8': preview,
+          'mt-40': advertisement && !preview,
+          'mt-48': advertisement && preview,
+        })}>
+        <header
+          className={cx(
+            'relative py-12 sm:py-16 px-3 xl:py-16 text-center border-b border-gray-300 dark:border-gray-700',
+            'bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
+            { hidden: !isHome },
+          )}
+          ref={ref}>
+          <div className="inline-flex flex-col items-center">
+            <Link href="/">
+              <a className="flex">
+                <Image
+                  className="rounded-full"
+                  height={120}
+                  loading="eager"
+                  src="/logo.jpg"
+                  width={120}
+                />
+              </a>
+            </Link>
+            <h1 className="my-2 text-2xl xs:text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased tracking-[-0.01em]">
+              Vietnam Coracle
+            </h1>
+            <h2
+              className="text-xxxxs xl:text-xxxs text-gray-600 dark:text-gray-400 uppercase tracking-widest font-display"
+              style={{ wordSpacing: '0.1em' }}>
+              Independent travel guides to Vietnam
+            </h2>
+          </div>
+        </header>
+      </div>
     </>
   );
 }

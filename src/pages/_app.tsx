@@ -25,7 +25,7 @@ const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
 function MyApp({ Component, pageProps }: AppProps) {
   const { ads, preview } = pageProps;
   const [loading, setLoading] = useState(false);
-  const [showAd, setShowAd] = useState(ads?.header?.enabled);
+  const [hideAd, setHideAd] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -58,6 +58,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   }, [router.events]);
 
   useWaitCursor(loading);
+
+  const showAd = ads?.header?.enabled && !hideAd;
 
   return (
     <StylesProvider>
@@ -95,7 +97,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           <button
             aria-label="Close Ad"
             className="absolute top-2 right-4 flex items-center text-xs opacity-75 hover:opacity-100"
-            onClick={() => setShowAd(false)}>
+            onClick={() => setHideAd(true)}>
             <XCircleIcon className="!w-5 !h-5 mr-1" />
             Close Ad
           </button>

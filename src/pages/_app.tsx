@@ -86,7 +86,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       {showAd && (
         <div
           className={cx(
-            'fixed left-0 right-0 bg-white dark:bg-gray-800 h-40 z-40 p-3 flex items-center justify-center',
+            'fixed left-0 right-0 bg-gray-300 dark:bg-gray-800 h-40 z-40 p-3 flex items-center justify-center',
             preview ? 'top-8' : 'top-0',
           )}>
           <div

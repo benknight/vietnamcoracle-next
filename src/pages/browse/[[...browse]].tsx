@@ -232,6 +232,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
             body
             enabled
             heading
+            position
             cta {
               url
               title

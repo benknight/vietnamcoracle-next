@@ -47,7 +47,11 @@ const Collection = ({ ad, data }) => {
             <li
               className="flex shrink-0 w-4/5 sm:w-3/7 lg:w-3/8 xl:w-3/7 xl:min-w-[23rem] xl:max-w-[25rem] pr-3 lg:pr-4 xl:pr-3 2xl:pr-6"
               key={post.slug}>
-              <PostCard {...(index === 3 && ad.enabled ? { ad } : { post })} />
+              <PostCard
+                {...(ad.enabled && index === ad.position - 1
+                  ? { ad }
+                  : { post })}
+              />
             </li>
           ))}
         </ol>

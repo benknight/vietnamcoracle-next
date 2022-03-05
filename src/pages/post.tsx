@@ -11,9 +11,7 @@ import getGQLClient from '../lib/getGQLClient';
 export default function SSRPost({ patron, post, renderPatreonButton = false }) {
   useEffect(() => {
     if (post) {
-      window.history.replaceState(
-        null,
-        null,
+      window.location.replace(
         `${window.location.origin}${post.data.contentNode.uri}`,
       );
     }

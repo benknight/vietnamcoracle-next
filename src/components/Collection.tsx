@@ -5,7 +5,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
 import useCarousel from '../lib/useCarousel';
 import PostCard from './PostCard';
 
-const Collection = ({ data }) => {
+const Collection = ({ ad, data }) => {
   const {
     getLeftNavProps,
     getRightNavProps,
@@ -43,11 +43,11 @@ const Collection = ({ data }) => {
         <ol
           className="flex pb-8 -mb-8 pl-4 md:pl-8 overflow-y-auto"
           ref={scrollAreaRef as RefObject<HTMLOListElement>}>
-          {data.posts?.map(post => (
+          {data.posts?.map((post, index) => (
             <li
               className="flex shrink-0 w-4/5 sm:w-3/7 lg:w-3/8 xl:w-3/7 xl:min-w-[23rem] xl:max-w-[25rem] pr-3 lg:pr-4 xl:pr-3 2xl:pr-6"
               key={post.slug}>
-              <PostCard data={post} />
+              <PostCard {...(index === 3 && ad.enabled ? { ad } : { post })} />
             </li>
           ))}
         </ol>

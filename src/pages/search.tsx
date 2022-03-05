@@ -116,14 +116,14 @@ export default function SearchPage(props) {
               <Tab.Panel>
                 <div className="px-2 lg:px-8 lg:pt-4 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
                   {posts.map(post => (
-                    <PostCard data={post} inGrid key={post.uri} />
+                    <PostCard inGrid key={post.uri} post={post} />
                   ))}
                 </div>
               </Tab.Panel>
               <Tab.Panel>
                 <div className="px-2 py-px lg:px-8">
                   {posts.map(post => (
-                    <PostMediaBlock data={post} key={post.uri} />
+                    <PostMediaBlock key={post.uri} post={post} />
                   ))}
                 </div>
               </Tab.Panel>

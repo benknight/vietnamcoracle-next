@@ -180,7 +180,7 @@ export default function Post({ data, html, postNav }) {
                 id="related-posts"
                 ref={relatedPostsRef}>
                 {content.customRelatedPosts.nodes.map(post => (
-                  <PostCard key={post.slug} data={post} inGrid />
+                  <PostCard key={post.slug} inGrid post={post} />
                 ))}
               </div>
             )}

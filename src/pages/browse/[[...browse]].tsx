@@ -143,7 +143,11 @@ const Browse = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
                     </Link>
                   )}
                 </div>
-                <Collection key={item.title} data={item} />
+                <Collection
+                  ad={category.ads?.collection}
+                  key={item.title}
+                  data={item}
+                />
               </section>
             ))
           ) : (
@@ -223,6 +227,21 @@ export const getStaticProps = async ({ params, preview = false }) => {
     ) {
       category(id: $categorySlug, idType: SLUG) {
         slug
+        ads {
+          collection {
+            body
+            enabled
+            heading
+            cta {
+              url
+              title
+            }
+            image {
+              altText
+              srcLarge: sourceUrl(size: LARGE)
+            }
+          }
+        }
         children(first: 1000) {
           nodes {
             name

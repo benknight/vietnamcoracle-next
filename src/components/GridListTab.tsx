@@ -59,14 +59,14 @@ function Group({ hideList = false, posts }) {
         <Tab.Panel>
           <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
             {posts.map(post => (
-              <PostCard key={post.slug} data={post} inGrid />
+              <PostCard key={post.slug} post={post} inGrid />
             ))}
           </div>
         </Tab.Panel>
         <Tab.Panel>
           <div className="px-2 py-4 lg:px-8">
             {posts.map(post => (
-              <PostMediaBlock key={post.slug} data={post} />
+              <PostMediaBlock key={post.slug} post={post} />
             ))}
           </div>
         </Tab.Panel>

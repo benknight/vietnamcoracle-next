@@ -51,7 +51,7 @@ export const CollectionData = gql`
 export const CommentThreadCommentData = gql`
   fragment CommentThreadCommentData on Comment {
     content
-    commentId
+    databaseId
     dateGmt
     parentId
     id

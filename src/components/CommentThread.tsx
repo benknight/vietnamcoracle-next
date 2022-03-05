@@ -59,7 +59,7 @@ const CommentHeader = ({ comment, isReply = false }) => (
 const CommentReplies = ({ all, comment }) => {
   const replies = all
     .filter(reply => reply.parentId === comment.id)
-    .sort((a, b) => a.commentId - b.commentId);
+    .sort((a, b) => a.databaseId - b.databaseId);
   if (replies.length === 0) {
     return null;
   }

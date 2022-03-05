@@ -112,7 +112,6 @@ export const PostCardData = gql`
     ... on NodeWithFeaturedImage {
       featuredImage {
         node {
-          __typename
           altText
           id
           srcLarge: sourceUrl(size: LARGE)

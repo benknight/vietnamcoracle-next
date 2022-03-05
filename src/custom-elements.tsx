@@ -1,6 +1,6 @@
 import { render } from 'react-dom';
-import ShareButtons from '../components/ShareButtons';
-import SubscribeForm from '../components/SubscribeForm';
+import ShareButtons from './components/ShareButtons';
+import SubscribeForm from './components/SubscribeForm';
 
 declare global {
   namespace JSX {

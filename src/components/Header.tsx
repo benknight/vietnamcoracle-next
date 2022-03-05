@@ -65,8 +65,8 @@ export default function Header({
               shadow: scrolled,
               'top-0': !advertisement && !preview,
               'top-8': !advertisement && preview,
-              'top-40': advertisement && !preview,
-              'top-48': advertisement && preview,
+              'top-28 md:top-40': advertisement && !preview,
+              'top-36 md:top-48': advertisement && preview,
             },
           )}>
           <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
@@ -129,8 +129,8 @@ export default function Header({
       <div
         className={cx({
           'mt-8': preview,
-          'mt-40': advertisement && !preview,
-          'mt-48': advertisement && preview,
+          'mt-28 md:mt-40': advertisement && !preview,
+          'mt-36 md:mt-48': advertisement && preview,
         })}>
         <header
           className={cx(

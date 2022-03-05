@@ -223,12 +223,6 @@ export const getStaticProps = async ({ params, preview = false }) => {
     ) {
       category(id: $categorySlug, idType: SLUG) {
         slug
-        ads {
-          header {
-            enabled
-            html
-          }
-        }
         children(first: 1000) {
           nodes {
             name
@@ -344,7 +338,6 @@ export const getStaticProps = async ({ params, preview = false }) => {
   return {
     notFound: !data.category,
     props: {
-      ads: data.category?.ads,
       data,
       preview,
     },

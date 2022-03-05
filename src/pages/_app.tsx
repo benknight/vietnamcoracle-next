@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
-import { XCircleIcon } from '@heroicons/react/outline';
+import { XIcon } from '@heroicons/react/outline';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { StylesProvider } from '@material-ui/core/styles';
 import Header from '../components/Header';
@@ -86,7 +86,7 @@ function MyApp({ Component, pageProps }: AppProps) {
       {showAd && (
         <div
           className={cx(
-            'fixed left-0 right-0 bg-gray-300 dark:bg-gray-800 h-40 z-40 p-3 flex items-center justify-center',
+            'fixed left-0 right-0 bg-gray-300 dark:bg-gray-800 h-28 md:h-40 z-40 p-3 flex items-center justify-center',
             preview ? 'top-8' : 'top-0',
           )}>
           <div
@@ -94,13 +94,14 @@ function MyApp({ Component, pageProps }: AppProps) {
               __html: ads.header.html,
             }}
           />
-          <button
-            aria-label="Close Ad"
-            className="absolute top-2 right-4 flex items-center text-xs opacity-75 hover:opacity-100"
-            onClick={() => setHideAd(true)}>
-            <XCircleIcon className="!w-5 !h-5 mr-1" />
-            Close Ad
-          </button>
+          <div className="absolute top-px right-px xl:right-3">
+            <button
+              aria-label="Close Ad"
+              className="bg-blue-500 p-px text-white"
+              onClick={() => setHideAd(true)}>
+              <XIcon className="!w-5 !h-5" />
+            </button>
+          </div>
         </div>
       )}
       {preview && <PreviewAlert />}

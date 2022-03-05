@@ -263,6 +263,7 @@ export async function getPostPageProps(
   data: any,
   preview: boolean,
 ): Promise<{
+  ads: any;
   data: any;
   html: string;
   monthsOld: number;
@@ -376,6 +377,12 @@ export async function getPostPageProps(
   }
 
   return {
+    ads: {
+      header:
+        data.contentNode.categories?.nodes.find(
+          node => node.ads?.header?.enabled,
+        )?.ads.header ?? null,
+    },
     data,
     html,
     monthsOld,
@@ -449,6 +456,12 @@ export const POST_QUERY = gql`
           nodes {
             name
             uri
+            ads {
+              header {
+                enabled
+                html
+              }
+            }
           }
         }
         navCategory: categories(

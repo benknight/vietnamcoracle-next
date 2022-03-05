@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import _shuffle from 'lodash/shuffle';
 import { RefObject } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
@@ -12,18 +13,28 @@ const Collection = ({ data }) => {
     scrollAreaRef,
     scrollPosition,
   } = useCarousel();
+  const navButtonClassName =
+    'flex items-center justify-center absolute z-10 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-black hover:bg-blue-400 transition-colors duration-50 ease-out bg-opacity-75 text-white top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-black hover:bg-blue-400 transition-colors duration-50 ease-out bg-opacity-75 text-white';
   return (
     <div className="relative my-3 lg:my-4 rounded-r-lg overflow-hidden">
-      {!isTouchDevice && scrollPosition && scrollPosition !== 'start' && (
+      {!isTouchDevice && scrollPosition && (
         <button
-          className="flex items-center justify-center absolute z-10 left-2 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-black bg-opacity-75 text-white"
+          className={cx(
+            navButtonClassName,
+            'left-2',
+            scrollPosition === 'start' && 'opacity-0',
+          )}
           {...getLeftNavProps()}>
           <ArrowLeftIcon className="w-7 h-7" />
         </button>
       )}
-      {!isTouchDevice && scrollPosition && scrollPosition !== 'end' && (
+      {!isTouchDevice && scrollPosition && (
         <button
-          className="flex items-center justify-center absolute z-10 top-1/2 right-2 -translate-y-1/2 w-16 h-16 rounded-full bg-black bg-opacity-75 text-white"
+          className={cx(
+            navButtonClassName,
+            'right-2',
+            scrollPosition === 'end' && 'opacity-0',
+          )}
           {...getRightNavProps()}>
           <ArrowRightIcon className="w-7 h-7" />
         </button>

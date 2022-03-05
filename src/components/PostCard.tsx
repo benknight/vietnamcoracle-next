@@ -47,8 +47,8 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
       </div>
       <div
         className={cx(
-          'relative flex-auto flex items-end -mt-32 p-1 px-4 md:px-5 md:py-6 pt-4 pb-6 font-medium rounded-b',
-          ad ? '-mt-40' : '-mt-24',
+          'relative flex-auto flex items-end -mt-32 p-1 px-4 md:px-5 py-4 xl:pb-5 font-medium rounded-b',
+          ad ? 'xl:-mt-40' : '-mt-24',
         )}>
         <div className="relative">
           {ad && (

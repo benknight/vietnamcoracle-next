@@ -22,7 +22,6 @@ if (typeof window !== 'undefined') {
 function MyApp({ Component, pageProps }: AppProps) {
   const { ads, preview } = pageProps;
   const [loading, setLoading] = useState(false);
-  const [hideAd, setHideAd] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -56,8 +55,6 @@ function MyApp({ Component, pageProps }: AppProps) {
 
   useWaitCursor(loading);
 
-  const showAd = ads?.header?.enabled && !hideAd;
-
   return (
     <StylesProvider>
       <Head>
@@ -80,25 +77,16 @@ function MyApp({ Component, pageProps }: AppProps) {
           thickness={5}
         />
       </div>
-      {showAd && (
+      {ads?.header?.enabled && (
         <div className="fixed top-0 left-0 right-0 bg-gray-300 dark:bg-gray-800 h-28 md:h-40 p-3 flex items-center justify-center">
           <div
             dangerouslySetInnerHTML={{
               __html: ads.header.html,
             }}
           />
-          <div className="absolute top-px right-px xl:right-3">
-            <button
-              aria-label="Close Ad"
-              className="flex items-center bg-blue-500 px-1 h-5 text-white hover:underline text-xs leading-snug rounded-sm"
-              onClick={() => setHideAd(true)}>
-              Close Ad
-              <XIcon className="ml-1 !w-4 !h-4" />
-            </button>
-          </div>
         </div>
       )}
-      <Header advertisement={showAd} />
+      <Header advertisement={ads?.header?.enabled} />
       <NavBar navCategory={pageProps?.navCategory} preview={preview} />
       <Component {...pageProps} />
     </StylesProvider>

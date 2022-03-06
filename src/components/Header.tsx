@@ -14,21 +14,19 @@ import SearchForm from './SearchForm';
 
 interface Props {
   advertisement?: boolean;
-  preview?: boolean;
 }
 
-export default function Header({
-  advertisement = false,
-  preview = false,
-}: Props) {
+export default function Header({ advertisement = false }: Props) {
   const ref = useRef<HTMLElement>();
   const [scrolled, setScolled] = useState(false);
   const [pastThreshold, setPastThreshold] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
-  const isLG = useMediaQuery(`(min-width: ${breakpoints.lg})`);
+  const isMd = useMediaQuery(`(min-width: ${breakpoints.md})`);
+  const isLg = useMediaQuery(`(min-width: ${breakpoints.lg})`);
   const isHome = ['/', '/browse', '/browse/'].includes(router.asPath);
   const showMini = !isHome || pastThreshold;
+  const pinStart = !advertisement ? 0 : isMd ? 160 : 112;
 
   useEffect(() => {
     const update = _debounce(() => {
@@ -38,7 +36,7 @@ export default function Header({
       );
       const thresholdHeight =
         (isLarge ? 1 : 0.75) * ref.current.getBoundingClientRect().height;
-      setScolled(window.scrollY > 0);
+      setScolled(window.scrollY > pinStart);
       setPastThreshold(window.scrollY >= thresholdHeight);
     }, 10);
 
@@ -53,22 +51,17 @@ export default function Header({
       router.events.off('routeChangeComplete', update);
       window.removeEventListener('scroll', update);
     };
-  }, []);
+  }, [pinStart]);
 
   return (
     <>
-      <Headroom className="relative lg:fixed top-0 z-30 w-full" disable={isLG}>
-        <div
-          className={cx(
-            'relative h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900',
-            {
-              shadow: scrolled,
-              'top-0': !advertisement && !preview,
-              'top-8': !advertisement && preview,
-              'top-28 md:top-40': advertisement && !preview,
-              'top-36 md:top-48': advertisement && preview,
-            },
-          )}>
+      <Headroom
+        className={cx('relative lg:sticky lg:top-0 z-30 w-full', {
+          'top-28 md:top-40': advertisement,
+        })}
+        disable={isLg}
+        pinStart={pinStart}>
+        <div className="relative h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900">
           <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
             <Menu className="scale-90 lg:scale-100 origin-left">
               <MenuIcon className="w-5 h-5 mx-3" />
@@ -128,9 +121,7 @@ export default function Header({
       </Headroom>
       <div
         className={cx({
-          'mt-8': preview,
-          'mt-28 md:mt-40': advertisement && !preview,
-          'mt-36 md:mt-48': advertisement && preview,
+          'mt-28 md:mt-40': advertisement,
         })}>
         <header
           className={cx(

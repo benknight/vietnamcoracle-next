@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.headroom--pinned {
+  @apply shadow;
+}
+
 @layer base {
   html {
     @apply bg-gray-100 dark:bg-black;

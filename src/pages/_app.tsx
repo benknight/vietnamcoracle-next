@@ -1,6 +1,5 @@
 import cx from 'classnames';
 import type { AppProps } from 'next/app';
-import dynamic from 'next/dynamic';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -19,8 +18,6 @@ import '../custom-elements';
 if (typeof window !== 'undefined') {
   smoothscroll.polyfill();
 }
-
-const PreviewAlert = dynamic(() => import('../components/PreviewAlert'));
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { ads, preview } = pageProps;
@@ -84,11 +81,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </div>
       {showAd && (
-        <div
-          className={cx(
-            'fixed left-0 right-0 bg-gray-300 dark:bg-gray-800 h-28 md:h-40 z-40 p-3 flex items-center justify-center',
-            preview ? 'top-8' : 'top-0',
-          )}>
+        <div className="fixed top-0 left-0 right-0 bg-gray-300 dark:bg-gray-800 h-28 md:h-40 p-3 flex items-center justify-center">
           <div
             dangerouslySetInnerHTML={{
               __html: ads.header.html,
@@ -97,20 +90,16 @@ function MyApp({ Component, pageProps }: AppProps) {
           <div className="absolute top-px right-px xl:right-3">
             <button
               aria-label="Close Ad"
-              className="bg-blue-500 p-px text-white"
+              className="flex items-center bg-blue-500 px-1 h-5 text-white hover:underline text-xs leading-snug rounded-sm"
               onClick={() => setHideAd(true)}>
-              <XIcon className="!w-5 !h-5" />
+              Close Ad
+              <XIcon className="ml-1 !w-4 !h-4" />
             </button>
           </div>
         </div>
       )}
-      {preview && <PreviewAlert />}
-      <Header advertisement={showAd} preview={preview} />
-      <NavBar
-        advertisement={showAd}
-        navCategory={pageProps?.navCategory}
-        preview={preview}
-      />
+      <Header advertisement={showAd} />
+      <NavBar navCategory={pageProps?.navCategory} preview={preview} />
       <Component {...pageProps} />
     </StylesProvider>
   );

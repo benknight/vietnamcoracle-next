@@ -80,7 +80,7 @@ export default function Post({ data, html, postNav }) {
           rel="stylesheet"
         />
         <link
-          href="https://cms.vietnamcoracle.com/wp-includes/css/dist/block-library/style.min.css?v=1"
+          href="https://cms.vietnamcoracle.com/wp-includes/css/dist/block-library/style.css?v=1"
           rel="stylesheet"
         />
         <script

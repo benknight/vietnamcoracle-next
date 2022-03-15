@@ -87,6 +87,7 @@ export default function Post({ data, html, postNav }) {
           async
           src="https://cms.vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
         />
+        <style dangerouslySetInnerHTML={{ __html: data.globalStylesheet }} />
       </Head>
       <Hero
         className="relative max-w-screen-2xl mx-auto"
@@ -386,6 +387,7 @@ export async function getPostPageProps(
 
 export const POST_QUERY = gql`
   query Post($preview: Boolean!, $id: ID!) {
+    globalStylesheet
     contentNode(id: $id, idType: URI) {
       ... on ContentNode {
         databaseId

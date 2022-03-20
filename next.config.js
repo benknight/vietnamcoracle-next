@@ -8,7 +8,7 @@ const { withSentryConfig } = require('@sentry/nextjs');
 
 const moduleExports = {
   images: {
-    domains: ['cms.vietnamcoracle.com', 'res.cloudinary.com'],
+    domains: ['cms.vietnamcoracle.com', 'res.cloudinary.com', 'fakeimg.pl'],
   },
   trailingSlash: true,
   async redirects() {

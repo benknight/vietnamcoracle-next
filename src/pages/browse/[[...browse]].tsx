@@ -23,7 +23,10 @@ import * as fragments from '../../config/fragments';
 import getCategoryLink from '../../lib/getCategoryLink';
 import getGQLClient from '../../lib/getGQLClient';
 
-const Browse = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
+const Browse = ({
+  data,
+  previewData,
+}: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const [showSubcats, setShowSubcats] = useState(false);
@@ -35,6 +38,7 @@ const Browse = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const coverImgLg =
     (subcategory ? subcategory.cover.large : category.cover.large) ||
     data.defaultImages?.cover.large;
+  const ads = previewData?.ads || category.ads;
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
@@ -124,10 +128,10 @@ const Browse = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
           </HeroContent>
         </Hero>
       )}
-      <Layout className="bg-white dark:bg-gray-950 py-px pb-14 xl:pb-0">
+      <Layout className="relative bg-white dark:bg-gray-950 py-px pb-14 xl:pb-0">
         <LayoutMain className="overflow-hidden">
           {category && !subcategory && category.collections?.items ? (
-            category.collections.items.map(item => (
+            category.collections.items.map((item, index) => (
               <section
                 className="my-6 md:my-12 md:dark:mt-4 xl:pr-8"
                 key={item.title}>
@@ -144,7 +148,7 @@ const Browse = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
                   )}
                 </div>
                 <Collection
-                  ad={category.ads?.collection}
+                  ad={ads?.collection?.[index % ads.collection.length]}
                   key={item.title}
                   data={item}
                 />
@@ -216,7 +220,11 @@ export const getStaticPaths = async () => {
   return result;
 };
 
-export const getStaticProps = async ({ params, preview = false }) => {
+export const getStaticProps = async ({
+  params,
+  preview = false,
+  previewData = null,
+}) => {
   const query = gql`
     query Browse(
       $categorySlug: ID!
@@ -230,6 +238,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
         ads {
           collection {
             body
+            code
             enabled
             heading
             position
@@ -355,11 +364,14 @@ export const getStaticProps = async ({ params, preview = false }) => {
       ].includes(categorySlug),
   });
 
+  // console.log(JSON.stringify(data.category?.ads.collection, null, 2));
+
   return {
     notFound: !data.category,
     props: {
       data,
       preview,
+      previewData,
     },
     revalidate: 60,
   };

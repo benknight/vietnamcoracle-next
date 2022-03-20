@@ -146,7 +146,7 @@ export default function Slider({ className = '', children, ...props }) {
   return (
     <div
       {...props}
-      className={cx(className, 'text-gray-900 bg-black')}
+      className={cx(className, 'relative text-gray-900 bg-black')}
       ref={rootRef}>
       <div className="relative overflow-hidden">
         <div

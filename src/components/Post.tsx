@@ -46,21 +46,6 @@ export default function Post({ data, html, postNav }) {
 
   useWaitCursor(router.isFallback);
 
-  // Track clicks on ads
-  const clickHandler = event => {
-    const anchorElement = event.target.closest('a');
-    if (!anchorElement) return;
-    if (!anchorElement.classList.contains('gofollow')) return;
-    if (!anchorElement.hasAttribute('data-track')) return;
-    fetch('https://cms.vietnamcoracle.com/wp-admin/admin-ajax.php', {
-      method: 'post',
-      body: new URLSearchParams({
-        action: 'adrotate_click',
-        track: anchorElement.getAttribute('data-track'),
-      }),
-    });
-  };
-
   if (router.isFallback) {
     return null;
   }
@@ -171,7 +156,6 @@ export default function Post({ data, html, postNav }) {
               dangerouslySetInnerHTML={{
                 __html: html,
               }}
-              onClick={clickHandler}
               ref={articleRef}
             />
             {data?.contentNode.customRelatedPosts && (

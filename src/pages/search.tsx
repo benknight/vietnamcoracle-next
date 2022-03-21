@@ -89,7 +89,7 @@ export default function SearchPage(props) {
           {router.query.query ? ` for ${router.query.query}` : ''}
         </title>
       </Head>
-      <Layout className="relative max-w-screen-2xl bg-white dark:bg-gray-950 pb-14 xl:pb-0">
+      <Layout className="max-w-screen-2xl pb-14 xl:pb-0">
         <LayoutMain className="min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent">
           <Tab.Group defaultIndex={1} manual>
             <div className="px-2 lg:px-8">

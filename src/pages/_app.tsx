@@ -106,9 +106,11 @@ function MyApp({ Component, pageProps }: AppProps) {
           />
         </div>
       )}
-      <Header advertisement={ads?.header?.enabled} />
-      <NavBar navCategory={pageProps?.navCategory} preview={preview} />
-      <Component {...pageProps} />
+      <div className="relative bg-white dark:bg-gray-950">
+        <Header advertisement={ads?.header?.enabled} />
+        <NavBar navCategory={pageProps?.navCategory} preview={preview} />
+        <Component {...pageProps} />
+      </div>
     </StylesProvider>
   );
 }

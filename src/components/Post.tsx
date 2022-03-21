@@ -75,7 +75,7 @@ export default function Post({ data, html, postNav }) {
         <style dangerouslySetInnerHTML={{ __html: data.globalStylesheet }} />
       </Head>
       <Hero
-        className="relative max-w-screen-2xl mx-auto"
+        className="max-w-screen-2xl mx-auto"
         imgSm={
           content.thumbnails?.thumbnailHeaderSquare ??
           content.featuredImage?.node ??

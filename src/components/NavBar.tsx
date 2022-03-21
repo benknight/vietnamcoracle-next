@@ -118,7 +118,7 @@ export default function NavBar({ navCategory, preview }: Props) {
               href={`/api/exit-preview/?redirect=${encodeURIComponent(
                 router.asPath,
               )}`}>
-              <a className="flex items-center justify-center h-5 px-2 bg-yellow-500 text-black border-2 border-black border-t-0 text-xs hover:underline rounded-b">
+              <a className="flex items-center justify-center h-5 px-2 bg-yellow-300 hover:bg-yellow-400 text-black border-2 border-black border-t-0 text-xs font-medium rounded">
                 Preview mode enabled. Click here to exit.
               </a>
             </Link>

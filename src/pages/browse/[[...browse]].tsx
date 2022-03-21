@@ -128,7 +128,7 @@ const Browse = ({
           </HeroContent>
         </Hero>
       )}
-      <Layout className="relative bg-white dark:bg-gray-950 py-px pb-14 xl:pb-0">
+      <Layout className="py-px pb-14 xl:pb-0">
         <LayoutMain className="overflow-hidden">
           {category && !subcategory && category.collections?.items ? (
             category.collections.items.map((item, index) => (

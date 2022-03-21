@@ -56,7 +56,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
         )}>
         <div className="relative w-full">
           {ad && (
-            <div className="inline-block text-xs bg-yellow-400 text-yellow-900 p-1 rounded-sm leading-none mb-2 shadow-sm">
+            <div className="inline-block text-xs bg-yellow-300 text-yellow-700 p-1 rounded-sm leading-none mb-2 shadow-sm">
               Advertisement
             </div>
           )}

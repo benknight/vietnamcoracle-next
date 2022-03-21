@@ -436,7 +436,7 @@ export const POST_QUERY = gql`
       }
       ... on Post {
         commentStatus
-        categories(where: { exclude: 154 }) {
+        categories(where: { exclude: 154, orderby: COUNT, order: ASC }) {
           nodes {
             name
             uri
@@ -477,7 +477,7 @@ export const POST_QUERY = gql`
         settings {
           useNextStyles
         }
-        tags {
+        tags(where: { orderby: NAME, order: ASC }) {
           nodes {
             name
             uri

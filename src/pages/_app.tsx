@@ -20,7 +20,6 @@ if (typeof window !== 'undefined') {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { ads, preview } = pageProps;
   const { preview, previewData } = pageProps;
   const [loading, setLoading] = useState(false);
   const router = useRouter();

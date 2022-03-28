@@ -14,7 +14,7 @@ import SearchForm from './SearchForm';
 
 export default function Header() {
   const ref = useRef<HTMLElement>();
-  const [fullHeaderVisible, setFullHeaderVisible] = useState(false);
+  const [fullHeaderVisible, setFullHeaderVisible] = useState(true);
   const [searchFocused, setSearchFocused] = useState(false);
   const [pinStart, setPinStart] = useState(0);
   const router = useRouter();

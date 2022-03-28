@@ -108,7 +108,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
     ${fragments.SidebarDefaultData}
   `;
 
-  const api = getGQLClient('admin');
+  const api = getGQLClient(preview ? 'preview' : 'admin');
 
   const data = await api.request(query, {
     preview,

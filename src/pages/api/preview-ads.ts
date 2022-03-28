@@ -4,14 +4,14 @@ export default async function preview(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { secret, redirect } = req.query;
+  const { redirect } = req.query;
 
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({
     ads: {
       header: {
         enabled: true,
-        html: `<a href="https://www.vietnamcoracle.com/"><img alt="placeholder" src="https://fakeimg.pl/1000x100/?text=SAMPLE&font=noto"></a>`,
+        html: `<a href="https://www.vietnamcoracle.com/"><img alt="placeholder" src="https://via.placeholder.com/1600x400?text=Header%20Banner%20(4:1)"></a>`,
       },
       collection: [
         {
@@ -25,7 +25,8 @@ export default async function preview(
           },
           image: {
             altText: '',
-            srcLarge: 'https://fakeimg.pl/1024x1024/?text=SAMPLE&font=noto',
+            srcLarge:
+              'https://via.placeholder.com/1024x1024?text=Card%20Banner%20(1:1)',
           },
         },
       ],

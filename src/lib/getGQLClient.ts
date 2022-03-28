@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 
-export default function getGQLClient(authType?: 'admin' | 'user') {
+export default function getGQLClient(authType?: 'admin' | 'preview' | 'user') {
   if (typeof authType !== 'undefined' && typeof window !== 'undefined') {
     throw new Error(
       'Can only instantiate client with auth type in server-side environments',
@@ -13,6 +13,14 @@ export default function getGQLClient(authType?: 'admin' | 'user') {
     config.headers = {
       Authorization: `Basic ${Buffer.from(
         `${process.env.WORDPRESS_API_USERNAME_ADMIN}:${process.env.WORDPRESS_API_PASSWORD_ADMIN}`,
+        'utf-8',
+      ).toString('base64')}`,
+    };
+  }
+  if (authType === 'preview') {
+    config.headers = {
+      Authorization: `Basic ${Buffer.from(
+        `${process.env.WORDPRESS_API_USERNAME_PREVIEW}:${process.env.WORDPRESS_API_PASSWORD_PREVIEW}`,
         'utf-8',
       ).toString('base64')}`,
     };

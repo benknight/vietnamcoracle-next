@@ -161,7 +161,7 @@ export default function SearchPage(props) {
 }
 
 export async function getStaticProps({ preview = false }) {
-  const api = getGQLClient('admin');
+  const api = getGQLClient(preview ? 'preview' : 'admin');
   const data = await api.request(
     gql`
       query SearchPage($preview: Boolean!) {

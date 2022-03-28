@@ -246,6 +246,7 @@ export default function Post({ data, html, postNav }) {
 export async function getPostPageProps(
   data: any,
   preview: boolean,
+  previewData: any = null,
 ): Promise<{
   ads: any;
   data: any;
@@ -254,6 +255,7 @@ export async function getPostPageProps(
   navCategory?: string;
   postNav: any;
   preview: boolean;
+  previewData: any;
 }> {
   if (preview) {
     if (data.contentNode) {
@@ -373,6 +375,7 @@ export async function getPostPageProps(
     navCategory: data.contentNode?.navCategory?.nodes?.[0]?.slug ?? null,
     postNav,
     preview,
+    previewData,
   };
 }
 

@@ -12,53 +12,43 @@ import breakpoints from '../config/breakpoints';
 import Menu from './Menu';
 import SearchForm from './SearchForm';
 
-interface Props {
-  advertisement?: boolean;
-}
-
-export default function Header({ advertisement = false }: Props) {
+export default function Header() {
   const ref = useRef<HTMLElement>();
-  const [scrolled, setScolled] = useState(false);
-  const [pastThreshold, setPastThreshold] = useState(false);
+  const [fullHeaderVisible, setFullHeaderVisible] = useState(false);
   const [searchFocused, setSearchFocused] = useState(false);
+  const [pinStart, setPinStart] = useState(0);
   const router = useRouter();
-  const isMd = useMediaQuery(`(min-width: ${breakpoints.md})`);
   const isLg = useMediaQuery(`(min-width: ${breakpoints.lg})`);
   const isHome = ['/', '/browse', '/browse/'].includes(router.asPath);
-  const showMini = !isHome || pastThreshold;
-  const pinStart = !advertisement ? 0 : isMd ? 160 : 112;
+  const showMini = !isHome || !fullHeaderVisible;
 
   useEffect(() => {
-    const update = _debounce(() => {
-      if (!ref.current) return;
-      const { matches: isLarge } = window.matchMedia(
-        `(min-width: ${breakpoints.lg})`,
-      );
-      const thresholdHeight =
-        (isLarge ? 1 : 0.75) * ref.current.getBoundingClientRect().height;
-      setScolled(window.scrollY > pinStart);
-      setPastThreshold(window.scrollY >= thresholdHeight);
-    }, 10);
-
-    // Call update on initialization
-    update();
-
-    // Subscribe to events
-    router.events.on('routeChangeComplete', update);
-    window.addEventListener('scroll', update);
-
-    return () => {
-      router.events.off('routeChangeComplete', update);
-      window.removeEventListener('scroll', update);
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(entry => {
+          setFullHeaderVisible(entry.isIntersecting);
+        });
+      },
+      {
+        threshold: 0.5,
+      },
+    );
+    observer.observe(ref.current);
+    const calculatePinStart = () => {
+      const box = ref.current.getBoundingClientRect();
+      setPinStart(box.top + box.height);
     };
-  }, [pinStart]);
+    calculatePinStart();
+    window.addEventListener('resize', calculatePinStart);
+    return () => {
+      window.removeEventListener('resize', calculatePinStart);
+    };
+  }, []);
 
   return (
     <>
       <Headroom
-        className={cx('relative lg:sticky lg:top-0 z-30 w-full', {
-          'top-28 md:top-40': advertisement,
-        })}
+        className="relative lg:sticky lg:top-0 z-30 w-full"
         disable={isLg}
         pinStart={pinStart}>
         <div className="relative h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900">
@@ -119,40 +109,35 @@ export default function Header({ advertisement = false }: Props) {
           </div>
         </div>
       </Headroom>
-      <div
-        className={cx({
-          'mt-28 md:mt-40': advertisement,
-        })}>
-        <header
-          className={cx(
-            'relative py-12 sm:py-16 px-3 xl:py-16 text-center border-b border-gray-300 dark:border-gray-700',
-            'bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
-            { hidden: !isHome },
-          )}
-          ref={ref}>
-          <div className="inline-flex flex-col items-center">
-            <Link href="/">
-              <a className="flex">
-                <Image
-                  className="rounded-full"
-                  height={120}
-                  loading="eager"
-                  src="/logo.jpg"
-                  width={120}
-                />
-              </a>
-            </Link>
-            <h1 className="my-2 text-2xl xs:text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased tracking-[-0.01em]">
-              Vietnam Coracle
-            </h1>
-            <h2
-              className="text-xxxxs xl:text-xxxs text-gray-600 dark:text-gray-400 uppercase tracking-widest font-display"
-              style={{ wordSpacing: '0.1em' }}>
-              Independent travel guides to Vietnam
-            </h2>
-          </div>
-        </header>
-      </div>
+      <header
+        className={cx(
+          'relative py-12 sm:py-16 px-3 xl:py-16 text-center border-b border-gray-300 dark:border-gray-700',
+          'bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
+          { hidden: !isHome },
+        )}
+        ref={ref}>
+        <div className="inline-flex flex-col items-center">
+          <Link href="/">
+            <a className="flex">
+              <Image
+                className="rounded-full"
+                height={120}
+                loading="eager"
+                src="/logo.jpg"
+                width={120}
+              />
+            </a>
+          </Link>
+          <h1 className="my-2 text-2xl xs:text-3xl xl:text-4xl text-gray-700 dark:text-white font-display antialiased tracking-[-0.01em]">
+            Vietnam Coracle
+          </h1>
+          <h2
+            className="text-xxxxs xl:text-xxxs text-gray-600 dark:text-gray-400 uppercase tracking-widest font-display"
+            style={{ wordSpacing: '0.1em' }}>
+            Independent travel guides to Vietnam
+          </h2>
+        </div>
+      </header>
     </>
   );
 }

@@ -33,8 +33,12 @@ export async function getStaticPaths() {
   return result;
 }
 
-export async function getStaticProps({ params: { slug }, preview = false }) {
-  const api = getGQLClient('admin');
+export async function getStaticProps({
+  params: { slug },
+  preview = false,
+  previewData,
+}) {
+  const api = getGQLClient(preview ? 'preview' : 'admin');
   const data = await api.request(POST_QUERY, {
     preview,
     id: decodeURIComponent(slug),
@@ -59,7 +63,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
     };
   }
   return {
-    props: await getPostPageProps(data, preview),
+    props: await getPostPageProps(data, preview, previewData),
     revalidate: 60,
   };
 }

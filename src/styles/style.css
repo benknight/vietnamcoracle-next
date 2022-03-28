@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.headroom--pinned {
-  @apply shadow;
-}
-
 @layer base {
   html {
     @apply bg-gray-100 dark:bg-black;
@@ -241,6 +237,15 @@ article .has-drop-cap:not(:focus)::first-letter {
 /* Necessary to style /vietnam-coracle-video-library */
 article .wp-block-gallery a {
   @apply text-white !important;
+}
+.ad-wrapper {
+  @apply mb-4;
+}
+.ad-wrapper small {
+  @apply flex justify-between mb-1 px-1;
+}
+.headroom--pinned {
+  @apply shadow;
 }
 .patreon-valid-patron-message {
   @apply hidden;

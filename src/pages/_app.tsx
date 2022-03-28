@@ -97,8 +97,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </div>
       {ads?.header?.enabled && (
-        <div className="fixed top-0 left-0 right-0 bg-gray-300 dark:bg-gray-800 h-28 md:h-40 p-3 flex items-center justify-center">
+        <div className="sticky top-0 bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-w-4 aspect-h-1">
           <div
+            className="flex items-center justify-center"
             dangerouslySetInnerHTML={{
               __html: ads.header.html,
             }}
@@ -106,7 +107,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </div>
       )}
       <div className="relative bg-white dark:bg-gray-950">
-        <Header advertisement={ads?.header?.enabled} />
+        <Header />
         <NavBar navCategory={pageProps?.navCategory} preview={preview} />
         <Component {...pageProps} />
       </div>

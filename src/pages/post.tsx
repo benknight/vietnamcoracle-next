@@ -37,6 +37,7 @@ export default function SSRPost({ patron, post, renderPatreonButton = false }) {
 
 export async function getServerSideProps({
   preview,
+  previewData,
   query,
   req,
 }: GetServerSidePropsContext) {
@@ -51,7 +52,7 @@ export async function getServerSideProps({
     };
   }
 
-  const api = getGQLClient('admin');
+  const api = getGQLClient(preview ? 'preview' : 'admin');
   const data = await api.request(
     gql`
       query PostById($id: ID!) {
@@ -80,7 +81,7 @@ export async function getServerSideProps({
     data.contentNode.status !== 'publish' ||
     data.contentNode.isRestricted ||
     data.contentNode.patreonLevel > 0;
-  let userCanView = preview;
+  let userCanView = false;
   let renderPatreonButton = false;
 
   // Patreon-only content requires OAuth token
@@ -146,7 +147,7 @@ export async function getServerSideProps({
       });
       return {
         props: {
-          post: await getPostPageProps(postData, Boolean(preview)),
+          post: await getPostPageProps(postData, Boolean(preview), previewData),
           preview: Boolean(preview),
         },
       };

@@ -10,12 +10,6 @@
   body {
     @apply overscroll-x-none;
     @apply text-gray-800 dark:text-gray-200;
-    @apply dark:antialiased;
-  }
-  @media (min-resolution: 320dpi) and (prefers-color-scheme: dark) {
-    body {
-      @apply antialiased;
-    }
   }
   a {
     text-underline-offset: 1px;
@@ -139,7 +133,7 @@
 }
 
 article {
-  @apply text-base font-display leading-relaxed tracking-wide dark:text-gray-300;
+  @apply text-base font-display leading-relaxed dark:text-gray-300;
 }
 article a {
   @apply link;

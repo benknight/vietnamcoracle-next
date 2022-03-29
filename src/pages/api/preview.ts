@@ -6,17 +6,10 @@ export default async function preview(
 ) {
   const { secret, redirect } = req.query;
 
-  // Check the secret and next parameters
-  // This secret should only be known by this API route
-  if (
-    !process.env.WORDPRESS_PREVIEW_SECRET ||
-    secret !== process.env.WORDPRESS_PREVIEW_SECRET
-  ) {
-    return res.status(401).json({ message: 'Invalid request' });
-  }
-
   // Enable Preview Mode by setting the cookies
-  res.setPreviewData({});
+  res.setPreviewData({
+    isAdminPreview: secret == process.env.WORDPRESS_PREVIEW_SECRET,
+  });
 
   // Redirect to the path provided
   res.writeHead(307, { Location: redirect || '/' });

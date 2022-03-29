@@ -246,7 +246,6 @@ export default function Post({ data, html, postNav }) {
 export async function getPostPageProps(
   data: any,
   preview: boolean,
-  previewData: any = null,
 ): Promise<{
   ads: any;
   data: any;
@@ -255,7 +254,6 @@ export async function getPostPageProps(
   navCategory?: string;
   postNav: any;
   preview: boolean;
-  previewData: any;
 }> {
   if (preview) {
     if (data.contentNode) {
@@ -363,19 +361,25 @@ export async function getPostPageProps(
   }
 
   return {
-    ads: {
-      header:
-        data.contentNode.categories?.nodes.find(
-          node => node.ads?.header?.enabled,
-        )?.ads.header ?? null,
-    },
+    ads: preview
+      ? {
+          header: {
+            enabled: true,
+            html: `<a href="https://www.vietnamcoracle.com/"><img alt="placeholder" src="https://via.placeholder.com/1600x400?text=Header%20Banner%20(4:1)"></a>`,
+          },
+        }
+      : {
+          header:
+            data.contentNode.categories?.nodes.find(
+              node => node.ads?.header?.enabled,
+            )?.ads.header ?? null,
+        },
     data,
     html,
     monthsOld,
     navCategory: data.contentNode?.navCategory?.nodes?.[0]?.slug ?? null,
     postNav,
     preview,
-    previewData,
   };
 }
 

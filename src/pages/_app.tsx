@@ -20,10 +20,10 @@ if (typeof window !== 'undefined') {
 }
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const { preview, previewData } = pageProps;
+  const { preview } = pageProps;
   const [loading, setLoading] = useState(false);
   const router = useRouter();
-  const ads = previewData?.ads || pageProps.ads;
+  const ads = pageProps.ads;
 
   useEffect(() => {
     const routeChangeStart = () => setLoading(true);

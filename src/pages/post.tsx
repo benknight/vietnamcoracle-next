@@ -81,7 +81,7 @@ export async function getServerSideProps({
     data.contentNode.status !== 'publish' ||
     data.contentNode.isRestricted ||
     data.contentNode.patreonLevel > 0;
-  let userCanView = false;
+  let userCanView = (previewData as any)?.isAdminPreview;
   let renderPatreonButton = false;
 
   // Patreon-only content requires OAuth token
@@ -147,7 +147,7 @@ export async function getServerSideProps({
       });
       return {
         props: {
-          post: await getPostPageProps(postData, Boolean(preview), previewData),
+          post: await getPostPageProps(postData, Boolean(preview)),
           preview: Boolean(preview),
         },
       };

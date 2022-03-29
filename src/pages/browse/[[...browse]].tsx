@@ -24,8 +24,8 @@ import getCategoryLink from '../../lib/getCategoryLink';
 import getGQLClient from '../../lib/getGQLClient';
 
 const Browse = ({
+  ads,
   data,
-  previewData,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
@@ -38,7 +38,6 @@ const Browse = ({
   const coverImgLg =
     (subcategory ? subcategory.cover.large : category.cover.large) ||
     data.defaultImages?.cover.large;
-  const ads = previewData?.ads || category.ads;
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
@@ -220,11 +219,7 @@ export const getStaticPaths = async () => {
   return result;
 };
 
-export const getStaticProps = async ({
-  params,
-  preview = false,
-  previewData = null,
-}) => {
+export const getStaticProps = async ({ params, preview = false }) => {
   const query = gql`
     query Browse(
       $categorySlug: ID!
@@ -369,9 +364,29 @@ export const getStaticProps = async ({
   return {
     notFound: !data.category,
     props: {
+      ads: preview
+        ? {
+            collection: [
+              {
+                body: 'This is the ad body content. Use this to describe your product or service.',
+                enabled: true,
+                heading: 'Sample Advertisement',
+                position: 4,
+                cta: {
+                  title: 'Call to Action',
+                  url: 'https://www.vietnamcoracle.com',
+                },
+                image: {
+                  altText: '',
+                  srcLarge:
+                    'https://via.placeholder.com/1024x1024?text=Card%20Banner%20(1:1)',
+                },
+              },
+            ],
+          }
+        : data.category.ads,
       data,
       preview,
-      previewData,
     },
     revalidate: 60,
   };

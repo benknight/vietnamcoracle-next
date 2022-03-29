@@ -233,7 +233,7 @@ article .wp-block-gallery a {
   @apply text-white !important;
 }
 .ad-wrapper {
-  @apply mb-4;
+  @apply mb-7;
 }
 .ad-wrapper small {
   @apply flex justify-between mb-1 px-1;

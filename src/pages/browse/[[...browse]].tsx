@@ -166,7 +166,7 @@ const Browse = ({
           )}
         </LayoutMain>
         <LayoutSidebar showBorder={Boolean(subcategory)}>
-          <SidebarDefault data={data} />
+          <SidebarDefault className="!pt-10" data={data} />
           <Footer data={data} />
         </LayoutSidebar>
       </Layout>

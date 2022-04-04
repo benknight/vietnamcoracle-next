@@ -192,7 +192,7 @@ function coracle__inject_ads($post_content)
 					<div class="ad-wrapper">
 						<small>
 							Selected Resources
-							<a href="/about/#ads">
+							<a href="/about/#ads" target="_blank">
 								What’s this?
 							</a>
 						</small>

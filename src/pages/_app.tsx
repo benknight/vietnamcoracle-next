@@ -4,11 +4,9 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
-import { XIcon } from '@heroicons/react/outline';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { StylesProvider } from '@material-ui/core/styles';
 import Header from '../components/Header';
-import NavBar from '../components/NavBar';
 import { pageview } from '../lib/GoogleAnalytics';
 import useWaitCursor from '../lib/useWaitCursor';
 import '../styles/fonts.css';
@@ -97,9 +95,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         />
       </div>
       {ads?.header?.enabled && (
-        <div className="sticky top-0 bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-w-4 aspect-h-1">
+        <div className="sticky top-0 bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-w-2 aspect-h-1">
           <div
-            className="flex items-center justify-center"
+            className="w-full h-full"
             dangerouslySetInnerHTML={{
               __html: ads.header.html,
             }}
@@ -107,8 +105,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         </div>
       )}
       <div className="relative bg-white dark:bg-gray-950">
-        <Header />
-        <NavBar navCategory={pageProps?.navCategory} preview={preview} />
+        <Header navCategory={pageProps?.navCategory} preview={preview} />
         <Component {...pageProps} />
       </div>
     </StylesProvider>

@@ -365,7 +365,7 @@ export async function getPostPageProps(
       ? {
           header: {
             enabled: true,
-            html: `<a href="https://www.vietnamcoracle.com/"><img alt="placeholder" src="https://via.placeholder.com/1600x400?text=Header%20Banner%20(4:1)"></a>`,
+            html: `<a href="https://www.vietnamcoracle.com/"><img alt="placeholder" src="https://via.placeholder.com/2000x1000?text=Header%20Banner%20(2:1)"></a>`,
           },
         }
       : {

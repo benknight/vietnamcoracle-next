@@ -10,10 +10,17 @@ import { MenuIcon } from '@heroicons/react/outline';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import breakpoints from '../config/breakpoints';
 import Menu from './Menu';
+import Nav from './Nav';
 import SearchForm from './SearchForm';
 
-export default function Header() {
-  const ref = useRef<HTMLElement>();
+export default function Header({
+  preview,
+  navCategory,
+}: {
+  navCategory?: string;
+  preview: boolean;
+}) {
+  const ref = useRef<HTMLDivElement>();
   const [fullHeaderVisible, setFullHeaderVisible] = useState(true);
   const [searchFocused, setSearchFocused] = useState(false);
   const [pinStart, setPinStart] = useState(0);
@@ -36,7 +43,7 @@ export default function Header() {
     observer.observe(ref.current);
     const calculatePinStart = () => {
       const box = ref.current.getBoundingClientRect();
-      setPinStart(box.top + box.height);
+      setPinStart(window.scrollY + box.top);
     };
     calculatePinStart();
     window.addEventListener('resize', calculatePinStart);
@@ -46,12 +53,9 @@ export default function Header() {
   }, []);
 
   return (
-    <>
-      <Headroom
-        className="relative lg:sticky lg:top-0 z-30 w-full"
-        disable={isLg}
-        pinStart={pinStart}>
-        <div className="relative h-14 lg:h-auto mx-auto bg-white dark:bg-gray-900">
+    <div ref={ref}>
+      <Headroom className="relative z-30 w-full" pinStart={pinStart}>
+        <div className="relative flex items-center justify-center h-14 lg:h-16 mx-auto bg-white dark:bg-gray-900">
           <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
             <Menu className="scale-90 lg:scale-100 origin-left">
               <MenuIcon className="w-5 h-5 mx-3" />
@@ -100,22 +104,36 @@ export default function Header() {
             )}>
             <SearchForm
               className={cx('ring-2 ring-white md:ring-0 dark:ring-gray-900', {
-                'w-28 xs:w-32 md:w-44': !searchFocused,
-                'w-full md:w-44 2xl:w-60': searchFocused,
+                'w-32 md:w-44': !searchFocused,
+                'w-full md:w-60 2xl:w-60': searchFocused,
               })}
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}
             />
           </div>
+          <div className="hidden lg:block">
+            <Nav navCategory={navCategory} />
+          </div>
+          {preview && (
+            <div className="absolute top-full left-0 w-full flex lg:justify-center">
+              <Link
+                href={`/api/exit-preview/?redirect=${encodeURIComponent(
+                  isHome ? '/' : router.asPath,
+                )}`}>
+                <a className="flex-auto flex items-center justify-center h-5 px-6 bg-yellow-300 hover:bg-yellow-400 text-black text-xs font-medium shadow">
+                  You are viewing this site in Preview Mode. Click here to exit.
+                </a>
+              </Link>
+            </div>
+          )}
         </div>
       </Headroom>
       <header
         className={cx(
-          'relative py-12 sm:py-16 px-3 xl:py-16 text-center border-b border-gray-300 dark:border-gray-700',
+          'relative py-12 sm:py-16 px-3 xl:pt-12 text-center border-b border-gray-300 dark:border-gray-700',
           'bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
           { hidden: !isHome },
-        )}
-        ref={ref}>
+        )}>
         <div className="inline-flex flex-col items-center">
           <Link href="/">
             <a className="flex">
@@ -138,6 +156,9 @@ export default function Header() {
           </h2>
         </div>
       </header>
-    </>
+      <div className="nav-bar fixed lg:hidden bottom-0 z-20 w-full h-16 bg-gray-100 md:bg-white dark:bg-gray-900 md:dark:bg-gray-900">
+        <Nav navCategory={navCategory} />
+      </div>
+    </div>
   );
 }

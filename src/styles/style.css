@@ -66,11 +66,6 @@
       @apply hidden !important;
     }
   }
-  @screen lg {
-    .nav-bar {
-      @apply flex !important;
-    }
-  }
   .nav-link-home {
     @apply lg:hidden !important;
   }
@@ -239,7 +234,7 @@ article .wp-block-gallery a {
   @apply flex justify-between mb-1 px-1;
 }
 .headroom--pinned {
-  @apply shadow;
+  @apply shadow-xl;
 }
 .patreon-valid-patron-message {
   @apply hidden;

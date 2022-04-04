@@ -21,7 +21,7 @@ const Map = ({ data }) => {
             },
           )}>
           <h3 className="text-xl xs:text-2xl sm:text-3xl">{data.title}</h3>
-          <p className="max-w-4xl mt-2 mb-4 sm:px-16 mx-auto text-sm md:text-base font-serif dark:text-gray-400">
+          <p className="max-w-4xl mt-4 mb-6 sm:px-16 mx-auto text-sm md:text-base font-serif dark:text-gray-400">
             {data.description}
           </p>
           <a

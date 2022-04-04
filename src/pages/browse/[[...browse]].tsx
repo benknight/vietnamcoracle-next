@@ -133,9 +133,7 @@ const Browse = ({
         <LayoutMain className="overflow-hidden">
           {category && !subcategory && category.collections?.items ? (
             category.collections.items.map((item, index) => (
-              <section
-                className="my-6 md:my-12 md:dark:mt-4 xl:pr-8"
-                key={item.title}>
+              <section className="my-6 md:my-12 md:dark:mt-4" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
                   <h3 className="mb-2 font-display text-lg xs:text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl">
                     {item.title}
@@ -167,7 +165,9 @@ const Browse = ({
             </section>
           )}
         </LayoutMain>
-        <LayoutSidebar showBorder={Boolean(subcategory)}>
+        <LayoutSidebar
+          className="xl:bg-gradient-to-r from-gray-100 via-gray-100 dark:xl:bg-none"
+          showBorder={Boolean(subcategory)}>
           <SidebarDefault className="!pt-10" data={data} />
           <Footer data={data} />
         </LayoutSidebar>

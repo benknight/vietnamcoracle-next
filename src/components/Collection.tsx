@@ -16,7 +16,7 @@ const Collection = ({ ad, data }) => {
   const navButtonClassName =
     'flex items-center justify-center absolute z-10 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-black hover:bg-blue-400 transition-colors duration-50 ease-out bg-opacity-75 text-white top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-black hover:bg-blue-400 transition-colors duration-50 ease-out bg-opacity-75 text-white';
   return (
-    <div className="relative my-3 lg:my-4 rounded-r-lg overflow-hidden">
+    <div className="relative my-3 lg:my-4 overflow-hidden">
       {!isTouchDevice && scrollPosition && (
         <button
           className={cx(

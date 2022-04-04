@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import useSWR from 'swr';
 import { Popover, Transition } from '@headlessui/react';
-import { ChevronRightIcon } from '@heroicons/react/outline';
+import { ChevronRightIcon } from '@heroicons/react/solid';
 import { ArrowLeftIcon } from '@heroicons/react/solid';
 import { CircularProgress } from '@material-ui/core';
 import getGQLClient from '../lib/getGQLClient';
@@ -186,7 +186,7 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
                   }}
                   style={{ WebkitTapHighlightColor: 'transparent' }}>
                   <div className="flex-auto">{item.label}</div>
-                  {grouped[item.id] && <ChevronRightIcon className="w-4 h-4" />}
+                  {grouped[item.id] && <ChevronRightIcon className="w-5 h-5" />}
                 </a>
               </Link>
             </li>

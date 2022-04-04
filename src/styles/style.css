@@ -61,7 +61,7 @@
   .nav-bar {
     @apply flex justify-center;
   }
-  @media (max-height: 500px) {
+  @media (max-height: 600px) {
     .nav-bar {
       @apply hidden !important;
     }

@@ -115,7 +115,7 @@ export default function Header({
             <Nav navCategory={navCategory} />
           </div>
           {preview && (
-            <div className="absolute top-full left-0 w-full flex lg:justify-center">
+            <div className="absolute top-full left-0 w-full flex justify-center">
               <Link
                 href={`/api/exit-preview/?redirect=${encodeURIComponent(
                   isHome ? '/' : router.asPath,

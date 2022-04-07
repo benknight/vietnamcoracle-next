@@ -6,19 +6,17 @@ import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
 import CategorySlider from '../../components/CategorySlider';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
-import GridListTab from '../../components/GridListTab';
 import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import Map from '../../components/Map';
+import PostCard from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
-import breakpoints from '../../config/breakpoints';
 import * as fragments from '../../config/fragments';
 import getCategoryLink from '../../lib/getCategoryLink';
 import getGQLClient from '../../lib/getGQLClient';
@@ -28,7 +26,6 @@ const Browse = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
-  const isSmall = useMediaQuery(`(min-width: ${breakpoints.sm})`);
   const [showSubcats, setShowSubcats] = useState(false);
   const isHome = !router.query.browse;
   const { category, subcategory } = data;
@@ -38,6 +35,28 @@ const Browse = ({
   const coverImgLg =
     (subcategory ? subcategory.cover.large : category.cover.large) ||
     data.defaultImages?.cover.large;
+  const showCollections =
+    category && !subcategory && category.collections?.items;
+
+  const archiveItems = useMemo(() => {
+    if (showCollections) return [];
+    const shuffledAds = _.shuffle(ads.collection);
+    const mapPosts = post => ({
+      type: 'post',
+      data: post,
+    });
+    const posts = (subcategory || category).posts.nodes;
+    const result = _.flatten(
+      _.chunk(posts, 2).map((chunk, i) => {
+        let result = chunk.map(mapPosts);
+        if (i % 2 === 0 && shuffledAds.length > 0) {
+          result.push({ type: 'ad', data: shuffledAds.pop() });
+        }
+        return result;
+      }),
+    );
+    return result;
+  }, [ads, category, subcategory, showCollections]);
 
   useEffect(() => {
     const handleRouteChange = (url: string) => {
@@ -131,7 +150,7 @@ const Browse = ({
       )}
       <Layout className="py-px pb-14 xl:pb-0">
         <LayoutMain className="overflow-hidden">
-          {category && !subcategory && category.collections?.items ? (
+          {showCollections ? (
             category.collections.items.map((item, index) => (
               <section className="my-6 md:my-12 md:dark:mt-4" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
@@ -154,10 +173,15 @@ const Browse = ({
               </section>
             ))
           ) : (
-            <GridListTab.Group
-              hideList={!isSmall}
-              posts={(subcategory || category).posts.nodes}
-            />
+            <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
+              {archiveItems.map(item => (
+                <PostCard
+                  {...(item.type === 'ad'
+                    ? { ad: item.data }
+                    : { post: item.data })}
+                />
+              ))}
+            </div>
           )}
           {category.map?.mid && (
             <section className="lg:mb-8 lg:px-8">
@@ -372,7 +396,22 @@ export const getStaticProps = async ({ params, preview = false }) => {
               {
                 body: 'This is the ad body content. Use this to describe your product or service.',
                 enabled: true,
-                heading: 'Sample Advertisement',
+                heading: 'Sample Advertisement #1',
+                position: 4,
+                cta: {
+                  title: 'Call to Action',
+                  url: 'https://www.vietnamcoracle.com',
+                },
+                image: {
+                  altText: '',
+                  srcLarge:
+                    'https://via.placeholder.com/1024x1024?text=Card%20Banner%20(1:1)',
+                },
+              },
+              {
+                body: 'This is the ad body content. Use this to describe your product or service. This is the ad body content. Use this to describe your product or service.',
+                enabled: true,
+                heading: 'Sample Advertisement #2',
                 position: 4,
                 cta: {
                   title: 'Call to Action',

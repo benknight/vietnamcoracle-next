@@ -45,7 +45,9 @@ const Browse = ({
       type: 'post',
       data: post,
     });
-    const posts = (subcategory || category).posts.nodes;
+    const posts = (subcategory || category).posts.nodes.filter(
+      node => !!node.featuredImage,
+    );
     const result = _.flatten(
       _.chunk(posts, 2).map((chunk, i) => {
         let result = chunk.map(mapPosts);

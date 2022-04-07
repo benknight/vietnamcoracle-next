@@ -224,7 +224,7 @@ export default function Slider({ className = '', children, ...props }) {
         }
         return (
           <RadioGroup
-            className="py-2 w-full flex justify-center items-center cursor-default bg-white dark:bg-gray-950"
+            className="absolute py-2 w-full flex justify-center items-center cursor-default"
             value={cursor}
             onChange={i => goTo(i, 'manual')}>
             <RadioGroup.Label className="sr-only">

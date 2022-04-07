@@ -74,9 +74,7 @@ const Browse = ({
     <>
       <Head>{htmlToReact(category.seo.fullHead)}</Head>
       {isHome ? (
-        <div className="pb-6">
-          <CategorySlider data={category.slider} />
-        </div>
+        <CategorySlider data={category.slider} />
       ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg} theme="dark">
           <HeroContent>
@@ -150,8 +148,8 @@ const Browse = ({
           </HeroContent>
         </Hero>
       )}
-      <Layout className="py-px pb-14 xl:pb-0">
-        <LayoutMain className="overflow-hidden">
+      <Layout className="py-px xl:pb-0">
+        <LayoutMain className="overflow-hidden py-6">
           {showCollections ? (
             category.collections.items.map((item, index) => (
               <section className="my-6 md:my-12 md:dark:mt-4" key={item.title}>

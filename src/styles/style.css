@@ -233,7 +233,10 @@ article .wp-block-gallery a {
 .selected-resources small {
   @apply flex justify-between mb-1 px-1;
 }
-.headroom--pinned {
+.headroom > div {
+  @apply transition-shadow ease-in-out duration-500 shadow-none;
+}
+.headroom--pinned > div {
   @apply shadow-xl;
 }
 .patreon-valid-patron-message {

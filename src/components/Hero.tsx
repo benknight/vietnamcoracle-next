@@ -74,7 +74,7 @@ export function HeroContent({ children }) {
   const { theme } = useContext(HeroContext);
   return (
     <div
-      className={cx('relative pb-4', {
+      className={cx('relative pb-4 dark:pb-0', {
         'text-gray-800 dark:text-white': theme === 'auto',
         'text-white': theme === 'dark',
         'text-gray-800': theme === 'light',

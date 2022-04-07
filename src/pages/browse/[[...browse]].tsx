@@ -148,8 +148,8 @@ const Browse = ({
           </HeroContent>
         </Hero>
       )}
-      <Layout className="py-px xl:pb-0">
-        <LayoutMain className="overflow-hidden py-6">
+      <Layout className={cx('py-px pb-14 xl:pb-0', isHome ? 'dark:pt-12' : '')}>
+        <LayoutMain className="overflow-hidden pt-4">
           {showCollections ? (
             category.collections.items.map((item, index) => (
               <section className="my-6 md:my-12" key={item.title}>
@@ -173,7 +173,7 @@ const Browse = ({
               </section>
             ))
           ) : (
-            <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
+            <div className="px-2 md:px-4 lg:px-8 py-6 grid gap-4 xl:gap-6 md:grid-cols-2">
               {archiveItems.map(item => (
                 <PostCard
                   {...(item.type === 'ad'

@@ -98,7 +98,7 @@ export default function Post({ data, html, postNav }) {
                       </div>
                     </div>
                   </LayoutMain>
-                  <LayoutSidebar />
+                  <LayoutSidebar showBorder={false} />
                 </Layout>
               </div>
             </div>

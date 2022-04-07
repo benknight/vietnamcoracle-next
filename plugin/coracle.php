@@ -173,7 +173,7 @@ function coracle__inject_ads($post_content)
 		for ($i = 0; $i < $paragraph_count; $i++) {
 			$paragraph = $paragraphs[$i];
 			$paragraph_size = strlen(strip_tags($paragraph));
-			if ($paragraph_size >= 140) {
+			if ($paragraph_size >= 140 || strpos($paragraph, 'class="wp-image-') > 0) {
 				$big_paragraph_counter += 1;
 			}
 			if (trim($paragraph)) {

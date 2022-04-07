@@ -91,8 +91,7 @@ export default function NavBar({ navCategory }: Props) {
                   'nav-link-home': link.url === '/',
                 },
               )}
-              key={link.url}
-              style={{ WebkitTapHighlightColor: 'transparent' }}>
+              key={link.url}>
               {cloneElement(isCurrent(link.url) ? link.icon : link.iconAlt, {
                 className: '!w-5 !h-5 lg:mr-2 mb-1 lg:mb-0 shrink-0',
               })}

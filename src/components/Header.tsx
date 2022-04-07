@@ -120,8 +120,8 @@ export default function Header({
                 href={`/api/exit-preview/?redirect=${encodeURIComponent(
                   isHome ? '/' : router.asPath,
                 )}`}>
-                <a className="flex-auto flex items-center justify-center h-5 px-6 bg-yellow-300 hover:bg-yellow-400 text-black text-xs font-medium shadow">
-                  You are viewing this site in Preview Mode. Click here to exit.
+                <a className="flex items-center justify-center h-5 mt-1 px-4 bg-yellow-300 dark:bg-opacity-75 hover:bg-opacity-100 text-black text-xs font-medium shadow rounded-full">
+                  You are viewing in Preview Mode. Click here to exit.
                 </a>
               </Link>
             </div>

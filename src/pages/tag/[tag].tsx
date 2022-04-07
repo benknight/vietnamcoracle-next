@@ -30,7 +30,7 @@ const Tag = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
         <LayoutMain>
           <GridListTab.Group posts={data.tag.posts.nodes} />
         </LayoutMain>
-        <LayoutSidebar showBorder>
+        <LayoutSidebar>
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>

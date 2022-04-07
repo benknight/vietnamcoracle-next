@@ -189,9 +189,7 @@ const Browse = ({
             </section>
           )}
         </LayoutMain>
-        <LayoutSidebar
-          className="xl:bg-gradient-to-r from-gray-100 via-gray-100 dark:xl:bg-none"
-          showBorder={Boolean(subcategory)}>
+        <LayoutSidebar className="xl:bg-gradient-to-r from-gray-100 via-gray-100 dark:xl:bg-none">
           <SidebarDefault className="!pt-10" data={data} />
           <Footer data={data} />
         </LayoutSidebar>

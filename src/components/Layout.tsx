@@ -13,7 +13,7 @@ export const LayoutMain = ({ children, className = '' }) => (
 export const LayoutSidebar = ({
   children = null,
   className = '',
-  showBorder = false,
+  showBorder = true,
 }) => {
   return (
     <div

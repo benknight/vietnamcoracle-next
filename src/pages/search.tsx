@@ -151,7 +151,7 @@ export default function SearchPage(props) {
             </button>
           </div>
         </LayoutMain>
-        <LayoutSidebar showBorder>
+        <LayoutSidebar>
           <SidebarDefault data={props.data} />
           <Footer data={props.data} />
         </LayoutSidebar>

@@ -234,7 +234,7 @@ export default function Post({ data, html, postNav }) {
             )}
           </div>
         </LayoutMain>
-        <LayoutSidebar showBorder>
+        <LayoutSidebar>
           <SidebarDefault data={data} />
           <Footer data={data} />
         </LayoutSidebar>

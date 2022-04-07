@@ -16,11 +16,11 @@ const Collection = ({ ad, data }) => {
   const navButtonClassName =
     'flex items-center justify-center absolute z-10 top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-black hover:bg-blue-400 transition-colors duration-50 ease-out bg-opacity-75 text-white top-1/2 -translate-y-1/2 w-16 h-16 rounded-full bg-black hover:bg-blue-400 transition-colors duration-50 ease-out bg-opacity-75 text-white';
   const items = useMemo(() => {
-    if (!ad?.enabled) return data.posts;
     const mapPosts = post => ({
       type: 'post',
       data: post,
     });
+    if (!ad?.enabled) return data.posts.map(mapPosts);
     return [
       ...data.posts.slice(0, ad.position - 1).map(mapPosts),
       { type: 'ad', data: ad },

@@ -166,6 +166,7 @@ function coracle__inject_ads($post_content)
 	}
 	if (count($injection_ads) > 0) {
 		$debug = 0;
+		$ad_counter = 0;
 		$paragraphs = explode("</p>", $post_content);
 		$paragraph_count = count($paragraphs);
 		$big_paragraph_counter = -1;
@@ -188,8 +189,9 @@ function coracle__inject_ads($post_content)
 			) {
 				$ad_html = array_shift($injection_ads);
 				if ($ad_html) {
+					$ad_counter += 1;
 					$paragraphs[$i] .= <<<HTML
-					<div class="selected-resources" id="selected-resources-$group_id">
+					<div class="selected-resources" id="selected-resources-$ad_counter">
 						<small>
 							Selected Resources
 							<a href="/about/#ads" target="_blank">

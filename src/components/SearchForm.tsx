@@ -44,7 +44,6 @@ export default function SearchInput({ className = '', ...inputProps }) {
         }}
         placeholder="Search"
         ref={inputRef}
-        type="search"
         value={value}
       />
     </form>

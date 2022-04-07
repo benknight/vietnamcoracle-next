@@ -227,10 +227,10 @@ article .has-drop-cap:not(:focus)::first-letter {
 article .wp-block-gallery a {
   @apply text-white !important;
 }
-.ad-wrapper {
+.selected-resources {
   @apply mb-7;
 }
-.ad-wrapper small {
+.selected-resources small {
   @apply flex justify-between mb-1 px-1;
 }
 .headroom--pinned {

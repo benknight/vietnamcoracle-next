@@ -138,7 +138,7 @@ function coracle__inject_ads($post_content)
 		}
 	}
 	$paragraph_top_offset = 3;
-	$paragraph_skip_count = 3;
+	$paragraph_skip_count = 2;
 	$before = $after = 0;
 	$injection_ads = [];
 	foreach ($group_array as $group_id => $group) {
@@ -189,7 +189,7 @@ function coracle__inject_ads($post_content)
 				$ad_html = array_shift($injection_ads);
 				if ($ad_html) {
 					$paragraphs[$i] .= <<<HTML
-					<div class="ad-wrapper">
+					<div class="selected-resources" id="selected-resources-$group_id">
 						<small>
 							Selected Resources
 							<a href="/about/#ads" target="_blank">

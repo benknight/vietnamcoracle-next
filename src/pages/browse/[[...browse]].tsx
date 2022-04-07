@@ -152,7 +152,7 @@ const Browse = ({
         <LayoutMain className="overflow-hidden py-6">
           {showCollections ? (
             category.collections.items.map((item, index) => (
-              <section className="my-6 md:my-12 md:dark:mt-4" key={item.title}>
+              <section className="my-6 md:my-12" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
                   <h3 className="mb-2 font-display text-lg xs:text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl">
                     {item.title}

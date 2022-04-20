@@ -394,31 +394,15 @@ export const getStaticProps = async ({ params, preview = false }) => {
               {
                 body: 'This is the ad body content. Use this to describe your product or service.',
                 enabled: true,
-                heading: 'Sample Advertisement #1',
-                position: 4,
+                heading: 'Post Tile Banner [$250/month] [1:1]',
+                position: 3,
                 cta: {
                   title: 'Call to Action',
                   url: 'https://www.vietnamcoracle.com',
                 },
                 image: {
                   altText: '',
-                  srcLarge:
-                    'https://via.placeholder.com/1024x1024?text=Card%20Banner%20(1:1)',
-                },
-              },
-              {
-                body: 'This is the ad body content. Use this to describe your product or service. This is the ad body content. Use this to describe your product or service.',
-                enabled: true,
-                heading: 'Sample Advertisement #2',
-                position: 4,
-                cta: {
-                  title: 'Call to Action',
-                  url: 'https://www.vietnamcoracle.com',
-                },
-                image: {
-                  altText: '',
-                  srcLarge:
-                    'https://via.placeholder.com/1024x1024?text=Card%20Banner%20(1:1)',
+                  srcLarge: 'https://via.placeholder.com/1024x1024?text=%20',
                 },
               },
             ],

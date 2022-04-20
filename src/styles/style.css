@@ -305,6 +305,16 @@ article .wp-block-gallery a {
 .post-next .wp-block-image {
   @apply my-8;
 }
+.preview-ad {
+  @apply relative block;
+}
+.preview-ad::after {
+  content: attr(title);
+  @apply absolute inset-0 flex items-center justify-center text-black text-2xl text-center opacity-30 font-sans font-bold;
+}
+.preview-ad img {
+  @apply w-full;
+}
 .wp-block-buttons:nth-child(2) {
   @apply block md:flex md:mt-8;
 }

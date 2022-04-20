@@ -174,7 +174,7 @@ function coracle__inject_ads($post_content)
 			$paragraph = $paragraphs[$i];
 			$paragraph_size = strlen(strip_tags($paragraph));
 			$is_big_paragraph =
-				$paragraph_size >= 140 || strpos($paragraph, 'class="wp-image-') > 0;
+				$paragraph_size >= 280 || strpos($paragraph, 'class="wp-image-') > 0;
 			$is_map = strpos($paragraph, 'name="map"') > 0 || strpos($paragraph, 'id="map"') > 0;
 			if ($is_big_paragraph && !$is_map) {
 				$big_paragraph_counter += 1;

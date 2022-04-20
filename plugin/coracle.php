@@ -211,7 +211,7 @@ function coracle__inject_ads($post_content)
 		$post_content = implode("", $paragraphs);
 	}
 	return $post_content;
-	// --- OLD CODE ---
+	// --- OLD IMPLEMENTATION (Ported from Carl's jQuery code to PHP) ---
 	//   $paragraph_top_offset = 12;
 	//   $paragraph_skip_count = 5;
 	//   $paragraphs = explode('</p>', $post_content);

@@ -174,8 +174,9 @@ const Browse = ({
             ))
           ) : (
             <div className="px-2 md:px-4 lg:px-8 py-6 grid gap-4 xl:gap-6 md:grid-cols-2">
-              {archiveItems.map(item => (
+              {archiveItems.map((item, index) => (
                 <PostCard
+                  key={index}
                   {...(item.type === 'ad'
                     ? { ad: item.data }
                     : { post: item.data })}

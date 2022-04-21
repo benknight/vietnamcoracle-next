@@ -305,14 +305,14 @@ article .wp-block-gallery a {
 .post-next .wp-block-image {
   @apply my-8;
 }
-.preview-ad {
+.preview-placement {
   @apply relative block;
 }
-.preview-ad::after {
+.preview-placement::after {
   content: attr(title);
   @apply absolute inset-0 flex items-center justify-center text-black text-2xl text-center opacity-30 font-sans font-bold;
 }
-.preview-ad img {
+.preview-placement img {
   @apply w-full;
 }
 .wp-block-buttons:nth-child(2) {

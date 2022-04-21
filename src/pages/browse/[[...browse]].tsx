@@ -390,22 +390,20 @@ export const getStaticProps = async ({ params, preview = false }) => {
     props: {
       ads: preview
         ? {
-            collection: [
-              {
-                body: 'This is the ad body content. Use this to describe your product or service.',
-                enabled: true,
-                heading: 'Post Tile Banner [$250/month] [1:1]',
-                position: 3,
-                cta: {
-                  title: 'Call to Action',
-                  url: 'https://www.vietnamcoracle.com',
-                },
-                image: {
-                  altText: '',
-                  srcLarge: 'https://via.placeholder.com/1024x1024?text=%20',
-                },
+            collection: _.fill(Array(2), {
+              body: 'This is the ad body content. Use this to describe your product or service.',
+              enabled: true,
+              heading: 'Post Tile Banner [$250/month] [1:1]',
+              position: 3,
+              cta: {
+                title: 'Call to Action',
+                url: 'https://www.vietnamcoracle.com',
               },
-            ],
+              image: {
+                altText: '',
+                srcLarge: 'https://via.placeholder.com/1024x1024?text=%20',
+              },
+            }),
           }
         : data.category.ads,
       data,

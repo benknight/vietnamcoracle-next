@@ -171,7 +171,7 @@ export default function Slider({ className = '', children, ...props }) {
           ref={navRef}>
           {(() => {
             const btnClassName =
-              'absolute h-full text-white opacity-80 hover:opacity-100 from-black-50 to-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto transition ease duration-100 hover:scale-110';
+              'absolute h-full text-white opacity-80 hover:opacity-100 from-black-50 to-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto transition ease duration-100 hover:scale-110 active:scale-105';
             return (
               <>
                 <button
@@ -182,7 +182,8 @@ export default function Slider({ className = '', children, ...props }) {
                   )}
                   onClick={() => {
                     goTo((cursor - 1 + slideCount) % slideCount, 'manual');
-                  }}>
+                  }}
+                  type="button">
                   <ChevronLeftIcon className="!w-20 !h-20" />
                 </button>
                 <button
@@ -193,7 +194,8 @@ export default function Slider({ className = '', children, ...props }) {
                   )}
                   onClick={() => {
                     goTo((cursor + 1) % slideCount, 'manual');
-                  }}>
+                  }}
+                  type="button">
                   <ChevronRightIcon className="!w-20 !h-20" />
                 </button>
               </>
@@ -214,7 +216,7 @@ export default function Slider({ className = '', children, ...props }) {
                 <>
                   <span
                     className={cx(
-                      'box-content w-[5px] h-[5px] block border border-primary-700 dark:border-white rounded-full shadow',
+                      'box-content w-[5px] h-[5px] block border border-primary-700 dark:border-white rounded-full',
                       {
                         'bg-primary-700 dark:bg-white': checked,
                         'bg-transparent border-opacity-50 dark:border-opacity-50':

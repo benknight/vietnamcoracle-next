@@ -7,6 +7,10 @@ const axios = require('axios');
 const { withSentryConfig } = require('@sentry/nextjs');
 
 const moduleExports = {
+  i18n: {
+    locales: ['en'],
+    defaultLocale: 'en',
+  },
   images: {
     domains: [
       'cms.vietnamcoracle.com',

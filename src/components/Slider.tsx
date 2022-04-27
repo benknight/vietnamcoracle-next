@@ -2,13 +2,11 @@ import cx from 'classnames';
 import { throttle } from 'lodash';
 import { forwardRef, useCallback, useRef, useState, useEffect } from 'react';
 import { RadioGroup } from '@headlessui/react';
-import PauseIcon from '@material-ui/icons/Pause';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import SkipNextIcon from '@material-ui/icons/SkipNext';
-import SkipPrevIcon from '@material-ui/icons/SkipPrevious';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 
 export default function Slider({ className = '', children, ...props }) {
   const advanceRef = useRef<() => void>();
+  const cursorRef = useRef<number>();
   const busyRef = useRef<boolean>();
   const intervalRef = useRef<number>();
   const parentRef = useRef<HTMLDivElement>();
@@ -19,6 +17,7 @@ export default function Slider({ className = '', children, ...props }) {
   const [showNav, setShowNav] = useState(false);
   const [slideCount, setSlideCount] = useState(null);
   const [cursor, setCursor] = useState(0);
+  const [domLoaded, setDomLoaded] = useState(false);
 
   const goTo = useCallback(
     (
@@ -43,27 +42,41 @@ export default function Slider({ className = '', children, ...props }) {
 
   // Auto-play behavior
   useEffect(() => {
-    if (!slideCount) return;
+    if (!slideCount || !domLoaded) return;
     if (play && !intervalRef.current) {
       intervalRef.current = window.setInterval(() => {
         busyRef.current = true;
         advanceRef.current();
         window.setTimeout(() => (busyRef.current = false), 500);
-      }, 5000);
+      }, 10000);
     }
     if (!play && intervalRef.current) {
       window.clearInterval(intervalRef.current);
       intervalRef.current = null;
     }
-  }, [play, slideCount]);
+  }, [domLoaded, play, slideCount]);
 
   // Update the advance callback
   useEffect(() => {
     advanceRef.current = () => goTo((cursor + 1) % slideCount);
   }, [cursor, slideCount]);
 
+  // Track DOM loaded state in local state
+  useEffect(() => {
+    const onLoad = () => {
+      setDomLoaded(true);
+    };
+    if (window.document.readyState === 'complete') {
+      onLoad();
+    } else {
+      window.addEventListener('load', onLoad);
+    }
+    return () => window.removeEventListener('load', onLoad);
+  }, []);
+
   // Update cursor when user scrolls
   useEffect(() => {
+    if (!domLoaded) return;
     const slides = parentRef.current.querySelectorAll(':scope > a');
     setSlideCount(slides.length);
     if (!('IntersectionObserver' in window)) {
@@ -76,10 +89,10 @@ export default function Slider({ className = '', children, ...props }) {
             let index = 0;
             let child = entry.target;
             while ((child = child.previousSibling as HTMLElement)) index++;
-            setCursor(index);
-            if (cursor !== index && !busyRef.current) {
+            if (cursorRef.current !== index && !busyRef.current) {
               setPlay(false);
             }
+            setCursor(index);
           }
         });
       },
@@ -88,18 +101,8 @@ export default function Slider({ className = '', children, ...props }) {
         threshold: 0.5,
       },
     );
-    const observeSlides = () => {
-      slides.forEach(node => {
-        observer.observe(node);
-      });
-    };
-    if (window.document.readyState === 'complete') {
-      observeSlides();
-    } else {
-      window.addEventListener('load', observeSlides);
-    }
-    return () => window.removeEventListener('load', observeSlides);
-  }, []);
+    slides.forEach(node => observer.observe(node));
+  }, [domLoaded]);
 
   // Nav auto-hide behavior
   useEffect(() => {
@@ -143,6 +146,11 @@ export default function Slider({ className = '', children, ...props }) {
     };
   }, []);
 
+  // Sync cursor ref with cursor state
+  useEffect(() => {
+    cursorRef.current = cursor;
+  }, [cursor]);
+
   return (
     <div
       {...props}
@@ -157,40 +165,36 @@ export default function Slider({ className = '', children, ...props }) {
         </div>
         <nav
           className={cx(
-            'box-content hidden pointer:flex justify-center w-full h-11 pt-8 absolute left-0 bottom-0 transition-opacity duration-100 ease text-gray-100 shadow-xl bg-gradient-to-t from-black-50 to-transparent pointer-events-none',
+            'hidden pointer:flex transition-opacity duration-500 ease text-gray-100 pointer-events-none',
             showNav ? 'opacity-100' : 'opacity-0',
           )}
           ref={navRef}>
           {(() => {
             const btnClassName =
-              'flex items-center text-white opacity-60 hover:opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto transition ease duration-100 hover:scale-110';
+              'absolute h-full text-white opacity-80 hover:opacity-100 from-black-50 to-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto transition ease duration-100 hover:scale-110';
             return (
               <>
                 <button
                   aria-label="Prev"
-                  className={btnClassName}
+                  className={cx(
+                    btnClassName,
+                    'top-0 left-0 pl-2 pr-8 bg-gradient-to-r',
+                  )}
                   onClick={() => {
                     goTo((cursor - 1 + slideCount) % slideCount, 'manual');
                   }}>
-                  <SkipPrevIcon className="!w-7 !h-7" />
-                </button>
-                <button
-                  aria-label={play ? 'Pause' : 'Play'}
-                  className={btnClassName}
-                  onClick={() => setPlay(play => !play)}>
-                  {play ? (
-                    <PauseIcon className="!w-8 !h-8" />
-                  ) : (
-                    <PlayArrowIcon className="!w-8 !h-8" />
-                  )}
+                  <ChevronLeftIcon className="!w-20 !h-20" />
                 </button>
                 <button
                   aria-label="Next"
-                  className={btnClassName}
+                  className={cx(
+                    btnClassName,
+                    'top-0 right-0 pr-2 pl-8 bg-gradient-to-l',
+                  )}
                   onClick={() => {
                     goTo((cursor + 1) % slideCount, 'manual');
                   }}>
-                  <SkipNextIcon className="!w-7 !h-7" />
+                  <ChevronRightIcon className="!w-20 !h-20" />
                 </button>
               </>
             );
@@ -210,9 +214,11 @@ export default function Slider({ className = '', children, ...props }) {
                 <>
                   <span
                     className={cx(
-                      'box-content w-1 h-1 block bg-primary-700 dark:bg-white border border-primary-700 dark:border-white rounded-full shadow',
+                      'box-content w-[5px] h-[5px] block border border-primary-700 dark:border-white rounded-full shadow',
                       {
-                        'opacity-50': !checked,
+                        'bg-primary-700 dark:bg-white': checked,
+                        'bg-transparent border-opacity-50 dark:border-opacity-50':
+                          !checked,
                       },
                     )}
                   />
@@ -246,7 +252,7 @@ export const SliderSlide = forwardRef<
   return (
     <Component
       {...props}
-      className={cx(className, 'snap-center always-stop')}
+      className={cx(className, 'snap-center snap-always')}
       ref={ref}
     />
   );

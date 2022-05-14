@@ -72,7 +72,7 @@ export default function Header({
                   className="rounded-full"
                   height={44}
                   loading="eager"
-                  src="/logo.jpg"
+                  src="/logo.svg"
                   width={44}
                 />
               </div>
@@ -141,7 +141,7 @@ export default function Header({
                 className="rounded-full"
                 height={120}
                 loading="eager"
-                src="/logo.jpg"
+                src="/logo.svg"
                 width={120}
               />
             </a>

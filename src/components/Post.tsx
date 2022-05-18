@@ -399,6 +399,11 @@ export const POST_QUERY = gql`
             name
           }
         }
+        customRelatedPosts(first: 6) {
+          nodes {
+            ...PostCardData
+          }
+        }
       }
       ... on NodeWithComments {
         commentCount
@@ -465,11 +470,6 @@ export const POST_QUERY = gql`
         comments(first: 1000) {
           nodes {
             ...CommentThreadCommentData
-          }
-        }
-        customRelatedPosts(first: 6) {
-          nodes {
-            ...PostCardData
           }
         }
         preview @include(if: $preview) {

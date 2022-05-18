@@ -378,8 +378,8 @@ add_filter("rest_authentication_errors", function ($result) {
 // Add Custom Related Posts to GraphQL schema
 add_action("graphql_register_types", function () {
 	register_graphql_connection([
-		"fromType" => "Post",
-		"toType" => "Post",
+		"fromType" => "ContentNode",
+		"toType" => "ContentNode",
 		"fromFieldName" => "customRelatedPosts",
 		"resolve" => function (\WPGraphQL\Model\Post $source, $args, $context, $info) {
 			if (!class_exists("CustomRelatedPosts")) {
@@ -390,7 +390,7 @@ add_action("graphql_register_types", function () {
 				$args,
 				$context,
 				$info,
-				"post",
+				"any",
 			);
 			$post_ids = array_keys(CustomRelatedPosts::get()->relations_to($source->ID));
 			if (empty($post_ids)) {
@@ -450,6 +450,7 @@ add_filter(
 // Register header menu for Next
 add_action("init", function () {
 	register_nav_menu("header-menu-next", __("Header Menu (Next)"));
+	add_post_type_support("page", "excerpt");
 });
 
 // https://www.wpgraphql.com/filters/graphql_html_entity_decoding_enabled/

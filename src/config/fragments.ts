@@ -33,6 +33,18 @@ export const CategorySliderData = gql`
           }
         }
       }
+      ... on Page {
+        title
+        uri
+        thumbnails {
+          thumbnailSlideSquare {
+            ...HeroImageData
+          }
+          thumbnailSlideWidescreen {
+            ...HeroImageData
+          }
+        }
+      }
     }
   }
 `;
@@ -41,6 +53,10 @@ export const CollectionData = gql`
   fragment CollectionData on Category_Collections_items {
     posts {
       ... on Post {
+        slug
+        ...PostCardData
+      }
+      ... on Page {
         slug
         ...PostCardData
       }

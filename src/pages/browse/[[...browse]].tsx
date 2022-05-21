@@ -6,8 +6,9 @@ import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { MapIcon } from '@heroicons/react/outline';
+import { ChevronDownIcon } from '@heroicons/react/solid';
 import CategorySlider from '../../components/CategorySlider';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
@@ -25,6 +26,7 @@ const Browse = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
+  const [showSubcats, setShowSubcats] = useState(true);
   const isHome = !router.query.browse;
   const { category, subcategory } = data;
   const coverImgSm =
@@ -57,6 +59,16 @@ const Browse = ({
     );
     return result;
   }, [ads, category, subcategory, showCollections]);
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      setShowSubcats(false);
+    };
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => {
+      router.events.off('routeChangeComplete', handleRouteChange);
+    };
+  }, [router.events]);
 
   return (
     <>
@@ -92,14 +104,39 @@ const Browse = ({
                   Jump to Map
                 </a>
               )}
+              {category.children.nodes.length > 0 && (
+                <div className="flex-auto w-full md:w-auto lg:hidden">
+                  <button
+                    className="relative btn justify-center h-11 w-full md:w-auto mt-3 rounded-full bg-opacity-25"
+                    onClick={() => setShowSubcats(value => !value)}>
+                    {showSubcats
+                      ? subcategory
+                        ? 'Show Less'
+                        : 'Hide Subcategories'
+                      : subcategory
+                      ? 'Show More'
+                      : 'Show Subcategories'}
+                    <ChevronDownIcon
+                      className={cx(
+                        'w-4 h-4 ml-2 transition-duration-100',
+                        showSubcats ? 'rotate-180' : 'rotate-0',
+                      )}
+                    />
+                  </button>
+                </div>
+              )}
             </div>
             {category.children.nodes.length > 0 && (
-              <div className="page-wrap pb-4 dark:pb-0 md:pr-24">
+              <div
+                className={cx(
+                  'page-wrap pb-4 dark:pb-0 md:pr-24',
+                  showSubcats ? '' : 'hidden lg:block',
+                )}>
                 {category.children.nodes.map(node => (
                   <Link key={node.uri} href={getCategoryLink(node.uri)}>
                     <a
                       className={cx(
-                        'inline-flex items-center h-8 sm:h-10 mt-3 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide',
+                        'inline-flex items-center h-8 mt-2 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm',
                         subcategory?.uri === node.uri
                           ? 'border-primary-400 border-opacity-75 text-primary-400'
                           : 'text-white border-white border-opacity-25 hover:border-opacity-50',

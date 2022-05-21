@@ -6,9 +6,8 @@ import type { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { MapIcon } from '@heroicons/react/outline';
-import { ChevronDownIcon } from '@heroicons/react/solid';
 import CategorySlider from '../../components/CategorySlider';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
@@ -26,7 +25,6 @@ const Browse = ({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
-  const [showSubcats, setShowSubcats] = useState(false);
   const isHome = !router.query.browse;
   const { category, subcategory } = data;
   const coverImgSm =
@@ -59,16 +57,6 @@ const Browse = ({
     );
     return result;
   }, [ads, category, subcategory, showCollections]);
-
-  useEffect(() => {
-    const handleRouteChange = (url: string) => {
-      setShowSubcats(false);
-    };
-    router.events.on('routeChangeComplete', handleRouteChange);
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange);
-    };
-  }, [router.events]);
 
   return (
     <>
@@ -104,45 +92,22 @@ const Browse = ({
                   Jump to Map
                 </a>
               )}
-              {category.children.nodes.length > 0 && (
-                <>
-                  <div className="flex-auto w-full md:w-auto">
-                    <button
-                      className="relative btn justify-between h-11 w-full md:w-auto mt-3 rounded-full bg-opacity-25"
-                      onClick={() => setShowSubcats(value => !value)}>
-                      {showSubcats ? 'Hide' : 'Show'} subcategories…
-                      <ChevronDownIcon
-                        className={cx(
-                          'w-4 h-4 ml-2 transition-duration-100',
-                          showSubcats ? 'rotate-180' : 'rotate-0',
-                        )}
-                      />
-                    </button>
-                  </div>
-                </>
-              )}
             </div>
             {category.children.nodes.length > 0 && (
-              <div
-                className={cx(
-                  'page-wrap pb-4 dark:pb-0 md:pr-24',
-                  showSubcats ? '' : 'hidden',
-                )}>
-                {category.children.nodes
-                  .filter(node => node.posts.nodes.length > 0)
-                  .map(node => (
-                    <Link key={node.uri} href={getCategoryLink(node.uri)}>
-                      <a
-                        className={cx(
-                          'inline-flex items-center h-8 sm:h-10 mt-3 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide',
-                          subcategory?.uri === node.uri
-                            ? 'border-primary-400 border-opacity-75 text-primary-400'
-                            : 'text-gray-300 hover:text-white border-white border-opacity-25',
-                        )}>
-                        {node.name}
-                      </a>
-                    </Link>
-                  ))}
+              <div className="page-wrap pb-4 dark:pb-0 md:pr-24">
+                {category.children.nodes.map(node => (
+                  <Link key={node.uri} href={getCategoryLink(node.uri)}>
+                    <a
+                      className={cx(
+                        'inline-flex items-center h-8 sm:h-10 mt-3 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide',
+                        subcategory?.uri === node.uri
+                          ? 'border-primary-400 border-opacity-75 text-primary-400'
+                          : 'text-white border-white border-opacity-25 hover:border-opacity-50',
+                      )}>
+                      {node.name}
+                    </a>
+                  </Link>
+                ))}
               </div>
             )}
           </HeroContent>
@@ -172,7 +137,7 @@ const Browse = ({
                 />
               </section>
             ))
-          ) : (
+          ) : archiveItems.length > 0 ? (
             <div className="px-2 md:px-4 lg:px-8 py-6 grid gap-4 xl:gap-6 md:grid-cols-2">
               {archiveItems.map((item, index) => (
                 <PostCard
@@ -182,6 +147,11 @@ const Browse = ({
                     : { post: item.data })}
                 />
               ))}
+            </div>
+          ) : (
+            <div className="py-48 font-display text-center">
+              <h1 className="text-3xl mb-2 text-center">No posts to show</h1>
+              This category is currently empty.
             </div>
           )}
           {category.map?.mid && (

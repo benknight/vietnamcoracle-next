@@ -337,6 +337,18 @@ article .wp-block-gallery a {
 .wp-block-image > a {
   @apply block mt-8 mb-2 -mx-3 sm:-mx-4 md:mx-0;
 }
+.wp-block-stackable-columns.stk-block-background {
+  @apply dark:bg-gray-800 !important;
+}
+.wp-block-stackable-columns .wp-block-image img {
+  @apply shadow-heavy;
+}
+.wp-block-stackable-columns.stk-has-top-separator .wp-block-image img {
+  @apply shadow-heavy;
+}
+.wp-block-stackable-columns .stk-separator__wrapper svg {
+  @apply dark:fill-gray-950;
+}
 @screen lg {
   #map {
     scroll-margin-top: 5rem;

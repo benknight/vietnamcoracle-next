@@ -279,7 +279,7 @@ export async function getPostPageProps(
     );
 
     if (lastUpdated.length > 0) {
-      lastUpdated.addClass('!font-display text-sm !py-4 !m-0');
+      lastUpdated.addClass('!font-display text-sm !my-4 !m-0');
       const date = lastUpdated
         .text()
         .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]
@@ -299,7 +299,7 @@ export async function getPostPageProps(
     }
 
     if (data.contentNode.status === 'publish') {
-      const html = '<div class="mb-8"><share-buttons /></div>';
+      const html = '<div class="mt-4 mb-8"><share-buttons /></div>';
       if (lastUpdated.length > 0) {
         $(html).insertAfter(lastUpdated);
       } else {

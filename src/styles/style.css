@@ -350,6 +350,9 @@ article .wp-block-gallery a {
 .wp-block-stackable-columns .stk-separator__wrapper svg {
   @apply dark:fill-gray-950;
 }
+.post .wp-block-stackable-columns {
+  @apply overflow-visible !important;
+}
 @screen lg {
   #map {
     scroll-margin-top: 5rem;

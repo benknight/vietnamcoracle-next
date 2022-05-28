@@ -133,7 +133,10 @@ const Browse = ({
                   showSubcats ? '' : 'hidden lg:block',
                 )}>
                 {category.children.nodes.map(node => (
-                  <Link key={node.uri} href={getCategoryLink(node.uri)}>
+                  <Link
+                    key={node.uri}
+                    href={getCategoryLink(node.uri)}
+                    scroll={false}>
                     <a
                       className={cx(
                         'inline-flex items-center h-8 mt-2 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm',

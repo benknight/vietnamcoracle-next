@@ -637,10 +637,16 @@ add_action(
 	2,
 );
 
-add_action("edit_comment", function ($comment_id) {
+function coracle__revalidate_comments($comment_id)
+{
 	$comment = get_comment($comment_id);
-	$post = get_post($comment->comment_post_ID);
-	wp_remote_get(
-		"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=/{$post->post_name}",
-	);
-});
+	if ($comment->comment_approved === "1") {
+		$post = get_post($comment->comment_post_ID);
+		wp_remote_get(
+			"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=/{$post->post_name}",
+		);
+	}
+}
+
+add_action("comment_post", "coracle__revalidate_comments");
+add_action("edit_comment", "coracle__revalidate_comments");

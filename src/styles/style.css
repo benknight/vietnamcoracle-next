@@ -140,7 +140,8 @@ article h1 {
   @apply mb-5 text-2xl;
   letter-spacing: 0.2em;
 }
-article h2 {
+article h2,
+article .has-huge-font-size {
   @apply sm:mt-8 pb-4 lg:pb-4 font-display tracking-wider leading-loose;
 }
 article hr,
@@ -186,7 +187,7 @@ article *[style*='#ff0000'] {
   @apply text-red-600 dark:text-red-500 !important;
 }
 article *[style*='#d8e0e6'],
-article *[style*='#dee4e9']
+article *[style*='#dee4e9'],
 article *[style*='#e2e9ef'] {
   @apply dark:bg-gray-800 !important;
 }
@@ -223,6 +224,9 @@ article .crp-list + div p {
 }
 article .has-drop-cap:not(:focus)::first-letter {
   font-size: 6rem !important;
+}
+article .has-huge-font-size {
+  @apply font-display text-2xl sm:text-3xl md:text-4xl;
 }
 /* Necessary to style /vietnam-coracle-video-library */
 article .wp-block-gallery a {

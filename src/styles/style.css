@@ -142,7 +142,7 @@ article h1 {
 }
 article h2,
 article .has-huge-font-size {
-  @apply sm:mt-8 pb-4 lg:pb-4 font-display tracking-wider leading-loose;
+  @apply sm:mt-8 pb-4 lg:pb-4 font-display leading-loose;
 }
 article hr,
 .wp-block-separator {
@@ -166,6 +166,9 @@ article p,
 article ul,
 article figure {
   @apply mb-7 font-serif;
+}
+article p.has-background {
+  @apply px-4 md:px-8;
 }
 article figcaption {
   @apply block py-2 leading-tight font-bold text-sm text-center;
@@ -223,6 +226,7 @@ article .crp-list + div p {
   margin-bottom: 0 !important;
 }
 article .has-drop-cap:not(:focus)::first-letter {
+  @apply font-display mr-2;
   font-size: 6rem !important;
 }
 article .has-huge-font-size {

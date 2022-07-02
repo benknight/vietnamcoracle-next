@@ -54,7 +54,7 @@ const Collection = ({ ad, data }) => {
       )}
       <div className="overflow-hidden">
         <ol
-          className="snap-x flex pb-8 -mb-8 pl-4 md:pl-8 overflow-y-auto"
+          className="snap-x xl:snap-none flex pb-8 -mb-8 pl-4 md:pl-8 overflow-y-auto"
           ref={scrollAreaRef as RefObject<HTMLOListElement>}>
           {items?.map((item, index) => (
             <li

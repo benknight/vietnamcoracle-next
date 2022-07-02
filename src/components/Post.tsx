@@ -223,12 +223,9 @@ export default function Post({ data, html, postNav }) {
                   <CommentForm post={content.databaseId} />
                 </div>
                 {content.comments.nodes.length > 0 && (
-                  <>
-                    <div className="page-heading mb-4" id="comments">
-                      {content.commentCount} Comments
-                    </div>
+                  <div id="comments">
                     <CommentThread comments={content.comments.nodes} />
-                  </>
+                  </div>
                 )}
               </>
             )}

@@ -120,8 +120,6 @@ export const getStaticProps = async ({ params, preview = false }) => {
       data,
       preview,
     },
-    // Disabling to avoid overage charges, replace with on-demand revalidation
-    // revalidate: 60,
   };
 };
 

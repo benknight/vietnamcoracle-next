@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import { gql } from 'graphql-request';
 import _groupBy from 'lodash/groupBy';
 import _keyBy from 'lodash/keyBy';
 import Link from 'next/link';
@@ -9,32 +8,14 @@ import { Popover, Transition } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import { ArrowLeftIcon } from '@heroicons/react/solid';
 import { CircularProgress } from '@material-ui/core';
-import getGQLClient from '../lib/getGQLClient';
 
-const api = getGQLClient();
-const fetcher = query => api.request(query);
+const fetcher = path => fetch(path).then(res => res.json());
 
 export default function Menu({ children, className = '' }) {
-  const { data } = useSWR(
-    gql`
-      query Menu {
-        menuItems(where: { location: HEADER_MENU_NEXT }, first: 1000) {
-          nodes {
-            id
-            label
-            parentId
-            path
-            url
-          }
-        }
-      }
-    `,
-    fetcher,
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-    },
-  );
+  const { data } = useSWR('/api/menu', fetcher, {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+  });
   return (
     <Popover>
       {({ open }) => (

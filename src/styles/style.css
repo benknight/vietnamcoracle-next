@@ -20,7 +20,7 @@
   .btn {
     @apply h-8 px-4 inline-flex items-center justify-center;
     @apply text-sm font-sans font-medium tracking-wider;
-    @apply bg-gray-500 dark:hover:bg-primary-500;
+    @apply bg-gray-500 dark:hover:bg-primary;
     @apply bg-opacity-10 hover:bg-opacity-25 dark:bg-opacity-25 dark:hover:bg-opacity-25;
     @apply focus:outline-none rounded-lg subpixel-antialiased font-sans;
     @apply transition-colors duration-100 ease-in-out;

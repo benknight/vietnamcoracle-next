@@ -86,8 +86,7 @@ export default function NavBar({ navCategory }: Props) {
                 'rounded-full transition-colors duration-200 ease',
                 'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-gray-800',
                 {
-                  'dark:shadow text-primary-500 dark:text-primary-400':
-                    isCurrent(link.url),
+                  'dark:shadow text-primary': isCurrent(link.url),
                   'nav-link-home': link.url === '/',
                 },
               )}

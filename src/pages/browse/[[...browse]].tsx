@@ -141,7 +141,7 @@ const Browse = ({
                       className={cx(
                         'inline-flex items-center h-8 mt-2 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm',
                         subcategory?.uri === node.uri
-                          ? 'border-primary-400 border-opacity-75 text-primary-400'
+                          ? 'border-primary border-opacity-75 text-primary'
                           : 'text-white border-white border-opacity-25 hover:border-opacity-50',
                       )}>
                       {node.name}

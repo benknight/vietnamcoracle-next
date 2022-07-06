@@ -10,10 +10,10 @@ import PostMediaBlock from './PostMediaBlock';
 const tabCx = (selected: boolean, className = '') =>
   cx(
     className,
-    'inline-flex items-center p-2 sm:p-3 text-sm leading-5 font-medium rounded-lg focus:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-primary-400 ring-white ring-opacity-60',
+    'inline-flex items-center p-2 sm:p-3 text-sm leading-5 font-medium rounded-lg focus:outline-none focus-visible:ring-2 ring-offset-2 ring-offset-primary ring-white ring-opacity-60',
     selected
-      ? 'bg-white shadow text-primary-600'
-      : 'text-primary-400 text-opacity-75 hover:text-opacity-100',
+      ? 'bg-white shadow text-primary'
+      : 'text-primary text-opacity-75 hover:text-opacity-100',
   );
 
 function Group({ hideList = false, posts }) {

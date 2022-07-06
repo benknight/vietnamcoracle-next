@@ -26,7 +26,7 @@ module.exports = {
         'lp-blue': '#297CBB',
         'near-black': 'hsl(0deg 0% 2%)',
         purple: colors.purple,
-        primary: colors.indigo,
+        primary: '#ac6aaf',
       },
       fontFamily: {
         serif: ['Lora', ...defaultTheme.fontFamily.serif],

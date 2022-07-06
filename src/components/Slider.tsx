@@ -171,7 +171,7 @@ export default function Slider({ className = '', children, ...props }) {
           ref={navRef}>
           {(() => {
             const btnClassName =
-              'absolute h-full text-white opacity-80 hover:opacity-100 from-black-50 to-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 pointer-events-auto transition ease duration-100 hover:scale-110 active:scale-105';
+              'absolute h-full text-white opacity-80 hover:opacity-100 from-black-50 to-transparent focus:outline-none focus-visible:ring-2 focus-visible:ring-primary pointer-events-auto transition ease duration-100 hover:scale-110 active:scale-105';
             return (
               <>
                 <button
@@ -216,9 +216,9 @@ export default function Slider({ className = '', children, ...props }) {
                 <>
                   <span
                     className={cx(
-                      'box-content w-[5px] h-[5px] block border border-primary-700 dark:border-white rounded-full',
+                      'box-content w-[5px] h-[5px] block border border-primary dark:border-white rounded-full',
                       {
-                        'bg-primary-700 dark:bg-white': checked,
+                        'bg-primary dark:bg-white': checked,
                         'bg-transparent border-opacity-50 dark:border-opacity-50':
                           !checked,
                       },

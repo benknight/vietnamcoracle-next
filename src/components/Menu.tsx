@@ -3,19 +3,14 @@ import _groupBy from 'lodash/groupBy';
 import _keyBy from 'lodash/keyBy';
 import Link from 'next/link';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
-import useSWR from 'swr';
 import { Popover, Transition } from '@headlessui/react';
 import { ChevronRightIcon } from '@heroicons/react/solid';
 import { ArrowLeftIcon } from '@heroicons/react/solid';
 import { CircularProgress } from '@material-ui/core';
-
-const fetcher = path => fetch(path).then(res => res.json());
+import useAPI from '../lib/useAPI';
 
 export default function Menu({ children, className = '' }) {
-  const { data } = useSWR('/api/menu', fetcher, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-  });
+  const { data } = useAPI('/api/menu');
   return (
     <Popover>
       {({ open }) => (

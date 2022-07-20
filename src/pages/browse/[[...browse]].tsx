@@ -201,8 +201,8 @@ const Browse = ({
           )}
         </LayoutMain>
         <LayoutSidebar className="xl:bg-gradient-to-r from-gray-100 via-gray-100 dark:xl:bg-none">
-          <SidebarDefault className="!pt-10" data={data} />
-          <Footer data={data} />
+          <SidebarDefault className="!pt-10" />
+          <Footer />
         </LayoutSidebar>
       </Layout>
     </>
@@ -259,7 +259,6 @@ export const getStaticProps = async ({ params, preview = false }) => {
     query Browse(
       $categorySlug: ID!
       $hasSubcategory: Boolean!
-      $preview: Boolean!
       $skipCategoryPosts: Boolean!
       $subcategorySlug: ID!
     ) {
@@ -343,8 +342,6 @@ export const getStaticProps = async ({ params, preview = false }) => {
           }
         }
       }
-      ...FooterData
-      ...SidebarDefaultData
     }
     fragment CategoryData on Category {
       name
@@ -361,15 +358,12 @@ export const getStaticProps = async ({ params, preview = false }) => {
         fullHead
       }
     }
-    ${fragments.BlockData}
     ${fragments.CategorySliderData}
     ${fragments.CollectionData}
-    ${fragments.FooterData}
     ${fragments.HeroImageData}
     ${fragments.MapData}
     ${fragments.PostCardData}
     ${fragments.PostMediaBlockData}
-    ${fragments.SidebarDefaultData}
   `;
 
   const categorySlug = params.browse?.[0] ?? 'features-guides';

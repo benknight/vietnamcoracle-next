@@ -152,34 +152,10 @@ export default function SearchPage(props) {
           </div>
         </LayoutMain>
         <LayoutSidebar>
-          <SidebarDefault data={props.data} />
-          <Footer data={props.data} />
+          <SidebarDefault />
+          <Footer />
         </LayoutSidebar>
       </Layout>
     </>
   );
-}
-
-export async function getStaticProps({ preview = false }) {
-  const api = getGQLClient(preview ? 'preview' : 'admin');
-  const data = await api.request(
-    gql`
-      query SearchPage($preview: Boolean!) {
-        ...FooterData
-        ...SidebarDefaultData
-      }
-      ${fragments.BlockData}
-      ${fragments.FooterData}
-      ${fragments.SidebarDefaultData}
-    `,
-    {
-      preview,
-    },
-  );
-  return {
-    props: {
-      data,
-      preview,
-    },
-  };
 }

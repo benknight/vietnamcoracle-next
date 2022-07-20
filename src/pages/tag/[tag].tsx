@@ -31,8 +31,8 @@ const Tag = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
           <GridListTab.Group posts={data.tag.posts.nodes} />
         </LayoutMain>
         <LayoutSidebar>
-          <SidebarDefault data={data} />
-          <Footer data={data} />
+          <SidebarDefault />
+          <Footer />
         </LayoutSidebar>
       </Layout>
     </>
@@ -64,7 +64,7 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async ({ params, preview = false }) => {
   const query = gql`
-    query Tag($preview: Boolean!, $slug: ID!) {
+    query Tag($slug: ID!) {
       tag(id: $slug, idType: SLUG) {
         name
         slug
@@ -97,15 +97,10 @@ export const getStaticProps = async ({ params, preview = false }) => {
           }
         }
       }
-      ...FooterData
-      ...SidebarDefaultData
     }
-    ${fragments.BlockData}
-    ${fragments.FooterData}
     ${fragments.HeroImageData}
     ${fragments.PostCardData}
     ${fragments.PostMediaBlockData}
-    ${fragments.SidebarDefaultData}
   `;
 
   const api = getGQLClient(preview ? 'preview' : 'admin');

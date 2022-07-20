@@ -1,23 +1,5 @@
 import { gql } from 'graphql-request';
 
-export const BlockData = gql`
-  fragment BlockData on Block_Block {
-    description
-    title
-    image {
-      sourceUrl
-    }
-    link {
-      title
-      url
-    }
-    messages {
-      key
-      value
-    }
-  }
-`;
-
 export const CategorySliderData = gql`
   fragment CategorySliderData on Category_Slider {
     posts {
@@ -79,19 +61,6 @@ export const CommentThreadCommentData = gql`
           avatar {
             url
           }
-        }
-      }
-    }
-  }
-`;
-
-export const FooterData = gql`
-  fragment FooterData on RootQuery {
-    footerMenu: menu(id: "dGVybTo0MDk=") {
-      menuItems {
-        nodes {
-          path
-          label
         }
       }
     }
@@ -172,25 +141,6 @@ export const PostMediaBlockData = gql`
           uri
         }
       }
-    }
-  }
-`;
-
-export const SidebarDefaultData = gql`
-  fragment SidebarDefaultData on RootQuery {
-    about: block(id: "cG9zdDozNjExOA==", asPreview: $preview) {
-      ...Block
-    }
-    subscribe: block(id: "cG9zdDozNzcwNQ==", asPreview: $preview) {
-      ...Block
-    }
-    support: block(id: "cG9zdDozNzY4Nw==", asPreview: $preview) {
-      ...Block
-    }
-  }
-  fragment Block on Block {
-    block {
-      ...BlockData
     }
   }
 `;

@@ -4,7 +4,7 @@ import useAPI from '../lib/useAPI';
 import LonelyPlanetLogo from '../../public/lp-logo.svg';
 
 export default function Footer() {
-  const { data } = useAPI('/api/footer');
+  const { data } = useAPI('/api/footer/');
   if (!data) return null;
   return (
     <footer>

@@ -6,7 +6,7 @@ import Support from './Support';
 import SlidingSticky from './SlidingSticky';
 
 const SidebarDefault = ({ className = '' }) => {
-  const { data } = useAPI('/api/sidebar');
+  const { data } = useAPI('/api/sidebar/');
   if (!data) return null;
   return (
     <SlidingSticky>

@@ -10,7 +10,7 @@ import { CircularProgress } from '@material-ui/core';
 import useAPI from '../lib/useAPI';
 
 export default function Menu({ children, className = '' }) {
-  const { data } = useAPI('/api/menu');
+  const { data } = useAPI('/api/menu/');
   return (
     <Popover>
       {({ open }) => (

@@ -47,14 +47,14 @@ const CommentBody = ({ comment, post }) => {
         onClick={() => setShowReplyForm(x => !x)}>
         {showReplyForm ? 'Cancel Reply' : 'Reply'}
       </button>
-      {showReplyForm && (
-        <div className="mt-4 mb-8 border-t border-gray-200 dark:border-gray-700 pt-4">
-          <div className="font-display text-sm mb-4">
-            Reply to <b>{comment.author.node.name}</b>:
-          </div>
-          <CommentForm parent={comment.id} post={post} />
+      <div
+        className="mt-4 mb-8 border-t border-gray-200 dark:border-gray-700 pt-4"
+        hidden={!showReplyForm}>
+        <div className="font-display text-sm mb-4">
+          Reply to <b>{comment.author.node.name}</b>:
         </div>
-      )}
+        <CommentForm parent={comment.id} post={post} />
+      </div>
     </>
   );
 };

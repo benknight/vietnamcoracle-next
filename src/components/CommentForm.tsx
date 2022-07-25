@@ -1,14 +1,17 @@
 import cx from 'classnames';
 import { gql } from 'graphql-request';
-import { Formik, Field, Form } from 'formik';
+import { Formik, Field, Form, useFormikContext } from 'formik';
 import _unescape from 'lodash/unescape';
+import { useState } from 'react';
 import getGQLClient from '../lib/getGQLClient';
+import useWaitCursor from '../lib/useWaitCursor';
 
 const CREATE_COMMENT_MUTATION = gql`
   mutation CreateComment(
     $comment: String!
     $email: String!
     $name: String!
+    $parent: ID
     $post: Int!
   ) {
     createComment(
@@ -17,6 +20,7 @@ const CREATE_COMMENT_MUTATION = gql`
         authorEmail: $email
         commentOn: $post
         content: $comment
+        parent: $parent
       }
     ) {
       success
@@ -35,14 +39,18 @@ const CREATE_COMMENT_MUTATION = gql`
 
 type Props = {
   post: number;
+  parent?: number;
 };
 
-export default function CommentForm({ post }: Props) {
-  const onSubmit = async (values, actions) => {
-    actions.setSubmitting(true);
+export default function CommentForm({ parent, post }: Props) {
+  const [busy, setBusy] = useState(false);
+  useWaitCursor(busy);
+  const onSubmit = async values => {
+    setBusy(true);
     try {
       const api = getGQLClient();
       const response = await api.request(CREATE_COMMENT_MUTATION, {
+        parent,
         post,
         ...values,
       });
@@ -65,6 +73,7 @@ export default function CommentForm({ post }: Props) {
         ),
       );
     }
+    setBusy(false);
   };
   return (
     <Formik
@@ -116,7 +125,7 @@ export default function CommentForm({ post }: Props) {
             disabled={isSubmitting}
             className={cx('btn mt-4', { 'opacity-50': isSubmitting })}
             type="submit">
-            Submit
+            {isSubmitting ? 'Please wait…' : 'Submit'}
           </button>
         </Form>
       )}

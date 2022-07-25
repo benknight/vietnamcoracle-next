@@ -224,7 +224,10 @@ export default function Post({ data, html, postNav }) {
                 </div>
                 {content.comments.nodes.length > 0 && (
                   <div id="comments">
-                    <CommentThread comments={content.comments.nodes} />
+                    <CommentThread
+                      comments={content.comments.nodes}
+                      post={content.databaseId}
+                    />
                   </div>
                 )}
               </>

@@ -135,8 +135,7 @@ article h1 {
   @apply mb-5 text-2xl;
   letter-spacing: 0.2em;
 }
-article h2,
-article .has-huge-font-size {
+article h2 {
   @apply sm:mt-8 pb-4 lg:pb-4 font-display leading-loose;
 }
 article hr,
@@ -224,8 +223,9 @@ article .has-drop-cap:not(:focus)::first-letter {
   @apply font-display mr-2;
   font-size: 6rem !important;
 }
-article .has-huge-font-size {
-  @apply font-display text-2xl sm:text-3xl md:text-4xl;
+article .has-huge-font-size,
+article .has-large-font-size {
+  @apply text-2xl sm:text-3xl md:text-4xl !important;
 }
 /* Necessary to style /vietnam-coracle-video-library */
 article .wp-block-gallery a {

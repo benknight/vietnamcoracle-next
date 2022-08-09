@@ -7,8 +7,6 @@ import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
 import { Transition } from '@headlessui/react';
 import { MenuIcon } from '@heroicons/react/outline';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
-import breakpoints from '../config/breakpoints';
 import Menu from './Menu';
 import Nav from './Nav';
 import SearchForm from './SearchForm';
@@ -25,7 +23,6 @@ export default function Header({
   const [searchFocused, setSearchFocused] = useState(false);
   const [pinStart, setPinStart] = useState(0);
   const router = useRouter();
-  const isLg = useMediaQuery(`(min-width: ${breakpoints.lg})`);
   const isHome = ['/', '/browse', '/browse/'].includes(router.asPath);
   const showMini = !isHome || !fullHeaderVisible;
 

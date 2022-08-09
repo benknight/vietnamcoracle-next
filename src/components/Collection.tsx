@@ -54,11 +54,11 @@ const Collection = ({ ad, data }) => {
       )}
       <div className="overflow-hidden">
         <ol
-          className="snap-x xl:snap-none flex pb-8 -mb-8 pl-4 md:pl-8 overflow-y-auto"
+          className="sm:snap-x xl:snap-none flex pb-8 -mb-8 pr-4 md:pr-8 overflow-y-auto"
           ref={scrollAreaRef as RefObject<HTMLOListElement>}>
           {items?.map((item, index) => (
             <li
-              className="snap-center flex shrink-0 w-4/5 sm:w-3/7 lg:w-3/8 xl:w-3/7 xl:min-w-[23rem] xl:max-w-[25rem] pr-3 lg:pr-4 xl:pr-3 2xl:pr-6"
+              className="snap-start flex shrink-0 w-4/5 sm:w-3/7 lg:w-3/8 xl:w-3/7 xl:min-w-[23rem] xl:max-w-[25rem] pl-3 lg:pl-4 xl:pl-3 2xl:pl-6"
               key={index}>
               <PostCard
                 {...(item.type === 'ad'

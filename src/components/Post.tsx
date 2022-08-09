@@ -365,7 +365,7 @@ export async function getPostPageProps(
       ? {
           header: {
             enabled: true,
-            html: `<a class="preview-placement" href="https://www.vietnamcoracle.com/" title="Header Banner [$500/month] [2:1]"><img alt="" src="https://via.placeholder.com/200x100?text=%20"></a>`,
+            html: `<a class="preview-placement" href="https://www.vietnamcoracle.com/" title="Header Banner [$500/month] [2:1]"><img alt="" src="https://cms.vietnamcoracle.com/wp-content/uploads/2022/08/placeholder200x100.png"></a>`,
           },
         }
       : {

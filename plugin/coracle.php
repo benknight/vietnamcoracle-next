@@ -629,10 +629,12 @@ add_action("template_redirect", function () {
 add_action(
 	"edit_post",
 	function ($post_id, $post) {
-		$path = "/" . $post->post_name;
-		wp_remote_get(
-			"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
-		);
+		if ($post->post_type === "post" || $post->post_type === "page") {
+			$path = "/" . $post->post_name;
+			wp_remote_get(
+				"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
+			);
+		}
 	},
 	10,
 	2,

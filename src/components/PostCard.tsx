@@ -22,7 +22,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
         : post
         ? {
             body: post.excerpt,
-            image: post.featuredImage.node,
+            image: post.featuredImage?.node,
             title: post.title,
           }
         : null,

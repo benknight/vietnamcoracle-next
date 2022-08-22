@@ -20,7 +20,7 @@ const Tag = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
       <Hero imgSm={coverImgSm} imgLg={coverImgLg} theme="dark">
         <HeroContent>
           <div className="page-wrap">
-            <h1 className="font-display text-2xl md:text-3xl lg:text-3xl leading-tight">
+            <h1 className="font-display text-2xl md:text-3xl lg:text-3xl leading-tight pb-4 dark:pb-0">
               Posts tagged <i>“{data.tag.name}”</i>
             </h1>
           </div>

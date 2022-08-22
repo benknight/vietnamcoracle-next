@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "src/components/SubscribeForm.jsx", "src/components/ShareButtons.jsx"  ],
   "exclude": [
     "node_modules"
   ]

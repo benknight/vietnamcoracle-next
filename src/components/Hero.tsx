@@ -13,7 +13,7 @@ type HeroImage = {
 };
 
 interface Props {
-  children?: JSX.Element[] | JSX.Element | HTMLElement;
+  children?: React.ReactNode;
   className?: string;
   imgSm: HeroImage;
   imgLg: HeroImage;

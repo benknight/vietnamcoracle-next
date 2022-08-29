@@ -27,8 +27,8 @@ const Browse = ({
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
   const [showSubcats, setShowSubcats] = useState(true);
-  const isHome = !router.query.browse;
   const { category, subcategory } = data;
+  const isHome = category.slug === 'features-guides';
   const coverImgSm =
     (subcategory ? subcategory.cover.small : category.cover.small) ||
     data.defaultImages?.cover.small;

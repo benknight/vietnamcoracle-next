@@ -82,8 +82,8 @@ const moduleExports = {
   async rewrites() {
     return [
       {
-        destination: '/browse/',
-        source: '/:path*',
+        destination: '/browse/features-guides/',
+        source: '/',
       },
     ];
   },

@@ -23,7 +23,13 @@ export default function Header({
   const [searchFocused, setSearchFocused] = useState(false);
   const [pinStart, setPinStart] = useState(0);
   const router = useRouter();
-  const isHome = ['/', '/browse', '/browse/'].includes(router.asPath);
+  const isHome = [
+    '/',
+    '/browse',
+    '/browse/',
+    '/browse/features-guides',
+    '/browse/features-guides/',
+  ].includes(router.asPath);
   const showMini = !isHome || !fullHeaderVisible;
 
   useEffect(() => {

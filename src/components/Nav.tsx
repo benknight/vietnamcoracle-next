@@ -72,7 +72,13 @@ export default function NavBar({ navCategory }: Props) {
     },
     [navCategory, router.asPath, router.query.ref],
   );
-  const isHome = ['/', '/browse', '/browse/'].includes(router.asPath);
+  const isHome = [
+    '/',
+    '/browse',
+    '/browse/',
+    '/browse/features-guides',
+    '/browse/features-guides/',
+  ].includes(router.asPath);
   return (
     <nav className="flex justify-center items-center flex-auto px-1 xl:px-16 font-sans font-medium tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
       {links.map(link => {

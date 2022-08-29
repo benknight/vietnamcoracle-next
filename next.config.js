@@ -83,7 +83,7 @@ const moduleExports = {
     return [
       {
         destination: '/browse/',
-        source: '/',
+        source: '/:path*',
       },
     ];
   },

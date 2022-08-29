@@ -626,19 +626,8 @@ add_action("template_redirect", function () {
 	}
 });
 
-add_action(
-	"edit_post",
-	function ($post_id, $post) {
-		if ($post->post_type === "post" || $post->post_type === "page") {
-			$path = "/" . $post->post_name;
-			wp_remote_get(
-				"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
-			);
-		}
-	},
-	10,
-	2,
-);
+add_action("comment_post", "coracle__revalidate_comments");
+add_action("edit_comment", "coracle__revalidate_comments");
 
 function coracle__revalidate_comments($comment_id)
 {
@@ -652,23 +641,63 @@ function coracle__revalidate_comments($comment_id)
 	}
 }
 
-add_action("comment_post", "coracle__revalidate_comments");
-add_action("edit_comment", "coracle__revalidate_comments");
+add_action("edit_category", "coracle__revalidate_term");
+add_action("edit_post_tag", "coracle__revalidate_term");
 
-add_action("edit_category", function ($category_id) {
-	$link = get_category_link($category_id);
+add_action(
+	"added_term_relationship",
+	function ($object_id, $tt_id) {
+		global $wpdb;
+		$term_id = $wpdb->get_var(
+			$wpdb->prepare(
+				"SELECT term_id FROM $wpdb->term_taxonomy WHERE term_taxonomy_id = %d",
+				$tt_id,
+			),
+		);
+		if ($term_id) {
+			coracle__revalidate_term((int) $term_id);
+		}
+	},
+	10,
+	2,
+);
+
+add_action(
+	"deleted_term_relationships",
+	function ($object_id, $tt_ids) {
+		global $wpdb;
+		$imploded = implode(",", $tt_ids);
+		$term_ids = $wpdb->get_col(
+			"SELECT term_id FROM $wpdb->term_taxonomy WHERE term_taxonomy_id IN ($imploded)",
+		);
+		foreach ($term_ids as $term_id) {
+			coracle__revalidate_term((int) $term_id);
+		}
+	},
+	10,
+	2,
+);
+
+function coracle__revalidate_term($term_id)
+{
+	$link = get_term_link($term_id);
 	$parsed_link = parse_url($link);
 	$path = str_replace("/category/features-guides", "/browse", $parsed_link["path"]);
 	wp_remote_get(
 		"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
 	);
-});
+}
 
-add_action("edit_post_tag", function ($term_id) {
-	$link = get_term_link($term_id);
-	$parsed_link = parse_url($link);
-	$path = $parsed_link["path"];
-	wp_remote_get(
-		"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
-	);
-});
+add_action(
+	"save_post",
+	function ($post_id, $post) {
+		if ($post->post_type === "post" || $post->post_type === "page") {
+			$path = "/" . $post->post_name;
+			wp_remote_get(
+				"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
+			);
+		}
+	},
+	10,
+	2,
+);

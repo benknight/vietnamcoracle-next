@@ -5,7 +5,7 @@ import tailwindConfig from '../../tailwind.config.js';
 
 const {
   theme: { borderRadius, colors, height, padding, width },
-} = resolveConfig(tailwindConfig);
+} = resolveConfig(tailwindConfig) as any;
 
 export default function SubscribeFormElement() {
   const [email, setEmail] = useState('');

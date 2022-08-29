@@ -28,7 +28,7 @@ const {
     padding,
     width,
   },
-} = resolveConfig(tailwindConfig);
+} = resolveConfig(tailwindConfig) as any;
 
 interface Props {
   image: string;

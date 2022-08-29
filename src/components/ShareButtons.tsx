@@ -30,12 +30,18 @@ const {
   },
 } = resolveConfig(tailwindConfig);
 
-const fetcher = (link) =>
+interface Props {
+  image: string;
+  link: string;
+  title: string;
+}
+
+const fetcher = (link: string) =>
   fetch(`/api/share-counts/?link=${encodeURIComponent(link)}`).then(res =>
     res.json(),
   );
 
-export default function ShareButtons({ image, link, title }) {
+export default function ShareButtons({ image, link, title }: Props) {
   const { data: shareCountData } = useSWR(cmsToNextUrls(link), fetcher);
   return (
     <>

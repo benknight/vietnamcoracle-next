@@ -83,7 +83,8 @@ export default function Post({ data, html, postNav }) {
         }
         imgLg={
           content.thumbnails?.thumbnailHeader ?? data.defaultImages?.cover.large
-        }>
+        }
+        priority>
         <HeroContent>
           <div className="dark:grid grid-rows-[0.5fr] pt-7 sm:pt-12 dark:!pt-0">
             <div className="min-h-0">

@@ -17,6 +17,7 @@ interface Props {
   className?: string;
   imgSm: HeroImage;
   imgLg: HeroImage;
+  priority?: boolean;
   preserveAspectRatio?: boolean;
   theme?: 'light' | 'dark' | 'auto';
 }
@@ -31,6 +32,7 @@ export default function Hero({
   imgSm,
   imgLg,
   preserveAspectRatio = false,
+  priority = false,
   theme = 'auto',
 }: Props) {
   return (
@@ -50,6 +52,7 @@ export default function Hero({
             key={imgSm.id}
             layout="fill"
             objectFit="cover"
+            priority={priority}
             src={imgSm.sourceUrl}
           />
         </div>
@@ -60,6 +63,7 @@ export default function Hero({
             key={imgLg.id}
             layout="responsive"
             objectFit="cover"
+            priority={priority}
             src={imgLg.sourceUrl}
             width={imgLg.mediaDetails.width}
           />

@@ -11,7 +11,7 @@ const CategorySlider = ({ data }) => {
             Boolean(post.thumbnails.thumbnailSlideSquare) &&
             Boolean(post.thumbnails.thumbnailSlideWidescreen),
         )
-        .map(post => (
+        .map((post, index) => (
           <Link href={post.uri} key={post.uri} passHref>
             <SliderSlide
               as="a"
@@ -20,6 +20,7 @@ const CategorySlider = ({ data }) => {
                 imgSm={post.thumbnails.thumbnailSlideSquare}
                 imgLg={post.thumbnails.thumbnailSlideWidescreen}
                 preserveAspectRatio
+                priority={index === 0}
               />
             </SliderSlide>
           </Link>

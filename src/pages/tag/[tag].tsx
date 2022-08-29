@@ -17,7 +17,7 @@ const Tag = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
   return (
     <>
       <Head>{htmlToReact(data.tag.seo.fullHead)}</Head>
-      <Hero imgSm={coverImgSm} imgLg={coverImgLg} theme="dark">
+      <Hero imgSm={coverImgSm} imgLg={coverImgLg} priority theme="dark">
         <HeroContent>
           <div className="page-wrap">
             <h1 className="font-display text-2xl md:text-3xl lg:text-3xl leading-tight pb-4 dark:pb-0">

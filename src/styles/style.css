@@ -218,7 +218,14 @@ article .crp-list + div p {
 }
 article .has-drop-cap:not(:focus)::first-letter {
   @apply font-display mr-2;
-  font-size: 6rem !important;
+  font-size: 3rem !important;
+  margin-top: 12px !important;
+}
+@screen lg {
+  article .has-drop-cap:not(:focus)::first-letter {
+    font-size: 6rem !important;
+    margin-top: 0.05em !important;
+  }
 }
 article .has-huge-font-size,
 article .has-large-font-size {

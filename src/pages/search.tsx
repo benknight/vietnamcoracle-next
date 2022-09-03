@@ -5,12 +5,9 @@ import _upperFirst from 'lodash/upperFirst';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import useSWRInfinite from 'swr/infinite';
-import { Tab } from '@headlessui/react';
 import useMediaQuery from '@material-ui/core/useMediaQuery';
 import Footer from '../components/Footer';
-import GridListTab from '../components/GridListTab';
 import Layout, { LayoutMain, LayoutSidebar } from '../components/Layout';
-import PostCard from '../components/PostCard';
 import PostMediaBlock from '../components/PostMediaBlock';
 import SidebarDefault from '../components/SidebarDefault';
 import breakpoints from '../config/breakpoints';
@@ -91,45 +88,29 @@ export default function SearchPage(props) {
       </Head>
       <Layout className="max-w-screen-2xl pb-14 xl:pb-0">
         <LayoutMain className="min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent">
-          <Tab.Group defaultIndex={1} manual>
-            <div className="px-2 lg:px-8">
-              <div className="flex justify-between items-baseline my-2 lg:mt-8">
-                <div className="ml-4 md:ml-0 mr-8 lg:font-display lg:text-xl">
-                  {isLoadingInitialData ? (
-                    'Searching…'
-                  ) : isEmpty ? (
-                    <>
-                      No results found for <em>{query}</em>
-                    </>
-                  ) : (
-                    <>
-                      Search results for <em>{query}</em>
-                    </>
-                  )}
-                </div>
-                <div className={isLoadingInitialData ? 'invisible' : ''}>
-                  <GridListTab.List hideLabels={!isSm} />
-                </div>
+          <div className="px-2 lg:px-8">
+            <div className="flex justify-between items-baseline py-4 lg:pt-8">
+              <div className="ml-2 sm:ml-4 lg:ml-0 mr-8 lg:font-display lg:text-xl">
+                {isLoadingInitialData ? (
+                  'Searching…'
+                ) : isEmpty ? (
+                  <>
+                    No results found for <em>{query}</em>
+                  </>
+                ) : (
+                  <>
+                    Search results for <em>{query}</em>
+                  </>
+                )}
               </div>
             </div>
-            <Tab.Panels>
-              <Tab.Panel>
-                <div className="px-2 lg:px-8 lg:pt-4 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
-                  {posts.map(post => (
-                    <PostCard inGrid key={post.uri} post={post} />
-                  ))}
-                </div>
-              </Tab.Panel>
-              <Tab.Panel>
-                <div className="px-2 py-px lg:px-8">
-                  {posts.map(post => (
-                    <PostMediaBlock key={post.uri} post={post} />
-                  ))}
-                </div>
-              </Tab.Panel>
-            </Tab.Panels>
-          </Tab.Group>
-          <div className="px-2 lg:px-8 text-center my-4 lg:my-8 xl:mb-32">
+          </div>
+          <div className="px-2 py-px lg:px-8">
+            {posts.map(post => (
+              <PostMediaBlock key={post.uri} post={post} />
+            ))}
+          </div>
+          <div className="px-2 lg:px-8 text-center pt-2 pb-4 lg:my-8 xl:mb-32">
             <button
               className={cx('btn w-full h-12 lg:h-10 lg:w-auto', {
                 'opacity-50': isLoadingMore,

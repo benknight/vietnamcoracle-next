@@ -112,7 +112,7 @@ function coracle__inject_ads($post_content)
 		$group_rows = $wpdb->get_results(
 			"SELECT id, page, page_loc, page_par, cat, cat_loc, cat_par FROM {$wpdb->prefix}adrotate_groups WHERE cat_loc > 0 AND cat_loc < 5 ORDER BY name;",
 		);
-		$wp_categories = get_terms("category", ["fields" => "ids"]);
+		$post_categories = wp_get_post_categories($post->ID);
 		foreach ($group_rows as $row) {
 			$categories = explode(",", $row->cat);
 			if (!is_array($categories)) {
@@ -122,7 +122,7 @@ function coracle__inject_ads($post_content)
 			if ($show_preview) {
 				$show_group = in_array($row->id, $preview_groups);
 			} else {
-				foreach ($wp_categories as &$value) {
+				foreach ($post_categories as &$value) {
 					if (in_array($value, $categories)) {
 						$show_group = true;
 					}
@@ -211,65 +211,6 @@ function coracle__inject_ads($post_content)
 		$post_content = implode("", $paragraphs);
 	}
 	return $post_content;
-	// --- OLD IMPLEMENTATION (Ported from Carl's jQuery code to PHP) ---
-	//   $paragraph_top_offset = 12;
-	//   $paragraph_skip_count = 5;
-	//   $paragraphs = explode('</p>', $post_content);
-	//   $paragraph_count = count($paragraphs);
-	//   $pattern = '/<\s*a[^>]*>.*?<\s*\/\s*a>/';
-	//   preg_match_all(
-	//     $pattern,
-	//     preg_replace('/\r|\n/', '', adrotate_group('17')),
-	//     $premium_ads_xl
-	//   );
-	//   preg_match_all(
-	//     $pattern,
-	//     preg_replace('/\r|\n/', '', adrotate_group('14')),
-	//     $premium_ads
-	//   );
-	//   preg_match_all(
-	//     $pattern,
-	//     preg_replace('/\r|\n/', '', adrotate_group('12')),
-	//     $standard_ads
-	//   );
-	//   $premium_ads_xl = array_shift($premium_ads_xl);
-	//   $premium_ads = array_shift($premium_ads);
-	//   $standard_ads = array_shift($standard_ads);
-	//   for (
-	//     $i = $paragraph_top_offset;
-	//     $i < $paragraph_count;
-	//     $i = $i + $paragraph_skip_count
-	//   ) {
-	//     if (trim($paragraphs[$i])) {
-	//       $paragraphs[$i] .= '</p>';
-	//     }
-	//     if ($ad_html = array_shift($premium_ads_xl)) {
-	//       $classname = 'premium_xl';
-	//     } elseif ($ad_html = array_shift($premium_ads)) {
-	//       $classname = 'premium';
-	//     } elseif ($ad_html = array_shift($standard_ads)) {
-	//       $classname = 'standard';
-	//       if ($ad_html_2 = array_shift($standard_ads)) {
-	//         $ad_html .= $ad_html_2;
-	//       }
-	//     }
-	//     if ($ad_html) {
-	//       $paragraphs[$i] .= <<<HTML
-	// <!-- injected ad, index $i -->
-	// <div class="in_article_ad in_article_ad--$classname">
-	//   <hr />
-	//   <small>Selected Resources</small>
-	//   <a class="in_article_ad_whats_this" href="/about-2/#ads">
-	//     <small>What’s this?</small>
-	//   </a>
-	//   <div class="in_article_ad_container">$ad_html</div>
-	//   <hr />
-	// </div>
-	// HTML;
-	//     }
-	//   }
-	//   $post_content = implode('', $paragraphs);
-	//   return $post_content;
 }
 
 // See: https://www.advancedcustomfields.com/resources/customize-the-wysiwyg-toolbars/
@@ -588,14 +529,14 @@ add_filter("graphql_connection_max_query_amount", function () {
 });
 
 // Rebuild site when redirects are updated
-function coracle__update_redirects()
+function coracle__redeploy_next()
 {
 	wp_remote_post(
-		"https://api.vercel.com/v1/integrations/deploy/QmYHtkC3ZMNx7CucDSQicEynNzn7zZP2Lw2d9Tgimzr4kv/bLUnOAGfZh",
+		"https://api.vercel.com/v1/integrations/deploy/prj_q9y1qe5iCUW97hKTPZK1oFOeSYjQ/Ty9G6PIdNR",
 	);
 }
-add_action("redirection_redirect_deleted", "coracle__update_redirects");
-add_action("redirection_redirect_updated", "coracle__update_redirects");
+add_action("redirection_redirect_deleted", "coracle__redeploy_next");
+add_action("redirection_redirect_updated", "coracle__redeploy_next");
 
 // Redirect preview page to Next preview
 add_action("template_redirect", function () {
@@ -701,3 +642,26 @@ add_action(
 	10,
 	2,
 );
+
+add_action(
+	"admin_bar_menu",
+	function ($wp_admin_bar) {
+		if (current_user_can("manage_options")) {
+			$wp_admin_bar->add_node([
+				"id" => "Coracle_Rebuild_Site",
+				"title" => "Rebuild Site",
+				"href" => wp_nonce_url(
+					admin_url("admin-ajax.php?action=coracle_rebuild_site"),
+					"coracle-rebuild-site",
+				),
+			]);
+		}
+	},
+	PHP_INT_MAX,
+);
+
+add_action("wp_ajax_coracle_rebuild_site", function () {
+	coracle__redeploy_next();
+	wp_safe_redirect($_SERVER["HTTP_REFERER"]);
+	exit();
+});

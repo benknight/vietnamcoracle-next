@@ -200,7 +200,7 @@ const Browse = ({
             </section>
           )}
         </LayoutMain>
-        <LayoutSidebar className="xl:bg-gradient-to-r from-gray-100 via-gray-100 dark:xl:bg-none">
+        <LayoutSidebar>
           <SidebarDefault className="!pt-10" />
           <Footer />
         </LayoutSidebar>

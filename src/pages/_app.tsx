@@ -193,7 +193,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           />
         </div>
       )}
-      <div className="relative bg-white dark:bg-gray-950">
+      <div className="relative bg-white dark:bg-gray-950 min-h-screen">
         <Header navCategory={pageProps?.navCategory} preview={preview} />
         <Component {...pageProps} />
       </div>

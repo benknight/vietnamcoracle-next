@@ -89,7 +89,7 @@ export default function NavBar({ navCategory }: Props) {
               className={cx(
                 'w-1/5 md:w-24 lg:w-auto h-16 lg:h-10 mx-1 lg:mx-[2px] sm:px-3 lg:px-3',
                 'flex flex-col lg:flex-row items-center justify-center text-center',
-                'rounded-full transition-colors duration-200 ease',
+                'rounded-full font-display tracking-wide',
                 'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-gray-800',
                 {
                   'dark:shadow text-primary-500 dark:text-primary-400':
@@ -99,13 +99,15 @@ export default function NavBar({ navCategory }: Props) {
               )}
               key={link.url}>
               {cloneElement(isCurrent(link.url) ? link.icon : link.iconAlt, {
-                className: '!w-5 !h-5 lg:mr-2 mb-1 lg:mb-0 shrink-0',
+                className: '!w-5 !h-5 lg:mr-2 mb-1 lg:mb-[3px] shrink-0',
               })}
               <div className="w-full">
                 <div className="xl:hidden text-xxxs xs:text-xxs lg:text-base">
                   {link.titleShort}
                 </div>
-                <div className="hidden xl:block">{link.title}</div>
+                <div className="hidden xl:block text-[14.5px]">
+                  {link.title}
+                </div>
               </div>
             </a>
           </Link>

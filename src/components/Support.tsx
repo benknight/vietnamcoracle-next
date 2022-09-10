@@ -24,7 +24,7 @@ export default function Support({ data: block }: Props) {
         </Link>
       </div>
       <BlockTitle>{block.title}</BlockTitle>
-      <BlockContent className="xl:max-w-[340px]">
+      <BlockContent className="xl:max-w-[350px]">
         <p>
           {block.description}{' '}
           <Link href={internalizeUrl(block.link.url)}>

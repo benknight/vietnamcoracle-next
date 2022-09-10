@@ -16,16 +16,16 @@ export default function About({ data: block }: Props) {
             <Image
               alt=""
               className="h-full rounded-full object-cover"
-              height="160"
+              height="140"
               layout="fixed"
               src={block.image.sourceUrl}
-              width="160"
+              width="140"
             />
           </a>
         </Link>
       </div>
       <BlockTitle>{block.title}</BlockTitle>
-      <BlockContent className="xl:max-w-[350px]">
+      <BlockContent className="xl:max-w-[300px]">
         <p>
           {block.description}{' '}
           <Link href={internalizeUrl(block.link.url)}>

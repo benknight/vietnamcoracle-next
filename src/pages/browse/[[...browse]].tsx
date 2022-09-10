@@ -78,7 +78,7 @@ const Browse = ({
       ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg} theme="dark">
           <HeroContent>
-            <div className="page-wrap pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end justify-between">
+            <div className="page-wrap pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end">
               <h1 className="mt-8 sm:mr-6 font-display">
                 {subcategory ? (
                   <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
@@ -98,16 +98,16 @@ const Browse = ({
               </h1>
               {category.map?.mid && !subcategory && (
                 <a
-                  className="self-end hidden md:inline-flex lg:inline-flex my-2 md:my-0 md:order-1 items-end text-sm hover:underline"
+                  className="self-end hidden md:inline-flex lg:inline-flex my-2 md:mb-1 md:order-1 items-end text-sm hover:underline"
                   href="#map">
                   <MapIcon className="w-5 h-5 mr-2" />
                   Jump to Map
                 </a>
               )}
               {category.children.nodes.length > 0 && (
-                <div className="flex-auto w-full md:w-auto lg:hidden">
+                <div className="flex-auto w-full md:hidden">
                   <button
-                    className="relative btn justify-center h-11 w-full md:w-auto mt-3 rounded-full bg-opacity-25"
+                    className="relative btn justify-between h-11 w-full mt-3 rounded-full bg-opacity-25"
                     onClick={() => setShowSubcats(value => !value)}>
                     {showSubcats
                       ? subcategory
@@ -130,7 +130,7 @@ const Browse = ({
               <div
                 className={cx(
                   'page-wrap pb-4 dark:pb-0 md:pr-24',
-                  showSubcats ? '' : 'hidden lg:block',
+                  showSubcats ? '' : 'hidden md:block',
                 )}>
                 {category.children.nodes.map(node => (
                   <Link
@@ -201,7 +201,7 @@ const Browse = ({
           )}
         </LayoutMain>
         <LayoutSidebar>
-          <SidebarDefault className="!pt-10" />
+          <SidebarDefault className="!pt-14" />
           <Footer />
         </LayoutSidebar>
       </Layout>

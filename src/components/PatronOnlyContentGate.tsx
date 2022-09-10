@@ -74,7 +74,7 @@ export default function PatronOnlyContentGate({ patron, patreonLevel }: Props) {
           </a>
           <p className="my-8 text-xs">
             <Link href="/become-a-patron-of-vietnam-coracle">
-              <a className="link">Learn More</a>
+              <a className="link">Learn More about Patreon</a>
             </Link>
           </p>
         </div>

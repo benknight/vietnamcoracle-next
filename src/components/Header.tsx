@@ -28,6 +28,7 @@ export default function Header({
   const showMini = !isHome || !fullHeaderVisible;
 
   useEffect(() => {
+    if (!('IntersectionObserver' in window)) return;
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {

@@ -7,6 +7,7 @@ import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
 import { Transition } from '@headlessui/react';
 import { MenuIcon } from '@heroicons/react/outline';
+import isHomePath from '../lib/isHomePath';
 import Menu from './Menu';
 import Nav from './Nav';
 import SearchForm from './SearchForm';
@@ -23,13 +24,7 @@ export default function Header({
   const [searchFocused, setSearchFocused] = useState(false);
   const [pinStart, setPinStart] = useState(0);
   const router = useRouter();
-  const isHome = [
-    '/',
-    '/browse',
-    '/browse/',
-    '/browse/features-guides',
-    '/browse/features-guides/',
-  ].includes(router.asPath);
+  const isHome = isHomePath(router.asPath);
   const showMini = !isHome || !fullHeaderVisible;
 
   useEffect(() => {

@@ -396,9 +396,9 @@ export const getStaticProps = async ({ params, preview = false }) => {
       ads: preview
         ? {
             collection: _.fill(Array(2), {
-              body: 'This is the ad body content. Use this to describe your product or service.',
+              body: 'This is the ad body content. Use this to describe your product or service. Spice it up with an image of your product.',
               enabled: true,
-              heading: 'Post Tile Banner [$250/month] [1:1]',
+              heading: 'Tile Banner [$250/month]',
               position: 3,
               cta: {
                 title: 'Call to Action',
@@ -406,7 +406,8 @@ export const getStaticProps = async ({ params, preview = false }) => {
               },
               image: {
                 altText: '',
-                srcLarge: 'https://via.placeholder.com/1024x1024?text=%20',
+                srcLarge:
+                  'https://cms.vietnamcoracle.com/wp-content/uploads/2022/09/placeholder-tile.png',
               },
             }),
           }

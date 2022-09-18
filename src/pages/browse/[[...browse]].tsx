@@ -154,7 +154,8 @@ const Browse = ({
         </Hero>
       )}
       <Layout className="py-px pb-14 xl:pb-0">
-        <LayoutMain className={cx('overflow-hidden', isHome ? 'pt-8' : 'pt-4')}>
+        <LayoutMain
+          className={cx('overflow-hidden', isHome ? 'pt-8 md:pt-0' : 'pt-4')}>
           {showCollections ? (
             category.collections.items.map((item, index) => (
               <section className="my-6 md:my-12" key={item.title}>

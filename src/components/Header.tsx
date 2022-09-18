@@ -25,7 +25,7 @@ export default function Header({
   const [pinStart, setPinStart] = useState(0);
   const router = useRouter();
   const isHome = isHomePath(router.asPath);
-  const showMini = !isHome || !fullHeaderVisible;
+  const showMini = true;
 
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return;
@@ -131,8 +131,8 @@ export default function Header({
         className={cx(
           'relative py-12 sm:py-16 px-3 xl:pt-12 text-center border-b border-gray-300 dark:border-gray-700',
           'bg-white dark:bg-gray-900 bg-gradient-to-b from-white to-gray-100 dark:from-gray-900 dark:to-gray-950',
-          { hidden: !isHome },
-        )}>
+        )}
+        hidden>
         <div className="inline-flex flex-col items-center">
           <Link href="/">
             <a className="flex">

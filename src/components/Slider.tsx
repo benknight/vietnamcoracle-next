@@ -48,7 +48,7 @@ export default function Slider({ className = '', children, ...props }) {
         busyRef.current = true;
         advanceRef.current();
         window.setTimeout(() => (busyRef.current = false), 500);
-      }, 10000);
+      }, 8000);
     }
     if (!play && intervalRef.current) {
       window.clearInterval(intervalRef.current);

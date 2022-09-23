@@ -160,7 +160,7 @@ const Browse = ({
             category.collections.items.map((item, index) => (
               <section className="my-6 md:my-12" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
-                  <h3 className="mb-2 font-display text-lg xs:text-xl sm:text-2xl lg:text-3xl 2xl:text-4xl">
+                  <h3 className="sm:mb-2 font-display sm:text-2xl 2xl:text-2xl dark:text-gray-200">
                     {item.title}
                   </h3>
                   {item.category && (

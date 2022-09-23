@@ -73,15 +73,12 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
             )}>
             {data.title}
           </h3>
-          <div
-            className={cx(
-              'postcard-excerpt',
-              'mt-2 font-serif text-sm text-gray-100 xl:text-gray-300',
-              {
-                'block line-clamp-3 xl:line-clamp-4': !inGrid,
-              },
-            )}
-            dangerouslySetInnerHTML={{ __html: data.body }}></div>
+          <div className="postcard-excerpt leading-snug mt-2 font-serif text-sm text-white/60 block line-clamp-3">
+            <div dangerouslySetInnerHTML={{ __html: data.body }} />
+            {/* <div className="link whitespace-nowrap text-blue-300">
+              Read more ›
+            </div> */}
+          </div>
           {ad && (
             <div className="rounded mt-3 p-2 bg-blue-700 text-white text-center">
               {ad.cta.title}

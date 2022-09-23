@@ -102,6 +102,10 @@
   .postcard-excerpt a {
     @apply hidden;
   }
+  .postcard-excerpt p,
+  .postcard-excerpt div {
+    @apply inline;
+  }
 }
 
 @layer utilities {

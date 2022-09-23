@@ -236,7 +236,7 @@ export default function Slider({ className = '', children, ...props }) {
             <RadioGroup.Label className="sr-only">
               Slider Image Index
             </RadioGroup.Label>
-            {buttons}
+            <div className="inline-flex scale-90">{buttons}</div>
           </RadioGroup>
         );
       })()}

@@ -20,8 +20,8 @@ const Map = ({ data }) => {
               'bg-yellow-200': browse?.[0] === 'food-and-drink',
             },
           )}>
-          <h3 className="text-xl xs:text-2xl sm:text-3xl">{data.title}</h3>
-          <p className="max-w-4xl mt-4 mb-6 sm:px-16 mx-auto text-sm md:text-base font-serif dark:text-gray-400">
+          <h3 className="text-xl md:text-2xl">{data.title}</h3>
+          <p className="max-w-4xl mt-4 mb-6 sm:px-16 mx-auto text-sm leading-snug md:text-base font-serif dark:text-white/50">
             {data.description}
           </p>
           <a

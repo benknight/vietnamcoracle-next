@@ -400,7 +400,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
             collection: _.fill(Array(2), {
               body: 'This is the ad body content. Use this to describe your product or service. Spice it up with an image of your product.',
               enabled: true,
-              heading: 'Tile Banner [$250/month]',
+              heading: 'Title Banner [$250/month]',
               position: 3,
               cta: {
                 title: 'Call to Action',

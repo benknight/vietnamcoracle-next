@@ -22,10 +22,23 @@ export default function Header({
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
   const isHome = isHomePath(router.asPath);
+  const [pinStart, setPinStart] = useState(0);
+
+  useEffect(() => {
+    const calculatePinStart = () => {
+      const box = ref.current.getBoundingClientRect();
+      setPinStart(window.scrollY + box.top);
+    };
+    calculatePinStart();
+    window.addEventListener('resize', calculatePinStart);
+    return () => {
+      window.removeEventListener('resize', calculatePinStart);
+    };
+  }, []);
 
   return (
     <div ref={ref}>
-      <Headroom className="relative z-30 w-full">
+      <Headroom className="relative z-30 w-full" pinStart={pinStart}>
         <div className="relative flex items-center justify-center h-14 lg:h-16 mx-auto bg-white dark:bg-gray-900">
           <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
             <Menu className="scale-90 lg:scale-100 origin-left">

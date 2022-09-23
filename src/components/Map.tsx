@@ -3,6 +3,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
+import { CursorClickIcon } from '@heroicons/react/outline';
 
 const Map = ({ data }) => {
   const router = useRouter();
@@ -54,14 +55,13 @@ const Map = ({ data }) => {
                 width="800"></iframe>
               <div
                 className={cx(
-                  'absolute inset-0 transition-all duration-300 cursor-pointer flex items-center justify-center text-2xl font-sans font-medium backdrop-saturate-50 hover:backdrop-saturate-100',
+                  'absolute inset-0 transition-all duration-300 cursor-pointer flex items-center justify-center text-2xl font-sans font-medium backdrop-saturate-50',
                   mapInteractive ? 'hidden' : 'hidden pointer:flex',
                 )}
                 onClick={() => setMapInteractive(true)}>
-                <button
-                  className="w-2/3 p-8 text-indigo-400 dark:text-white rounded-xl bg-white/75 dark:bg-black/25 shadow-lg"
-                  type="button">
-                  Click to interact with the map
+                <button className="w-2/3 p-8 text-indigo-400 dark:text-white rounded-xl bg-white/75 dark:bg-black/60 shadow-lg flex items-center justify-center">
+                  <CursorClickIcon className="w-8 h-8 mr-2" /> Click to interact
+                  with the map
                 </button>
               </div>
             </div>

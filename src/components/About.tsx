@@ -29,7 +29,7 @@ export default function About({ data: block }: Props) {
         <p>
           {block.description}{' '}
           <Link href={internalizeUrl(block.link.url)}>
-            <a className="link">{block.link.title}</a>
+            <a className="link whitespace-nowrap">{block.link.title}</a>
           </Link>
         </p>
       </BlockContent>

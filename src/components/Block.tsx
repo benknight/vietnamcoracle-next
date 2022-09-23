@@ -30,7 +30,7 @@ export const BlockContent = ({ className = '', children }) => (
       className,
       'mx-auto mb-8 px-4',
       'max-w-sm lg:max-w-md',
-      'text-sm xs:text-base xl:text-[15px] font-serif',
+      'text-sm sm:text-base xl:text-[15px] font-serif',
       'text-gray-600 dark:text-gray-400',
     )}>
     {children}

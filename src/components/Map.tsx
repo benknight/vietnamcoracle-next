@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
@@ -36,13 +35,33 @@ const Map = ({ data }) => {
             className="px-3 py-2 inline-flex items-center text-sm sm:text-base font-sans hover:underline  rounded-full border border-black/20 dark:border-white/20"
             href={`https://www.google.com/maps/d/viewer?mid=${data.mid}`}>
             <div className="inline-flex mr-2">
-              <Image
-                alt=""
-                height="24"
-                layout="fixed"
-                src="/google-maps-logo.svg"
-                width="24"
-              />
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 93 133"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M60.77 2.4C56.37 1.01 51.69 0.25 46.83 0.25C32.65 0.25 19.96 6.66 11.5 16.73L33.3 35.07L60.77 2.4Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M11.49 16.73C4.75 24.75 0.68 35.1 0.68 46.39C0.68 55.07 2.41 62.1 5.25 68.4L33.29 35.07L11.49 16.73Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M46.83 28.75C56.58 28.75 64.48 36.65 64.48 46.4C64.48 50.74 62.91 54.72 60.31 57.79C60.31 57.79 74.25 41.21 87.78 25.13C82.19 14.38 72.5 6.11 60.78 2.4L33.29 35.07C36.53 31.2 41.39 28.75 46.83 28.75Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M46.83 64.04C37.08 64.04 29.18 56.14 29.18 46.39C29.18 42.08 30.73 38.13 33.29 35.06L5.25 68.4C10.04 79.03 18.01 87.56 26.22 98.31L60.3 57.79C57.07 61.61 52.23 64.04 46.83 64.04Z"
+                  fill="currentColor"
+                />
+                <path
+                  d="M59.63 109.37C75.02 85.3 92.97 74.37 92.97 46.39C92.97 38.72 91.09 31.49 87.78 25.13L26.23 98.31C28.84 101.73 31.47 105.37 34.04 109.38C43.4 123.84 40.8 132.51 46.84 132.51C52.86 132.51 50.27 123.83 59.63 109.37Z"
+                  fill="currentColor"
+                />
+              </svg>
             </div>
             Open in Google Maps
             <ExternalLinkIcon className="ml-2 w-4 h-4" />

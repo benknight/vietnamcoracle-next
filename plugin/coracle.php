@@ -624,6 +624,9 @@ function coracle__revalidate_term($term_id)
 	$link = get_term_link($term_id);
 	$parsed_link = parse_url($link);
 	$path = str_replace("/category/features-guides", "/browse", $parsed_link["path"]);
+	if ($path === "/browse/") {
+		$path = "/";
+	}
 	wp_remote_get(
 		"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
 	);

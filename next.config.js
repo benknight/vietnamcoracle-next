@@ -40,6 +40,11 @@ const moduleExports = {
         source: '/feed/',
       },
       {
+        destination: '/',
+        permanent: true,
+        source: '/browse/',
+      },
+      {
         destination: '/browse/:path*',
         permanent: true,
         source: '/category/features-guides/:path*',

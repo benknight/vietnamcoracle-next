@@ -315,6 +315,9 @@ export async function getPostPageProps(
       'data-image': data.contentNode.featuredImage?.node.sourceUrl ?? '',
     });
 
+    // Lazy load all iframes
+    $('iframe').attr({ loading: 'lazy' });
+
     // Generate contents menu
     const internalLinks = $(
       data.contentNode?.settings?.useNextStyles

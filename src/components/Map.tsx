@@ -74,6 +74,7 @@ const Map = ({ data }) => {
                 className="absolute inset-0 w-full h-full"
                 height="650"
                 src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=6&hl=en`}
+                loading="lazy"
                 title={data.title}
                 width="800"></iframe>
               <div

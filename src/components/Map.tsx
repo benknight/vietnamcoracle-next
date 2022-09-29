@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 import { CursorClickIcon } from '@heroicons/react/outline';

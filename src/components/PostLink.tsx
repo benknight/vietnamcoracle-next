@@ -1,6 +1,11 @@
-import useCategoryRef from '../lib/useCategoryRef';
+import useNavCategory from '../lib/useNavCategory';
 
 export default function PostLink({ post, ...props }) {
-  const ref = useCategoryRef();
-  return <a href={`/${post.slug}/${ref ? `?ref=${ref}` : ''}`} {...props} />;
+  const navCategory = useNavCategory();
+  return (
+    <a
+      href={`/${post.slug}/${navCategory ? `?ref=${navCategory}` : ''}`}
+      {...props}
+    />
+  );
 }

@@ -2,12 +2,14 @@ import cx from 'classnames';
 import type { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { StylesProvider } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import { pageview } from '../lib/GoogleAnalytics';
+import isHomePath from '../lib/isHomePath';
+import { NavCategory } from '../lib/useNavCategory';
 import useWaitCursor from '../lib/useWaitCursor';
 import '../styles/fonts.css';
 import '../styles/style.css';
@@ -22,6 +24,16 @@ function MyApp({ Component, pageProps }: AppProps) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const ads = pageProps.ads;
+  const navCategory = useMemo(() => {
+    if (pageProps?.navCategory) return pageProps.navCategory;
+    if (router.query.ref) return router.query.ref;
+    if (router.pathname === '/browse/[[...browse]]') {
+      if (isHomePath(router.asPath)) {
+        return null;
+      }
+      return router.query.browse?.[0];
+    }
+  }, [pageProps, router.query]);
 
   useEffect(() => {
     const routeChangeStart = () => setLoading(true);
@@ -194,8 +206,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         </div>
       )}
       <div className="relative bg-white dark:bg-gray-950 min-h-screen">
-        <Header navCategory={pageProps?.navCategory} preview={preview} />
-        <Component {...pageProps} />
+        <NavCategory.Provider value={navCategory}>
+          <Header preview={preview} />
+          <Component {...pageProps} />
+        </NavCategory.Provider>
       </div>
     </StylesProvider>
   );

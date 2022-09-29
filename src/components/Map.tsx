@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { ExternalLinkIcon } from '@heroicons/react/solid';
 import { CursorClickIcon } from '@heroicons/react/outline';
+import useNavCategory from '../lib/useNavCategory';
 
 const Map = ({ data }) => {
-  const router = useRouter();
+  const navCategory = useNavCategory();
   const [mapInteractive, setMapInteractive] = useState(false);
-  const { browse } = router.query;
   return (
     <div id="map">
       <div className="lg:rounded-lg overflow-hidden">
@@ -15,16 +15,15 @@ const Map = ({ data }) => {
           className={cx(
             'relative py-8 px-6 md:p-10 text-center dark:text-white lg:rounded-t-lg font-display',
             {
-              'bg-indigo-100 dark:bg-indigo-500/20':
-                browse === 'features-guides',
+              'bg-indigo-100 dark:bg-indigo-500/20': navCategory === null,
               'bg-amber-500/40 dark:bg-amber-500/10':
-                browse?.[0] === 'hotel-reviews',
+                navCategory === 'hotel-reviews',
               'bg-emerald-700/40 dark:bg-emerald-500/20':
-                browse?.[0] === 'motorbike-guides',
+                navCategory === 'motorbike-guides',
               'bg-yellow-700/40 dark:bg-yellow-800/20':
-                browse?.[0] === 'destinations',
+                navCategory === 'destinations',
               'bg-yellow-400/50 dark:bg-yellow-500/10':
-                browse?.[0] === 'food-and-drink',
+                navCategory === 'food-and-drink',
             },
           )}>
           <h3 className="text-xl md:text-2xl">{data.title}</h3>

@@ -11,13 +11,7 @@ import Menu from './Menu';
 import Nav from './Nav';
 import SearchForm from './SearchForm';
 
-export default function Header({
-  preview,
-  navCategory,
-}: {
-  navCategory?: string;
-  preview: boolean;
-}) {
+export default function Header({ preview }: { preview: boolean }) {
   const ref = useRef<HTMLDivElement>();
   const [searchFocused, setSearchFocused] = useState(false);
   const router = useRouter();
@@ -80,7 +74,7 @@ export default function Header({
             />
           </div>
           <div className="hidden lg:block">
-            <Nav navCategory={navCategory} />
+            <Nav />
           </div>
           {preview && (
             <div className="absolute top-full left-0 w-full flex justify-center">
@@ -97,7 +91,7 @@ export default function Header({
         </div>
       </Headroom>
       <div className="nav-bar fixed lg:hidden bottom-0 z-20 w-full h-16 bg-gray-100 md:bg-white dark:bg-gray-900 md:dark:bg-gray-900">
-        <Nav navCategory={navCategory} />
+        <Nav />
       </div>
     </div>
   );

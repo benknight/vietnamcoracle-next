@@ -32,7 +32,10 @@ export default function Header({ preview }: { preview: boolean }) {
 
   return (
     <div ref={ref}>
-      <Headroom className="relative z-30 w-full" pinStart={pinStart}>
+      <Headroom
+        className="relative z-30 w-full"
+        pinStart={pinStart}
+        upTolerance={50}>
         <div className="relative flex items-center justify-center h-14 lg:h-16 mx-auto bg-white dark:bg-gray-900">
           <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
             <Menu className="scale-90 lg:scale-100 origin-left">

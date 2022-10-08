@@ -27,10 +27,9 @@ const moduleExports = {
     const cmsRedirects = JSON.parse(response.data.data)?.redirects;
     const redirects = [
       ...cmsRedirects.map(config => ({
-        destination: config.action_data.url.replace(
-          /https?\:\/\/(www\.)?(cms\.)?vietnamcoracle\.com/g,
-          '',
-        ),
+        destination: config.action_data.url
+          .replace(/https?\:\/\/(www\.)?(cms\.)?vietnamcoracle\.com/g, '')
+          .replace(':', '\\:'),
         permanent: true,
         source: config.match_url,
       })),

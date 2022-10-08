@@ -27,11 +27,12 @@ const moduleExports = {
     const cmsRedirects = JSON.parse(response.data.data)?.redirects;
     const redirects = [
       ...cmsRedirects.map(config => ({
-        destination: config.action_data.url
-          .replace(/https?\:\/\/(www\.)?(cms\.)?vietnamcoracle\.com/g, '')
-          .replace(':', '\\:'),
+        destination: config.action_data.url.replace(
+          /https?\:\/\/(www\.)?(cms\.)?vietnamcoracle\.com/g,
+          '',
+        ),
         permanent: true,
-        source: config.match_url,
+        source: config.match_url.replace(':', '\\:'),
       })),
       {
         destination: 'https://cms.vietnamcoracle.com/feed/',

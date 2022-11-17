@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import Slider, { SliderSlide } from './Slider';
+import { Slider, SliderSlide } from './Slider';
 import Hero from './Hero';
 
 const CategorySlider = ({ data }) => {

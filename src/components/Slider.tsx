@@ -1,10 +1,10 @@
 import cx from 'classnames';
-import { throttle } from 'lodash';
+import { debounce, throttle } from 'lodash';
 import { forwardRef, useCallback, useRef, useState, useEffect } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 
-export default function Slider({ className = '', children, ...props }) {
+export function Slider({ className = '', children }) {
   const advanceRef = useRef<() => void>();
   const cursorRef = useRef<number>();
   const busyRef = useRef<boolean>();
@@ -144,6 +144,18 @@ export default function Slider({ className = '', children, ...props }) {
     };
   }, []);
 
+  // Prevent slider from getting 'stuck' in an in-between position
+  // (happens only in Chromium as of Nov 2022)
+  useEffect(() => {
+    const listener = debounce(() => goTo(cursorRef.current), 1000);
+    parentRef.current?.addEventListener('wheel', listener);
+    parentRef.current?.addEventListener('touchend', listener);
+    return () => {
+      parentRef.current?.removeEventListener('wheel', listener);
+      parentRef.current?.removeEventListener('touchend', listener);
+    };
+  }, []);
+
   // Sync cursor ref with cursor state
   useEffect(() => {
     cursorRef.current = cursor;
@@ -151,7 +163,6 @@ export default function Slider({ className = '', children, ...props }) {
 
   return (
     <div
-      {...props}
       className={cx(className, 'relative text-gray-900 bg-black')}
       ref={rootRef}>
       <div className="relative overflow-hidden">

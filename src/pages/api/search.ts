@@ -13,7 +13,9 @@ export default async function handler(req: NextRequest) {
     const result = await fetch(
       `https://${appId}-dsn.algolia.net/1/indexes/wp_post?` +
         new URLSearchParams({
-          attributesToRetrieve: 'excerpt,slug,thumbnail,title',
+          attributesToHighlight: 'title',
+          attributesToRetrieve: 'slug,thumbnail',
+          attributesToSnippet: 'content:40,excerpt:40',
           hitsPerPage: String(Math.min(100, Number(params.get('pageSize')))),
           page: String(Number(params.get('page')) - 1),
           query: params.get('q'),

@@ -127,7 +127,7 @@ function Page({
   } else if (index === 0) {
     status = (
       <>
-        Search results for <em>{query}</em>
+        Search results for ‘<em>{query}</em>’
       </>
     );
   }

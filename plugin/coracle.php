@@ -671,3 +671,94 @@ add_action("wp_ajax_coracle_rebuild_site", function () {
 	wp_safe_redirect($_SERVER["HTTP_REFERER"]);
 	exit();
 });
+
+// --- Algolia Custom Integration (Added January 2023) ---
+// See: https://www.algolia.com/doc/integration/wordpress/getting-started/quick-start/?client=php
+
+function isSplitRecord($arr)
+{
+	// Split records must be an indexed array
+	return array_keys($arr) == range(0, count($arr) - 1);
+}
+
+function algolia_post_to_record(WP_Post $post)
+{
+	$tags = array_map(function (WP_Term $term) {
+		return $term->name;
+	}, wp_get_post_terms($post->ID, "post_tag"));
+
+	// Prepare all common attributes and add a new `distinct_key` property
+	$common = [
+		"distinct_key" => implode("#", [$post->post_type, $post->ID]),
+		"title" => $post->post_title,
+		"author" => [
+			"id" => $post->post_author,
+			"name" => get_user_by("ID", $post->post_author)->display_name,
+		],
+		"excerpt" => $post->post_excerpt,
+		"content" => strip_tags($post->post_content),
+		"tags" => $tags,
+		"slug" => $post->post_name,
+		"thumbnail" => get_the_post_thumbnail_url($post->ID, "medium"),
+	];
+
+	// Split the records on the `post_content` attribute
+	$splitter = new \Algolia\HtmlSplitter();
+	$records = $splitter->split($post);
+
+	// Merge the common attributes into each split and add a unique `objectID`
+	foreach ($records as $key => $split) {
+		$records[$key] = array_merge($common, $split, [
+			"objectID" => implode("-", [$post->post_type, $post->ID, $key]),
+		]);
+	}
+
+	return $records;
+}
+
+add_filter("post_to_record", "algolia_post_to_record");
+
+function algolia_update_post($id, WP_Post $post, $update)
+{
+	if (wp_is_post_revision($id) || wp_is_post_autosave($id)) {
+		return $post;
+	}
+
+	// Only bother
+	if ($post->post_type !== "post") {
+		return $post;
+	}
+
+	global $algolia;
+
+	$record = (array) apply_filters($post->post_type . "_to_record", $post);
+
+	if (!isset($record["objectID"])) {
+		$record["objectID"] = implode("#", [$post->post_type, $post->ID]);
+	}
+
+	$index = $algolia->initIndex(apply_filters("algolia_index_name", $post->post_type));
+
+	// If the post is split, we always delete it
+	if ($splitRecord = isSplitRecord($record)) {
+		$index->deleteBy(["filters" => "distinct_key:" . $record["distinct_key"]]);
+	}
+
+	if ("trash" == $post->status) {
+		// If the post was split, it's already deleted
+		if (!$splitRecord) {
+			$index->deleteObject($record["objectID"]);
+		}
+	} else {
+		$index->saveObjects([$record]);
+	}
+
+	return $post;
+}
+
+add_action("save_post", "algolia_update_post", 10, 3);
+
+add_filter("algolia_index_name", function ($defaultName) {
+	global $table_prefix;
+	return $table_prefix . $defaultName;
+});

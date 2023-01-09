@@ -52,9 +52,11 @@ function PostMediaBlock({ post }: Props) {
         <div className="flex items-baseline">
           <PostLink
             className="link sm:mt-1 text-base sm:text-2xl font-display"
-            slug={post.slug}>
-            {post.title}
-          </PostLink>
+            dangerouslySetInnerHTML={{
+              __html: post.title,
+            }}
+            slug={post.slug}
+          />
         </div>
         <div
           className="my-1 text-sm sm:text-base lg:font-serif"

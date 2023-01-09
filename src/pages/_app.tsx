@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import type { AppProps } from 'next/app';
+import { AppProps } from 'next/app';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
@@ -19,7 +19,18 @@ if (typeof window !== 'undefined') {
   smoothscroll.polyfill();
 }
 
-function MyApp({ Component, pageProps }: AppProps) {
+type PageProps = {
+  ads: {
+    header: {
+      enabled: boolean;
+      html: string;
+    };
+  };
+  navCategory: string;
+  preview: boolean;
+};
+
+function MyApp({ Component, pageProps }: AppProps<PageProps>) {
   const { preview } = pageProps;
   const [loading, setLoading] = useState(false);
   const router = useRouter();

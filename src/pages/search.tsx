@@ -73,16 +73,18 @@ const algoliaResultsFetcher = async ([query, page, pageSize]): Promise<
   if (result.hits.length === 0) {
     return [];
   }
-  const posts = [...result.hits];
-  return posts.map(post => ({
+  const hits = [...result.hits];
+  return hits.map(hit => ({
     categories: [],
-    excerpt: post.excerpt,
+    excerpt: hit.excerpt
+      ? hit._snippetResult.excerpt.value
+      : hit._snippetResult.content.value,
     image: {
-      altText: post.thumbnailAltText,
-      src: post.thumbnail,
+      altText: hit.thumbnailAltText,
+      src: hit.thumbnail,
     },
-    slug: post.slug,
-    title: post.title,
+    slug: hit.slug,
+    title: hit._highlightResult.title.value,
   }));
 };
 
@@ -210,7 +212,8 @@ export default function Search() {
                 key={i}
                 query={query ? String(query) : ''}
                 onClickMore={() => setPageCount(x => x + 1)}
-                onError={() => {
+                onError={error => {
+                  console.error(error);
                   if (source === 'algolia') {
                     setPageCount(1);
                     setSource('wp');

@@ -675,10 +675,12 @@ add_action("wp_ajax_coracle_rebuild_site", function () {
 // --- Algolia Custom Integration (Added January 2023) ---
 // See: https://www.algolia.com/doc/integration/wordpress/getting-started/quick-start/?client=php
 
-function isSplitRecord($arr)
+function isAssoc(array $arr)
 {
-	// Split records must be an indexed array
-	return array_keys($arr) == range(0, count($arr) - 1);
+	if ([] === $arr) {
+		return false;
+	}
+	return array_keys($arr) !== range(0, count($arr) - 1);
 }
 
 function algolia_post_to_record(WP_Post $post)
@@ -724,7 +726,6 @@ function algolia_update_post($id, WP_Post $post, $update)
 		return $post;
 	}
 
-	// Only bother
 	if ($post->post_type !== "post") {
 		return $post;
 	}
@@ -738,15 +739,16 @@ function algolia_update_post($id, WP_Post $post, $update)
 	}
 
 	$index = $algolia->initIndex(apply_filters("algolia_index_name", $post->post_type));
+	$isSplitRecord = !isAssoc($record);
 
 	// If the post is split, we always delete it
-	if ($splitRecord = isSplitRecord($record)) {
-		$index->deleteBy(["filters" => "distinct_key:" . $record["distinct_key"]]);
+	if ($isSplitRecord) {
+		$index->deleteBy(["filters" => "distinct_key:" . $record[0]["distinct_key"]]);
 	}
 
 	if ("trash" == $post->status) {
 		// If the post was split, it's already deleted
-		if (!$splitRecord) {
+		if (!$isSplitRecord) {
 			$index->deleteObject($record["objectID"]);
 		}
 	} else {

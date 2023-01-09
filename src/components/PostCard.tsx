@@ -109,7 +109,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
   }
 
   return (
-    <PostLink className={parentClassName} post={post}>
+    <PostLink className={parentClassName} slug={post.slug}>
       {inner}
     </PostLink>
   );

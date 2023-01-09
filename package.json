@@ -4,7 +4,7 @@
   "author": "Benjamin Knight <ben@benknight.me>",
   "scripts": {
     "build": "next build",
-    "develop": "next dev -p 7777",
+    "develop": "next dev",
     "export": "next export",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",
@@ -19,6 +19,7 @@
     "@material-ui/icons": "^4.11.2",
     "@sentry/nextjs": "^7.11.1",
     "@svgr/webpack": "^6.1.2",
+    "algoliasearch": "^4.14.3",
     "axios": "^0.24.0",
     "cheerio": "^1.0.0-rc.5",
     "classnames": "latest",
@@ -36,7 +37,7 @@
     "react-helmet": "latest",
     "react-share": "^4.4.0",
     "smoothscroll-polyfill": "^0.4.4",
-    "swr": "^1.0.1"
+    "swr": "^2.0.0"
   },
   "devDependencies": {
     "@prettier/plugin-php": "^0.18.4",

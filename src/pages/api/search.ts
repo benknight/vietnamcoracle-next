@@ -1,26 +1,32 @@
-import algoliasearch from 'algoliasearch/lite';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
-const client = algoliasearch(
-  process.env.ALGOLIA_APP_ID,
-  process.env.ALGOLIA_KEY_ADMIN,
-);
+const { ALGOLIA_APP_ID: appId, ALGOLIA_KEY_ADMIN: key } = process.env;
 
-const index = client.initIndex('wp_post');
+export const config = {
+  runtime: 'experimental-edge',
+  regions: ['sin1'],
+};
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
+export default async function handler(req: NextRequest) {
   try {
-    const { q, page = 1, pageSize } = req.query;
-    const result = await index.search(String(q), {
-      attributesToRetrieve: ['excerpt', 'slug', 'thumbnail', 'title'],
-      hitsPerPage: Math.min(100, Number(pageSize)),
-      page: Number(page) - 1,
-    });
-    res.json(result);
+    const params = new URL(req.url).searchParams;
+    const result = await fetch(
+      `https://${appId}-dsn.algolia.net/1/indexes/wp_post?` +
+        new URLSearchParams({
+          attributesToRetrieve: 'excerpt,slug,thumbnail,title',
+          hitsPerPage: String(Math.min(100, Number(params.get('pageSize')))),
+          page: String(Number(params.get('page')) - 1),
+          query: params.get('q'),
+        }),
+      {
+        headers: {
+          'X-Algolia-Application-Id': appId,
+          'X-Algolia-API-Key': key,
+        },
+      },
+    ).then(res => res.json());
+    return NextResponse.json(result);
   } catch (error) {
-    res.status(503).send(null);
+    return NextResponse.error();
   }
 }

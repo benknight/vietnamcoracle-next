@@ -69,7 +69,7 @@ export default function Header({ preview }: { preview: boolean }) {
             )}>
             <SearchForm
               className={cx('ring-2 ring-white md:ring-0 dark:ring-gray-900', {
-                'w-28 xs:w-32 md:w-44': !searchFocused,
+                'w-28 xs:w-32 md:w-60': !searchFocused,
                 'w-full md:w-60 2xl:w-60': searchFocused,
               })}
               onBlur={() => setSearchFocused(false)}

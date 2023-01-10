@@ -718,6 +718,22 @@ function algolia_post_to_record(WP_Post $post)
 	return $records;
 }
 
+add_filter("term_to_record", "algolia_term_to_record");
+
+function algolia_term_to_record(WP_Term $term)
+{
+	$record = [
+		"count" => $term->count,
+		"id" => $term->term_id,
+		"name" => $term->name,
+		"objectID" => implode("#", [$term->taxonomy, $term->term_id]),
+		"parent" => $term->parent,
+		"slug" => $term->slug,
+		"taxonomy" => $term->taxonomy,
+	];
+	return $record;
+}
+
 add_filter("post_to_record", "algolia_post_to_record");
 
 function algolia_update_post($id, WP_Post $post, $update)

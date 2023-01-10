@@ -148,6 +148,7 @@ function Page({
         <PostMediaBlock key={post.slug} post={post} />
       ))}
       {isLastPage &&
+        !noResults &&
         !isLoading &&
         (source === 'algolia' || posts.length < pageSize) && (
           <div className="text-sm text-center italic">End of results.</div>

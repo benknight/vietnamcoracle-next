@@ -76,9 +76,12 @@ const algoliaResultsFetcher = async ([query, page, pageSize]): Promise<
   const hits = [...result.hits];
   return hits.map(hit => ({
     categories: [],
-    excerpt: hit.excerpt
-      ? hit._snippetResult.excerpt.value
-      : hit._snippetResult.content.value,
+    excerpt:
+      hit.excerpt && hit._snippetResult.excerpt.matchLevel === 'full'
+        ? hit._snippetResult.excerpt.value
+        : hit._snippetResult.content.matchLevel === 'full'
+        ? hit._snippetResult.content.value
+        : hit._snippetResult.excerpt.value,
     image: {
       altText: hit.thumbnailAltText,
       src: hit.thumbnail,

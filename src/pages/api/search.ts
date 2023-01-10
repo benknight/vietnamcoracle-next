@@ -14,7 +14,7 @@ export default async function handler(req: NextRequest) {
       `https://${appId}-dsn.algolia.net/1/indexes/wp_post?` +
         new URLSearchParams({
           attributesToHighlight: 'title',
-          attributesToRetrieve: 'slug,thumbnail',
+          attributesToRetrieve: 'slug,thumbnail,title',
           attributesToSnippet: 'content:40,excerpt:40',
           hitsPerPage: String(Math.min(100, Number(params.get('pageSize')))),
           page: String(Number(params.get('page')) - 1),

@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import _keyBy from 'lodash/keyBy';
 import _mapValues from 'lodash/mapValues';
-import Image from "next/legacy/image";
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
@@ -85,7 +85,6 @@ export default function Subscribe({ data: block }: Props) {
             alt=""
             className="h-full rounded-full object-cover"
             height="80"
-            layout="fixed"
             src={block.image.sourceUrl}
             width="80"
           />

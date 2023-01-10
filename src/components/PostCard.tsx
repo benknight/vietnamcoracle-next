@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import _get from 'lodash/get';
-import Image from "next/legacy/image";
+import Image from 'next/image';
 import { useMemo } from 'react';
 import PostLink from './PostLink';
 
@@ -38,15 +38,18 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
         <Image
           alt={data.image.altText}
           className="transition-ease-out duration-300 pointer:origin-top group-hover:xl:scale-[1.02] group-hover:duration-[3s]"
-          layout="fill"
           loading="lazy"
-          objectFit="cover"
           quality={50}
           src={
             ad
               ? data.image.srcLarge
               : `https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.image.srcLarge}`
           }
+          fill
+          sizes="100vw"
+          style={{
+            objectFit: 'cover',
+          }}
         />
       </div>
       <div className="absolute w-full pt-[101%] pointer-events-none">

@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import Image from "next/legacy/image";
+import Image from 'next/image';
 import { createContext, useContext } from 'react';
 
 type HeroImage = {
@@ -50,10 +50,13 @@ export default function Hero({
           <Image
             alt={imgSm.altText}
             key={imgSm.id}
-            layout="fill"
-            objectFit="cover"
             priority={priority}
             src={imgSm.sourceUrl}
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'cover',
+            }}
           />
         </div>
         <div className="hidden lg:block">
@@ -61,11 +64,15 @@ export default function Hero({
             alt={imgLg.altText}
             height={imgLg.mediaDetails.height}
             key={imgLg.id}
-            layout="responsive"
-            objectFit="cover"
             priority={priority}
             src={imgLg.sourceUrl}
             width={imgLg.mediaDetails.width}
+            sizes="100vw"
+            style={{
+              width: '100%',
+              height: 'auto',
+              objectFit: 'cover',
+            }}
           />
         </div>
         {children}

@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
-import Image from "next/legacy/image";
+import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useRef, useState, useEffect } from 'react';
@@ -47,6 +47,10 @@ export default function Header({ preview }: { preview: boolean }) {
                   loading="eager"
                   src="/logo.svg"
                   width={44}
+                  style={{
+                    maxWidth: '100%',
+                    height: 'auto',
+                  }}
                 />
               </div>
             </Menu>

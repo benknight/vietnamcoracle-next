@@ -1,5 +1,5 @@
 import _get from 'lodash/get';
-import Image from "next/legacy/image";
+import Image from 'next/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
 import PostLink from './PostLink';
@@ -40,10 +40,13 @@ function PostMediaBlock({ post }: Props) {
               alt={post.image.altText}
               className="rounded"
               height={150}
-              layout="intrinsic"
               loading="lazy"
               src={`https://res.cloudinary.com/vietnam-coracle/image/fetch/${post.image.src}`}
               width={150}
+              style={{
+                maxWidth: '100%',
+                height: 'auto',
+              }}
             />
           </PostLink>
         </div>

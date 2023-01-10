@@ -1,4 +1,4 @@
-import Image from "next/legacy/image";
+import Image from 'next/image';
 import Link from 'next/link';
 import internalizeUrl from '../lib/internalizeUrl';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
@@ -13,10 +13,9 @@ export default function About({ data: block }: Props) {
       <div className="mb-6 flex justify-center">
         <Link href={internalizeUrl(block.link.url)}>
           <Image
-            alt=""
-            className="h-full rounded-full object-cover"
+            alt="Picture of Tom"
+            className="rounded-full"
             height="140"
-            layout="fixed"
             src={block.image.sourceUrl}
             width="140"
           />

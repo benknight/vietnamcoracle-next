@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import _keyBy from 'lodash/keyBy';
 import _mapValues from 'lodash/mapValues';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';

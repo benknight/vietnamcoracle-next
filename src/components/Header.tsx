@@ -50,12 +50,12 @@ export default function Header({ preview }: { preview: boolean }) {
                 />
               </div>
             </Menu>
-            <Link href="/">
-              <a className="flex items-center hover:text-black dark:hover:text-white">
-                <h1 className="lg:ml-2 font-semibold font-display tracking-tight">
-                  Vietnam Coracle
-                </h1>
-              </a>
+            <Link
+              href="/"
+              className="flex items-center hover:text-black dark:hover:text-white">
+              <h1 className="lg:ml-2 font-semibold font-display tracking-tight">
+                Vietnam Coracle
+              </h1>
             </Link>
           </div>
           <div
@@ -84,10 +84,9 @@ export default function Header({ preview }: { preview: boolean }) {
               <Link
                 href={`/api/exit-preview/?redirect=${encodeURIComponent(
                   isHome ? '/' : router.asPath,
-                )}`}>
-                <a className="flex items-center justify-center h-5 mt-1 px-4 bg-yellow-300 dark:bg-opacity-75 hover:bg-opacity-100 text-black text-xs font-medium shadow rounded-full">
-                  You are viewing in Preview Mode. Click here to exit.
-                </a>
+                )}`}
+                className="flex items-center justify-center h-5 mt-1 px-4 bg-yellow-300 dark:bg-opacity-75 hover:bg-opacity-100 text-black text-xs font-medium shadow rounded-full">
+                You are viewing in Preview Mode. Click here to exit.
               </Link>
             </div>
           )}

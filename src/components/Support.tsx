@@ -16,56 +16,56 @@ export default function Support({ data: block }: Props) {
   return (
     <Block className="group">
       <div className="flex justify-center mb-6">
-        <Link href="/donations-page">
-          <a className="relative top-1 !w-14 !h-14 text-red-500">
-            <HeartIcon className="!w-full !h-full absolute inset-0" />
-            <HeartIcon className="!w-full !h-full absolute inset-0 xl:!hidden xl:group-hover:!block animate-ping opacity-60" />
-          </a>
+        <Link
+          href="/donations-page"
+          className="relative top-1 !w-14 !h-14 text-red-500">
+          <HeartIcon className="!w-full !h-full absolute inset-0" />
+          <HeartIcon className="!w-full !h-full absolute inset-0 xl:!hidden xl:group-hover:!block animate-ping opacity-60" />
         </Link>
       </div>
       <BlockTitle>{block.title}</BlockTitle>
       <BlockContent className="xl:max-w-[350px]">
         <p>
           {block.description}{' '}
-          <Link href={internalizeUrl(block.link.url)}>
-            <a className="link whitespace-nowrap">Read more ›</a>
+          <Link
+            href={internalizeUrl(block.link.url)}
+            className="link whitespace-nowrap">
+            Read more ›
           </Link>
         </p>
       </BlockContent>
       <div className="max-w-xs mx-auto">
-        <Link href="/donations-page">
-          <a
-            className={`
-              ${btnClassName} text-white h-12
-              bg-primary-500 hover:bg-primary-400 hover:bg-opacity-100
-              border-primary-500 hover:border-primary-400 dark:border-opacity-50`}>
-            <CurrencyDollarIcon className="w-6 h-6 mr-1" />{' '}
-            <span className="pr-4">Donate</span>
-          </a>
+        <Link
+          href="/donations-page"
+          className={`
+            ${btnClassName} text-white h-12
+            bg-primary-500 hover:bg-primary-400 hover:bg-opacity-100
+            border-primary-500 hover:border-primary-400 dark:border-opacity-50`}>
+          <CurrencyDollarIcon className="w-6 h-6 mr-1" />{' '}
+          <span className="pr-4">Donate</span>
         </Link>
-        <Link href="/become-a-patron-of-vietnam-coracle">
-          <a
-            className={`${btnClassName} btn-patreon border-white dark:border-black h-12`}>
-            <img
-              alt=""
-              className="w-4 h-4 mr-2"
-              src="/Digital-Patreon-Logo_FieryCoral.png"
-            />
-            Become a Patron
-          </a>
+        <Link
+          href="/become-a-patron-of-vietnam-coracle"
+          className={`${btnClassName} btn-patreon border-white dark:border-black h-12`}>
+          <img
+            alt=""
+            className="w-4 h-4 mr-2"
+            src="/Digital-Patreon-Logo_FieryCoral.png"
+          />
+          Become a Patron
         </Link>
         <div className="flex text-xs">
-          <Link href="/book-your-accommodation">
-            <a
-              className={`${btnClassName} border-white dark:border-black flex-auto hover:bg-blue-400 hover:bg-opacity-25 h-10`}>
-              <HotelIcon className="!w-[14px] !h-[14px] mr-2" /> Book Hotels
-            </a>
+          <Link
+            href="/book-your-accommodation"
+            className={`${btnClassName} border-white dark:border-black flex-auto hover:bg-blue-400 hover:bg-opacity-25 h-10`}>
+            <HotelIcon className="!w-[14px] !h-[14px] mr-2" />
+            Book Hotels
           </Link>
-          <Link href="/book-your-transportation">
-            <a
-              className={`${btnClassName} border-white dark:border-black ml-1 flex-auto hover:bg-green-400 hover:bg-opacity-25 h-10`}>
-              <FlightIcon className="!w-[14px] !h-[14px] mr-2" /> Book Transport
-            </a>
+          <Link
+            href="/book-your-transportation"
+            className={`${btnClassName} border-white dark:border-black ml-1 flex-auto hover:bg-green-400 hover:bg-opacity-25 h-10`}>
+            <FlightIcon className="!w-[14px] !h-[14px] mr-2" />
+            Book Transport
           </Link>
         </div>
       </div>

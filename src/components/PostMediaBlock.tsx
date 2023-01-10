@@ -70,8 +70,8 @@ function PostMediaBlock({ post }: Props) {
             {post.categories.map((cat, i) => (
               <Fragment key={cat.uri}>
                 {i !== 0 && ', '}
-                <Link href={cat.uri}>
-                  <a className="italic hover:underline">{cat.name}</a>
+                <Link href={cat.uri} className="italic hover:underline">
+                  {cat.name}
                 </Link>
               </Fragment>
             ))}

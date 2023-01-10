@@ -127,41 +127,39 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
           unmount={false}>
           {key === 'null' ? null : (
             <li>
-              <Link href={byId[key].path || byId[key].url}>
-                <a
-                  className="flex items-center h-14 px-6 text-lg font-bold rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
-                  onClick={event => {
-                    event.preventDefault();
-                    setCursor(byId[key].parentId);
-                    setDirection('backwards');
-                  }}
-                  style={{ WebkitTapHighlightColor: 'transparent' }}>
-                  <div className="flex items-center justify-center mr-3">
-                    <ArrowLeftIcon className="w-5 h-5" />
-                  </div>
-                  <div className="flex-auto">{byId[key].label}</div>
-                </a>
+              <Link
+                href={byId[key].path || byId[key].url}
+                className="flex items-center h-14 px-6 text-lg font-bold rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
+                onClick={event => {
+                  event.preventDefault();
+                  setCursor(byId[key].parentId);
+                  setDirection('backwards');
+                }}
+                style={{ WebkitTapHighlightColor: 'transparent' }}>
+                <div className="flex items-center justify-center mr-3">
+                  <ArrowLeftIcon className="w-5 h-5" />
+                </div>
+                <div className="flex-auto">{byId[key].label}</div>
               </Link>
             </li>
           )}
           {grouped[key].map(item => (
             <li key={item.id}>
-              <Link href={item.path || item.url}>
-                <a
-                  className="flex items-center h-14 px-6 rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
-                  onClick={event => {
-                    if (grouped[item.id]) {
-                      event.preventDefault();
-                      setCursor(item.id);
-                      setDirection('forwards');
-                    } else {
-                      close();
-                    }
-                  }}
-                  style={{ WebkitTapHighlightColor: 'transparent' }}>
-                  <div className="flex-auto">{item.label}</div>
-                  {grouped[item.id] && <ChevronRightIcon className="w-5 h-5" />}
-                </a>
+              <Link
+                href={item.path || item.url}
+                className="flex items-center h-14 px-6 rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
+                onClick={event => {
+                  if (grouped[item.id]) {
+                    event.preventDefault();
+                    setCursor(item.id);
+                    setDirection('forwards');
+                  } else {
+                    close();
+                  }
+                }}
+                style={{ WebkitTapHighlightColor: 'transparent' }}>
+                <div className="flex-auto">{item.label}</div>
+                {grouped[item.id] && <ChevronRightIcon className="w-5 h-5" />}
               </Link>
             </li>
           ))}

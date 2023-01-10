@@ -83,8 +83,10 @@ const Browse = ({
                 {subcategory ? (
                   <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
                     <span className="inline-block text-gray-300 opacity-90">
-                      <Link href={getCategoryLink(category.uri)}>
-                        <a className="hover:underline">{category.name}</a>
+                      <Link
+                        href={getCategoryLink(category.uri)}
+                        className="hover:underline">
+                        {category.name}
                       </Link>
                       &nbsp;&gt;&nbsp;
                     </span>
@@ -136,16 +138,14 @@ const Browse = ({
                   <Link
                     key={node.uri}
                     href={getCategoryLink(node.uri)}
-                    scroll={false}>
-                    <a
-                      className={cx(
-                        'inline-flex items-center h-8 mt-2 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm',
-                        subcategory?.uri === node.uri
-                          ? 'border-primary-400 border-opacity-75 text-primary-400'
-                          : 'text-white border-white border-opacity-25 hover:border-opacity-50',
-                      )}>
-                      {node.name}
-                    </a>
+                    scroll={false}
+                    className={cx(
+                      'inline-flex items-center h-8 mt-2 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm',
+                      subcategory?.uri === node.uri
+                        ? 'border-primary-400 border-opacity-75 text-primary-400'
+                        : 'text-white border-white border-opacity-25 hover:border-opacity-50',
+                    )}>
+                    {node.name}
                   </Link>
                 ))}
               </div>
@@ -164,10 +164,10 @@ const Browse = ({
                     {item.title}
                   </h3>
                   {item.category && (
-                    <Link href={getCategoryLink(item.category.uri)}>
-                      <a className="link ml-4 text-sm font-sans whitespace-nowrap">
-                        See all
-                      </a>
+                    <Link
+                      href={getCategoryLink(item.category.uri)}
+                      className="link ml-4 text-sm font-sans whitespace-nowrap">
+                      See all
                     </Link>
                   )}
                 </div>

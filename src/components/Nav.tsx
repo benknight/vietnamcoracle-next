@@ -78,32 +78,30 @@ export default function NavBar({ navCategory }: Props) {
       {links.map(link => {
         const to = link.url.match(/\/$/) ? link.url : link.url + '/';
         return (
-          <Link href={to} key={to}>
-            <a
-              className={cx(
-                'w-1/5 md:w-24 lg:w-auto h-16 lg:h-10 mx-1 lg:mx-[2px] sm:px-3 lg:px-3',
-                'flex flex-col lg:flex-row items-center justify-center text-center',
-                'rounded-full font-display tracking-wide',
-                'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-gray-800',
-                {
-                  'dark:shadow text-primary-500 dark:text-primary-400':
-                    isCurrent(link.url),
-                  'nav-link-home': link.url === '/',
-                },
-              )}
-              key={link.url}>
-              {cloneElement(isCurrent(link.url) ? link.icon : link.iconAlt, {
-                className: '!w-5 !h-5 lg:mr-2 mb-1 lg:mb-[3px] shrink-0',
-              })}
-              <div className="w-full">
-                <div className="xl:hidden text-xxxs xs:text-xxs lg:text-base">
-                  {link.titleShort}
-                </div>
-                <div className="hidden xl:block text-[14.5px]">
-                  {link.title}
-                </div>
+          <Link
+            href={to}
+            key={to}
+            className={cx(
+              'w-1/5 md:w-24 lg:w-auto h-16 lg:h-10 mx-1 lg:mx-[2px] sm:px-3 lg:px-3',
+              'flex flex-col lg:flex-row items-center justify-center text-center',
+              'rounded-full font-display tracking-wide',
+              'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-gray-800',
+              {
+                'dark:shadow text-primary-500 dark:text-primary-400': isCurrent(
+                  link.url,
+                ),
+                'nav-link-home': link.url === '/',
+              },
+            )}>
+            {cloneElement(isCurrent(link.url) ? link.icon : link.iconAlt, {
+              className: '!w-5 !h-5 lg:mr-2 mb-1 lg:mb-[3px] shrink-0',
+            })}
+            <div className="w-full">
+              <div className="xl:hidden text-xxxs xs:text-xxs lg:text-base">
+                {link.titleShort}
               </div>
-            </a>
+              <div className="hidden xl:block text-[14.5px]">{link.title}</div>
+            </div>
           </Link>
         );
       })}

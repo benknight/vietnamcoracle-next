@@ -178,12 +178,10 @@ export default function Post({ data, html, postNav }) {
                     {content.categories.nodes.map((cat, index) => (
                       <Fragment key={cat.uri}>
                         {index > 0 && ', '}
-                        <Link href={cat.uri}>
-                          <a
-                            className="link"
-                            dangerouslySetInnerHTML={{ __html: cat.name }}
-                          />
-                        </Link>
+                        <Link
+                          href={cat.uri}
+                          className="link"
+                          dangerouslySetInnerHTML={{ __html: cat.name }}></Link>
                       </Fragment>
                     ))}
                     .
@@ -196,12 +194,10 @@ export default function Post({ data, html, postNav }) {
                     {content.tags.nodes.map((tag, index) => (
                       <Fragment key={tag.uri}>
                         {index > 0 && ', '}
-                        <Link href={tag.uri}>
-                          <a
-                            className="link"
-                            dangerouslySetInnerHTML={{ __html: tag.name }}
-                          />
-                        </Link>
+                        <Link
+                          href={tag.uri}
+                          className="link"
+                          dangerouslySetInnerHTML={{ __html: tag.name }}></Link>
                       </Fragment>
                     ))}
                   </>

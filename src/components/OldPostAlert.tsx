@@ -24,8 +24,8 @@ export default function OldPostAlert({ className = '', monthsOld = 0 }) {
             check the comments
           </a>{' '}
           section for possible updates, or read more on my{' '}
-          <Link href="/updates-accuracy">
-            <a className="link">Updates &amp; Accuracy page</a>
+          <Link href="/updates-accuracy" className="link">
+            Updates &amp; Accuracy page
           </Link>
           .
         </p>

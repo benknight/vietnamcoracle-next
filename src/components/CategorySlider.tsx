@@ -12,7 +12,7 @@ const CategorySlider = ({ data }) => {
             Boolean(post.thumbnails.thumbnailSlideWidescreen),
         )
         .map((post, index) => (
-          <Link href={post.uri} key={post.uri} passHref>
+          <Link href={post.uri} key={post.uri} passHref legacyBehavior>
             <SliderSlide
               as="a"
               className="block relative w-full h-full shrink-0">

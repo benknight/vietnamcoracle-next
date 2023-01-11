@@ -42,6 +42,7 @@ export default function Header({ preview }: { preview: boolean }) {
               <MenuIcon className="w-5 h-5 mx-3" />
               <div className="flex -ml-1">
                 <Image
+                  alt="Vietnam Coracle logo"
                   className="rounded-full"
                   height={44}
                   loading="eager"

@@ -79,7 +79,7 @@ export default function Subscribe({ data: block }: Props) {
   });
   return (
     <Block>
-      <div className="my-4 flex justify-center">
+      <div className="mb-6 flex justify-center">
         <Link href="/subscribe">
           <a>
             <Image

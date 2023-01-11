@@ -1,0 +1,4 @@
+User-agent: *
+
+# Block all crawlers from search
+Disallow: /search/

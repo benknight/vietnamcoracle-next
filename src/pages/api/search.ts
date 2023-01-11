@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const { ALGOLIA_APP_ID: appId, ALGOLIA_KEY_ADMIN: key } = process.env;
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
   regions: ['sin1'],
 };
 
@@ -24,6 +24,7 @@ export default async function handler(req: NextRequest) {
         headers: {
           'X-Algolia-Application-Id': appId,
           'X-Algolia-API-Key': key,
+          'X-Forwarded-For': req.ip,
         },
       },
     ).then(res => res.json());

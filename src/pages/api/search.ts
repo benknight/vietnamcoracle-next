@@ -13,12 +13,12 @@ export default async function handler(req: NextRequest) {
     const result = await fetch(
       `https://${appId}-dsn.algolia.net/1/indexes/wp_post?` +
         new URLSearchParams({
+          query: params.get('q'),
+          page: String(Number(params.get('page')) - 1),
+          hitsPerPage: String(Math.min(100, Number(params.get('pageSize')))),
           attributesToHighlight: 'title',
           attributesToRetrieve: 'slug,thumbnail,title',
           attributesToSnippet: 'content:40,excerpt:40',
-          hitsPerPage: String(Math.min(100, Number(params.get('pageSize')))),
-          page: String(Number(params.get('page')) - 1),
-          query: params.get('q'),
         }),
       {
         headers: {

@@ -19,12 +19,12 @@ export default async function handler(req: NextRequest) {
           attributesToHighlight: 'title',
           attributesToRetrieve: 'slug,thumbnail,title',
           attributesToSnippet: 'content:40,excerpt:40',
+          userToken: req.ip,
         }),
       {
         headers: {
-          'X-Algolia-Application-Id': appId,
           'X-Algolia-API-Key': key,
-          'X-Forwarded-For': req.ip.split(',')[0],
+          'X-Algolia-Application-Id': appId,
         },
       },
     ).then(res => res.json());

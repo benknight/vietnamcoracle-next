@@ -19,7 +19,7 @@ export default async function handler(req: NextRequest) {
       console.error(result);
       throw new Error(result.error.message);
     }
-    return new Response(
+    return new NextResponse(
       JSON.stringify({
         facebook: result.og_object?.engagement?.count ?? 0,
       }),

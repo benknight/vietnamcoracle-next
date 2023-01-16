@@ -17,6 +17,9 @@ import getGQLClient from '../lib/getGQLClient';
 import RestClient from '../lib/RestClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
+const isBot = () =>
+  /bot|googlebot|crawler|spider|robot|crawling/i.test(navigator.userAgent);
+
 const SEARCH_RESULTS_QUERY = gql`
   query SearchResults($in: [ID]) {
     contentNodes(where: { in: $in }) {
@@ -37,6 +40,7 @@ const gqlClient = getGQLClient();
 const wpResultsFetcher = async ([query, page, pageSize]): Promise<
   PostMediaBlockPost[]
 > => {
+  if (isBot()) return [];
   const { data: results } = await RestClient.get(
     `/search?search=${query}&page=${page}&pageSize=${pageSize}`,
   );
@@ -66,7 +70,7 @@ const wpResultsFetcher = async ([query, page, pageSize]): Promise<
 const algoliaResultsFetcher = async ([query, page, pageSize]): Promise<
   PostMediaBlockPost[]
 > => {
-  if (!query) return [];
+  if (!query || isBot()) return [];
   const result = await fetch(
     `/api/search/?q=${query}&page=${page}&pageSize=${pageSize}`,
   ).then(res => (res.ok ? res.json() : Promise.reject()));
@@ -175,31 +179,7 @@ export default function Search() {
   const router = useRouter();
   const [pageCount, setPageCount] = useState(1);
   const [source, setSource] = useState<'algolia' | 'wp'>('algolia');
-  const { query, size } = router.query;
-
-  // useEffect(() => {
-  //   if (initialized.current !== true && size) {
-  //     setPageCount(Math.min(3, parseInt(String(size))));
-  //     initialized.current = true;
-  //   }
-  // }, [size]);
-
-  // useEffect(() => {
-  //   if (initialized.current === true && query && pageCount !== 1)
-  //     setPageCount(1);
-  // }, [query]);
-
-  // useEffect(() => {
-  //   router.replace(
-  //     {
-  //       pathname: '/search',
-  //       query: { query, size: pageCount + 1 },
-  //     },
-  //     null,
-  //     { scroll: false },
-  //   );
-  // }, [pageCount, router]);
-
+  const { query } = router.query;
   return (
     <>
       <Head>

@@ -1,28 +1,39 @@
-import axios from 'axios';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
-export default async function preview(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  let fbShareCount: number = null;
+export const config = {
+  runtime: 'experimental-edge',
+};
 
+export default async function handler(req: NextRequest) {
   try {
-    const response = await axios.get(
-      `https://graph.facebook.com/v10.0/?access_token=${
-        process.env.FACEBOOK_ACCESS_TOKEN
-      }&id=${encodeURIComponent(
-        String(req.query.link),
-      )}&fields=og_object{engagement}`,
+    const params = new URL(req.url).searchParams;
+    const result = await fetch(
+      `https://graph.facebook.com/v10.0/?` +
+        new URLSearchParams({
+          access_token: process.env.FACEBOOK_ACCESS_TOKEN,
+          fields: 'og_object{engagement}',
+          id: params.get('link'),
+        }),
+    ).then(res => res.json());
+    if (result.error) {
+      console.error(result);
+      throw new Error(result.error.message);
+    }
+    return new Response(
+      JSON.stringify({
+        facebook: result.og_object?.engagement?.count ?? 0,
+      }),
+      {
+        status: 200,
+        headers: {
+          'content-type': 'application/json',
+          'cache-control': 'public, s-maxage=3600, stale-while-revalidate=3600',
+        },
+      },
     );
-    fbShareCount = response.data?.og_object?.engagement?.count ?? 0;
   } catch (error) {
-    console.error(error);
+    return new NextResponse(null, {
+      status: 503,
+    });
   }
-
-  res.setHeader('max-age', 1);
-  res.setHeader('stale-while-revalidate', 6 * 60 * 60);
-  res.send({
-    facebook: fbShareCount,
-  });
 }

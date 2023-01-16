@@ -30,6 +30,6 @@ export default async function handler(req: NextRequest) {
     ).then(res => res.json());
     return NextResponse.json(result);
   } catch (error) {
-    return NextResponse.error();
+    return new NextResponse(null, { status: 503 });
   }
 }

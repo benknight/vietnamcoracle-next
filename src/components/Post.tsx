@@ -347,7 +347,8 @@ export async function getPostPageProps(
       ];
       const html = $('<div />')
         .append($(element).clone(), $(scriptTags).clone())
-        .html();
+        .html()
+        .replace('<br />', '');
       $(element).replaceWith(
         `<iframe src="/api/iframe-service/?html=${encodeURIComponent(
           html,

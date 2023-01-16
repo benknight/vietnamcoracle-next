@@ -24,7 +24,7 @@ export default async function handler(req: NextRequest) {
         headers: {
           'X-Algolia-Application-Id': appId,
           'X-Algolia-API-Key': key,
-          'X-Forwarded-For': req.ip,
+          'X-Forwarded-For': req.ip.split(',')[0],
         },
       },
     ).then(res => res.json());

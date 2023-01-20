@@ -187,6 +187,7 @@ export default function Search() {
           Search results
           {router.query.query ? ` for ${router.query.query}` : ''}
         </title>
+        <link rel="canonical" href="https://www.vietnamcoracle.com/" />
       </Head>
       <Layout className="max-w-screen-2xl pb-14 xl:pb-0">
         <LayoutMain className="min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent">

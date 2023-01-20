@@ -9,6 +9,7 @@ import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
 import SidebarDefault from '../../components/SidebarDefault';
 import * as fragments from '../../config/fragments';
+import cmsToNextUrls from '../../lib/cmsToNextUrls';
 import getGQLClient from '../../lib/getGQLClient';
 
 const Tag = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
@@ -16,7 +17,13 @@ const Tag = ({ data }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const coverImgLg = data.tag.cover?.large || data.defaultImages?.cover.large;
   return (
     <>
-      <Head>{htmlToReact(data.tag.seo.fullHead)}</Head>
+      <Head>
+        {htmlToReact(cmsToNextUrls(data.tag.seo.fullHead))}
+        <link
+          rel="canonical"
+          href={`https://www.vietnamcoracle.com/tag/${data.tag.slug}/`}
+        />
+      </Head>
       <Hero imgSm={coverImgSm} imgLg={coverImgLg} priority theme="dark">
         <HeroContent>
           <div className="page-wrap">

@@ -94,6 +94,17 @@ module.exports = {
         permanent: true,
         source: '/wp-content/:path*',
       },
+      {
+        destination: '/',
+        permanent: true,
+        source: '/search/',
+        missing: [
+          {
+            type: 'query',
+            key: 'query',
+          },
+        ],
+      },
     ];
     return redirects;
   },

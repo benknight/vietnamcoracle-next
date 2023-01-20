@@ -15,10 +15,6 @@ export default async function handler(req: NextRequest) {
           id: params.get('link'),
         }),
     ).then(res => res.json());
-    if (result.error) {
-      console.error(result);
-      throw new Error(result.error.message);
-    }
     return new NextResponse(
       JSON.stringify({
         facebook: result.og_object?.engagement?.count ?? 0,

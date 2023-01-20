@@ -75,8 +75,8 @@ const Browse = ({
     <>
       <Head>
         {htmlToReact(
-          cmsToNextUrls((subcategory || category).seo.fullHead).replaceAll(
-            '/category/features-guides/',
+          cmsToNextUrls((subcategory || category).seo.fullHead).replace(
+            /\/category\/features-guides\//g,
             '/browse/',
           ),
         )}

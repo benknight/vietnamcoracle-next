@@ -17,6 +17,7 @@ export default function Header({ preview }: { preview: boolean }) {
   const router = useRouter();
   const isHome = isHomePath(router.asPath);
   const [pinStart, setPinStart] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const calculatePinStart = () => {
@@ -70,9 +71,12 @@ export default function Header({ preview }: { preview: boolean }) {
             )}>
             <SearchForm
               className={cx('ring-2 ring-white md:ring-0 dark:ring-gray-900', {
-                'w-28 xs:w-32 md:w-60': !searchFocused,
+                'w-28 xs:w-32': !searchFocused,
+                'md:w-40': !searchFocused && !searchQuery,
+                'md:w-60': !searchFocused && searchQuery,
                 'w-full md:w-60 2xl:w-60': searchFocused,
               })}
+              onChange={event => setSearchQuery(event.target.value)}
               onBlur={() => setSearchFocused(false)}
               onFocus={() => setSearchFocused(true)}
             />

@@ -74,17 +74,17 @@ export default function NavBar({ navCategory }: Props) {
     [navCategory, router.asPath, router.query.ref],
   );
   return (
-    <nav className="flex justify-center items-center flex-auto px-1 xl:px-16 font-sans font-medium tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
+    <nav className="flex justify-around items-center flex-auto px-1 xl:px-16 font-sans font-medium tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
       {links.map(link => {
         const to = link.url.match(/\/$/) ? link.url : link.url + '/';
         return (
           <Link href={to} key={to}>
             <a
               className={cx(
-                'w-1/5 md:w-24 lg:w-auto h-16 lg:h-10 mx-1 lg:mx-[2px] sm:px-3 lg:px-3',
+                'min-w-[50px] md:w-24 lg:w-auto h-16 lg:h-10 mx-1 lg:mx-[2px] lg:px-3',
                 'flex flex-col lg:flex-row items-center justify-center text-center',
                 'rounded-full font-display tracking-wide',
-                'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-gray-800',
+                'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-primary-900/50',
                 {
                   'dark:shadow text-primary-500 dark:text-primary-400':
                     isCurrent(link.url),

@@ -92,7 +92,9 @@ const Browse = ({
                   <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
                     <span className="inline-block text-gray-300 opacity-90">
                       <Link href={getCategoryLink(category.uri)}>
-                        <a className="hover:underline">{category.name}</a>
+                        <a className="inline-block hover:link">
+                          {category.name}{' '}
+                        </a>
                       </Link>
                       &nbsp;&gt;&nbsp;
                     </span>

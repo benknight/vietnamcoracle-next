@@ -18,6 +18,7 @@ import Map from '../../components/Map';
 import PostCard from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
 import * as fragments from '../../config/fragments';
+import cmsToNextUrls from '../../lib/cmsToNextUrls';
 import getCategoryLink from '../../lib/getCategoryLink';
 import getGQLClient from '../../lib/getGQLClient';
 
@@ -72,7 +73,14 @@ const Browse = ({
 
   return (
     <>
-      <Head>{htmlToReact(category.seo.fullHead)}</Head>
+      <Head>
+        {htmlToReact(
+          cmsToNextUrls((subcategory || category).seo.fullHead).replaceAll(
+            '/category/features-guides/',
+            '/browse/',
+          ),
+        )}
+      </Head>
       {isHome ? (
         <CategorySlider data={category.slider} />
       ) : (

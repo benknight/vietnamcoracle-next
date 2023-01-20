@@ -7,19 +7,19 @@ const axios = require('axios');
 // const { withSentryConfig } = require('@sentry/nextjs');
 
 module.exports = {
-  // headers() {
-  //   return [
-  //     {
-  //       source: '/search/',
-  //       headers: [
-  //         {
-  //           key: 'X-Robots-Tag',
-  //           value: 'noindex',
-  //         },
-  //       ],
-  //     },
-  //   ];
-  // },
+  headers() {
+    return [
+      {
+        source: '/search/',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex',
+          },
+        ],
+      },
+    ];
+  },
   images: {
     domains: [
       'cms.vietnamcoracle.com',

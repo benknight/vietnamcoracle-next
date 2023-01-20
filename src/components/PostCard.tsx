@@ -90,7 +90,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
   );
 
   const parentClassName =
-    'postcard group relative overflow-hidden flex flex-col bg-gray-900 shadow w-full rounded-lg';
+    'postcard group relative overflow-hidden flex flex-col bg-gray-900 shadow w-full rounded-lg dark:border-b dark:border-gray-700';
 
   if (ad) {
     const trackingCode =

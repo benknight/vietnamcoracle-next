@@ -7,7 +7,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-import { MapIcon } from '@heroicons/react/outline';
+import { ArrowRightIcon, MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import CategorySlider from '../../components/CategorySlider';
 import Collection from '../../components/Collection';
@@ -168,16 +168,17 @@ const Browse = ({
             category.collections.items.map((item, index) => (
               <section className="my-6 md:my-12" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
-                  <h3 className="sm:mb-2 font-display sm:text-2xl 2xl:text-2xl dark:text-gray-200">
-                    {item.title}
+                  <h3 className="sm:mb-2 font-display sm:text-2xl 2xl:text-2xl dark:text-gray-200 group">
+                    {item.category ? (
+                      <Link href={getCategoryLink(item.category?.uri ?? '')}>
+                        <a className="block group-hover:link">
+                          {item.title} &gt;
+                        </a>
+                      </Link>
+                    ) : (
+                      item.title
+                    )}
                   </h3>
-                  {item.category && (
-                    <Link href={getCategoryLink(item.category.uri)}>
-                      <a className="link ml-4 text-sm font-sans whitespace-nowrap">
-                        See all
-                      </a>
-                    </Link>
-                  )}
                 </div>
                 <Collection
                   ad={ads?.collection?.[index % ads.collection.length]}

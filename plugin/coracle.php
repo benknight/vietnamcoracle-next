@@ -571,19 +571,59 @@ add_action("template_redirect", function () {
 	}
 });
 
+// Comment revalidation
+
 function coracle__revalidate_comments($comment_id)
 {
 	$comment = get_comment($comment_id);
 	$post = get_post($comment->comment_post_ID);
+	if (empty($post->post_name)) {
+		return;
+	}
 	$path = "/" . $post->post_name . "/";
-	wp_remote_get(
-		"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
-	);
+	wp_remote_get("https://3b5fa63af8541c356927ea8477b868ed.m.pipedream.net/?paths=$path");
 }
 
-add_action("comment_post", "coracle__revalidate_comments");
 add_action("edit_comment", "coracle__revalidate_comments");
+
 add_action("wp_set_comment_status", "coracle__revalidate_comments");
+
+add_action(
+	"comment_post",
+	function ($comment_id, $comment_approved) {
+		if ($comment_approved === 1) {
+			coracle__revalidate_comments($comment_id);
+		}
+	},
+	10,
+	2,
+);
+
+// Term revalidation
+
+function coracle__revalidate_terms($term_ids)
+{
+	$paths = [];
+	if (!is_array($term_ids)) {
+		$term_ids = [$term_ids];
+	}
+	foreach ($term_ids as $term_id) {
+		$term_id = (int) $term_id;
+		$link = get_term_link($term_id);
+		$parsed_link = parse_url($link);
+		$path = str_replace("/category/features-guides", "/browse", $parsed_link["path"]);
+		if ($path === "/browse/") {
+			$path = "/";
+		}
+		array_push($paths, $path);
+	}
+	$paths = implode(",", $paths);
+	wp_remote_get("https://3b5fa63af8541c356927ea8477b868ed.m.pipedream.net/?paths=$paths");
+}
+
+add_action("edit_category", "coracle__revalidate_terms");
+
+add_action("edit_post_tag", "coracle__revalidate_terms");
 
 add_action(
 	"added_term_relationship",
@@ -596,7 +636,7 @@ add_action(
 			),
 		);
 		if ($term_id) {
-			coracle__revalidate_term((int) $term_id);
+			coracle__revalidate_terms((int) $term_id);
 		}
 	},
 	10,
@@ -611,43 +651,39 @@ add_action(
 		$term_ids = $wpdb->get_col(
 			"SELECT term_id FROM $wpdb->term_taxonomy WHERE term_taxonomy_id IN ($imploded)",
 		);
-		foreach ($term_ids as $term_id) {
-			coracle__revalidate_term((int) $term_id);
-		}
+		coracle__revalidate_terms($term_ids);
 	},
 	10,
 	2,
 );
 
-function coracle__revalidate_term($term_id)
-{
-	$link = get_term_link($term_id);
-	$parsed_link = parse_url($link);
-	$path = str_replace("/category/features-guides", "/browse", $parsed_link["path"]);
-	if ($path === "/browse/") {
-		$path = "/";
-	}
-	wp_remote_get(
-		"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
-	);
-}
+add_action(
+	"transition_post_status",
+	function ($new_status, $old_status, $post) {
+		$term_ids = array_map(function (WP_Term $term) {
+			return $term->term_id;
+		}, wp_get_post_terms($post->ID, ["category", "post_tag"]));
+		coracle__revalidate_terms($term_ids);
+	},
+	10,
+	3,
+);
 
-add_action("edit_category", "coracle__revalidate_term");
-add_action("edit_post_tag", "coracle__revalidate_term");
+// Post revalidation
 
 add_action(
 	"save_post",
 	function ($post_id, $post) {
 		if ($post->post_type === "post" || $post->post_type === "page") {
 			$path = "/" . $post->post_name;
-			wp_remote_get(
-				"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
-			);
+			wp_remote_get("https://3b5fa63af8541c356927ea8477b868ed.m.pipedream.net/?paths=$path");
 		}
 	},
 	10,
 	2,
 );
+
+// Rebuild Site Admin Header
 
 add_action(
 	"admin_bar_menu",

@@ -99,9 +99,7 @@ export default function NavBar({ navCategory }: Props) {
                 <div className="xl:hidden text-xxxs xs:text-xxs lg:text-base">
                   {link.titleShort}
                 </div>
-                <div className="hidden xl:block text-[14.5px]">
-                  {link.title}
-                </div>
+                <div className="hidden xl:block">{link.title}</div>
               </div>
             </a>
           </Link>

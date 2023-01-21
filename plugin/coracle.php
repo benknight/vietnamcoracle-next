@@ -575,7 +575,7 @@ function coracle__revalidate_comments($comment_id)
 {
 	$comment = get_comment($comment_id);
 	$post = get_post($comment->comment_post_ID);
-	$path = "/" . $post->post_name;
+	$path = "/" . $post->post_name . "/";
 	wp_remote_get(
 		"https://www.vietnamcoracle.com/api/revalidate?secret=EckDg5dwCcwqJH6U&path=$path",
 	);

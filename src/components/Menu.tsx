@@ -4,8 +4,8 @@ import _keyBy from 'lodash/keyBy';
 import Link from 'next/link';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
-import { ChevronRightIcon } from '@heroicons/react/solid';
-import { ArrowLeftIcon } from '@heroicons/react/solid';
+import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { HomeIcon } from '@heroicons/react/outline';
 import { CircularProgress } from '@material-ui/core';
 import useAPI from '../lib/useAPI';
 
@@ -37,7 +37,7 @@ export default function Menu({ children, className = '' }) {
               className="
                 z-10 absolute left-0 xs:left-auto
                 w-screen xs:w-[80vw] sm:w-96 max-h-[87vh] mt-1 lg:mt-2 overflow-auto
-                font-medium font-display text-[14.5px]
+                font-medium font-display
                 bg-white dark:bg-gray-800
                 border border-gray-200 dark:border-gray-700
                 shadow-lg rounded-lg transition">
@@ -129,7 +129,7 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
             <li>
               <Link href={byId[key].path || byId[key].url}>
                 <a
-                  className="flex items-center h-14 px-6 text-lg font-bold rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
+                  className="flex items-center h-14 px-6 font-bold rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
                   onClick={event => {
                     event.preventDefault();
                     setCursor(byId[key].parentId);
@@ -137,7 +137,7 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
                   }}
                   style={{ WebkitTapHighlightColor: 'transparent' }}>
                   <div className="flex items-center justify-center mr-3">
-                    <ArrowLeftIcon className="w-5 h-5" />
+                    <ArrowLeftIcon className="w-4 h-4" />
                   </div>
                   <div className="flex-auto">{byId[key].label}</div>
                 </a>
@@ -159,6 +159,9 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
                     }
                   }}
                   style={{ WebkitTapHighlightColor: 'transparent' }}>
+                  {item.label === 'Home' && (
+                    <HomeIcon className="inline-flex w-4 h-5 mr-2 -mt-px" />
+                  )}
                   <div className="flex-auto">{item.label}</div>
                   {grouped[item.id] && <ChevronRightIcon className="w-5 h-5" />}
                 </a>

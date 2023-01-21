@@ -54,7 +54,7 @@ export default function Header({ preview }: { preview: boolean }) {
             </Menu>
             <Link href="/">
               <a className="flex items-center hover:text-black dark:hover:text-white">
-                <h1 className="lg:ml-2 font-semibold font-display tracking-tight">
+                <h1 className="lg:ml-2 font-semibold font-display">
                   Vietnam Coracle
                 </h1>
               </a>

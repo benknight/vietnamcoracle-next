@@ -9,7 +9,7 @@ export default async function handler(
     return res.status(401).json({ message: 'Invalid secret' });
   }
   try {
-    res.revalidate(String(path));
+    await res.revalidate(String(path));
     return res.send('OK');
   } catch (err) {
     // If there was an error, Next.js will continue

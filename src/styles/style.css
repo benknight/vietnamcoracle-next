@@ -69,11 +69,6 @@
   .nav-link-home {
     @apply lg:hidden !important;
   }
-  @media (min-width: 1300px) {
-    .nav-link-home {
-      @apply flex !important;
-    }
-  }
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }

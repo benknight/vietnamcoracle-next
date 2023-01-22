@@ -1,22 +1,22 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextApiRequest, NextApiResponse } from 'next';
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse,
+  request: NextApiRequest,
+  response: NextApiResponse,
 ) {
-  const { paths } = req.query;
-  const { secret } = req.body;
+  const { paths } = request.query;
+  const { secret } = request.body;
   if (secret !== process.env.WORDPRESS_PREVIEW_SECRET) {
-    return res.status(401).json({ message: 'Invalid request' });
+    return response.status(401).send({ message: 'Invalid request' });
   }
   try {
     await Promise.all(
       String(paths)
         .split(',')
-        .map(path => res.revalidate(path)),
+        .map(path => response.revalidate(path)),
     );
-    return res.send({ success: true });
-  } catch (err) {
-    return res.status(500).send({ success: false });
+    return response.send({ success: true });
+  } catch (error) {
+    return response.status(500).send({ error, success: false });
   }
 }

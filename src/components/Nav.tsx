@@ -81,7 +81,7 @@ export default function NavBar({ navCategory }: Props) {
           <Link href={to} key={to}>
             <a
               className={cx(
-                'min-w-[50px] md:w-24 lg:w-auto h-16 lg:h-10 mx-1 lg:mx-[2px] lg:px-3',
+                'min-w-[50px] md:w-24 lg:w-auto h-16 lg:h-9 mx-1 lg:mx-[2px] lg:px-3',
                 'flex flex-col lg:flex-row items-center justify-center text-center',
                 'rounded-full font-display tracking-wide',
                 'lg:hover:bg-gray-100 lg:hover:border-gray-100 lg:dark:bg-gray-900 lg:dark:hover:bg-primary-900/50',

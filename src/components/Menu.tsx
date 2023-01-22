@@ -86,7 +86,7 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
 
   return (
     <nav
-      className={`transition-all ease duration-${speed}`}
+      className={`transition-all ease duration-${speed} text-sm`}
       ref={ref}
       style={{ height: menuHeight ? `${menuHeight}px` : undefined }}>
       {Object.keys(grouped).map(key => (

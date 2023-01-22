@@ -618,6 +618,9 @@ function coracle__revalidate_terms($term_ids)
 		array_push($paths, $path);
 	}
 	$paths = implode(",", $paths);
+	if (empty($paths)) {
+		return;
+	}
 	wp_remote_get("https://3b5fa63af8541c356927ea8477b868ed.m.pipedream.net/?paths=$paths");
 }
 
@@ -675,7 +678,7 @@ add_action(
 	"save_post",
 	function ($post_id, $post) {
 		if ($post->post_type === "post" || $post->post_type === "page") {
-			$path = "/" . $post->post_name;
+			$path = "/" . $post->post_name . "/";
 			wp_remote_get("https://3b5fa63af8541c356927ea8477b868ed.m.pipedream.net/?paths=$path");
 		}
 	},
@@ -785,13 +788,13 @@ function algolia_update_post($id, WP_Post $post, $update)
 	global $algolia;
 
 	$record = (array) apply_filters($post->post_type . "_to_record", $post);
+	$isSplitRecord = !isAssoc($record);
 
-	if (!isset($record["objectID"])) {
+	if (!$isSplitRecord && !isset($record["objectID"])) {
 		$record["objectID"] = implode("#", [$post->post_type, $post->ID]);
 	}
 
 	$index = $algolia->initIndex(apply_filters("algolia_index_name", $post->post_type));
-	$isSplitRecord = !isAssoc($record);
 
 	// If the post is split, we always delete it
 	if ($isSplitRecord) {
@@ -804,7 +807,11 @@ function algolia_update_post($id, WP_Post $post, $update)
 			$index->deleteObject($record["objectID"]);
 		}
 	} else {
-		$index->saveObjects([$record]);
+		if ($isSplitRecord) {
+			$index->saveObjects($record);
+		} else {
+			$index->saveObjects([$record]);
+		}
 	}
 
 	return $post;

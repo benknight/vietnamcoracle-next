@@ -714,14 +714,6 @@ add_action("wp_ajax_coracle_rebuild_site", function () {
 // --- Algolia Custom Integration (Added January 2023) ---
 // See: https://www.algolia.com/doc/integration/wordpress/getting-started/quick-start/?client=php
 
-function isAssoc(array $arr)
-{
-	if ([] === $arr) {
-		return false;
-	}
-	return array_keys($arr) !== range(0, count($arr) - 1);
-}
-
 function algolia_post_to_record(WP_Post $post)
 {
 	$tags = array_map(function (WP_Term $term) {
@@ -730,6 +722,7 @@ function algolia_post_to_record(WP_Post $post)
 
 	// Prepare all common attributes and add a new `distinct_key` property
 	$common = [
+		"objectID" => implode("#", [$post->post_type, $post->ID]),
 		"distinct_key" => implode("#", [$post->post_type, $post->ID]),
 		"title" => $post->post_title,
 		"author" => [
@@ -746,6 +739,11 @@ function algolia_post_to_record(WP_Post $post)
 	// Split the records on the `post_content` attribute
 	$splitter = new \Algolia\HtmlSplitter();
 	$records = $splitter->split($post);
+
+	// If there's no result from splitting (perhaps because post is too small), just upload the $common record
+	if (empty($records)) {
+		return [$common];
+	}
 
 	// Merge the common attributes into each split and add a unique `objectID`
 	foreach ($records as $key => $split) {
@@ -781,38 +779,24 @@ function algolia_update_post($id, WP_Post $post, $update)
 		return $post;
 	}
 
-	if ($post->post_type !== "post") {
+	if (!in_array($post->post_type, ["page", "post"])) {
 		return $post;
 	}
 
 	global $algolia;
 
-	$record = (array) apply_filters($post->post_type . "_to_record", $post);
-	$isSplitRecord = !isAssoc($record);
+	$record = (array) apply_filters("post_to_record", $post);
 
-	if (!$isSplitRecord && !isset($record["objectID"])) {
-		$record["objectID"] = implode("#", [$post->post_type, $post->ID]);
+	if (empty($record)) {
+		return;
 	}
 
 	$index = $algolia->initIndex(apply_filters("algolia_index_name", $post->post_type));
 
 	// If the post is split, we always delete it
-	if ($isSplitRecord) {
-		$index->deleteBy(["filters" => "distinct_key:" . $record[0]["distinct_key"]]);
-	}
+	$index->deleteBy(["filters" => "distinct_key:" . $record[0]["distinct_key"]]);
 
-	if ("trash" == $post->status) {
-		// If the post was split, it's already deleted
-		if (!$isSplitRecord) {
-			$index->deleteObject($record["objectID"]);
-		}
-	} else {
-		if ($isSplitRecord) {
-			$index->saveObjects($record);
-		} else {
-			$index->saveObjects([$record]);
-		}
-	}
+	$index->saveObjects($record);
 
 	return $post;
 }

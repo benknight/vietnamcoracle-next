@@ -28,7 +28,8 @@ export default async function handler(req: NextRequest) {
         },
       },
     ).then(res => res.json());
-    return NextResponse.json(result);
+    const { hits } = result;
+    return NextResponse.json({ hits });
   } catch (error) {
     return new NextResponse(null, { status: 503 });
   }

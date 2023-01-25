@@ -114,6 +114,10 @@ module.exports = {
         destination: '/browse/features-guides/',
         source: '/',
       },
+      {
+        destination: '/browse/features-guides/',
+        source: '//',
+      },
     ];
   },
   webpack(config) {

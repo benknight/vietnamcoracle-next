@@ -7,7 +7,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
-import { ArrowRightIcon, MapIcon } from '@heroicons/react/outline';
+import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import CategorySlider from '../../components/CategorySlider';
 import Collection from '../../components/Collection';

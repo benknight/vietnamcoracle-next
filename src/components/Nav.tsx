@@ -90,7 +90,7 @@ export default function NavBar({ navCategory }: Props) {
                   ? 'text-primary-500 dark:text-white'
                   : 'lg:dark:text-gray-400',
                 {
-                  'nav-link-home': link.url === '/',
+                  'nav-link-home': isHomePath(link.url),
                 },
               )}
               key={link.url}>

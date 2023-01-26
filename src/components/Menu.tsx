@@ -7,6 +7,7 @@ import { Popover, Transition } from '@headlessui/react';
 import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { HomeIcon } from '@heroicons/react/outline';
 import { CircularProgress } from '@material-ui/core';
+import getCategoryLink from '../lib/getCategoryLink';
 import useAPI from '../lib/useAPI';
 
 export default function Menu({ children, className = '' }) {
@@ -146,7 +147,7 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
           )}
           {grouped[key].map(item => (
             <li key={item.id}>
-              <Link href={item.path || item.url}>
+              <Link href={getCategoryLink(item.path || item.url)}>
                 <a
                   className="flex items-center h-14 px-6 rounded hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-200 dark:active:bg-gray-600"
                   onClick={event => {

@@ -59,13 +59,11 @@ export default function Hero({
         <div className="hidden lg:block aspect-w-7 aspect-h-3">
           <Image
             alt={imgLg.altText}
-            height={imgLg.mediaDetails.height}
             key={imgLg.id}
             layout="fill"
             objectFit="cover"
             priority={priority}
             src={imgLg.sourceUrl}
-            width={imgLg.mediaDetails.width}
           />
         </div>
         {children}

@@ -26,8 +26,8 @@ export default function Footer() {
           “Excellent independent travel advice from a long-term resident”
         </div>
       </div>
-      <section className="px-2 pb-12 lg:px-0">
-        <ul className="flex flex-wrap justify-center uppercase text-xxxs tracking-widest">
+      <section className="px-2 pb-12 lg:px-0 max-w-md mx-auto">
+        <nav className="flex flex-wrap justify-center uppercase text-xxxs tracking-widest">
           {data.menu?.menuItems?.nodes.map(item => (
             <Link key={item.path} href={item.path}>
               <a className="mx-2 my-3 xs:mx-3 lg:mx-3 opacity-75 hover:opacity-100">
@@ -35,7 +35,7 @@ export default function Footer() {
               </a>
             </Link>
           ))}
-        </ul>
+        </nav>
       </section>
     </footer>
   );

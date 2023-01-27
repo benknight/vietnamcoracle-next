@@ -155,7 +155,7 @@ export default function Post({ data, html, postNav }) {
             <div className="max-w-[52rem] mx-auto">
               <article
                 className={cx(
-                  'post break-words',
+                  'post break-words py-px',
                   content.settings?.useNextStyles ? 'post-next' : 'post-legacy',
                 )}
                 dangerouslySetInnerHTML={{

@@ -163,7 +163,10 @@ export function Slider({ className = '', children }) {
 
   return (
     <div
-      className={cx(className, 'relative text-gray-900 bg-black')}
+      className={cx(
+        className,
+        'relative text-gray-900 bg-gradient-to-t from-gray-500 to-gray-400',
+      )}
       ref={rootRef}>
       <div className="relative overflow-hidden">
         <div

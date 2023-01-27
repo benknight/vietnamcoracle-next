@@ -3,10 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const breakpoints = require('./src/config/breakpoints');
 
 module.exports = {
-  plugins: [
-    require('@tailwindcss/aspect-ratio'),
-    require('@tailwindcss/line-clamp'),
-  ],
+  plugins: [require('@tailwindcss/line-clamp')],
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {

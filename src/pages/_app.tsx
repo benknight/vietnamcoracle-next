@@ -207,7 +207,7 @@ function MyApp({ Component, pageProps }: AppProps<PageProps>) {
         />
       </div>
       {ads?.header?.enabled && (
-        <div className="sticky top-0 bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-w-2 aspect-h-1">
+        <div className="sticky top-0 bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-[2]">
           <div
             className="w-full h-full"
             dangerouslySetInnerHTML={{

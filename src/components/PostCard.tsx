@@ -34,7 +34,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
 
   const inner = (
     <>
-      <div className="overflow-hidden w-full aspect-w-1 aspect-h-1">
+      <div className="relative overflow-hidden w-full aspect-square">
         <Image
           alt={data.image.altText}
           className="ease-out duration-1000 pointer:origin-top group-hover:xl:scale-[1.02] group-hover:duration-[3s] group-hover:ease"

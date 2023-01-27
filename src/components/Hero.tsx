@@ -44,8 +44,8 @@ export default function Hero({
           'bg-gray-950': theme === 'dark',
         })}>
         <div
-          className={cx('block aspect-w-1 aspect-h-1 lg:hidden', {
-            'md:aspect-w-3 md:aspect-h-2': !preserveAspectRatio,
+          className={cx('relative block aspect-square lg:hidden', {
+            'md:aspect-[3/2]': !preserveAspectRatio,
           })}>
           <Image
             alt={imgSm.altText}
@@ -56,7 +56,10 @@ export default function Hero({
             src={imgSm.sourceUrl}
           />
         </div>
-        <div className="hidden lg:block aspect-w-7 aspect-h-3">
+        <div
+          className={cx('relative hidden lg:block aspect-[7/3]', {
+            '2xl:aspect-[3.25]': !preserveAspectRatio,
+          })}>
           <Image
             alt={imgLg.altText}
             key={imgLg.id}

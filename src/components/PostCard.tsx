@@ -37,7 +37,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
       <div className="overflow-hidden w-full aspect-w-1 aspect-h-1">
         <Image
           alt={data.image.altText}
-          className="transition-ease-out duration-300 pointer:origin-top group-hover:xl:scale-[1.02] group-hover:duration-[3s]"
+          className="ease-out duration-1000 pointer:origin-top group-hover:xl:scale-[1.02] group-hover:duration-[3s] group-hover:ease"
           layout="fill"
           loading="lazy"
           objectFit="cover"

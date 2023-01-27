@@ -7,10 +7,6 @@ const axios = require('axios');
 // const { withSentryConfig } = require('@sentry/nextjs');
 
 module.exports = {
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-  },
   headers() {
     return [
       {

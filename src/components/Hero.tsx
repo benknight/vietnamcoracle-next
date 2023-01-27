@@ -56,12 +56,12 @@ export default function Hero({
             src={imgSm.sourceUrl}
           />
         </div>
-        <div className="hidden lg:block">
+        <div className="hidden lg:block aspect-w-7 aspect-h-3">
           <Image
             alt={imgLg.altText}
             height={imgLg.mediaDetails.height}
             key={imgLg.id}
-            layout="responsive"
+            layout="fill"
             objectFit="cover"
             priority={priority}
             src={imgLg.sourceUrl}

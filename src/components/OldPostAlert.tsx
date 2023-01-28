@@ -15,7 +15,7 @@ export default function OldPostAlert({ className = '', monthsOld = 0 }) {
       )}>
       <Icon className="fill-current self-start shrink-0 w-12 h-12 mr-2 -mb-2 md:ml-1" />
       <div className="flex-auto">
-        <p className="font-display text-[12px] leading-normal sm:text-sm mb-0">
+        <p className="font-display text-[12px] leading-normal sm:text-sm mb-0 text-left">
           <b className="font-bold">
             This post was last updated {Math.floor(monthsOld / 12)} years ago.
           </b>{' '}

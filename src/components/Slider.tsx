@@ -147,7 +147,7 @@ export function Slider({ className = '', children }) {
   // Prevent slider from getting 'stuck' in an in-between position
   // (happens only in Chromium as of Nov 2022)
   useEffect(() => {
-    const listener = debounce(() => goTo(cursorRef.current), 1000);
+    const listener = debounce(() => goTo(cursorRef.current), 1500);
     parentRef.current?.addEventListener('wheel', listener);
     parentRef.current?.addEventListener('touchend', listener);
     return () => {

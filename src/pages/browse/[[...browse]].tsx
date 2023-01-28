@@ -208,7 +208,7 @@ const Browse = ({
             </div>
           )}
           {category.map?.mid && (
-            <section className="lg:mb-8 lg:px-8">
+            <section className="lg:mb-8 lg:px-8 -mt-4">
               <Map data={category.map} />
             </section>
           )}

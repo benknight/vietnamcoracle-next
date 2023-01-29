@@ -127,7 +127,11 @@ export default function ShareButtons({ image, link, title }: Props) {
         }
       `}</style>
       <main>
-        <FacebookShareButton className="fb" title={title} url={link}>
+        <FacebookShareButton
+          className="fb"
+          title={title}
+          type="button"
+          url={link}>
           <span>
             <FacebookIcon fontSize="small" />
             <span>Share</span>{' '}
@@ -136,7 +140,11 @@ export default function ShareButtons({ image, link, title }: Props) {
               : ''}
           </span>
         </FacebookShareButton>
-        <TwitterShareButton className="tw" title={title} url={link}>
+        <TwitterShareButton
+          className="tw"
+          title={title}
+          type="button"
+          url={link}>
           <span>
             <TwitterIcon fontSize="small" />
             <span>Tweet</span>
@@ -146,19 +154,29 @@ export default function ShareButtons({ image, link, title }: Props) {
           className="pt"
           media={image}
           title={title}
+          type="button"
           url={link}>
           <span>
             <PinterestIcon />
             <span>Pin</span>
           </span>
         </PinterestShareButton>
-        <RedditShareButton className="rd" title={title} url={link}>
+        <RedditShareButton
+          className="rd"
+          title={title}
+          type="button"
+          url={link}>
           <span>
             <RedditIcon style={{ position: 'relative', top: '-1px' }} />
             <span>Post</span>
           </span>
         </RedditShareButton>
-        <EmailShareButton body="" className="em" subject={title} url={link}>
+        <EmailShareButton
+          body=""
+          className="em"
+          subject={title}
+          type="button"
+          url={link}>
           <span>
             <EmailIcon fontSize="small" />
             <span>Email</span>

@@ -339,11 +339,9 @@ export async function getPostPageProps(
     }
 
     // Remove "Back Top" link after related posts
-    const relatedPosts = $('related-posts');
-    if (relatedPosts) {
-      relatedPosts.parent().next('p:has(a[href="#top"])').remove();
-    }
+    $('related-posts')?.parent().next('p:has(a[href="#top"])').remove();
 
+    // Put agoda inside iframe
     $('div[id^="adgshp"]').each((_i, element) => {
       const scriptTags = [
         ...$(element).nextAll('script').toArray(),

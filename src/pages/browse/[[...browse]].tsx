@@ -9,12 +9,12 @@ import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
+import CategoryMap from '../../components/CategoryMap';
 import CategorySlider from '../../components/CategorySlider';
 import Collection from '../../components/Collection';
 import Footer from '../../components/Footer';
 import Hero, { HeroContent } from '../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
-import Map from '../../components/Map';
 import PostCard from '../../components/PostCard';
 import SidebarDefault from '../../components/SidebarDefault';
 import * as fragments from '../../config/fragments';
@@ -209,7 +209,7 @@ const Browse = ({
           )}
           {category.map?.mid && (
             <section className="lg:mb-8 lg:px-8 -mt-4">
-              <Map data={category.map} />
+              <CategoryMap data={category.map} />
             </section>
           )}
         </LayoutMain>

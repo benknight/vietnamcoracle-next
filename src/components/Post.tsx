@@ -1,4 +1,4 @@
-import cheerio from 'cheerio';
+import * as cheerio from 'cheerio';
 import cx from 'classnames';
 import { differenceInMonths, parse } from 'date-fns';
 import { gql } from 'graphql-request';
@@ -25,6 +25,7 @@ import Layout, { LayoutMain, LayoutSidebar } from './Layout';
 import OldPostAlert from './OldPostAlert';
 import PostCard from './PostCard';
 import SidebarDefault from './SidebarDefault';
+import { googleMapsEmbed } from '../config/regex';
 
 type NavLinks = string[][];
 
@@ -322,6 +323,20 @@ export async function getPostPageProps(
 
     // Lazy load all iframes
     $('iframe').attr({ loading: 'lazy' });
+
+    // Add overlay to Google Maps embeds
+    $('iframe')
+      .filter(function () {
+        return googleMapsEmbed.test($(this).attr('src'));
+      })
+      .replaceWith(function () {
+        return $('<map-overlay />').attr({
+          'data-height': $(this).attr('height'),
+          'data-src': $(this).attr('src'),
+          'data-title': $(this).attr('title'),
+          'data-width': $(this).attr('width'),
+        });
+      });
 
     // Generate contents menu
     const internalLinks = $(

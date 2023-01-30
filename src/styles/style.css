@@ -223,12 +223,6 @@ article .has-drop-cap:not(:focus)::first-letter {
   font-size: 3rem !important;
   margin-top: 12px !important;
 }
-@screen lg {
-  article .has-drop-cap:not(:focus)::first-letter {
-    font-size: 6rem !important;
-    margin-top: 0.05em !important;
-  }
-}
 article .has-huge-font-size,
 article .has-large-font-size {
   @apply text-2xl sm:text-3xl md:text-4xl !important;

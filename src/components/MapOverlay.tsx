@@ -22,7 +22,7 @@ export default function MapOverlay({
           {...iframeProps}></iframe>
         <div
           className={cx(
-            'group absolute inset-0 transition-all duration-300 flex items-center justify-center text-xl font-display font-medium backdrop-blur-0',
+            'group absolute inset-0 transition-all duration-300 flex items-center justify-center backdrop-blur-0',
             showSupport ? 'backdrop-blur-md' : '',
             mapInteractive ? 'hidden' : 'flex',
           )}
@@ -60,9 +60,9 @@ export default function MapOverlay({
               </Block>
             </div>
           ) : (
-            <button className="flex items-center justify-center py-4 px-8 dark:text-white rounded-full bg-white/90 hover:pointer:bg-white dark:bg-black/60 dark:hover:pointer:bg-black/75 shadow-lg transition-colors duration-150 text-blue-500 pointer:opacity-0 group-hover:pointer:opacity-100">
-              <CursorClickIcon className="w-8 h-8 mr-2" /> Click to interact
-              with the map
+            <button className="py-4 px-8 dark:text-white rounded-full bg-white/90 hover:pointer:bg-white dark:bg-black/60 dark:hover:pointer:bg-black/75 shadow-lg transition-colors duration-150 text-blue-500 pointer:opacity-0 group-hover:pointer:opacity-100 text-base md:text-xl font-display font-medium">
+              <CursorClickIcon className="inline align-bottom w-6 h-6 md:w-7 md:h-7" />{' '}
+              Click to interact with the map
             </button>
           )}
         </div>

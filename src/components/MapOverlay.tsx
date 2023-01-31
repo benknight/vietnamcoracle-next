@@ -62,7 +62,7 @@ export default function MapOverlay({
           ) : (
             <button className="py-4 px-8 dark:text-white rounded-full bg-white/90 hover:pointer:bg-white dark:bg-black/60 dark:hover:pointer:bg-black/75 shadow-lg transition-colors duration-150 text-blue-500 pointer:opacity-0 group-hover:pointer:opacity-100 text-base md:text-xl font-display font-medium">
               <CursorClickIcon className="inline align-bottom w-6 h-6 md:w-7 md:h-7" />{' '}
-              Click to interact with the map
+              Click to use the map
             </button>
           )}
         </div>

@@ -25,7 +25,6 @@ import Layout, { LayoutMain, LayoutSidebar } from './Layout';
 import OldPostAlert from './OldPostAlert';
 import PostCard from './PostCard';
 import SidebarDefault from './SidebarDefault';
-import { googleMapsEmbed } from '../config/regex';
 
 type NavLinks = string[][];
 
@@ -327,13 +326,15 @@ export async function getPostPageProps(
     // Add overlay to Google Maps embeds
     $('iframe')
       .filter(function () {
-        return googleMapsEmbed.test($(this).attr('src'));
+        return /(google\.com\/maps[\/\w-\.]+\/embed([\?&][\w-\.]+=[\w-\.]+)+)/g.test(
+          $(this).attr('src'),
+        );
       })
       .replaceWith(function () {
         return $('<map-overlay />').attr({
           'data-height': $(this).attr('height'),
           'data-src': $(this).attr('src'),
-          'data-title': $(this).attr('title'),
+          'data-title': $(this).attr('title') ?? '',
           'data-width': $(this).attr('width'),
         });
       });

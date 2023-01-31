@@ -7,7 +7,7 @@ import Block, { BlockContent, BlockTitle } from './Block';
 
 export default function MapOverlay({
   className = '',
-  iframeClassName = 'w-full',
+  iframeClassName = 'w-full min-h-[400px]',
   ...iframeProps
 }) {
   const { data: blocks } = useAPI('/api/blocks/');

@@ -37,7 +37,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
       <div className="relative overflow-hidden w-full aspect-square">
         <Image
           alt={data.image.altText}
-          className="ease-out duration-1000 pointer:origin-top group-hover:xl:scale-[1.02] group-hover:duration-[3s] group-hover:ease"
+          className="ease-out duration-1000 pointer:origin-top group-hover:xl:scale-[1.02] group-hover:duration-[3s] group-hover:ease bg-gray-400 dark:bg-gray-700"
           layout="fill"
           loading="lazy"
           objectFit="cover"
@@ -90,7 +90,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
   );
 
   const parentClassName =
-    'postcard group relative overflow-hidden flex flex-col bg-gray-900 shadow w-full rounded-lg dark:border dark:border-gray-700';
+    'postcard group relative overflow-hidden flex flex-col bg-gradient-to-b from-transparent via-gray-900 to-gray-900 shadow w-full rounded-lg dark:border dark:border-gray-700';
 
   if (ad) {
     const trackingCode =

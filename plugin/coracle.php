@@ -783,6 +783,10 @@ function algolia_update_post($id, WP_Post $post, $update)
 		return $post;
 	}
 
+	if ($post->post_status !== "publish") {
+		return $post;
+	}
+
 	global $algolia;
 
 	$record = (array) apply_filters("post_to_record", $post);

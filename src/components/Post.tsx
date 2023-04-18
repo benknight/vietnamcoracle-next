@@ -408,9 +408,9 @@ export async function getPostPageProps(
 }
 
 export const POST_QUERY = gql`
-  query Post($preview: Boolean!, $id: ID!) {
+  query Post($preview: Boolean!, $id: ID!, $idType: ContentNodeIdTypeEnum!) {
     globalStylesheet
-    contentNode(id: $id, idType: URI) {
+    contentNode(id: $id, idType: $idType) {
       ... on ContentNode {
         databaseId
         isRestricted

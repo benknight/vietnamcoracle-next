@@ -38,6 +38,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
   const data = await api.request(POST_QUERY, {
     preview,
     id: decodeURIComponent(slug),
+    idType: 'URI',
   });
   if (
     data.contentNode?.status === 'private' ||
@@ -45,7 +46,7 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
   ) {
     return {
       redirect: {
-        destination: `/post?p=${data.contentNode.databaseId}`,
+        destination: `/post/?p=${data.contentNode.databaseId}`,
         permanent: false,
       },
     };

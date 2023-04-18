@@ -552,20 +552,20 @@ add_action("template_redirect", function () {
 	) {
 		return;
 	}
-	// Exceptions for logged in users, WP admin, and RSS feed
-	if (is_user_logged_in() || is_admin() || is_feed()) {
-		return;
-	}
-	if (isset($_GET["preview"]) && $_GET["preview"] == true) {
+	if (isset($_GET["p"]) && isset($_GET["preview"]) && $_GET["preview"] == true) {
 		$redirect = add_query_arg(
 			[
-				"redirect" => urlencode("/post?p=" . $_GET["p"]),
+				"redirect" => urlencode("/post/?p=" . $_GET["p"]),
 				"secret" => "EckDg5dwCcwqJH6U",
 			],
-			"https://www.vietnamcoracle.com/api/preview",
+			"https://www.vietnamcoracle.com/api/preview/",
 		);
 		wp_redirect($redirect);
 	} else {
+		// Exceptions for logged in users, WP admin, and RSS feed
+		if (is_user_logged_in() || is_admin() || is_feed()) {
+			return;
+		}
 		$redirect = "https://www.vietnamcoracle.com" . $_SERVER["REQUEST_URI"];
 		wp_redirect($redirect, 301);
 	}

@@ -143,7 +143,8 @@ export async function getServerSideProps({
     if (userCanView) {
       const postData = await api.request(POST_QUERY, {
         preview: Boolean(preview),
-        id: decodeURIComponent(data.contentNode.uri),
+        id: postId,
+        idType: 'DATABASE_ID'
       });
       return {
         props: {

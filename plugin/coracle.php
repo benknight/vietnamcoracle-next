@@ -497,7 +497,7 @@ add_filter(
 	function ($preview_link, $post) {
 		return add_query_arg(
 			[
-				"redirect" => "/" . urlencode($post->post_name),
+				"redirect" => "/post/?p=" . $post->ID,
 				"secret" => "EckDg5dwCcwqJH6U",
 			],
 			"https://www.vietnamcoracle.com/api/preview",

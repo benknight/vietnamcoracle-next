@@ -170,7 +170,7 @@ export function Slider({ className = '', children }) {
       ref={rootRef}>
       <div className="relative overflow-hidden">
         <div
-          className="relative snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full no-scrollbar max-w-screen-2xl mx-auto"
+          className="relative snap-mandatory snap-x overflow-x-auto flex flex-nowrap w-full h-full no-scrollbar"
           dir="ltr"
           ref={parentRef}>
           {children}

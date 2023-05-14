@@ -10,7 +10,7 @@ const SidebarDefault = ({ className = '' }) => {
   if (!data) return null;
   return (
     <SlidingSticky>
-      <div className={cx('py-10', className)}>
+      <div className={cx('py-10 xl:pt-0', className)}>
         <About data={data.about.block} />
         <Subscribe data={data.subscribe.block} />
         <Support data={data.support.block} />

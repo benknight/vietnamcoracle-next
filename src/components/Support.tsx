@@ -37,7 +37,7 @@ export default function Support({ data: block }: Props) {
           <a
             className={`
               ${btnClassName} text-white h-12
-              bg-primary-400 hover:bg-primary-500 hover:bg-opacity-100
+              bg-primary-500 hover:bg-primary-600 hover:bg-opacity-100
               dark:bg-primary-900 dark:hover:bg-primary-800
               border-primary-500 hover:border-primary-400 dark:border-opacity-50`}>
             <CurrencyDollarIcon className="w-6 h-6 mr-1" />{' '}

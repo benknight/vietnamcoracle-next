@@ -88,7 +88,7 @@ export default function NavBar({ navCategory }: Props) {
                 'lg:dark:hover:bg-transparent lg:dark:hover:text-white',
                 isCurrent(link.url)
                   ? 'text-primary-500 dark:text-white'
-                  : 'lg:dark:text-gray-400',
+                  : 'dark:text-gray-400',
                 {
                   'nav-link-home': isHomePath(link.url),
                 },

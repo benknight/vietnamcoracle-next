@@ -94,7 +94,7 @@ export default function Post({ data, html, postNav }) {
                   <Layout>
                     <LayoutMain className="px-3 sm:px-4 md:px-8">
                       <div className="max-w-[52rem] mx-auto">
-                        <div className="xl:w-[145%]">
+                        <div className="xl:w-[120%]">
                           <h1 className="text-3xl sm:text-4xl xl:text-5xl leading-tight xl:leading-tight font-display tracking-tight">
                             {content.title.replace(/\s+(\S*)$/, '\u00A0$1')}
                           </h1>

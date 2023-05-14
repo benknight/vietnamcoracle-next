@@ -228,9 +228,10 @@ export function Slider({ className = '', children }) {
                 <>
                   <span
                     className={cx(
-                      'box-content w-[5px] h-[5px] block border border-primary-700 dark:border-white rounded-full',
+                      'box-content h-[5px] lg:h-2 block border border-gray-700 dark:border-white rounded-full transition-all ease duration-300',
+                      checked ? 'w-4' : 'w-[5px] lg:w-2',
                       {
-                        'bg-primary-700 dark:bg-white': checked,
+                        'bg-gray-700 dark:bg-white': checked,
                         'bg-transparent border-opacity-50 dark:border-opacity-50':
                           !checked,
                       },

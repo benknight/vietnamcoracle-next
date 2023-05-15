@@ -23,9 +23,9 @@ const Collection = ({ ad, data }) => {
     });
     if (!ad?.enabled) return data.posts.map(mapPosts);
     return [
-      ...data.posts.slice(0, ad.position - 1).map(mapPosts),
+      ...posts.slice(0, ad.position - 1).map(mapPosts),
       { type: 'ad', data: ad },
-      ...data.posts.slice(ad.position - 1).map(mapPosts),
+      ...posts.slice(ad.position - 1).map(mapPosts),
     ];
   }, [ad, data.posts]);
   return (

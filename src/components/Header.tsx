@@ -49,7 +49,9 @@ export default function Header({ preview, fullWidth }: Props) {
               fullWidth ? '' : 'max-w-screen-2xl mx-auto',
             )}>
             <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
-              <Menu className="scale-90 lg:scale-100 origin-left">
+              <Menu
+                className="scale-90 lg:scale-100 origin-left"
+                fullWidth={fullWidth}>
                 <MenuIcon className="w-5 h-5 mx-3" />
                 <div className="flex -ml-1">
                   <Image

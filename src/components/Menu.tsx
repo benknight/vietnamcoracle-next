@@ -10,7 +10,13 @@ import { CircularProgress } from '@material-ui/core';
 import getCategoryLink from '../lib/getCategoryLink';
 import useAPI from '../lib/useAPI';
 
-export default function Menu({ children, className = '' }) {
+interface Props {
+  children: React.ReactNode;
+  className?: string;
+  fullWidth: boolean;
+}
+
+export default function Menu({ children, className = '', fullWidth }) {
   const { data } = useAPI('/api/menu/');
   return (
     <Popover>
@@ -35,7 +41,10 @@ export default function Menu({ children, className = '' }) {
             leaveTo="opacity-0 translate-y-1">
             <Popover.Panel
               static
-              className="z-10 absolute left-0 2xl:-left-3 w-screen xs:w-[80vw] sm:w-96 max-h-[87vh] mt-1 lg:mt-2 overflow-y-auto overflow-x-hidden font-medium font-display bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg transition">
+              className={cx(
+                'z-10 absolute left-0 xs:left-auto w-screen xs:w-[80vw] sm:w-96 max-h-[87vh] mt-1 lg:mt-2 overflow-y-auto overflow-x-hidden font-medium font-display bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg rounded-lg transition',
+                fullWidth ? '' : '2xl:-left-3',
+              )}>
               {({ close }) =>
                 data?.menuItems?.nodes ? (
                   <MenuNav

@@ -183,7 +183,12 @@ const Browse = ({
                   </h3>
                 </div>
                 <Collection
-                  ad={ads?.collection?.[index % ads.collection.length]}
+                  ad={
+                    // Only show adds every other row
+                    index % 2 === 0
+                      ? ads?.collection?.[index % ads.collection.length]
+                      : null
+                  }
                   key={item.title}
                   data={item}
                 />

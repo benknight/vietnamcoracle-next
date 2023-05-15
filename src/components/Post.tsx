@@ -115,8 +115,7 @@ export default function Post({ data, html, postNav }) {
               'z-10 absolute lg:fixed top-[-9999px] lg:top-auto lg:bottom-0 lg:left-0 w-full lg:w-auto',
             )}
             disable={isLG}
-            pinStart={1000}
-            upTolerance={50}>
+            pinStart={1000}>
             <div className="h-14" />
             <div className="absolute top-14 lg:top-auto lg:left-0 lg:bottom-0 w-full lg:w-auto">
               <Menu

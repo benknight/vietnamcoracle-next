@@ -218,8 +218,8 @@ const Browse = ({
             </section>
           )}
         </LayoutMain>
-        <LayoutSidebar>
-          <SidebarDefault className="!pt-14" />
+        <LayoutSidebar className="xl:pt-10">
+          <SidebarDefault />
           <Footer />
         </LayoutSidebar>
       </Layout>

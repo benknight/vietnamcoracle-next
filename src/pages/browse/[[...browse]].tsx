@@ -218,7 +218,7 @@ const Browse = ({
             </section>
           )}
         </LayoutMain>
-        <LayoutSidebar className="xl:pt-10">
+        <LayoutSidebar className="xl:pt-14">
           <SidebarDefault />
           <Footer />
         </LayoutSidebar>

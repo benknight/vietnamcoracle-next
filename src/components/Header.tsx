@@ -38,10 +38,7 @@ export default function Header({ preview, fullWidth }: Props) {
 
   return (
     <div ref={ref}>
-      <Headroom
-        className="relative z-30 w-full"
-        pinStart={pinStart}
-        upTolerance={50}>
+      <Headroom className="relative z-30 w-full" pinStart={pinStart}>
         <div className="bg-white dark:bg-gray-900">
           <div
             className={cx(

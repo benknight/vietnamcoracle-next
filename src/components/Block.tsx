@@ -1,7 +1,7 @@
 import cx from 'classnames';
 
 export const BlockTitle = props => (
-  <h3 className="text-base font-bold xs:text-xl lg:text-2xl xl:text-xl mb-3">
+  <h3 className="text-base font-bold xs:text-xl lg:text-2xl xl:text-xl 2xl:text-[22px] mb-3">
     {props.children}
   </h3>
 );
@@ -30,7 +30,7 @@ export const BlockContent = ({ className = '', children }) => (
       className,
       'mx-auto mb-8 px-4',
       'max-w-sm lg:max-w-md',
-      'text-sm sm:text-base xl:text-[15px] font-serif',
+      'text-sm sm:text-base xl:text-[15px] 2xl:text-base font-serif',
       'text-gray-600 dark:text-gray-400',
     )}>
     {children}

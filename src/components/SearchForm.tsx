@@ -38,11 +38,12 @@ export default function SearchInput({ className = '', ...inputProps }) {
       </div>
       <input
         {...inputProps}
-        className="form-field w-full h-9 pl-9 pr-3 rounded-full placeholder:text-gray-400 placeholder:dark:text-gray-600"
+        className="form-field w-full h-9 pl-9 pr-3 rounded-full placeholder:text-black/20 placeholder:dark:text-gray-600"
         onChange={event => {
           setValue(event.target.value);
           inputProps.onChange?.(event);
         }}
+        placeholder="Search"
         ref={inputRef}
         type="search"
         value={value}

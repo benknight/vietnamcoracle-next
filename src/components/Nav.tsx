@@ -11,7 +11,7 @@ import RestaurantIcon from '@material-ui/icons/Restaurant';
 import MotorcycleIcon from '@material-ui/icons/TwoWheeler';
 import WorkIcon from '@material-ui/icons/Work';
 import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
-import isHomePath from '../lib/isHomePath';
+import checkHomePath from '../lib/checkHomePath';
 
 const links = [
   {
@@ -61,7 +61,7 @@ export default function NavBar({ navCategory }: Props) {
     uri => {
       const path = router.asPath;
       if (uri === '/') {
-        return isHomePath(path);
+        return checkHomePath(path);
       }
       if (router.query.ref) {
         return uri === `/browse/${router.query.ref}/`;
@@ -90,7 +90,7 @@ export default function NavBar({ navCategory }: Props) {
                   ? 'text-primary-500 dark:text-white'
                   : 'dark:text-gray-400',
                 {
-                  'nav-link-home': isHomePath(link.url),
+                  'nav-link-home': checkHomePath(link.url),
                 },
               )}
               key={link.url}>

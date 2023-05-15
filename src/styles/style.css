@@ -238,7 +238,7 @@ article .wp-block-gallery a {
   @apply flex justify-between mb-1 px-1;
 }
 .headroom > div {
-  @apply transition-shadow ease-in-out duration-500 shadow-none;
+  @apply transition-shadow ease-in-out duration-500 shadow-lg;
 }
 .headroom--pinned > div {
   @apply shadow-xl;

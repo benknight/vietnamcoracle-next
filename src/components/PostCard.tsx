@@ -72,7 +72,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
             )}>
             {data.title}
           </h3>
-          <div className="postcard-excerpt leading-snug mt-2 font-serif text-sm text-white/60 block line-clamp-3">
+          <div className="postcard-excerpt leading-snug mt-2 font-serif text-sm 2xl:text-base text-white/60 block line-clamp-3">
             <div dangerouslySetInnerHTML={{ __html: data.body }} />
             {/* <div className="link whitespace-nowrap text-blue-300">
               Read more ›

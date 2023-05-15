@@ -149,7 +149,7 @@ const Browse = ({
                     scroll={false}>
                     <a
                       className={cx(
-                        'inline-flex items-center h-8 mt-2 mr-1 px-3 rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm',
+                        'inline-flex items-center h-8 2xl:h-10 mt-2 mr-1 px-[1.2em] rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm 2xl:text-base',
                         subcategory?.uri === node.uri
                           ? 'border-primary-400 border-opacity-75 text-primary-400'
                           : 'text-white border-white border-opacity-25 hover:border-opacity-50',
@@ -195,7 +195,7 @@ const Browse = ({
               </section>
             ))
           ) : archiveItems.length > 0 ? (
-            <div className="px-2 md:px-4 lg:px-8 py-6 grid gap-4 xl:gap-6 md:grid-cols-2">
+            <div className="px-2 md:px-4 lg:px-8 py-6 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
               {archiveItems.map((item, index) => (
                 <PostCard
                   inGrid

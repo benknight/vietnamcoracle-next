@@ -74,7 +74,7 @@ export default function Post({ data, html, postNav }) {
         />
         <style dangerouslySetInnerHTML={{ __html: data.globalStylesheet }} />
       </Head>
-      <div className="bg-gray-300 dark:bg-black">
+      <div className="bg-gray-100 dark:bg-black">
         <Hero
           className="max-w-screen-2xl mx-auto"
           imgSm={

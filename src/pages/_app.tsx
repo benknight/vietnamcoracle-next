@@ -8,7 +8,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import { StylesProvider } from '@material-ui/core/styles';
 import Header from '../components/Header';
 import { pageview } from '../lib/GoogleAnalytics';
-import isHomePath from '../lib/isHomePath';
+import checkHomePath from '../lib/checkHomePath';
 import { NavCategory } from '../lib/useNavCategory';
 import useWaitCursor from '../lib/useWaitCursor';
 import '../styles/fonts.css';
@@ -35,11 +35,13 @@ function MyApp({ Component, pageProps }: AppProps<PageProps>) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const ads = pageProps.ads;
+  const isBrowsePath = router.pathname === '/browse/[[...browse]]';
+  const isHomePath = checkHomePath(router.asPath);
   const navCategory = useMemo(() => {
     if (pageProps?.navCategory) return pageProps.navCategory;
     if (router.query.ref) return router.query.ref;
-    if (router.pathname === '/browse/[[...browse]]') {
-      if (isHomePath(router.asPath)) {
+    if (isBrowsePath) {
+      if (isHomePath) {
         return null;
       }
       return router.query.browse?.[0];
@@ -218,7 +220,7 @@ function MyApp({ Component, pageProps }: AppProps<PageProps>) {
       )}
       <div className="relative bg-white dark:bg-gray-950 min-h-screen">
         <NavCategory.Provider value={navCategory}>
-          <Header preview={preview} />
+          <Header preview={preview} fullWidth={isBrowsePath || isHomePath} />
           <Component {...pageProps} />
         </NavCategory.Provider>
       </div>

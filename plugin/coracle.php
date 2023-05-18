@@ -337,11 +337,13 @@ add_action("graphql_register_types", function () {
 				$info,
 				"any",
 			);
-			$post_ids = array_keys(CustomRelatedPosts::get()->relations_to($source->ID));
+			$relations = CustomRelatedPosts::get()->relations_to($source->ID);
+			$post_ids = array_keys($relations);
 			if (empty($post_ids)) {
 				return;
 			}
 			$resolver->set_query_arg("post__in", $post_ids);
+			$resolver->set_query_arg("orderby", "post__in");
 			return $resolver->get_connection();
 		},
 	]);

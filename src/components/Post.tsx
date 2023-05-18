@@ -422,7 +422,7 @@ export const POST_QUERY = gql`
             name
           }
         }
-        customRelatedPosts(first: 6) {
+        customRelatedPosts {
           nodes {
             ...PostCardData
           }

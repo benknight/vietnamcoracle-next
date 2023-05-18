@@ -106,6 +106,7 @@ export default function Subscribe({ data: block }: Props) {
         <input
           className="form-field flex-auto h-8 mr-2 p-2 text-sm rounded"
           onChange={event => setEmail(event.target.value)}
+          placeholder="Your Email"
           required
           type="email"
           value={email}

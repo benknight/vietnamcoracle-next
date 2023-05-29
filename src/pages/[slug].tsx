@@ -1,6 +1,7 @@
 import { gql } from 'graphql-request';
 import Post, { getPostPageProps, POST_QUERY } from '../components/Post';
 import getGQLClient from '../lib/getGQLClient';
+import RestClient from '../lib/RestClient';
 
 export default function SSGPost(props) {
   return <Post data={props.data} html={props.html} postNav={props.postNav} />;
@@ -35,10 +36,19 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params: { slug }, preview = false }) {
   const api = getGQLClient(preview ? 'preview' : 'admin');
+  const response = await RestClient.get(
+    `/posts?slug=${encodeURIComponent(slug)}&_fields=id`,
+  );
+  const databaseId = response.data?.[0]?.id;
+  if (!databaseId) {
+    return {
+      notFound: true,
+    };
+  }
   const data = await api.request(POST_QUERY, {
     preview,
-    id: decodeURIComponent(slug),
-    idType: 'URI',
+    id: databaseId,
+    idType: 'DATABASE_ID',
   });
   if (
     data.contentNode?.status === 'private' ||

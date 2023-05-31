@@ -34,12 +34,21 @@ export async function getStaticPaths() {
   return result;
 }
 
+async function fetchFirstValidId(slug: string, endpoints: string[]) {
+  for (let endpoint of endpoints) {
+    const response = await RestClient.get(
+      `/${endpoint}?slug=${encodeURIComponent(slug)}&_fields=id`,
+    );
+    if (response.data?.[0]?.id) {
+      return response.data[0].id;
+    }
+  }
+  return null;
+}
+
 export async function getStaticProps({ params: { slug }, preview = false }) {
   const api = getGQLClient(preview ? 'preview' : 'admin');
-  const response = await RestClient.get(
-    `/posts?slug=${encodeURIComponent(slug)}&_fields=id`,
-  );
-  const databaseId = response.data?.[0]?.id;
+  const databaseId = await fetchFirstValidId(slug, ['posts', 'pages']);
   if (!databaseId) {
     return {
       notFound: true,

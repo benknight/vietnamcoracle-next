@@ -14,7 +14,7 @@ import PostMediaBlock, {
 import SidebarDefault from '../components/SidebarDefault';
 import * as fragments from '../config/fragments';
 import getGQLClient from '../lib/getGQLClient';
-import RestClient from '../lib/RestClient';
+import { RestClientSubscriber } from '../lib/RestClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
 const isBot = () =>
@@ -41,7 +41,7 @@ const wpResultsFetcher = async ([query, page, pageSize]): Promise<
   PostMediaBlockPost[]
 > => {
   if (isBot()) return [];
-  const { data: results } = await RestClient.get(
+  const { data: results } = await RestClientSubscriber.get(
     `/search?search=${query}&page=${page}&pageSize=${pageSize}`,
   );
   if (results.length === 0) {

@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request';
 import Post, { getPostPageProps, POST_QUERY } from '../components/Post';
 import getGQLClient from '../lib/getGQLClient';
-import RestClient from '../lib/RestClient';
+import { RestClientAdmin } from '../lib/RestClient';
 
 export default function SSGPost(props) {
   return <Post data={props.data} html={props.html} postNav={props.postNav} />;
@@ -36,9 +36,10 @@ export async function getStaticPaths() {
 
 async function fetchFirstValidId(slug: string, endpoints: string[]) {
   for (let endpoint of endpoints) {
-    const response = await RestClient.get(
-      `/${endpoint}?slug=${encodeURIComponent(slug)}&_fields=id`,
-    );
+    const url = `/${endpoint}?slug=${encodeURIComponent(
+      slug,
+    )}&_fields=id&status=private,publish`;
+    const response = await RestClientAdmin.get(url);
     if (response.data?.[0]?.id) {
       return response.data[0].id;
     }
@@ -48,7 +49,12 @@ async function fetchFirstValidId(slug: string, endpoints: string[]) {
 
 export async function getStaticProps({ params: { slug }, preview = false }) {
   const api = getGQLClient(preview ? 'preview' : 'admin');
-  const databaseId = await fetchFirstValidId(slug, ['posts', 'pages']);
+  let databaseId;
+  try {
+    databaseId = await fetchFirstValidId(slug, ['posts', 'pages']);
+  } catch (error) {
+    databaseId = null;
+  }
   if (!databaseId) {
     return {
       notFound: true,

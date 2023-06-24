@@ -62,22 +62,26 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
               Advertisement
             </div>
           )}
-          <h3
-            className={cx(
-              'font-display text-gray-100 tracking-tightest lg:tracking-tight',
-              {
-                'text-lg lg:text-2xl leading-snug': !inGrid,
-                'text-2xl': inGrid,
-              },
-            )}>
-            {data.title}
-          </h3>
-          <div className="postcard-excerpt leading-snug mt-2 font-serif text-sm 2xl:text-base text-white/60 block line-clamp-3">
-            <div dangerouslySetInnerHTML={{ __html: data.body }} />
-            {/* <div className="link whitespace-nowrap text-blue-300">
+          {data.title.trim() && (
+            <h3
+              className={cx(
+                'font-display text-gray-100 tracking-tightest lg:tracking-tight',
+                {
+                  'text-lg lg:text-2xl leading-snug': !inGrid,
+                  'text-2xl': inGrid,
+                },
+              )}>
+              {data.title}
+            </h3>
+          )}
+          {data.body.trim() && (
+            <div className="postcard-excerpt leading-snug mt-2 font-serif text-sm 2xl:text-base text-white/60 block line-clamp-3">
+              <div dangerouslySetInnerHTML={{ __html: data.body }} />
+              {/* <div className="link whitespace-nowrap text-blue-300">
               Read more ›
             </div> */}
-          </div>
+            </div>
+          )}
           {ad && (
             <div className="rounded mt-3 p-2 bg-blue-700 text-white text-center">
               {ad.cta.title}

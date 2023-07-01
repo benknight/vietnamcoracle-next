@@ -145,9 +145,26 @@ function coracle__inject_ads($post_content)
 	$paragraph_top_offset = 2;
 	$paragraph_skip_count = 2;
 	$before = $after = 0;
+	$rendered_images = [];
 	$injection_ads = [];
 	foreach ($group_array as $group_id => $group) {
 		$advert_output = adrotate_group($group_id);
+		// Keep track of which images we have already processed to avoid rendering the same ad multiple times on the page
+		preg_match_all('/<img[^>]+src="?\'?([^"\'>]+)"?\'?[^>]*>/i', $advert_output, $matches);
+		$srcs = $matches[1];
+		$already_injected = false;
+		if (!empty($srcs)) {
+			foreach ($srcs as $src) {
+				if (in_array($src, $rendered_images)) {
+					$already_injected = true;
+				} else {
+					$rendered_images[] = $src;
+				}
+			}
+		}
+		if ($already_injected) {
+			continue;
+		}
 		// Advert in front of content
 		if (($group["location"] == 1 or $group["location"] == 3) and $before == 0) {
 			$post_content = $advert_output . $post_content;
@@ -213,6 +230,8 @@ function coracle__inject_ads($post_content)
 			}
 		}
 		$post_content = implode("", $paragraphs);
+		$rendered_images_json = json_encode($rendered_images);
+		$post_content = $post_content . "<!-- rendered_images: $rendered_images_json -->";
 	}
 	return $post_content;
 }

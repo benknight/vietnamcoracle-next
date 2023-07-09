@@ -184,8 +184,9 @@ article *[style*='#ff0000'] {
 }
 article *[style*='#d8e0e6'],
 article *[style*='#dee4e9'],
-article *[style*='#e2e9ef'] {
-  @apply dark:bg-gray-800 !important;
+article *[style*='#e2e9ef'],
+article *[style*='#eeeeee'] {
+  @apply dark:bg-gray-900 !important;
 }
 article ul {
   @apply list-disc pl-8;

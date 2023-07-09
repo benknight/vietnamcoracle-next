@@ -369,7 +369,7 @@ export async function getPostPageProps(
       $(element).replaceWith(
         `<iframe src="/api/iframe-service/?html=${encodeURIComponent(
           html,
-        )}" height="420" title="Book your accommodation"></iframe>`,
+        )}" height="500" title="Book your accommodation"></iframe>`,
       );
       $(scriptTags).remove();
     });

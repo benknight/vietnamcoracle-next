@@ -185,7 +185,7 @@ const Browse = ({
                 <Collection
                   ad={
                     // Only show adds every other row
-                    ads.collection.length === 1 && index % 2 === 1
+                    ads.collection?.length === 1 && index % 2 === 1
                       ? null
                       : ads?.collection?.[index % ads.collection.length]
                   }

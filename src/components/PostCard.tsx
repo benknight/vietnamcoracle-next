@@ -67,7 +67,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
               className={cx(
                 'font-display text-gray-100 tracking-tightest lg:tracking-tight',
                 {
-                  'text-lg lg:text-2xl leading-snug': !inGrid,
+                  'text-lg lg:text-xl leading-snug': !inGrid,
                   'text-2xl': inGrid,
                 },
               )}>

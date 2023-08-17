@@ -58,7 +58,7 @@ const Collection = ({ ad, data }) => {
           ref={scrollAreaRef as RefObject<HTMLOListElement>}>
           {items?.map((item, index) => (
             <li
-              className="snap-start flex shrink-0 w-4/5 sm:w-3/7 lg:w-3/8 xl:w-3/7 xl:min-w-[23rem] xl:max-w-[25rem] py-1 pl-3 lg:pl-4 xl:pl-3 2xl:pl-6 md:first:pl-8"
+              className="snap-start flex shrink-0 w-4/5 sm:w-3/7 lg:w-1/3 xl:min-w-[20rem] xl:max-w-[25rem] py-1 pl-3 lg:pl-4 xl:pl-3 2xl:pl-6 md:first:pl-8"
               key={index}>
               <PostCard
                 {...(item.type === 'ad'

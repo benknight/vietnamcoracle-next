@@ -832,3 +832,19 @@ add_filter("algolia_index_name", function ($defaultName) {
 	global $table_prefix;
 	return $table_prefix . $defaultName;
 });
+
+function acf_post_object_custom_query($args, $field, $post_id)
+{
+	// Check if the 's' parameter exists and if it's numeric
+	if (isset($args["s"]) && is_numeric($args["s"])) {
+		// Set the 'p' parameter (post ID) for WP_Query
+		$args["p"] = intval($args["s"]);
+
+		// Clear the 's' parameter to avoid a keyword search
+		unset($args["s"]);
+	}
+
+	return $args;
+}
+
+add_filter("acf/fields/post_object/query", "acf_post_object_custom_query", 10, 3);

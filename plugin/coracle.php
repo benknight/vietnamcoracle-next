@@ -230,7 +230,9 @@ function coracle__inject_ads($post_content)
 		}
 		$post_content = implode("", $paragraphs);
 		$rendered_images_json = json_encode($rendered_images);
-		$post_content = $post_content . "<!-- rendered_images: $rendered_images_json -->";
+		if ($debug) {
+			$post_content = $post_content . "<!-- rendered_images: $rendered_images_json -->";
+		}
 	}
 	return $post_content;
 }

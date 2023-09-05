@@ -66,8 +66,8 @@ function MyApp({ Component, pageProps }: AppProps<PageProps>) {
     const handleRouteChange = (url: string) => {
       pageview(url);
     };
-    //When the component is mounted, subscribe to router changes
-    //and log those page views
+    // When the component is mounted, subscribe to router changes
+    // and log those page views
     router.events.on('routeChangeComplete', handleRouteChange);
 
     // If the component is unmounted, unsubscribe
@@ -78,20 +78,29 @@ function MyApp({ Component, pageProps }: AppProps<PageProps>) {
   }, [router.events]);
 
   useEffect(() => {
-    const clickHandler = event => {
-      const anchorElement = event.target.closest('a');
+    const clickHandler = (event: MouseEvent) => {
+      const target = event.target as Element;
+      const anchorElement = target.closest('a');
+
       if (!anchorElement) return;
       if (!anchorElement.classList.contains('gofollow')) return;
       if (!anchorElement.hasAttribute('data-track')) return;
-      fetch('https://cms.vietnamcoracle.com/wp-admin/admin-ajax.php', {
-        method: 'post',
-        body: new URLSearchParams({
-          action: 'adrotate_click',
-          track: anchorElement.getAttribute('data-track'),
-        }),
-      });
+
+      const trackData = anchorElement.getAttribute('data-track');
+
+      if (trackData) {
+        fetch('https://cms.vietnamcoracle.com/wp-admin/admin-ajax.php', {
+          method: 'post',
+          body: new URLSearchParams({
+            action: 'adrotate_click',
+            track: trackData,
+          }),
+        });
+      }
     };
+
     document.body.addEventListener('click', clickHandler);
+
     return () => document.body.removeEventListener('click', clickHandler);
   }, []);
 

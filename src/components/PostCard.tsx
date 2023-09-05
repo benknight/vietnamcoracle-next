@@ -41,7 +41,6 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
           layout="fill"
           loading="lazy"
           objectFit="cover"
-          quality={50}
           src={
             ad
               ? data.image.srcLarge

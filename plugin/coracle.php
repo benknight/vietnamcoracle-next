@@ -612,7 +612,7 @@ function coracle__revalidate_comments($comment_id)
 		return;
 	}
 	$path = "/" . $post->post_name . "/";
-	revalidate_paths($paths);
+	revalidate_paths($path);
 }
 
 add_action("edit_comment", "coracle__revalidate_comments");
@@ -710,7 +710,7 @@ add_action(
 	function ($post_id, $post) {
 		if ($post->post_type === "post" || $post->post_type === "page") {
 			$path = "/" . $post->post_name . "/";
-			revalidate_paths($paths);
+			revalidate_paths($path);
 		}
 	},
 	10,

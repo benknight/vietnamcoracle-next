@@ -53,6 +53,7 @@ export default function Hero({
             layout="fill"
             objectFit="cover"
             priority={priority}
+            quality={60}
             src={imgSm.sourceUrl}
           />
         </div>
@@ -63,6 +64,7 @@ export default function Hero({
             layout="fill"
             objectFit="cover"
             priority={priority}
+            quality={60}
             src={imgLg.sourceUrl}
           />
         </div>

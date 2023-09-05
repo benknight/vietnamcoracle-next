@@ -76,7 +76,7 @@ export function HeroContent({ children }) {
   const { theme } = useContext(HeroContext);
   return (
     <div
-      className={cx('relative md:pb-1 dark:pb-0', {
+      className={cx('relative pb-0', {
         'text-gray-800 dark:text-white': theme === 'auto',
         'text-white': theme === 'dark',
         'text-gray-800': theme === 'light',
@@ -84,11 +84,12 @@ export function HeroContent({ children }) {
       <div
         className={cx(
           'absolute bottom-full w-full h-52 md:h-48 xl:h-32',
-          'bg-gradient-to-t to-transparent from-gray-950 via-black-25 pointer-events-none',
+          'bg-gradient-to-t to-transparent pointer-events-none',
           {
-            'opacity-50 dark:opacity-100': theme === 'auto',
-            'opacity-100': theme === 'dark',
-            'opacity-50': theme === 'light',
+            'from-white via-white-25 dark:from-gray-950 dark:via-black-25':
+              theme === 'auto',
+            'from-gray-950 via-black-25': theme === 'dark',
+            'from-white via-white-25': theme === 'light',
           },
         )}
       />

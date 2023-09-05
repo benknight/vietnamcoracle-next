@@ -53,9 +53,8 @@ function coracle__shutdown()
 	}
 }
 
-// NOTE(2021-06-13): Disabling below actions since there aren't really any ads
-// add_action("init", "coracle__init");
-// add_action("shutdown", "coracle__shutdown");
+add_action("init", "coracle__init");
+add_action("shutdown", "coracle__shutdown");
 
 // Get rid of unneeded scripts
 function coracle__wp_print_scripts()

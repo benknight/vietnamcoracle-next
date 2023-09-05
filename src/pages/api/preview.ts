@@ -8,7 +8,7 @@ export default async function preview(
 
   // Enable Preview Mode by setting the cookies
   res.setPreviewData({
-    isAdminPreview: secret == process.env.WORDPRESS_PREVIEW_SECRET,
+    isAdminPreview: secret == process.env.WORDPRESS_SECRET,
   });
 
   // Redirect to the path provided

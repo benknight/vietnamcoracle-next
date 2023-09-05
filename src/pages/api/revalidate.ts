@@ -4,17 +4,13 @@ export default async function handler(
   request: NextApiRequest,
   response: NextApiResponse,
 ) {
-  const { paths } = request.query;
-  const { secret } = request.body;
-  if (secret !== process.env.WORDPRESS_PREVIEW_SECRET) {
-    return response.status(401).send({ message: 'Invalid request' });
+  if (request.query.secret !== process.env.WORDPRESS_SECRET) {
+    return response.status(401).send({ message: 'Forbidden' });
   }
+
   try {
-    await Promise.all(
-      String(paths)
-        .split(',')
-        .map(path => response.revalidate(path)),
-    );
+    const paths = request.query.paths as string;
+    await Promise.all(paths.split(',').map(path => response.revalidate(path)));
     return response.send({ success: true });
   } catch (error) {
     return response.status(500).send({ error, success: false });

@@ -33,6 +33,11 @@ class MyDocument extends Document {
               `,
             }}
           />
+          {/* Goat Counter */}
+          <script
+            data-goatcounter="https://coracle.goatcounter.com/count"
+            async
+            src="//gc.zgo.at/count.js"></script>
         </Head>
         <body>
           <Main />

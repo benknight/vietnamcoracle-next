@@ -5,6 +5,7 @@ import FlightIcon from '@material-ui/icons/Flight';
 import HotelIcon from '@material-ui/icons/Hotel';
 import Block, { BlockContent, BlockTitle, BlockType } from './Block';
 import HeartIcon from './HeartIcon';
+import Image from 'next/image';
 
 interface Props {
   data: BlockType;
@@ -46,11 +47,12 @@ export default function Support({ data: block }: Props) {
         </Link>
         <Link href="/become-a-patron-of-vietnam-coracle">
           <a
-            className={`${btnClassName} btn-patreon border-white dark:border-black h-12`}>
-            <img
+            className={`${btnClassName} gap-2 btn-patreon border-white dark:border-black h-12`}>
+            <Image
               alt=""
-              className="w-4 h-4 mr-2"
               src="/Digital-Patreon-Logo_FieryCoral.png"
+              width={16}
+              height={16}
             />
             Become a Patron
           </a>

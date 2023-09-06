@@ -25,37 +25,6 @@ function coracle__widgets_init()
 }
 add_action("widgets_init", "coracle__widgets_init");
 
-// GIF optimization
-function coracle__optimize_gifs($buffer)
-{
-	if (is_admin()) {
-		return $buffer;
-	}
-	$placeholder = htmlspecialchars(
-		'data:image/svg+xml,<svg viewBox="0 0 1000 100" xmlns="http://www.w3.org/2000/svg"></svg>',
-	);
-	return preg_replace(
-		'/<img [^>]*src=[\'"]([^\'"]*\.gif)[^>]*>/i',
-		"<img loading=\"lazy\" class=\"native-lazyload-js-fallback\" data-src=\"$1\" src=\"$placeholder\">",
-		$buffer,
-	);
-}
-
-function coracle__init()
-{
-	ob_start("coracle__optimize_gifs");
-}
-
-function coracle__shutdown()
-{
-	if (ob_get_length()) {
-		ob_end_flush();
-	}
-}
-
-add_action("init", "coracle__init");
-add_action("shutdown", "coracle__shutdown");
-
 // Get rid of unneeded scripts
 function coracle__wp_print_scripts()
 {
@@ -229,8 +198,8 @@ function coracle__inject_ads($post_content)
 			}
 		}
 		$post_content = implode("", $paragraphs);
-		$rendered_images_json = json_encode($rendered_images);
 		if ($debug) {
+			$rendered_images_json = json_encode($rendered_images);
 			$post_content = $post_content . "<!-- rendered_images: $rendered_images_json -->";
 		}
 	}

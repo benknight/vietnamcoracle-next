@@ -3,7 +3,7 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const breakpoints = require('./src/config/breakpoints');
 
 module.exports = {
-  plugins: [require('@tailwindcss/line-clamp')],
+  plugins: [],
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {
     extend: {

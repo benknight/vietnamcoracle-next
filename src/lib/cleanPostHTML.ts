@@ -31,6 +31,9 @@ export default function cleanPostHTML(html: string): string {
     '<related-posts $2>$4</related-posts>',
   );
 
+  // Remove all "Georgia" font-families to reduce page size
+  result = result.replace(/font-family: [^;]*Georgia[^;]*;?/gi, '');
+
   result = cmsToNextUrls(result);
 
   return result;

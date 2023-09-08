@@ -1,5 +1,6 @@
 import cx from 'classnames';
-import { debounce, throttle } from 'lodash';
+import _debounce from 'lodash/debounce';
+import _throttle from 'lodash/throttle';
 import { forwardRef, useCallback, useRef, useState, useEffect } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
@@ -104,7 +105,7 @@ export function Slider({ className = '', children }) {
 
   // Nav auto-hide behavior
   useEffect(() => {
-    const timeout = throttle(
+    const timeout = _throttle(
       () =>
         window.setTimeout(() => {
           if (timeoutRef.current !== false) {
@@ -147,7 +148,7 @@ export function Slider({ className = '', children }) {
   // Prevent slider from getting 'stuck' in an in-between position
   // (happens only in Chromium as of Nov 2022)
   useEffect(() => {
-    const listener = debounce(() => goTo(cursorRef.current), 1500);
+    const listener = _debounce(() => goTo(cursorRef.current), 1500);
     parentRef.current?.addEventListener('wheel', listener);
     parentRef.current?.addEventListener('touchend', listener);
     return () => {

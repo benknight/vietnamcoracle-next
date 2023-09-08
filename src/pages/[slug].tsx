@@ -1,7 +1,9 @@
 import { gql } from 'graphql-request';
-import Post, { getPostPageProps, POST_QUERY } from '../components/Post';
+import Post from '../components/Post';
+import { POST_QUERY } from '../config/queries';
 import getGQLClient from '../lib/getGQLClient';
-import { RestClientAdmin } from '../lib/RestClient';
+import { getPostPageProps } from '../lib/getPostPageProps';
+import { RestClientAdmin } from '../services/RestClient';
 
 export default function SSGPost(props) {
   return <Post data={props.data} html={props.html} postNav={props.postNav} />;

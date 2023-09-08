@@ -1,8 +1,11 @@
 import cx from 'classnames';
 import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
-import _ from 'lodash';
-import type { InferGetStaticPropsType } from 'next';
+import _chunk from 'lodash/chunk';
+import _shuffle from 'lodash/shuffle';
+import _fill from 'lodash/fill';
+import _flatten from 'lodash/flatten';
+import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -41,7 +44,7 @@ const Browse = ({
 
   const archiveItems = useMemo(() => {
     if (showCollections) return [];
-    const shuffledAds = _.shuffle(ads.collection);
+    const shuffledAds = _shuffle(ads.collection);
     const mapPosts = post => ({
       type: 'post',
       data: post,
@@ -49,8 +52,8 @@ const Browse = ({
     const posts = (subcategory || category).posts.nodes.filter(
       node => !!node.featuredImage,
     );
-    const result = _.flatten(
-      _.chunk(posts, 2).map((chunk, i) => {
+    const result = _flatten(
+      _chunk(posts, 2).map((chunk, i) => {
         let result = chunk.map(mapPosts);
         if (i % 2 === 0 && shuffledAds.length > 0) {
           result.push({ type: 'ad', data: shuffledAds.pop() });
@@ -256,7 +259,7 @@ export const getStaticPaths = async () => {
   const result = {
     paths: [
       { params: { browse: [] } },
-      ..._.flatten(
+      ..._flatten(
         data.category.children.nodes.map(node => {
           return [
             { params: { browse: getComponentsFromURI(node.uri) } },
@@ -413,7 +416,7 @@ export const getStaticProps = async ({ params, preview = false }) => {
     props: {
       ads: preview
         ? {
-            collection: _.fill(Array(2), {
+            collection: _fill(Array(2), {
               body: 'This is the ad body content. Use this to describe your product or service. Spice it up with an image of your product.',
               enabled: true,
               heading: 'Title Banner [$250/month]',

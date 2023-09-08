@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request';
 import htmlToReact from 'html-react-parser';
-import _ from 'lodash';
-import type { InferGetStaticPropsType } from 'next';
+import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Footer from '../../components/Footer';
 import GridListTab from '../../components/GridListTab';

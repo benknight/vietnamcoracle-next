@@ -4,8 +4,10 @@ import { GetServerSidePropsContext } from 'next';
 import nodeCookie from 'node-cookie';
 import { useEffect } from 'react';
 import PatronOnlyContentGate from '../components/PatronOnlyContentGate';
-import Post, { POST_QUERY, getPostPageProps } from '../components/Post';
+import Post from '../components/Post';
+import { POST_QUERY } from '../config/queries';
 import getGQLClient from '../lib/getGQLClient';
+import { getPostPageProps } from '../lib/getPostPageProps';
 
 // This is a server-rendered page for posts for when logic is necessary in order to display the post or redirect
 export default function SSRPost({ patron, post, renderPatreonButton = false }) {
@@ -144,7 +146,7 @@ export async function getServerSideProps({
       const postData = await api.request(POST_QUERY, {
         preview: Boolean(preview),
         id: postId,
-        idType: 'DATABASE_ID'
+        idType: 'DATABASE_ID',
       });
       return {
         props: {

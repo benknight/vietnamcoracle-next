@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import { gql } from 'graphql-request';
-import { Formik, Field, Form, useFormikContext } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import _unescape from 'lodash/unescape';
 import { useState } from 'react';
 import getGQLClient from '../lib/getGQLClient';

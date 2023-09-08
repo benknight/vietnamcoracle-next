@@ -7,7 +7,7 @@ import smoothscroll from 'smoothscroll-polyfill';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { StylesProvider } from '@material-ui/core/styles';
 import Header from '../components/Header';
-import { pageview } from '../lib/GoogleAnalytics';
+import { pageview } from '../services/GoogleAnalytics';
 import checkHomePath from '../lib/checkHomePath';
 import { NavCategory } from '../lib/useNavCategory';
 import useWaitCursor from '../lib/useWaitCursor';

@@ -89,80 +89,82 @@ const Browse = ({
       ) : (
         <Hero imgSm={coverImgSm} imgLg={coverImgLg} priority theme="dark">
           <HeroContent>
-            <div className="page-wrap pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end">
-              <h1 className="mt-8 sm:mr-6 font-display">
-                {subcategory ? (
-                  <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
-                    <span className="inline-block text-gray-300 opacity-90">
-                      <Link href={getCategoryLink(category.uri)}>
-                        <a className="inline-block hover:link">
-                          {category.name}{' '}
-                        </a>
-                      </Link>
-                      &nbsp;&gt;&nbsp;
-                    </span>
-                    <span className="inline-block">{subcategory.name}</span>
-                  </div>
-                ) : (
-                  <div className="text-4xl md:text-3xl lg:text-5xl leading-tight">
-                    {category.name}
+            <div className="lg:-translate-y-8">
+              <div className="page-wrap pb-4 flex-auto flex flex-wrap md:flex-nowrap items-end">
+                <h1 className="sm:mr-6 font-display">
+                  {subcategory ? (
+                    <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
+                      <span className="inline-block text-gray-300 opacity-90">
+                        <Link href={getCategoryLink(category.uri)}>
+                          <a className="inline-block hover:link">
+                            {category.name}{' '}
+                          </a>
+                        </Link>
+                        &nbsp;&gt;&nbsp;
+                      </span>
+                      <span className="inline-block">{subcategory.name}</span>
+                    </div>
+                  ) : (
+                    <div className="text-4xl md:text-3xl lg:text-5xl leading-tight">
+                      {category.name}
+                    </div>
+                  )}
+                </h1>
+                {category.map?.mid && !subcategory && (
+                  <a
+                    className="self-end hidden md:inline-flex lg:inline-flex my-2 md:mb-1 md:order-1 items-end text-sm hover:underline"
+                    href="#map">
+                    <MapIcon className="w-5 h-5 mr-2" />
+                    Jump to Map
+                  </a>
+                )}
+                {category.children.nodes.length > 0 && (
+                  <div className="flex-auto w-full md:hidden">
+                    <button
+                      className="relative btn justify-between h-11 w-full mt-3 rounded-full bg-opacity-25"
+                      onClick={() => setShowSubcats(value => !value)}>
+                      {showSubcats
+                        ? subcategory
+                          ? 'Show Less'
+                          : 'Hide Subcategories'
+                        : subcategory
+                        ? 'Show More'
+                        : 'Show Subcategories'}
+                      <ChevronDownIcon
+                        className={cx(
+                          'w-4 h-4 ml-2 transition-duration-100',
+                          showSubcats ? 'rotate-180' : 'rotate-0',
+                        )}
+                      />
+                    </button>
                   </div>
                 )}
-              </h1>
-              {category.map?.mid && !subcategory && (
-                <a
-                  className="self-end hidden md:inline-flex lg:inline-flex my-2 md:mb-1 md:order-1 items-end text-sm hover:underline"
-                  href="#map">
-                  <MapIcon className="w-5 h-5 mr-2" />
-                  Jump to Map
-                </a>
-              )}
+              </div>
               {category.children.nodes.length > 0 && (
-                <div className="flex-auto w-full md:hidden">
-                  <button
-                    className="relative btn justify-between h-11 w-full mt-3 rounded-full bg-opacity-25"
-                    onClick={() => setShowSubcats(value => !value)}>
-                    {showSubcats
-                      ? subcategory
-                        ? 'Show Less'
-                        : 'Hide Subcategories'
-                      : subcategory
-                      ? 'Show More'
-                      : 'Show Subcategories'}
-                    <ChevronDownIcon
-                      className={cx(
-                        'w-4 h-4 ml-2 transition-duration-100',
-                        showSubcats ? 'rotate-180' : 'rotate-0',
-                      )}
-                    />
-                  </button>
+                <div
+                  className={cx(
+                    'page-wrap pb-4 dark:pb-0 md:pr-24',
+                    showSubcats ? '' : 'hidden md:block',
+                  )}>
+                  {category.children.nodes.map(node => (
+                    <Link
+                      key={node.uri}
+                      href={getCategoryLink(node.uri)}
+                      scroll={false}>
+                      <a
+                        className={cx(
+                          'inline-flex items-center h-8 2xl:h-10 mt-2 mr-1 px-[1.2em] rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm 2xl:text-base',
+                          subcategory?.uri === node.uri
+                            ? 'border-primary-400 border-opacity-75 text-primary-400'
+                            : 'text-white border-white border-opacity-25 hover:border-opacity-50',
+                        )}>
+                        {node.name}
+                      </a>
+                    </Link>
+                  ))}
                 </div>
               )}
             </div>
-            {category.children.nodes.length > 0 && (
-              <div
-                className={cx(
-                  'page-wrap pb-4 dark:pb-0 md:pr-24',
-                  showSubcats ? '' : 'hidden md:block',
-                )}>
-                {category.children.nodes.map(node => (
-                  <Link
-                    key={node.uri}
-                    href={getCategoryLink(node.uri)}
-                    scroll={false}>
-                    <a
-                      className={cx(
-                        'inline-flex items-center h-8 2xl:h-10 mt-2 mr-1 px-[1.2em] rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm 2xl:text-base',
-                        subcategory?.uri === node.uri
-                          ? 'border-primary-400 border-opacity-75 text-primary-400'
-                          : 'text-white border-white border-opacity-25 hover:border-opacity-50',
-                      )}>
-                      {node.name}
-                    </a>
-                  </Link>
-                ))}
-              </div>
-            )}
           </HeroContent>
         </Hero>
       )}
@@ -171,7 +173,7 @@ const Browse = ({
           className={cx('overflow-hidden', isHome ? 'pt-8 md:pt-0' : 'pt-4')}>
           {showCollections ? (
             category.collections.items.map((item, index) => (
-              <section className="my-6 md:my-12" key={item.title}>
+              <section className="my-6 md:my-12 first:lg:mt-0" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
                   <h3 className="sm:mb-2 font-display sm:text-2xl 2xl:text-2xl dark:text-gray-200 group">
                     {item.category ? (

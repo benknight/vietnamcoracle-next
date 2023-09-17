@@ -56,7 +56,7 @@ export default function Hero({
             src={imgSm.sourceUrl}
           />
         </div>
-        <div className={cx('relative hidden lg:block aspect-[7/3]')}>
+        <div className={cx('relative hidden lg:block aspect-[7/2.8]')}>
           <Image
             alt={imgLg.altText}
             key={imgLg.id}
@@ -83,7 +83,7 @@ export function HeroContent({ children }) {
       })}>
       <div
         className={cx(
-          'absolute bottom-full w-full h-52 md:h-48 xl:h-32',
+          'absolute bottom-full w-full h-52 md:h-48 xl:h-40',
           'bg-gradient-to-t to-transparent pointer-events-none',
           {
             'from-white via-white-25 dark:from-gray-950 dark:via-black-25':

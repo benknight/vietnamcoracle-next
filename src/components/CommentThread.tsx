@@ -12,6 +12,7 @@ const CommentHeader = ({ comment, isReply = false }) => (
   <div className="flex items-center mb-4 font-display text-sm">
     {comment.author.node?.id === 'dXNlcjoy' && (
       <img
+        alt=""
         className="w-11 h-11 mr-2 rounded-full"
         src={comment.author.node.avatar.url}
       />

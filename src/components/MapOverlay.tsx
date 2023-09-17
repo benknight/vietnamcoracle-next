@@ -19,6 +19,7 @@ export default function MapOverlay({
         <iframe
           className={iframeClassName}
           loading="lazy"
+          title="Map"
           {...iframeProps}></iframe>
         <div
           className={cx(

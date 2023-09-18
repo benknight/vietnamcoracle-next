@@ -56,7 +56,7 @@ export default function Hero({
             src={imgSm.sourceUrl}
           />
         </div>
-        <div className={cx('relative hidden lg:block aspect-[7/2.8]')}>
+        <div className={cx('relative hidden lg:block aspect-[7/3]')}>
           <Image
             alt={imgLg.altText}
             key={imgLg.id}

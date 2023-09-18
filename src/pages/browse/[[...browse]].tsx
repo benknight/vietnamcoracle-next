@@ -173,7 +173,7 @@ const Browse = ({
           className={cx('overflow-hidden', isHome ? 'pt-8 md:pt-0' : 'pt-4')}>
           {showCollections ? (
             category.collections.items.map((item, index) => (
-              <section className="my-6 md:my-12 first:lg:mt-0" key={item.title}>
+              <section className="my-6 md:my-12" key={item.title}>
                 <div className="page-wrap flex items-baseline justify-between md:justify-start">
                   <h3 className="sm:mb-2 font-display sm:text-2xl 2xl:text-2xl dark:text-gray-200 group">
                     {item.category ? (

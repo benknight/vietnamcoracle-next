@@ -55,9 +55,11 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
   try {
     databaseId = await fetchFirstValidId(slug, ['posts', 'pages']);
   } catch (error) {
+    console.error(error);
     databaseId = null;
   }
   if (!databaseId) {
+    console.warn('databaseId not found for slug:', slug);
     return {
       notFound: true,
     };
@@ -82,6 +84,10 @@ export async function getStaticProps({ params: { slug }, preview = false }) {
     !data.contentNode ||
     !['post', 'page'].includes(data.contentNode.contentType?.node.name)
   ) {
+    console.warn(
+      'contentNode not found for database id, or not a post or page:',
+      data.contentNode,
+    );
     return {
       notFound: true,
     };

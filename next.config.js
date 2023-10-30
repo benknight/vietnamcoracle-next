@@ -12,6 +12,15 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/post/',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex',
+          },
+        ],
+      },
     ];
   },
   images: {

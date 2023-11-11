@@ -44,7 +44,7 @@ const Browse = ({
 
   const archiveItems = useMemo(() => {
     if (showCollections) return [];
-    const shuffledAds = _shuffle(ads.collection);
+    const shuffledAds = _shuffle(ads.collection.filter(ad => ad.enabled));
     const mapPosts = post => ({
       type: 'post',
       data: post,

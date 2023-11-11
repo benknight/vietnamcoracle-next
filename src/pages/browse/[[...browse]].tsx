@@ -26,7 +26,7 @@ import getCategoryLink from '../../lib/getCategoryLink';
 import getGQLClient from '../../lib/getGQLClient';
 
 const Browse = ({
-  ads,
+  ads = [],
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const router = useRouter();
@@ -44,7 +44,7 @@ const Browse = ({
 
   const archiveItems = useMemo(() => {
     if (showCollections) return [];
-    const shuffledAds = _shuffle(ads.collection.filter(ad => ad.enabled));
+    const shuffledAds = _shuffle(ads.collection?.filter(ad => ad.enabled));
     const mapPosts = post => ({
       type: 'post',
       data: post,
@@ -410,8 +410,6 @@ export const getStaticProps = async ({ params, preview = false }) => {
         'destinations',
       ].includes(categorySlug),
   });
-
-  // console.log(JSON.stringify(data.category?.ads.collection, null, 2));
 
   return {
     notFound: !data.category,

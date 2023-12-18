@@ -15,25 +15,25 @@ export const config = {
   },
 };
 
-export default async function handle(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  const isTest = Boolean(req.query['test'] as string);
+
   let event: Stripe.Event;
 
   const stripe = new Stripe(
-    event.livemode
-      ? process.env.STRIPE_SECRET_KEY
-      : process.env.STRIPE_SECRET_KEY_TEST,
+    isTest ? process.env.STRIPE_SECRET_KEY_TEST : process.env.STRIPE_SECRET_KEY,
   );
 
   try {
     event = stripe.webhooks.constructEvent(
       await getRawBody(req),
       req.headers['stripe-signature'],
-      event.livemode
-        ? process.env.STRIPE_WEBHOOK_SECRET
-        : process.env.STRIPE_WEBHOOK_SECRET_TEST,
+      isTest
+        ? process.env.STRIPE_WEBHOOK_SECRET_TEST
+        : process.env.STRIPE_WEBHOOK_SECRET,
     );
   } catch (error) {
     console.error(error.toString());

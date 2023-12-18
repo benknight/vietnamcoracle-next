@@ -21,22 +21,22 @@ function formatMessageHtml(message: string): string {
 </html>`;
 }
 
-export default async function handle(
+export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   // Read the Checkout Session ID from the URL query parameter
   const sessionId = req.query['checkout_session_id'] as string;
 
+  if (!sessionId) {
+    return res.status(400).send(formatMessageHtml('Session ID is required'));
+  }
+
   const stripe = new Stripe(
     sessionId.startsWith('cs_test')
       ? process.env.STRIPE_SECRET_KEY_TEST
       : process.env.STRIPE_SECRET_KEY,
   );
-
-  if (!sessionId) {
-    return res.status(400).send(formatMessageHtml('Session ID is required'));
-  }
 
   try {
     // Retrieve the session from Stripe

@@ -3,8 +3,6 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import getRawBody from 'raw-body';
 import Stripe from 'stripe';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
-
 AWS.config.update({
   accessKeyId: process.env.AWS_ACCESS_KEY_ID,
   secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
@@ -23,11 +21,19 @@ export default async function handle(
 ) {
   let event: Stripe.Event;
 
+  const stripe = new Stripe(
+    event.livemode
+      ? process.env.STRIPE_SECRET_KEY
+      : process.env.STRIPE_SECRET_KEY_TEST,
+  );
+
   try {
     event = stripe.webhooks.constructEvent(
       await getRawBody(req),
       req.headers['stripe-signature'],
-      process.env.STRIPE_WEBHOOK_SECRET,
+      event.livemode
+        ? process.env.STRIPE_WEBHOOK_SECRET
+        : process.env.STRIPE_WEBHOOK_SECRET_TEST,
     );
   } catch (error) {
     console.error(error.toString());

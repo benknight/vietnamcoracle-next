@@ -7,10 +7,12 @@
     @apply bg-gray-100 dark:bg-black;
     touch-action: manipulation;
   }
+
   body {
     @apply overscroll-x-none;
     @apply text-gray-800 dark:text-gray-200;
   }
+
   a {
     text-underline-offset: 1px;
   }
@@ -26,25 +28,38 @@
     @apply transition-colors duration-100 ease-in-out;
     @apply whitespace-nowrap;
   }
+
+  .btn-primary {
+    @apply text-white bg-primary-500 hover:bg-primary-600 hover:bg-opacity-100;
+    @apply dark:bg-primary-900 dark:hover:bg-primary-800;
+    @apply border-primary-500 hover:border-primary-400 dark:border-opacity-50;
+  }
+
   .btn-patreon {
     @apply hover:bg-[#FF424D] hover:bg-opacity-25;
   }
+
   .c-block::after {
     @apply block w-2/3 mx-auto my-12 border-t border-gray-300 dark:border-gray-800;
     content: '';
   }
+
   .c-block:last-child::after {
     content: none;
   }
+
   .comment {
     @apply text-sm leading-snug;
   }
+
   .comment a {
     @apply link;
   }
+
   .comment p {
     @apply mb-4;
   }
+
   .form-field {
     @apply outline-none leading-none font-sans
       bg-white dark:bg-black focus:bg-white dark:focus:bg-black
@@ -53,50 +68,63 @@
       focus:border-gray-500 dark:focus:border-gray-600
       hover:border-gray-500 dark:hover:border-gray-600;
   }
+
   .link {
     @apply text-blue-600 dark:text-blue-400;
     @apply visited:text-purple-600 dark:visited:text-purple-400;
     @apply hover:underline active:text-red-600 dark:active:text-red-500;
   }
+
   .nav-bar {
     @apply flex justify-center;
   }
+
   @media (max-height: 600px) {
     .nav-bar {
       @apply hidden !important;
     }
   }
+
   .nav-link-home {
     @apply lg:hidden !important;
   }
+
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
+
   .page-heading {
     scroll-margin-top: 6rem;
     @apply font-display text-2xl md:text-4xl;
   }
+
   .page-wrap {
     @apply px-4 md:px-8;
   }
+
   .page-wrap--left {
     @apply pr-0 !important;
   }
+
   .page-wrap--right {
     @apply pl-0 !important;
   }
+
   .page-wrap--center {
     @apply mx-auto py-12 max-w-screen-lg;
   }
+
   /* smartphones, touchscreens */
   @media (hover: none) and (pointer: coarse) {
     .pointer-only {
       pointer-events: none;
     }
   }
+
   .postcard-excerpt a {
     @apply hidden;
   }
+
   .postcard-excerpt p,
   .postcard-excerpt div {
     @apply inline;
@@ -107,12 +135,15 @@
   .text-shadow {
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
+
   .text-shadow-md {
     text-shadow: 0 4px 8px rgba(0, 0, 0, 0.12), 0 2px 4px rgba(0, 0, 0, 0.08);
   }
+
   .text-shadow-lg {
     text-shadow: 0 15px 30px rgba(0, 0, 0, 0.11), 0 5px 15px rgba(0, 0, 0, 0.08);
   }
+
   .text-shadow-none {
     text-shadow: none;
   }
@@ -129,153 +160,196 @@ input[type='search']::-webkit-search-cancel-button {
 article {
   @apply text-base font-display leading-relaxed dark:text-gray-300;
 }
+
 article a {
   @apply link;
 }
+
 article a[name] {
   scroll-margin-top: 6rem;
 }
+
 article h1 {
   @apply mb-5 text-2xl;
   letter-spacing: 0.2em;
 }
+
 article h2 {
   @apply sm:mt-8 pb-4 lg:pb-4 font-display leading-loose;
 }
+
 article hr,
 .wp-block-separator {
   @apply my-6 border border-gray-200 dark:border-gray-800;
   border-width: 0 0 1px;
 }
+
 article iframe {
   width: 100%;
 }
+
 article img {
   @apply md:shadow-heavy;
 }
+
 article img,
 article iframe {
   @apply block;
 }
+
 article img.size-large {
   @apply mt-8;
 }
+
 article p,
 article ul,
 article figure {
   @apply mb-7 font-serif md:font-lora;
 }
+
 article > p {
   @apply md:text-justify;
 }
+
 article p.has-background {
   @apply px-4 md:px-8;
 }
+
 article figcaption {
   @apply block py-2 leading-tight font-bold text-sm text-center;
 }
+
 article figure {
   @apply max-w-full !important;
 }
+
 article *[style*='#3366ff'] {
   @apply text-blue-600 dark:text-blue-400 !important;
 }
+
 article *[style*='#333333'],
 article *[style*='#000000'] {
   @apply dark:text-white !important;
 }
+
 article *[style*='#808080'] {
   @apply text-gray-400 !important;
 }
+
 article *[style*='#ff0000'] {
   @apply text-red-600 dark:text-red-500 !important;
 }
+
 article *[style*='#d8e0e6'],
 article *[style*='#dee4e9'],
 article *[style*='#e2e9ef'],
 article *[style*='#eeeeee'] {
   @apply dark:bg-gray-900 !important;
 }
+
 article ul {
   @apply list-disc pl-8;
 }
+
 article .aligncenter {
   @apply mx-auto mb-0;
 }
+
 article .alignleft {
   @apply mx-auto mb-0 float-none md:float-left clear-both md:mr-8;
 }
+
 article .alignright {
   @apply mx-auto mb-0 float-none md:float-right clear-both md:ml-8;
 }
+
 article .blocks-gallery-grid {
   @apply list-none pl-0;
 }
+
 article .blocks-gallery-item img {
   @apply block rounded;
 }
+
 article .crp-list-title {
   @apply hidden;
 }
+
 article .crp-list {
   @apply hidden;
 }
+
 article .crp-list + div > a {
   color: inherit !important;
   @apply hover:no-underline !important;
 }
+
 article .crp-list + div p {
   margin-bottom: 0 !important;
 }
+
 article .has-drop-cap:not(:focus)::first-letter {
   @apply font-display mr-2;
   font-size: 3rem !important;
   margin-top: 12px !important;
 }
+
 article .has-huge-font-size,
 article .has-large-font-size {
   @apply text-2xl sm:text-3xl md:text-4xl !important;
 }
+
 /* Necessary to style /vietnam-coracle-video-library */
 article .wp-block-gallery a {
   @apply text-white !important;
 }
+
 .selected-resources {
   @apply mb-7;
 }
+
 .selected-resources small {
   @apply flex justify-between mb-1 px-1;
 }
+
 .headroom > div {
   @apply transition-shadow ease-in-out duration-500 shadow-lg;
 }
+
 .headroom--pinned > div {
   @apply shadow-xl;
 }
+
 .patreon-valid-patron-message {
   @apply hidden;
 }
+
 /* Override inline colors set in WYSIWYG */
 .post-legacy a > span {
   color: inherit !important;
 }
+
 .post-legacy h2 strong {
   line-height: 0;
   font-size: 0;
   @apply sm:text-base mt-4 sm:mt-8 flex flex-col items-start sm:block text-gray-500;
 }
+
 .post-legacy h2 strong a {
   letter-spacing: 3px;
   position: relative;
   top: 1.5px;
   @apply text-lg sm:text-lg leading-relaxed mb-2 sm:mx-2;
 }
+
 .post-legacy h2 strong a:first-child {
   @apply ml-0;
 }
+
 .post-legacy span[style*='Georgia'] {
   font-family: inherit !important;
 }
+
 .post-legacy span[style*='25px'],
 .post-legacy span[style*='26px'],
 .post-legacy span[style*='27px'],
@@ -283,90 +357,125 @@ article .wp-block-gallery a {
   @apply font-display !important;
   @apply leading-normal !important;
 }
+
 /* Images & captions */
 .legacy-caption em::after,
 .legacy-caption em::before {
   content: ' ';
 }
+
 .post-next h2,
 .post-next h3,
 .post-next h4 {
   @apply my-6 pb-0 font-bold;
 }
+
 .post-next h2 {
   @apply uppercase text-2xl text-center dark:text-white;
   letter-spacing: 0.2em;
 }
+
 .post-next h3 {
   @apply text-xl dark:text-white;
 }
+
 .post-next h2,
 .post-next h3 {
   scroll-margin-top: 6rem;
 }
+
 @screen xl {
   .post-next h2,
   .post-next h3 {
     scroll-margin-top: 8rem;
   }
 }
+
 .post-next p,
 .post-next ul,
 .post-next ol {
   @apply mb-4;
 }
+
 .post-next .wp-block-image {
   @apply my-8;
 }
+
 .preview-placement {
   @apply relative block;
 }
+
 .preview-placement::after {
   content: attr(title);
   @apply absolute inset-0 flex items-center justify-center text-black text-2xl text-center opacity-30 font-sans font-bold;
 }
+
 .preview-placement img {
   @apply w-full;
 }
+
 .wp-block-buttons:nth-child(2) {
   @apply block md:flex md:mt-8;
 }
+
 .wp-block-buttons:nth-child(2) .wp-block-button {
   @apply block p-0 mx-0 mt-0 mb-2;
 }
+
 .wp-block-buttons:nth-child(2) .wp-block-button:not(:last-child)::after {
   @apply inline-block h-3 w-[2px] mx-4 bg-black dark:bg-white opacity-20;
 }
+
 @screen md {
   .wp-block-buttons:nth-child(2) .wp-block-button:not(:last-child)::after {
     content: '';
   }
 }
+
 .wp-block-buttons:nth-child(2) .wp-block-button__link {
   @apply link p-0 bg-transparent text-base tracking-widest leading-relaxed uppercase;
   @apply text-lg font-bold;
 }
+
 .post-image,
 .wp-block-image > a {
   @apply block mt-8 mb-2;
 }
+
 .wp-block-stackable-columns.stk-block-background {
   @apply dark:bg-gray-800 !important;
 }
+
 .wp-block-stackable-columns .wp-block-image img {
   @apply shadow-heavy;
 }
+
 .wp-block-stackable-columns.stk-has-top-separator .wp-block-image img {
   @apply shadow-heavy;
 }
+
 .wp-block-stackable-columns .stk-separator__wrapper svg {
   @apply dark:fill-gray-950;
 }
+
 .post .wp-block-stackable-columns {
   @apply overflow-visible !important;
 }
+
 @screen lg {
   #map {
     scroll-margin-top: 5rem;
   }
+}
+
+.offline-guide-cta {
+  @apply text-lg;
+}
+
+.offline-guide-cta .wp-block-heading {
+  @apply text-3xl font-lora font-bold mb-4 pb-0;
+}
+
+.offline-guide-cta .wp-block-button__link {
+  @apply btn-primary mt-4 w-full no-underline;
 }

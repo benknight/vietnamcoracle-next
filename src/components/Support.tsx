@@ -11,7 +11,7 @@ interface Props {
   data: BlockType;
 }
 
-const btnClassName = 'btn flex mt-2 rounded-xl';
+const btnClassName = 'btn flex mt-2';
 
 export default function Support({ data: block }: Props) {
   return (
@@ -35,12 +35,7 @@ export default function Support({ data: block }: Props) {
       </BlockContent>
       <div className="max-w-xs mx-auto">
         <Link href="/donations-page">
-          <a
-            className={`
-              ${btnClassName} text-white h-12
-              bg-primary-500 hover:bg-primary-600 hover:bg-opacity-100
-              dark:bg-primary-900 dark:hover:bg-primary-800
-              border-primary-500 hover:border-primary-400 dark:border-opacity-50`}>
+          <a className={`${btnClassName} btn-primary h-12`}>
             <CurrencyDollarIcon className="w-6 h-6 mr-1" />{' '}
             <span className="pr-4">Donate</span>
           </a>

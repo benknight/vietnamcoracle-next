@@ -83,7 +83,9 @@ export async function getServerSideProps({
     data.contentNode.status !== 'publish' ||
     data.contentNode.isRestricted ||
     data.contentNode.patreonLevel > 0;
-  let userCanView = (previewData as any)?.isAdminPreview;
+  let userCanView =
+    process.env.NODE_ENV === 'development' ||
+    (previewData as any)?.isAdminPreview;
   let renderPatreonButton = false;
 
   // Patreon-only content requires OAuth token

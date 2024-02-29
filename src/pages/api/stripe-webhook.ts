@@ -83,13 +83,12 @@ export default async function handler(
 
       const ses = new AWS.SES();
 
-      ses.sendEmail(params, (error, data) => {
-        if (error) {
-          console.error('Error sending email', error);
-        } else {
-          console.log('Email sent', data.MessageId);
-        }
-      });
+      try {
+        const data = await ses.sendEmail(params).promise();
+        console.log('Email sent', data.MessageId);
+      } catch (error) {
+        console.error('Error sending email', error);
+      }
 
       break;
     default:

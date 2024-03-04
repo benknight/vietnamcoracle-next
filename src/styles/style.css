@@ -468,36 +468,72 @@ article .wp-block-gallery a {
   }
 }
 
+.offline-guide-cta {
+  @apply flex-col md:flex-row gap-5 md:gap-8 p-8 !important;
+  @apply grid-cols-2 font-serif md:font-lora;
+}
+
 .offline-guide-cta h3 {
-  @apply text-3xl font-display font-bold mb-4;
+  @apply text-3xl font-display font-bold text-center md:text-left;
+  @apply col-span-3;
 }
 
 .offline-guide-cta h5 {
-  @apply text-base font-lora mb-2;
+  @apply text-base col-span-2 m-0 text-center md:text-left;
+}
+
+.offline-guide-cta ul {
+  @apply col-span-2 m-0;
 }
 
 .offline-guide-cta p {
   @apply mb-2;
 }
 
+.offline-guide-cta .wp-block-buttons {
+  @apply mt-0 lg:mt-4;
+}
+
+.offline-guide-cta .wp-block-button {
+  @apply flex-auto lg:flex-none;
+}
+
 .offline-guide-cta .wp-block-button__link {
-  @apply no-underline font-sans flex items-center gap-2;
+  @apply font-sans px-6 block;
+}
+
+.offline-guide-cta .wp-block-column {
+  @apply contents md:flex md:flex-col md:gap-4;
+}
+
+.offline-guide-cta .wp-block-image {
+  @apply relative w-1/2 sm:w-1/3 md:w-full mb-4 md:mb-0;
+}
+
+.offline-guide-cta .wp-block-image img {
+  @apply shadow-2xl rounded;
 }
 
 .offline-guide-cta .wp-block-image > a {
   @apply m-0;
 }
 
-.offline-guide-cta .wp-block-button__link::before {
+.offline-guide-cta .wp-block-image::before {
+  @apply rounded-br;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   content: '';
   display: block;
-  width: 18px;
-  height: 18px;
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHZpZXdCb3g9IjAgMCAyMCAyMCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTEwLjc1IDIuNzVDMTAuNzUgMi4zMzU3OSAxMC40MTQyIDIgMTAgMkM5LjU4NTc5IDIgOS4yNSAyLjMzNTc5IDkuMjUgMi43NVYxMS4zNjM2TDYuMjk1MjYgOC4yMzUwM0M2LjAxMDg1IDcuOTMzODkgNS41MzYxNyA3LjkyMDMzIDUuMjM1MDMgOC4yMDQ3NEM0LjkzMzkgOC40ODkxNSA0LjkyMDMzIDguOTYzODMgNS4yMDQ3NCA5LjI2NDk3TDkuNDU0NzQgMTMuNzY1QzkuNTk2NDIgMTMuOTE1IDkuNzkzNjYgMTQgMTAgMTRDMTAuMjA2MyAxNCAxMC40MDM2IDEzLjkxNSAxMC41NDUzIDEzLjc2NUwxNC43OTUzIDkuMjY0OTdDMTUuMDc5NyA4Ljk2MzgzIDE1LjA2NjEgOC40ODkxNSAxNC43NjUgOC4yMDQ3NEMxNC40NjM4IDcuOTIwMzMgMTMuOTg5MiA3LjkzMzg5IDEzLjcwNDcgOC4yMzUwM0wxMC43NSAxMS4zNjM2VjIuNzVaIiBmaWxsPSIjRkZGRkZGIi8+CjxwYXRoIGQ9Ik0zLjUgMTIuNzVDMy41IDEyLjMzNTggMy4xNjQyMSAxMiAyLjc1IDEyQzIuMzM1NzkgMTIgMiAxMi4zMzU4IDIgMTIuNzVWMTUuMjVDMiAxNi43Njg4IDMuMjMxMjIgMTggNC43NSAxOEgxNS4yNUMxNi43Njg4IDE4IDE4IDE2Ljc2ODggMTggMTUuMjVWMTIuNzVDMTggMTIuMzM1OCAxNy42NjQyIDEyIDE3LjI1IDEyQzE2LjgzNTggMTIgMTYuNSAxMi4zMzU4IDE2LjUgMTIuNzVWMTUuMjVDMTYuNSAxNS45NDA0IDE1Ljk0MDQgMTYuNSAxNS4yNSAxNi41SDQuNzVDNC4wNTk2NCAxNi41IDMuNSAxNS45NDA0IDMuNSAxNS4yNVYxMi43NVoiIGZpbGw9IiNGRkZGRkYiLz4KPC9zdmc+Cg==');
-  background-size: contain;
+  width: 60px;
+  height: 60px;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAzMzQuMzcxIDM4MC41NjMiIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDE0IDE2IiB4bWw6c3BhY2U9InByZXNlcnZlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgoKCTxnIHRyYW5zZm9ybT0ibWF0cml4KC4wNDU4OSAwIDAgLjA0NTg5IC0uNjY4NzcgLS43MzM3OSkiPgoJCTxwb2x5Z29uIHBvaW50cz0iNTEuNzkxIDM1Ni42NSA1MS43OTEgMjMuOTkgMjA0LjUgMjMuOTkgMjgyLjY1IDEwMi4wNyAyODIuNjUgMzU2LjY1IiBmaWxsPSIjZmZmIiBzdHJva2Utd2lkdGg9IjIxMi42NSIvPgoJCTxwYXRoIGQ9Im0yMDEuMTkgMzEuOTkgNzMuNDYgNzMuMzkzdjI0My4yNmgtMjE0Ljg2di0zMTYuNjZoMTQxLjRtNi42MjMtMTZoLTE2NC4wMnYzNDguNjZoMjQ2Ljg1di0yNjUuOXoiIHN0cm9rZS13aWR0aD0iMjEuNzkxIi8+Cgk8L2c+Cgk8ZyB0cmFuc2Zvcm09Im1hdHJpeCguMDQ1ODkgMCAwIC4wNDU4OSAtLjY2ODc3IC0uNzMzNzkpIj4KCQk8cG9seWdvbiBwb2ludHM9IjI4Mi42NSAzNTYuNjUgNTEuNzkxIDM1Ni42NSA1MS43OTEgMjMuOTkgMjA0LjUgMjMuOTkgMjA2LjMxIDI1LjggMjA2LjMxIDEwMC4zMyAyODAuOSAxMDAuMzMgMjgyLjY1IDEwMi4wNyIgZmlsbD0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIyMTIuNjUiLz4KCQk8cGF0aCBkPSJtMTk4LjMxIDMxLjk5djc2LjMzN2g3Ni4zMzd2MjQwLjMyaC0yMTQuODZ2LTMxNi42NmgxMzguNTJtOS41LTE2aC0xNjQuMDJ2MzQ4LjY2aDI0Ni44NXYtMjY1LjlsLTYuNDMtNi40MjRoLTY5LjkwN3YtNjkuODQyeiIgc3Ryb2tlLXdpZHRoPSIyMS43OTEiLz4KCTwvZz4KCTxnIHRyYW5zZm9ybT0ibWF0cml4KC4wNDU4OSAwIDAgLjA0NTg5IC0uNjY4NzcgLS43MzM3OSkiIHN0cm9rZS13aWR0aD0iMjEuNzkxIj4KCQk8cG9seWdvbiBwb2ludHM9IjI1OC4zMSA4Ny43NSAyMTkuNjQgODcuNzUgMjE5LjY0IDQ4LjY2NyAyNTguMzEgODYuMzgiLz4KCQk8cGF0aCBkPSJtMjI3LjY0IDY3LjY0NiAxMi40MSAxMi4xMDRoLTEyLjQxdi0xMi4xMDRtLTUuMDAyLTI3LjIyOWgtMTAuOTk4djU1LjMzM2g1NC42NjZ2LTEyLjc0MnoiLz4KCTwvZz4KCTxnIHRyYW5zZm9ybT0ibWF0cml4KC4wNDU4OSAwIDAgLjA0NTg5IC0uNjY4NzcgLS43MzM3OSkiIGZpbGw9IiNlZDFjMjQiIHN0cm9rZS13aWR0aD0iMjEyLjY1Ij4KCQk8cG9seWdvbiBwb2ludHM9IjMxMS44OSAyODQuNDkgMjIuNTQ0IDI4NC40OSAyMi41NDQgMTY3LjY4IDM3LjI5MSAxNTIuOTQgMzcuMjkxIDE3MS40OSAyOTcuMTUgMTcxLjQ5IDI5Ny4xNSAxNTIuOTQgMzExLjg5IDE2Ny42OCIvPgoJCTxwYXRoIGQ9Im0zMDMuNjUgMTY4LjYzIDEuNzQ3IDEuNzQ3djEwNy42MmgtMjc2LjM1di0xMDcuNjJsMS43NDctMS43NDd2OS4zNjJoMjcyLjg1di05LjM2Mm0tMTIuOTk5LTMxLjM4NXYyNy43NDdoLTI0Ni44NnYtMjcuNzQ3bC0yNy43NDcgMjcuNzQ3djEyNmgzMDIuMzV2LTEyNnoiLz4KCTwvZz4KCTxyZWN0IHg9IjEuNzIxOSIgeT0iNy45NTQ0IiB3aWR0aD0iMTAuNjg0IiBoZWlnaHQ9IjQuMDMwNyIgZmlsbD0ibm9uZSIvPgoJPGcgdHJhbnNmb3JtPSJtYXRyaXgoLjA0NTg5IDAgMCAuMDQ1ODkgMS43MjE5IDExLjczMykiIGZpbGw9IiNmZmYiIHN0cm9rZS13aWR0aD0iMjEuNzkxIj48cGF0aCBkPSJtOS4yMTYgMHYtODMuMmgzMC40NjRxNi43ODQgMCAxMi45MjggMS40MDggNi4xNDQgMS4yOCAxMC43NTIgNC42MDggNC42MDggMy4yIDcuMjk2IDguNTc2IDIuODE2IDUuMjQ4IDIuODE2IDEzLjA1NiAwIDcuNjgtMi44MTYgMTMuMTg0LTIuNjg4IDUuNTA0LTcuMjk2IDkuMDg4LTQuNjA4IDMuNDU2LTEwLjYyNCA1LjI0OC02LjAxNiAxLjY2NC0xMi41NDQgMS42NjRoLTguOTZ2MjYuMzY4em0yMi4wMTYtNDMuNzc2aDcuOTM2cTYuNTI4IDAgOS42LTMuMDcyIDMuMi0zLjA3MiAzLjItOC43MDR0LTMuNDU2LTcuOTM2LTkuODU2LTIuMzA0aC03LjQyNHoiLz48cGF0aCBkPSJtODcuMDQgMHYtODMuMmgyNC41NzZxOS40NzIgMCAxNy4yOCAyLjMwNCA3LjkzNiAyLjMwNCAxMy41NjggNy4yOTZ0OC43MDQgMTIuOHEzLjIgNy44MDggMy4yIDE4LjgxNnQtMy4wNzIgMTguOTQ0LTguNzA0IDEzLjA1NnEtNS41MDQgNS4xMi0xMy4xODQgNy41NTItNy41NTIgMi40MzItMTYuNTEyIDIuNDMyem0yMi4wMTYtMTcuNjY0aDEuMjhxNC40OCAwIDguNDQ4LTEuMDI0IDMuOTY4LTEuMTUyIDYuNzg0LTMuODQgMi45NDQtMi42ODggNC42MDgtNy40MjR0MS42NjQtMTIuMDMyLTEuNjY0LTExLjkwNC00LjYwOC03LjE2OHEtMi44MTYtMi41Ni02Ljc4NC0zLjQ1Ni0zLjk2OC0xLjAyNC04LjQ0OC0xLjAyNGgtMS4yOHoiLz48cGF0aCBkPSJtMTY5LjIyIDB2LTgzLjJoNTQuMjcydjE4LjQzMmgtMzIuMjU2djE1Ljg3MmgyNy42NDh2MTguNDMyaC0yNy42NDh2MzAuNDY0eiIvPjwvZz4KCjwvc3ZnPgo='),
+    linear-gradient(135deg, transparent, transparent 50%, #ccc 50%, #aaa);
+  background-size: 60%, auto;
+  background-position: bottom 25% right 25%;
   background-repeat: no-repeat;
 }
 
 .has-gradient-1-gradient-background {
-  @apply dark:bg-none !important;
+  @apply dark:bg-gray-800 dark:bg-none !important;
 }

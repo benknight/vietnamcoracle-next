@@ -519,7 +519,7 @@ article .wp-block-gallery a {
 }
 
 .offline-guide-cta .wp-block-image::before {
-  @apply rounded-br;
+  @apply rounded-br select-none pointer-events-none;
   position: absolute;
   bottom: 0;
   right: 0;

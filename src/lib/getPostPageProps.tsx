@@ -84,7 +84,7 @@ export async function getPostPageProps(
     // Add overlay to Google Maps embeds
     $('iframe')
       .filter(function () {
-        return /(google\.com\/maps[\/\w-\.]+\/embed([\?&][\w-\.]+=[\w-\.]+)+)/g.test(
+        return /(google(\.[\w]+)+\/maps[\/\w-\.]+\/embed([\?&][\w-\.]+=[\w-\.]+)+)/g.test(
           $(this).attr('src'),
         );
       })

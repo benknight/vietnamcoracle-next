@@ -40,7 +40,7 @@ export default function Support({ data: block }: Props) {
             <span className="pr-4">Donate</span>
           </a>
         </Link>
-        <Link href="/become-a-patron-of-vietnam-coracle">
+        <Link href="https://www.patreon.com/vietnamcoracle">
           <a
             className={`${btnClassName} gap-2 btn-patreon border-white dark:border-black h-12`}>
             <Image

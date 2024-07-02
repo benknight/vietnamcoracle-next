@@ -1,6 +1,5 @@
 import cx from 'classnames';
-import _keyBy from 'lodash/keyBy';
-import _mapValues from 'lodash/mapValues';
+import { defaults, keyBy, mapValues } from 'lodash';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -23,10 +22,20 @@ interface HookOptions {
   successRedirectUrl?: string;
 }
 
+const defaultMessages: Required<HookOptions['messages']> = {
+  alreadySubscribed:
+    'There is already an existing subscription for the provided email addresss',
+  error: 'Something went wrong. Please try again later.',
+  success: 'Thank you for subscribing to Vietnam Coracle',
+};
+
 export function useSubscribeForm(opts?: HookOptions) {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
+  const messages = defaults(opts?.messages, defaultMessages);
+
   useWaitCursor(loading);
+
   const onSubmit = useCallback(email => {
     setLoading(true);
     fetch('/api/subscribe/', {
@@ -38,23 +47,17 @@ export function useSubscribeForm(opts?: HookOptions) {
     })
       .then(res => res.json())
       .then(data => {
-        let message = '';
+        let message: string;
         if (data.success) {
           if (opts?.successRedirectUrl) {
             router.push(internalizeUrl(opts.successRedirectUrl));
           } else {
-            message =
-              opts?.messages?.success ||
-              'Thank you for subscribing to Vietnam Coracle';
+            message = messages.success;
           }
         } else {
-          message =
-            opts?.messages?.error ||
-            'Something went wrong. Please try again later.';
+          message = messages.error;
           if (data.code === 'ERR_ALREADY_SUBSCRIBED') {
-            message =
-              opts?.messages?.alreadySubscribed ||
-              'There is already an existing subcription for the provided email addresss';
+            message = messages.alreadySubscribed;
           }
         }
         if (message) {
@@ -63,12 +66,13 @@ export function useSubscribeForm(opts?: HookOptions) {
         setLoading(false);
       });
   }, []);
+
   return { isLoading: loading, onSubmit };
 }
 
 export default function Subscribe({ data: block }: Props) {
   const [email, setEmail] = useState('');
-  const messages = _mapValues(_keyBy(block.messages, 'key'), 'value');
+  const messages = mapValues(keyBy(block.messages, 'key'), 'value');
   const { isLoading, onSubmit } = useSubscribeForm({
     messages: {
       alreadySubscribed: messages['already_subscribed'],

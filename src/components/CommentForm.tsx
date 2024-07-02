@@ -56,13 +56,20 @@ export default function CommentForm({ parent, post }: Props) {
       });
       if (response.createComment.success) {
         if (values.subscribe === true) {
-          fetch('/api/subscribe/', {
-            method: 'post',
-            body: JSON.stringify({ email: values.email }),
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          });
+          try {
+            fetch('/api/subscribe/', {
+              method: 'post',
+              body: JSON.stringify({ email: values.email }),
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+          } catch (error) {
+            console.error(
+              `CommentForm: failed to subscribe ${values.email}`,
+              error,
+            );
+          }
         }
         window.alert('Thank you! Your comment is awaiting moderation.');
       }

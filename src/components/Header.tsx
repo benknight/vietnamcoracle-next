@@ -37,7 +37,7 @@ export default function Header({ preview, fullWidth }: Props) {
   }, []);
 
   return (
-    <div ref={ref}>
+    <div ref={ref} role="banner">
       <Headroom
         className="relative z-30 w-full"
         downTolerance={10}

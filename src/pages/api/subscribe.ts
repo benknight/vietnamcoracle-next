@@ -14,7 +14,7 @@ export default async function preview(
   const { email } = req.body;
 
   if (!email) {
-    return res.status(401).json({
+    return res.status(400).json({
       code: 'ERR_INVALID_REQUEST',
       success: false,
     });

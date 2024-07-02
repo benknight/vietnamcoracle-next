@@ -18,6 +18,9 @@ export default async function menu(_req: NextApiRequest, res: NextApiResponse) {
     }
   `);
   const maxAgeSeconds = 60 * 60 * 24; // 24 hours
-  res.setHeader('Cache-Control', `public, maxage=0, s-maxage=${maxAgeSeconds}`);
+  res.setHeader(
+    'Cache-Control',
+    `public, max-age=0, s-maxage=${maxAgeSeconds}`,
+  );
   res.send(result);
 }

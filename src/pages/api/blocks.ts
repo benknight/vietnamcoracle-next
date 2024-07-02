@@ -37,6 +37,6 @@ export default async function sidebar(
       }
     }
   `);
-  res.setHeader('Cache-Control', 'max-age=0, s-maxage=3600');
+  res.setHeader('Cache-Control', 'public, maxage=0, s-maxage=3600');
   res.send(result);
 }

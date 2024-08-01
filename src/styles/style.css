@@ -511,7 +511,7 @@ article .wp-block-gallery a {
 }
 
 .offline-guide-cta .wp-block-image img {
-  @apply shadow-2xl rounded;
+  @apply shadow-2xl rounded-2xl;
 }
 
 .offline-guide-cta .wp-block-image > a {

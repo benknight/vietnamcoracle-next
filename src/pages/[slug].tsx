@@ -42,7 +42,7 @@ async function fetchFirstValidId(slug: string, endpoints: string[]) {
       slug,
     )}&_fields=id&status=private,publish`;
     const response = await RestClientAdmin.get(url);
-    console.log('fetchFirstValidId', url, response.data);
+    // console.log('fetchFirstValidId', url, response.data);
     if (response.data?.[0]?.id) {
       return response.data[0].id;
     }

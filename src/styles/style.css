@@ -3,6 +3,16 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --wp--preset--color--contrast: #292524;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --wp--preset--color--contrast: #e7e5e4;
+    }
+  }
+
   html {
     @apply bg-gray-100 dark:bg-black;
     touch-action: manipulation;
@@ -180,7 +190,7 @@ article h2 {
 
 article hr,
 .wp-block-separator {
-  @apply my-6 border border-gray-200 dark:border-gray-800;
+  @apply my-6 border border-gray-200 dark:border-gray-800 w-full;
   border-width: 0 0 1px;
 }
 

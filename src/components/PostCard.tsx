@@ -8,9 +8,10 @@ interface Props {
   ad?: any;
   inGrid?: boolean;
   post?: any;
+  showAdTag?: boolean;
 }
 
-const PostCard = ({ ad, inGrid = false, post }: Props) => {
+const PostCard = ({ ad, inGrid = false, post, showAdTag = false }: Props) => {
   const data = useMemo(
     () =>
       ad
@@ -41,11 +42,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
           layout="fill"
           loading="lazy"
           objectFit="cover"
-          src={
-            ad
-              ? data.image.srcLarge
-              : `https://res.cloudinary.com/vietnam-coracle/image/fetch/${data.image.srcLarge}`
-          }
+          src={data.image.srcLarge}
         />
       </div>
       <div className="absolute w-full pt-[101%] pointer-events-none">
@@ -56,7 +53,7 @@ const PostCard = ({ ad, inGrid = false, post }: Props) => {
           'relative flex-auto flex items-end p-1 px-4 md:px-5 py-4 xl:pb-5 font-medium rounded-b -mt-24',
         )}>
         <div className="relative w-full">
-          {ad && (
+          {showAdTag && (
             <div className="inline-block text-xs bg-yellow-300 text-yellow-700 p-1 rounded-sm leading-none mb-2 shadow-sm">
               Advertisement
             </div>

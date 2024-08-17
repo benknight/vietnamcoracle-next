@@ -172,33 +172,61 @@ const Browse = ({
         <LayoutMain
           className={cx('overflow-hidden', isHome ? 'pt-8 md:pt-0' : 'pt-4')}>
           {showCollections ? (
-            category.collections.items.map((item, index) => (
-              <section className="my-6 md:my-12" key={item.title}>
-                <div className="page-wrap flex items-baseline justify-between md:justify-start">
-                  <h3 className="sm:mb-2 font-display sm:text-2xl 2xl:text-2xl dark:text-gray-200 group">
-                    {item.category ? (
-                      <Link href={getCategoryLink(item.category?.uri ?? '')}>
-                        <a className="block group-hover:link">
-                          {item.title} &gt;
-                        </a>
-                      </Link>
-                    ) : (
-                      item.title
+            category.collections.items.map((item, index) => {
+              const ad =
+                ads.collection?.length === 1 && index % 2 === 1
+                  ? null
+                  : ads?.collection?.[index % ads.collection.length];
+
+              const posts = item.posts.filter(post => !!post.featuredImage);
+
+              const mapPosts = post => ({
+                type: 'post',
+                data: post,
+              });
+
+              const items =
+                isHome || !ad?.enabled
+                  ? item.posts.map(mapPosts)
+                  : [
+                      ...posts.slice(0, ad.position - 1).map(mapPosts),
+                      { type: 'ad', data: ad },
+                      ...posts.slice(ad.position - 1).map(mapPosts),
+                    ];
+
+              return (
+                <>
+                  {isHome && index === 0 && ads.collection && (
+                    <Collection
+                      heading="Offline Guides"
+                      items={ads.collection.map(ad => (
+                        <PostCard ad={ad} />
+                      ))}
+                    />
+                  )}
+                  <Collection
+                    heading={
+                      item.category ? (
+                        <Link href={getCategoryLink(item.category?.uri ?? '')}>
+                          <a className="block group-hover:link">
+                            {item.title} &gt;
+                          </a>
+                        </Link>
+                      ) : (
+                        item.title
+                      )
+                    }
+                    items={items.map(item =>
+                      item.type === 'ad' ? (
+                        <PostCard ad={item.data} />
+                      ) : (
+                        <PostCard post={item.data} />
+                      ),
                     )}
-                  </h3>
-                </div>
-                <Collection
-                  ad={
-                    // Only show adds every other row
-                    ads.collection?.length === 1 && index % 2 === 1
-                      ? null
-                      : ads?.collection?.[index % ads.collection.length]
-                  }
-                  key={item.title}
-                  data={item}
-                />
-              </section>
-            ))
+                  />
+                </>
+              );
+            })
           ) : archiveItems.length > 0 ? (
             <div className="px-2 md:px-4 lg:px-8 py-6 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
               {archiveItems.map((item, index) => (

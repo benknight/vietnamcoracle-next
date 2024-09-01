@@ -19,12 +19,8 @@ const expiresMs = 15 * 60 * 1000; // 15 minutes
 const isPdf = (name: string) => name.toLowerCase().endsWith('.pdf');
 
 const sortFiles = (a: DownloadLink, b: DownloadLink) => {
-  const isPdfA = a.name.toLowerCase().endsWith('.pdf');
-  const isPdfB = b.name.toLowerCase().endsWith('.pdf');
-
   if (isPdf(a.name) && !isPdf(b.name)) return -1;
   if (!isPdf(a.name) && isPdf(b.name)) return 1;
-
   return a.name.localeCompare(b.name);
 };
 
@@ -64,9 +60,10 @@ export default function DownloadGuide(props: Props) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async ({
-  query,
-}: GetServerSidePropsContext) => {
+export const getServerSideProps: GetServerSideProps<Props> = async (
+  context: GetServerSidePropsContext,
+) => {
+  const { query } = context;
   const sessionId = query['checkout_session_id'] as string;
 
   if (!sessionId) {
@@ -136,11 +133,10 @@ export const getServerSideProps: GetServerSideProps<Props> = async ({
     };
   }
 
-  // Generate a signed URLs
   const downloadLinks: DownloadLink[] = [];
 
   for (const fileKey of fileKeys) {
-    const signedUrl = await getSignedUrl({
+    const signedUrl = getSignedUrl({
       url: `${distributionUrl}/${fileKey.trim()}`,
       keyPairId: process.env.CLOUDFRONT_KEY_PAIR_ID,
       privateKey: process.env.CLOUDFRONT_PRIVATE_KEY.replace(/\\n/g, '\n'),

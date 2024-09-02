@@ -6,17 +6,23 @@ const distributionUrl = 'https://d2gs0ocb6y9y9p.cloudfront.net';
 const downloadLimit = Number(process.env.OFFLINE_GUIDE_DOWNLOAD_LIMIT || 100);
 const expiresMs = 60 * 1000; // 1 minutes
 
+const getErrorMessage = (message: string): string => {
+  return `${message}. Please contact admin@vietnamcoracle.com for assistance.`;
+};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
   // Read the Checkout Session ID from the URL query parameter
-  const paymentIntentId = req.body.pi as string;
-  const fileKey = req.body.file_key as string;
-  const isTest = Boolean(req.body.is_test);
+  const paymentIntentId = req.query.pi as string;
+  const fileKey = req.query.file_key as string;
+  const isTest = req.query.is_test === '1';
 
   if (!paymentIntentId) {
-    return res.status(400).send('Payment Intent ID is required');
+    return res
+      .status(400)
+      .send(getErrorMessage('Payment Intent ID is required'));
   }
 
   const stripe = new Stripe(
@@ -37,7 +43,7 @@ export default async function handler(
     });
 
     if (newCount > downloadLimit) {
-      res.status(400).send('Download limit exceeded');
+      res.send(getErrorMessage('Download limit exceeded'));
     } else {
       const url = getSignedUrl({
         url: `${distributionUrl}/${fileKey.trim()}`,
@@ -45,10 +51,10 @@ export default async function handler(
         privateKey: process.env.CLOUDFRONT_PRIVATE_KEY.replace(/\\n/g, '\n'),
         dateLessThan: new Date(Date.now() + expiresMs).toISOString(),
       });
-      res.send(url);
+      res.redirect(url);
     }
   } catch (error) {
     console.error(error);
-    res.status(500).send('Unexpected error');
+    res.status(500).send(getErrorMessage('Unexpected error'));
   }
 }

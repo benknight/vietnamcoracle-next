@@ -57,8 +57,15 @@ export default async function handler(
         { expand: ['line_items'] },
       );
 
-      if (!paymentLink.metadata.s3_file_key) {
-        console.log('No file key found in Payment Link metadata');
+      // Skip any events that don't have the necessary metadata
+      const shouldHandleEvent = Object.keys(paymentLink.metadata).some(key =>
+        ['s3_prefix', 's3_file_key', 'guides_package_count'].includes(key),
+      );
+
+      if (!shouldHandleEvent) {
+        console.log(
+          'Skipping event because there are no recognize keys in payment link metadata.',
+        );
         break;
       }
 

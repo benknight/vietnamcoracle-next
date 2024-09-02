@@ -34,7 +34,7 @@
     @apply text-sm font-sans font-medium tracking-wider bg-gray-500;
     @apply bg-opacity-10 dark:bg-opacity-25;
     @apply hover:bg-opacity-25 dark:hover:bg-primary-500 dark:hover:bg-opacity-25;
-    @apply focus:bg-opacity-25 dark:focus:bg-primary-500 dark:focus:bg-opacity-25;
+    @apply focus-visible:ring-2 ring-primary-500;
     @apply focus:outline-none rounded-lg subpixel-antialiased font-sans;
     @apply transition-colors duration-100 ease-in-out;
     @apply whitespace-nowrap;

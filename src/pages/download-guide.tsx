@@ -126,7 +126,7 @@ export default function DownloadGuide(props: Props) {
                 <h3 className="text-lg mt-8 mb-4 font-medium text-center">
                   {groups[prefix].sort(sortFiles)[0].name.replace('.pdf', '')}
                 </h3>
-                <ul className="space-y-2 border border-opacity-10 p-2 rounded">
+                <ul className="space-y-2 border border-opacity-10 p-2 rounded-xl">
                   {sortedFiles.map(file => (
                     <li key={file.name}>
                       <button
@@ -209,7 +209,11 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       });
 
       const guideOptions = paymentLinks.data
-        .filter(link => 's3_prefix' in link.metadata)
+        .filter(
+          link =>
+            's3_prefix' in link.metadata &&
+            link.metadata.s3_prefix.split(',').length === 1,
+        )
         .map(link => [
           link.metadata.s3_prefix,
           link.line_items.data[0].description,

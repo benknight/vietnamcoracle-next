@@ -79,7 +79,7 @@ export default async function handler(
         Message: {
           Body: {
             Text: {
-              Data: `Thank you! Here's your download link for the ${description}:\n\nhttps://www.vietnamcoracle.com/download-guide/?checkout_session_id=${session.id}\n\nFor full functionality, open PDF files with Adobe Acrobat Reader or Foxit PDF Reader (free on Android or iOS)\n\nIf you have any questions or feedback, feel free to respond to this email.\n\nTom`,
+              Data: `Thank you! Here's your download link for ${description}:\n\nhttps://www.vietnamcoracle.com/download-guide/?checkout_session_id=${session.id}\n\nFor full functionality, open PDF files with Adobe Acrobat Reader or Foxit PDF Reader (free on Android or iOS)\n\nIf you have any questions or feedback, feel free to respond to this email.\n\nTom`,
             },
           },
           Subject: {

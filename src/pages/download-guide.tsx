@@ -206,6 +206,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       const maxSelection = Number(paymentLink.metadata.guides_package_count);
       const paymentLinks = await stripe.paymentLinks.list({
         expand: ['data.line_items'],
+        limit: 100,
       });
 
       const guideOptions = paymentLinks.data

@@ -9,7 +9,7 @@ import { InferGetStaticPropsType } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import { MapIcon } from '@heroicons/react/outline';
 import { ChevronDownIcon } from '@heroicons/react/solid';
 import CategoryMap from '../../components/CategoryMap';
@@ -195,7 +195,7 @@ const Browse = ({
                     ];
 
               return (
-                <>
+                <Fragment key={index}>
                   {isHome && index === 0 && ads.collection && (
                     <Collection
                       heading="Offline Guides"
@@ -224,7 +224,7 @@ const Browse = ({
                       ),
                     )}
                   />
-                </>
+                </Fragment>
               );
             })
           ) : archiveItems.length > 0 ? (

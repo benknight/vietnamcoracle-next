@@ -33,12 +33,16 @@ const Browse = ({
   const [showSubcats, setShowSubcats] = useState(true);
   const { category, subcategory } = data;
   const isHome = category.slug === 'features-guides';
+  const isMotorbikeGuides = category.slug === 'motorbike-guides';
+
   const coverImgSm =
     (subcategory ? subcategory.cover.small : category.cover.small) ||
     data.defaultImages?.cover.small;
+
   const coverImgLg =
     (subcategory ? subcategory.cover.large : category.cover.large) ||
     data.defaultImages?.cover.large;
+
   const showCollections =
     category && !subcategory && category.collections?.items;
 
@@ -172,61 +176,76 @@ const Browse = ({
         <LayoutMain
           className={cx('overflow-hidden', isHome ? 'pt-8 md:pt-0' : 'pt-4')}>
           {showCollections ? (
-            category.collections.items.map((item, index) => {
-              const ad =
-                ads.collection?.length === 1 && index % 2 === 1
-                  ? null
-                  : ads?.collection?.[index % ads.collection.length];
+            <>
+              {isHome && ads.collection && (
+                <Collection
+                  heading="Offline Guides &amp; Maps"
+                  items={ads.collection
+                    .filter(ad => ad.enabled)
+                    .map(ad => (
+                      <PostCard ad={ad} />
+                    ))}
+                />
+              )}
+              {isMotorbikeGuides && ads.collection && (
+                <Collection
+                  heading="Offline Guides &amp; Maps"
+                  items={ads.collection
+                    .filter(ad => ad.enabled)
+                    .map(ad => (
+                      <PostCard ad={ad} />
+                    ))}
+                />
+              )}
+              {category.collections.items.map((item, index) => {
+                const ad =
+                  ads.collection?.length === 1 && index % 2 === 1
+                    ? null
+                    : ads?.collection?.[index % ads.collection.length];
 
-              const posts = item.posts.filter(post => !!post.featuredImage);
+                const posts = item.posts.filter(post => !!post.featuredImage);
 
-              const mapPosts = post => ({
-                type: 'post',
-                data: post,
-              });
+                const mapPosts = post => ({
+                  type: 'post',
+                  data: post,
+                });
 
-              const items =
-                isHome || !ad?.enabled
-                  ? item.posts.map(mapPosts)
-                  : [
-                      ...posts.slice(0, ad.position - 1).map(mapPosts),
-                      { type: 'ad', data: ad },
-                      ...posts.slice(ad.position - 1).map(mapPosts),
-                    ];
+                const items =
+                  isHome || !ad?.enabled
+                    ? item.posts.map(mapPosts)
+                    : [
+                        ...posts.slice(0, ad.position - 1).map(mapPosts),
+                        { type: 'ad', data: ad },
+                        ...posts.slice(ad.position - 1).map(mapPosts),
+                      ];
 
-              return (
-                <Fragment key={index}>
-                  {isHome && index === 0 && ads.collection && (
+                return (
+                  <Fragment key={index}>
                     <Collection
-                      heading="Offline Guides"
-                      items={ads.collection.map(ad => (
-                        <PostCard ad={ad} />
-                      ))}
+                      heading={
+                        item.category ? (
+                          <Link
+                            href={getCategoryLink(item.category?.uri ?? '')}>
+                            <a className="block group-hover:link">
+                              {item.title} &gt;
+                            </a>
+                          </Link>
+                        ) : (
+                          item.title
+                        )
+                      }
+                      items={items.map(item =>
+                        item.type === 'ad' ? (
+                          <PostCard ad={item.data} />
+                        ) : (
+                          <PostCard post={item.data} />
+                        ),
+                      )}
                     />
-                  )}
-                  <Collection
-                    heading={
-                      item.category ? (
-                        <Link href={getCategoryLink(item.category?.uri ?? '')}>
-                          <a className="block group-hover:link">
-                            {item.title} &gt;
-                          </a>
-                        </Link>
-                      ) : (
-                        item.title
-                      )
-                    }
-                    items={items.map(item =>
-                      item.type === 'ad' ? (
-                        <PostCard ad={item.data} />
-                      ) : (
-                        <PostCard post={item.data} />
-                      ),
-                    )}
-                  />
-                </Fragment>
-              );
-            })
+                  </Fragment>
+                );
+              })}
+            </>
           ) : archiveItems.length > 0 ? (
             <div className="px-2 md:px-4 lg:px-8 py-6 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
               {archiveItems.map((item, index) => (

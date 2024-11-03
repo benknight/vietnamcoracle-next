@@ -11,6 +11,10 @@ interface Props {
 }
 
 const Collection = ({ items, heading }: Props) => {
+  if (items.length === 0) {
+    return null;
+  }
+
   const {
     getLeftNavProps,
     getRightNavProps,

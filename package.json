@@ -4,7 +4,7 @@
   "author": "Benjamin Knight <ben@benknight.me>",
   "scripts": {
     "build": "next build",
-    "develop": "next dev",
+    "dev": "next dev",
     "export": "next export",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "next start",

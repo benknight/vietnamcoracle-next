@@ -211,7 +211,7 @@ const Browse = ({
                 });
 
                 const items =
-                  isHome || !ad?.enabled
+                  isHome || isMotorbikeGuides || !ad?.enabled
                     ? item.posts.map(mapPosts)
                     : [
                         ...posts.slice(0, ad.position - 1).map(mapPosts),

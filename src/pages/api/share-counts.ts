@@ -7,17 +7,19 @@ export const config = {
 export default async function handler(req: NextRequest) {
   try {
     const params = new URL(req.url).searchParams;
+
     const result = await fetch(
-      `https://graph.facebook.com/v10.0/?` +
+      `https://graph.facebook.com/v20.0/?` +
         new URLSearchParams({
           access_token: process.env.FACEBOOK_ACCESS_TOKEN,
-          fields: 'og_object{engagement}',
+          fields: 'engagement',
           id: params.get('link'),
         }),
     ).then(res => res.json());
+
     return new NextResponse(
       JSON.stringify({
-        facebook: result.og_object?.engagement?.count ?? 0,
+        facebook: result.engagement?.reaction_count ?? 0,
       }),
       {
         status: 200,
@@ -29,6 +31,8 @@ export default async function handler(req: NextRequest) {
       },
     );
   } catch (error) {
+    console.error(error);
+
     return new NextResponse(null, {
       status: 503,
     });

@@ -19,7 +19,10 @@ export default async function handler(req: NextRequest) {
 
     return new NextResponse(
       JSON.stringify({
-        facebook: result.engagement?.reaction_count ?? 0,
+        facebook:
+          (result.engagement?.share_count ?? 0) +
+          (result.engagement?.comment_count ?? 0) +
+          (result.engagement?.reaction_count ?? 0),
       }),
       {
         status: 200,

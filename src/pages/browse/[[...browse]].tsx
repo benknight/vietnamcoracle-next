@@ -49,22 +49,26 @@ const Browse = ({
   const archiveItems = useMemo(() => {
     if (showCollections) return [];
     const shuffledAds = _shuffle(ads.collection?.filter(ad => ad.enabled));
+
     const mapPosts = post => ({
       type: 'post',
       data: post,
     });
+
     const posts = (subcategory || category).posts.nodes.filter(
       node => !!node.featuredImage,
     );
+
     const result = _flatten(
       _chunk(posts, 2).map((chunk, i) => {
         let result = chunk.map(mapPosts);
-        if (i % 2 === 0 && shuffledAds.length > 0) {
+        if (i % 2 === 0 && shuffledAds.length > 0 && !isMotorbikeGuides) {
           result.push({ type: 'ad', data: shuffledAds.pop() });
         }
         return result;
       }),
     );
+
     return result;
   }, [ads, category, subcategory, showCollections]);
 

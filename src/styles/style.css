@@ -532,3 +532,8 @@ article .wp-block-gallery a {
 .has-gradient-1-gradient-background {
   @apply dark:bg-gray-800 dark:bg-none !important;
 }
+
+/* Stackable block height fix */
+.stk-block {
+  min-height: initial !important;
+}

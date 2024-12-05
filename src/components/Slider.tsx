@@ -30,7 +30,7 @@ export function Slider({ className = '', children }) {
 
       parentRef.current?.scrollTo({
         left: (slides[destination] as HTMLElement).offsetLeft,
-        behavior: 'instant',
+        behavior: 'auto',
       });
     },
     [],

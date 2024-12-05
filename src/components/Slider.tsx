@@ -21,21 +21,16 @@ export function Slider({ className = '', children }) {
   const [domLoaded, setDomLoaded] = useState(false);
 
   const goTo = useCallback(
-    (
-      destination: number,
-      intent: 'auto' | 'manual' = 'auto',
-      behavior: 'auto' | 'smooth' = 'auto',
-    ) => {
+    (destination: number, intent: 'auto' | 'manual' = 'auto') => {
       const slides = parentRef.current?.querySelectorAll(':scope > a');
+
       if (intent === 'manual') {
         setPlay(false);
       }
-      if (intent === 'auto' && behavior === 'auto') {
-        behavior = 'smooth';
-      }
+
       parentRef.current?.scrollTo({
         left: (slides[destination] as HTMLElement).offsetLeft,
-        behavior,
+        behavior: 'instant',
       });
     },
     [],
@@ -44,6 +39,7 @@ export function Slider({ className = '', children }) {
   // Auto-play behavior
   useEffect(() => {
     if (!slideCount || !domLoaded) return;
+
     if (play && !intervalRef.current) {
       intervalRef.current = window.setInterval(() => {
         busyRef.current = true;
@@ -51,6 +47,7 @@ export function Slider({ className = '', children }) {
         window.setTimeout(() => (busyRef.current = false), 500);
       }, 8000);
     }
+
     if (!play && intervalRef.current) {
       window.clearInterval(intervalRef.current);
       intervalRef.current = null;

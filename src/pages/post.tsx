@@ -10,9 +10,14 @@ import getGQLClient from '../lib/getGQLClient';
 import { getPostPageProps } from '../lib/getPostPageProps';
 
 // This is a server-rendered page for posts for when logic is necessary in order to display the post or redirect
-export default function SSRPost({ patron, post, renderPatreonButton = false }) {
+export default function SSRPost({
+  patron,
+  post,
+  preview,
+  renderPatreonButton = false,
+}) {
   useEffect(() => {
-    if (post) {
+    if (!preview && post) {
       window.history.replaceState(
         null,
         null,

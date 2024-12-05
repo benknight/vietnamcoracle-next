@@ -38,13 +38,18 @@ export default function Hero({
   return (
     <HeroContext.Provider value={{ theme }}>
       <div
-        className={cx(className, {
-          'bg-white dark:bg-gray-950': theme === 'auto',
-          'bg-white': theme === 'light',
-          'bg-gray-950': theme === 'dark',
-        })}>
+        className={cx(
+          className,
+          preserveAspectRatio
+            ? 'bg-gray-400 dark:bg-gray-700'
+            : {
+                'bg-white dark:bg-gray-950': theme === 'auto',
+                'bg-white': theme === 'light',
+                'bg-gray-950': theme === 'dark',
+              },
+        )}>
         <div
-          className={cx('relative block aspect-square lg:hidden', {
+          className={cx('relative block aspect-square md:hidden', {
             'md:aspect-[3/2]': !preserveAspectRatio,
           })}>
           <Image
@@ -56,12 +61,17 @@ export default function Hero({
             src={imgSm.sourceUrl}
           />
         </div>
-        <div className={cx('relative hidden lg:block aspect-[7/3]')}>
+        <div
+          className={cx(
+            'relative hidden md:block aspect-[1920/837] 2xl:aspect-[3/1]',
+          )}>
           <Image
+            className={cx('object-cover', {
+              '2xl:object-contain': preserveAspectRatio,
+            })}
             alt={imgLg.altText}
             key={imgLg.id}
             layout="fill"
-            objectFit="cover"
             priority={priority}
             src={imgLg.sourceUrl}
           />

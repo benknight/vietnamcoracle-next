@@ -173,7 +173,7 @@ export async function getServerSideProps({
   // By default 301 to canonical post urls
   return {
     redirect: {
-      destination: encodeURIComponent(data.contentNode?.uri),
+      destination: data.contentNode?.uri,
       permanent: true,
     },
   };

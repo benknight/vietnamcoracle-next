@@ -18,7 +18,7 @@ export default function PatronOnlyContentGate({ patron, patreonLevel }: Props) {
     () =>
       new URLSearchParams({
         response_type: 'code',
-        client_id: process.env.PATREON_OAUTH_CLIENT_ID,
+        client_id: process.env.NEXT_PUBLIC_PATREON_OAUTH_CLIENT_ID,
         redirect_uri: oauthRedirect,
         scope: 'identity',
         state: router.asPath,

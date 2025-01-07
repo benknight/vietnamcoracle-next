@@ -26,7 +26,7 @@ export default async function patreonOauth(
     const result = await axios({
       data: new URLSearchParams({
         grant_type: 'authorization_code',
-        client_id: process.env.PATREON_OAUTH_CLIENT_ID,
+        client_id: process.env.NEXT_PUBLIC_PATREON_OAUTH_CLIENT_ID,
         client_secret: process.env.PATREON_OAUTH_CLIENT_SECRET,
         code: String(code),
         redirect_uri: oauthRedirect,

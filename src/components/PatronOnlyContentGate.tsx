@@ -38,9 +38,21 @@ export default function PatronOnlyContentGate({ patron, patreonLevel }: Props) {
   return (
     <div className="page-wrap page-wrap--center text-center font-display pt-48 pb-12">
       <h1 className="text-xl sm:text-2xl mb-6">
-        {patron && patreonLevel
-          ? `This content requires a minimum Patreon contribution level of $${patreonLevel}.`
-          : 'Please log in with Patreon to view this content.'}
+        {patron && patreonLevel ? (
+          `This content requires a minimum Patreon contribution level of $${patreonLevel}.`
+        ) : (
+          <>
+            This content is for Patreon members only. If you are already a
+            Patron of Vietnam Coracle, please log in with the button below, or{' '}
+            <a
+              className="link"
+              href="https://www.patreon.com/vietnamcoracle/membership"
+              target="_blank">
+              click here to sign up
+            </a>
+            .
+          </>
+        )}
       </h1>
 
       {patron ? (

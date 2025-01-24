@@ -339,6 +339,10 @@ export const getStaticProps = async ({ params, preview = false }) => {
       category(id: $categorySlug, idType: SLUG) {
         slug
         ads {
+          header {
+            enabled
+            html
+          }
           collection {
             body
             code

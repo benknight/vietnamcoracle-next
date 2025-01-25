@@ -75,6 +75,7 @@ export default async function handler(
         Source: '"Vietnam Coracle" <admin@vietnamcoracle.com>', // sender email
         Destination: {
           ToAddresses: [customerEmail], // recipient email
+          BccAddresses: ['vietnamcoracle@gmail.com'],
         },
         Message: {
           Body: {

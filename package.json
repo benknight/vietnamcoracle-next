@@ -4,10 +4,10 @@
   "author": "Benjamin Knight <ben@benknight.me>",
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
     "export": "next export",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "start": "next start",
+    "start": "next dev",
+    "serve": "next start",
     "env:pull": "npx vercel env pull",
     "graphql:coverage": "graphql coverage",
     "graphql:validate": "graphql validate"

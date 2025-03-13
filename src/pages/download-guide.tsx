@@ -117,8 +117,12 @@ export default function DownloadGuide(props: Props) {
       <div className="page-wrap flex justify-center items-center py-24">
         <div className="max-w-screen-sm w-full">
           <h2 className="text-2xl font-bold mb-4 text-center">
-            Download Files
+            Your Downloads
           </h2>
+          <p>
+            Note: You can always get back to this page by clicking the link in
+            the email you received.
+          </p>
           {Object.keys(groups).map(prefix => {
             const sortedFiles = groups[prefix].sort(sortFiles);
             return (

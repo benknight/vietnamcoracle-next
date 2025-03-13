@@ -80,7 +80,7 @@ export default async function handler(
         Message: {
           Body: {
             Text: {
-              Data: `Thank you! Here's your download link for ${description}:\n\nhttps://www.vietnamcoracle.com/download-guide/?checkout_session_id=${session.id}\n\nFor full functionality, open PDF files with Adobe Acrobat Reader or Foxit PDF Reader (free on Android or iOS)\n\nIf you have any questions or feedback, feel free to reply to this email.\n\nTom`,
+              Data: `Thank you! Here's your download link for ${description}:\n\nhttps://www.vietnamcoracle.com/download-guide/?checkout_session_id=${session.id}\n\nFor full functionality, open PDF files with Adobe Acrobat Reader or Foxit PDF Reader (free on Android or iOS)\n\nTo open and use KMZ map files please follow the instructions in the Offline Maps How-To Guide PDF.\n\nIf you have any questions or feedback, feel free to reply to this email.\n\nTom`,
             },
           },
           Subject: {

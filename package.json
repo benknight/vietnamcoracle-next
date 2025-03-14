@@ -1,5 +1,6 @@
 {
   "private": true,
+  "version": "1.0.0",
   "name": "vietnamcoracle-next",
   "author": "Benjamin Knight <ben@benknight.me>",
   "scripts": {

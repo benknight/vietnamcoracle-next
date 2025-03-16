@@ -4,8 +4,13 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo, useState } from 'react';
 import smoothscroll from 'smoothscroll-polyfill';
-import CircularProgress from '@material-ui/core/CircularProgress';
-import { StylesProvider } from '@material-ui/core/styles';
+import CircularProgress from '@mui/material/CircularProgress';
+import {
+  ThemeProvider,
+  Theme,
+  StyledEngineProvider,
+  createTheme,
+} from '@mui/material/styles';
 import Header from '../components/Header';
 import { pageview } from '../services/GoogleAnalytics';
 import checkHomePath from '../lib/checkHomePath';
@@ -14,6 +19,8 @@ import useWaitCursor from '../lib/useWaitCursor';
 import '../styles/fonts.css';
 import '../styles/style.css';
 import '../custom-elements';
+
+const theme = createTheme();
 
 if (typeof window !== 'undefined') {
   smoothscroll.polyfill();
@@ -107,133 +114,135 @@ function MyApp({ Component, pageProps }: AppProps<PageProps>) {
   useWaitCursor(loading);
 
   return (
-    <StylesProvider>
-      <Head>
-        <title>Vietnam Coracle</title>
-        <link
-          rel="apple-touch-icon-precomposed"
-          sizes="57x57"
-          href="/apple-touch-icon-57x57.png"
-        />
-        <link
-          rel="apple-touch-icon-precomposed"
-          sizes="114x114"
-          href="/apple-touch-icon-114x114.png"
-        />
-        <link
-          rel="apple-touch-icon-precomposed"
-          sizes="72x72"
-          href="/apple-touch-icon-72x72.png"
-        />
-        <link
-          rel="apple-touch-icon-precomposed"
-          sizes="144x144"
-          href="/apple-touch-icon-144x144.png"
-        />
-        <link
-          rel="apple-touch-icon-precomposed"
-          sizes="60x60"
-          href="/apple-touch-icon-60x60.png"
-        />
-        <link
-          rel="apple-touch-icon-precomposed"
-          sizes="120x120"
-          href="/apple-touch-icon-120x120.png"
-        />
-        <link
-          rel="apple-touch-icon-precomposed"
-          sizes="76x76"
-          href="/apple-touch-icon-76x76.png"
-        />
-        <link
-          rel="apple-touch-icon-precomposed"
-          sizes="152x152"
-          href="/apple-touch-icon-152x152.png"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          href="/favicon-196x196.png"
-          sizes="196x196"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          href="/favicon-96x96.png"
-          sizes="96x96"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          href="/favicon-32x32.png"
-          sizes="32x32"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          href="/favicon-16x16.png"
-          sizes="16x16"
-        />
-        <link
-          rel="icon"
-          type="image/png"
-          href="/favicon-128.png"
-          sizes="128x128"
-        />
-        <meta name="application-name" content="&nbsp;" />
-        <meta name="msapplication-TileColor" content="#FFFFFF" />
-        <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
-        <meta
-          name="msapplication-square70x70logo"
-          content="/mstile-70x70.png"
-        />
-        <meta
-          name="msapplication-square150x150logo"
-          content="/mstile-150x150.png"
-        />
-        <meta
-          name="msapplication-wide310x150logo"
-          content="/mstile-310x150.png"
-        />
-        <meta
-          name="msapplication-square310x310logo"
-          content="/mstile-310x310.png"
-        />
-      </Head>
-      <div
-        className={cx(
-          'flex items-center p-3 fixed z-40 top-1/2 left-1/2',
-          '-translate-x-1/2 -translate-y-1/2',
-          {
-            'block pointer:hidden': true,
-            hidden: !loading,
-          },
-        )}>
-        <CircularProgress
-          classes={{
-            colorPrimary: 'text-black dark:text-white',
-          }}
-          size={24}
-          thickness={5}
-        />
-      </div>
-      {ads?.header?.enabled && (
-        <div className="bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-[2]">
-          <div
-            className="w-full h-full"
-            dangerouslySetInnerHTML={{
-              __html: ads.header.html,
+    <StyledEngineProvider injectFirst>
+      <ThemeProvider theme={theme}>
+        <Head>
+          <title>Vietnam Coracle</title>
+          <link
+            rel="apple-touch-icon-precomposed"
+            sizes="57x57"
+            href="/apple-touch-icon-57x57.png"
+          />
+          <link
+            rel="apple-touch-icon-precomposed"
+            sizes="114x114"
+            href="/apple-touch-icon-114x114.png"
+          />
+          <link
+            rel="apple-touch-icon-precomposed"
+            sizes="72x72"
+            href="/apple-touch-icon-72x72.png"
+          />
+          <link
+            rel="apple-touch-icon-precomposed"
+            sizes="144x144"
+            href="/apple-touch-icon-144x144.png"
+          />
+          <link
+            rel="apple-touch-icon-precomposed"
+            sizes="60x60"
+            href="/apple-touch-icon-60x60.png"
+          />
+          <link
+            rel="apple-touch-icon-precomposed"
+            sizes="120x120"
+            href="/apple-touch-icon-120x120.png"
+          />
+          <link
+            rel="apple-touch-icon-precomposed"
+            sizes="76x76"
+            href="/apple-touch-icon-76x76.png"
+          />
+          <link
+            rel="apple-touch-icon-precomposed"
+            sizes="152x152"
+            href="/apple-touch-icon-152x152.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            href="/favicon-196x196.png"
+            sizes="196x196"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            href="/favicon-96x96.png"
+            sizes="96x96"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            href="/favicon-32x32.png"
+            sizes="32x32"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            href="/favicon-16x16.png"
+            sizes="16x16"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            href="/favicon-128.png"
+            sizes="128x128"
+          />
+          <meta name="application-name" content="&nbsp;" />
+          <meta name="msapplication-TileColor" content="#FFFFFF" />
+          <meta name="msapplication-TileImage" content="/mstile-144x144.png" />
+          <meta
+            name="msapplication-square70x70logo"
+            content="/mstile-70x70.png"
+          />
+          <meta
+            name="msapplication-square150x150logo"
+            content="/mstile-150x150.png"
+          />
+          <meta
+            name="msapplication-wide310x150logo"
+            content="/mstile-310x150.png"
+          />
+          <meta
+            name="msapplication-square310x310logo"
+            content="/mstile-310x310.png"
+          />
+        </Head>
+        <div
+          className={cx(
+            'flex items-center p-3 fixed z-40 top-1/2 left-1/2',
+            '-translate-x-1/2 -translate-y-1/2',
+            {
+              'block pointer:hidden': true,
+              hidden: !loading,
+            },
+          )}>
+          <CircularProgress
+            classes={{
+              colorPrimary: 'text-black dark:text-white',
             }}
+            size={24}
+            thickness={5}
           />
         </div>
-      )}
-      <div className="relative bg-white dark:bg-gray-950 min-h-screen">
-        <NavCategory.Provider value={navCategory}>
-          <Header preview={preview} fullWidth={isBrowsePath || isHomePath} />
-          <Component {...pageProps} />
-        </NavCategory.Provider>
-      </div>
-    </StylesProvider>
+        {ads?.header?.enabled && (
+          <div className="bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-[2]">
+            <div
+              className="w-full h-full"
+              dangerouslySetInnerHTML={{
+                __html: ads.header.html,
+              }}
+            />
+          </div>
+        )}
+        <div className="relative bg-white dark:bg-gray-950 min-h-screen">
+          <NavCategory.Provider value={navCategory}>
+            <Header preview={preview} fullWidth={isBrowsePath || isHomePath} />
+            <Component {...pageProps} />
+          </NavCategory.Provider>
+        </div>
+      </ThemeProvider>
+    </StyledEngineProvider>
   );
 }
 

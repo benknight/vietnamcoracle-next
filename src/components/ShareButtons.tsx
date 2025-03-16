@@ -7,11 +7,11 @@ import {
 } from 'react-share';
 import useSWR from 'swr';
 import resolveConfig from 'tailwindcss/resolveConfig';
-import EmailIcon from '@material-ui/icons/AlternateEmail';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import PinterestIcon from '@material-ui/icons/Pinterest';
-import RedditIcon from '@material-ui/icons/Reddit';
-import TwitterIcon from '@material-ui/icons/Twitter';
+import EmailIcon from '@mui/icons-material/AlternateEmail';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import PinterestIcon from '@mui/icons-material/Pinterest';
+import RedditIcon from '@mui/icons-material/Reddit';
+import TwitterIcon from '@mui/icons-material/Twitter';
 import tailwindConfig from '../../tailwind.config.js';
 import breakpoints from '../config/breakpoints';
 import cmsToNextUrls from '../lib/cmsToNextUrls';

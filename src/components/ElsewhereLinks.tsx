@@ -1,10 +1,10 @@
-import Tooltip from '@material-ui/core/Tooltip';
-import EmailIcon from '@material-ui/icons/AlternateEmail';
-import FacebookIcon from '@material-ui/icons/Facebook';
-import InstagramIcon from '@material-ui/icons/Instagram';
-import RssFeedIcon from '@material-ui/icons/RssFeed';
-import TwitterIcon from '@material-ui/icons/Twitter';
-import YouTubeIcon from '@material-ui/icons/YouTube';
+import Tooltip from '@mui/material/Tooltip';
+import EmailIcon from '@mui/icons-material/AlternateEmail';
+import FacebookIcon from '@mui/icons-material/Facebook';
+import InstagramIcon from '@mui/icons-material/Instagram';
+import RssFeedIcon from '@mui/icons-material/RssFeed';
+import TwitterIcon from '@mui/icons-material/Twitter';
+import YouTubeIcon from '@mui/icons-material/YouTube';
 
 export default function ElsewhereLinks({ useBrandColors = false }) {
   return (

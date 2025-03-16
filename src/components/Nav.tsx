@@ -5,12 +5,12 @@ import { useRouter } from 'next/router';
 import { cloneElement, useCallback } from 'react';
 import { HomeIcon } from '@heroicons/react/solid';
 import { HomeIcon as HomeOutlinedIcon } from '@heroicons/react/outline';
-import HotelIcon from '@material-ui/icons/Hotel';
-import HotelOutlinedIcon from '@material-ui/icons/HotelOutlined';
-import RestaurantIcon from '@material-ui/icons/Restaurant';
-import MotorcycleIcon from '@material-ui/icons/TwoWheeler';
-import WorkIcon from '@material-ui/icons/Work';
-import WorkOutlineIcon from '@material-ui/icons/WorkOutline';
+import HotelIcon from '@mui/icons-material/Hotel';
+import HotelOutlinedIcon from '@mui/icons-material/HotelOutlined';
+import RestaurantIcon from '@mui/icons-material/Restaurant';
+import MotorcycleIcon from '@mui/icons-material/TwoWheeler';
+import WorkIcon from '@mui/icons-material/Work';
+import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
 import checkHomePath from '../lib/checkHomePath';
 
 const links = [

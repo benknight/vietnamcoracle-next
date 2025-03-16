@@ -7,7 +7,7 @@ import { useMemo, useRef, Fragment } from 'react';
 import Headroom from 'react-headroom';
 import { Menu } from '@headlessui/react';
 import { MenuAlt1Icon } from '@heroicons/react/outline';
-import useMediaQuery from '@material-ui/core/useMediaQuery';
+import useMediaQuery from '@mui/material/useMediaQuery';
 import breakpoints from '../config/breakpoints';
 import cmsToNextUrls from '../lib/cmsToNextUrls';
 import useWaitCursor from '../lib/useWaitCursor';

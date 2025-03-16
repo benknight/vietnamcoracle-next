@@ -6,7 +6,7 @@ import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
 import { HomeIcon } from '@heroicons/react/outline';
-import { CircularProgress } from '@material-ui/core';
+import { CircularProgress } from '@mui/material';
 import getCategoryLink from '../lib/getCategoryLink';
 import useAPI from '../lib/useAPI';
 

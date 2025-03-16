@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { useMemo } from 'react';
 import { Tab } from '@headlessui/react';
 import { ViewGridIcon } from '@heroicons/react/solid';
-import ViewListIcon from '@material-ui/icons/ViewList';
+import ViewListIcon from '@mui/icons-material/ViewList';
 import { useRouter } from 'next/router';
 import PostCard from './PostCard';
 import PostMediaBlock from './PostMediaBlock';

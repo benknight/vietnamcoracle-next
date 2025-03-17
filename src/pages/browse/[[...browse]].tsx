@@ -10,8 +10,8 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { Fragment, useEffect, useMemo, useState } from 'react';
-import { MapIcon } from '@heroicons/react/outline';
-import { ChevronDownIcon } from '@heroicons/react/solid';
+import { MapIcon } from '@heroicons/react/24/outline';
+import { ChevronDownIcon } from '@heroicons/react/24/solid';
 import CategoryMap from '../../components/CategoryMap';
 import CategorySlider from '../../components/CategorySlider';
 import Collection from '../../components/Collection';
@@ -103,10 +103,10 @@ const Browse = ({
                   {subcategory ? (
                     <div className="text-2xl sm:text-3xl lg:text-4xl leading-normal sm:leading-tight">
                       <span className="inline-block text-gray-300 opacity-90">
-                        <Link href={getCategoryLink(category.uri)}>
-                          <a className="inline-block hover:link">
-                            {category.name}{' '}
-                          </a>
+                        <Link
+                          href={getCategoryLink(category.uri)}
+                          className="inline-block hover:link">
+                          {category.name}{' '}
                         </Link>
                         &nbsp;&gt;&nbsp;
                       </span>
@@ -158,16 +158,14 @@ const Browse = ({
                     <Link
                       key={node.uri}
                       href={getCategoryLink(node.uri)}
-                      scroll={false}>
-                      <a
-                        className={cx(
-                          'inline-flex items-center h-8 2xl:h-10 mt-2 mr-1 px-[1.2em] rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm 2xl:text-base',
-                          subcategory?.uri === node.uri
-                            ? 'border-primary-400 border-opacity-75 text-primary-400'
-                            : 'text-white border-white border-opacity-25 hover:border-opacity-50',
-                        )}>
-                        {node.name}
-                      </a>
+                      scroll={false}
+                      className={cx(
+                        'inline-flex items-center h-8 2xl:h-10 mt-2 mr-1 px-[1.2em] rounded-full border bg-black leading-none whitespace-nowrap tracking-wide text-sm 2xl:text-base',
+                        subcategory?.uri === node.uri
+                          ? 'border-primary-400 border-opacity-75 text-primary-400'
+                          : 'text-white border-white border-opacity-25 hover:border-opacity-50',
+                      )}>
+                      {node.name}
                     </Link>
                   ))}
                 </div>
@@ -229,10 +227,9 @@ const Browse = ({
                       heading={
                         item.category ? (
                           <Link
-                            href={getCategoryLink(item.category?.uri ?? '')}>
-                            <a className="block group-hover:link">
-                              {item.title} &gt;
-                            </a>
+                            href={getCategoryLink(item.category?.uri ?? '')}
+                            className="block group-hover:link">
+                            {item.title}&gt;
                           </Link>
                         ) : (
                           item.title

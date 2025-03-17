@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import Image from 'next/image';
+import Image from "next/legacy/image";
 import { createContext, useContext } from 'react';
 
 type HeroImage = {

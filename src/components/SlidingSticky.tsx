@@ -1,10 +1,10 @@
 import { useEffect, useRef } from 'react';
 
 export default function SlidingSticky({ children }) {
-  const sticky = useRef<HTMLDivElement>();
-  const stickyContainer = useRef<HTMLDivElement>();
-  const spacer = useRef<HTMLDivElement>();
-  const scrollPosition = useRef<number>();
+  const sticky = useRef<HTMLDivElement>(null);
+  const stickyContainer = useRef<HTMLDivElement>(null);
+  const spacer = useRef<HTMLDivElement>(null);
+  const scrollPosition = useRef<number>(null);
 
   useEffect(() => {
     scrollPosition.current = 0;

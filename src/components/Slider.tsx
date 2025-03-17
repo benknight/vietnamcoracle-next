@@ -3,17 +3,17 @@ import _debounce from 'lodash/debounce';
 import _throttle from 'lodash/throttle';
 import { forwardRef, useCallback, useRef, useState, useEffect } from 'react';
 import { RadioGroup } from '@headlessui/react';
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/solid';
+import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 
 export function Slider({ className = '', children }) {
-  const advanceRef = useRef<() => void>();
-  const cursorRef = useRef<number>();
-  const busyRef = useRef<boolean>();
-  const intervalRef = useRef<number>();
-  const parentRef = useRef<HTMLDivElement>();
-  const navRef = useRef<HTMLDivElement>();
-  const rootRef = useRef<HTMLDivElement>();
-  const timeoutRef = useRef<boolean>();
+  const advanceRef = useRef<() => void>(null);
+  const cursorRef = useRef<number>(null);
+  const busyRef = useRef<boolean>(null);
+  const intervalRef = useRef<number>(null);
+  const parentRef = useRef<HTMLDivElement>(null);
+  const navRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLDivElement>(null);
+  const timeoutRef = useRef<boolean>(null);
   const [play, setPlay] = useState(true);
   const [showNav, setShowNav] = useState(false);
   const [slideCount, setSlideCount] = useState(null);

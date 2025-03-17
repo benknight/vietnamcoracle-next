@@ -1,7 +1,7 @@
 import cx from 'classnames';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useState } from 'react';
-import { CursorClickIcon } from '@heroicons/react/outline';
+import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
 import useAPI from '../lib/useAPI';
 import Block, { BlockContent, BlockTitle } from './Block';
 
@@ -62,7 +62,7 @@ export default function MapOverlay({
             </div>
           ) : (
             <button className="py-4 px-8 dark:text-white rounded-full bg-white/90 hover:pointer:bg-white dark:bg-black/60 dark:hover:pointer:bg-black/75 shadow-lg transition-colors duration-150 text-blue-500 pointer:opacity-0 group-hover:pointer:opacity-100 text-base md:text-xl font-display font-medium">
-              <CursorClickIcon className="inline align-bottom w-6 h-6 md:w-7 md:h-7" />{' '}
+              <CursorArrowRaysIcon className="inline align-bottom w-6 h-6 md:w-7 md:h-7" />{' '}
               Click to use the map
             </button>
           )}

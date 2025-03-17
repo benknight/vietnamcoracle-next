@@ -2,11 +2,11 @@ import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
-import { SearchIcon } from '@heroicons/react/solid';
+import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { gaEvent } from '../services/GoogleAnalytics';
 
 export default function SearchInput({ className = '', ...inputProps }) {
-  const inputRef = useRef<HTMLInputElement>();
+  const inputRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
   const [value, setValue] = useState('');
 
@@ -35,7 +35,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
       }}
       role="search">
       <div className="absolute top-0 left-0 bottom-0 w-10 flex items-center justify-center pointer-events-none">
-        <SearchIcon className="w-[18px] h-[18px]" />
+        <MagnifyingGlassIcon className="w-[18px] h-[18px]" />
       </div>
       <input
         {...inputProps}

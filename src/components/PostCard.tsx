@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import _get from 'lodash/get';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import { useMemo } from 'react';
 import PostLink from './PostLink';
 

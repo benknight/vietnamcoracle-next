@@ -1,5 +1,5 @@
 import _get from 'lodash/get';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { Fragment } from 'react';
 import PostLink from './PostLink';
@@ -70,8 +70,8 @@ function PostMediaBlock({ post }: Props) {
             {post.categories.map((cat, i) => (
               <Fragment key={cat.uri}>
                 {i !== 0 && ', '}
-                <Link href={cat.uri}>
-                  <a className="italic hover:underline">{cat.name}</a>
+                <Link href={cat.uri} className="italic hover:underline">
+                  {cat.name}
                 </Link>
               </Fragment>
             ))}

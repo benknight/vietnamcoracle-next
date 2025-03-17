@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { useMemo, useRef, Fragment } from 'react';
 import Headroom from 'react-headroom';
 import { Menu } from '@headlessui/react';
-import { MenuAlt1Icon } from '@heroicons/react/outline';
+import { Bars3CenterLeftIcon } from '@heroicons/react/24/outline';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import breakpoints from '../config/breakpoints';
 import cmsToNextUrls from '../lib/cmsToNextUrls';
@@ -20,8 +20,8 @@ import PostCard from './PostCard';
 import SidebarDefault from './SidebarDefault';
 
 export default function Post({ data, html, postNav }) {
-  const articleRef = useRef<HTMLDivElement>();
-  const relatedPostsRef = useRef<HTMLDivElement>();
+  const articleRef = useRef<HTMLDivElement>(null);
+  const relatedPostsRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const isLG = useMediaQuery(`(min-width: ${breakpoints.lg})`);
 
@@ -114,7 +114,7 @@ export default function Post({ data, html, postNav }) {
                 as="nav"
                 className="text-sm lg:text-base tracking-widest ring-1 ring-gray-300 dark:ring-gray-800 shadow-xl lg:rounded-tr-xl overflow-hidden">
                 <Menu.Button className="flex items-center justify-center lg:justify-start w-full p-3 lg:px-8 lg:h-10 lg:text-sm font-medium bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
-                  <MenuAlt1Icon className="w-4 h-4" />
+                  <Bars3CenterLeftIcon className="w-4 h-4" />
                   <span className="pl-2 pr-2">Contents</span>
                 </Menu.Button>
                 <Menu.Items
@@ -172,12 +172,12 @@ export default function Post({ data, html, postNav }) {
                       {content.categories.nodes.map((cat, index) => (
                         <Fragment key={cat.uri}>
                           {index > 0 && ', '}
-                          <Link href={cat.uri}>
-                            <a
-                              className="link"
-                              dangerouslySetInnerHTML={{ __html: cat.name }}
-                            />
-                          </Link>
+                          <Link
+                            href={cat.uri}
+                            className="link"
+                            dangerouslySetInnerHTML={{
+                              __html: cat.name,
+                            }}></Link>
                         </Fragment>
                       ))}
                       .
@@ -190,12 +190,12 @@ export default function Post({ data, html, postNav }) {
                       {content.tags.nodes.map((tag, index) => (
                         <Fragment key={tag.uri}>
                           {index > 0 && ', '}
-                          <Link href={tag.uri}>
-                            <a
-                              className="link"
-                              dangerouslySetInnerHTML={{ __html: tag.name }}
-                            />
-                          </Link>
+                          <Link
+                            href={tag.uri}
+                            className="link"
+                            dangerouslySetInnerHTML={{
+                              __html: tag.name,
+                            }}></Link>
                         </Fragment>
                       ))}
                     </>

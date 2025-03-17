@@ -29,10 +29,13 @@ export default function Footer() {
       <section className="px-2 pb-12 lg:px-0 max-w-md mx-auto">
         <nav className="flex flex-wrap justify-center uppercase text-xxxs tracking-widest">
           {data.menu?.menuItems?.nodes.map(item => (
-            <Link key={item.path} href={item.path}>
-              <a className="mx-2 my-3 xs:mx-3 lg:mx-3 opacity-75 hover:opacity-100">
-                {item.label}
-              </a>
+            <Link
+              key={item.path}
+              href={item.path}
+              className="mx-2 my-3 xs:mx-3 lg:mx-3 opacity-75 hover:opacity-100">
+
+              {item.label}
+
             </Link>
           ))}
         </nav>

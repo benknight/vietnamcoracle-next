@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import { useMemo } from 'react';
 import { Tab } from '@headlessui/react';
-import { ViewGridIcon } from '@heroicons/react/solid';
+import { Squares2X2Icon } from '@heroicons/react/24/solid';
 import ViewListIcon from '@mui/icons-material/ViewList';
 import { useRouter } from 'next/router';
 import PostCard from './PostCard';
@@ -81,7 +81,7 @@ function List({ hideLabels = false }) {
       <Tab
         className={({ selected }) => tabCx(selected)}
         style={{ WebkitTapHighlightColor: 'transparent' }}>
-        <ViewGridIcon className="w-5 h-5" />
+        <Squares2X2Icon className="w-5 h-5" />
         <span className={cx('ml-1', { 'hidden md:inline-block': hideLabels })}>
           {' '}
           Grid

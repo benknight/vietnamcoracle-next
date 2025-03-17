@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { ExternalLinkIcon } from '@heroicons/react/solid';
+import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 import useNavCategory from '../lib/useNavCategory';
 import { BlockContent, BlockTitle } from './Block';
 import MapOverlay from './MapOverlay';
@@ -32,7 +32,7 @@ const CategoryMap = ({ data }) => {
                 className="link inline-flex items-center hover:underline"
                 href={`https://www.google.com/maps/d/viewer?mid=${data.mid}`}>
                 Open in Google Maps
-                <ExternalLinkIcon className="ml-1 w-4 h-4" />
+                <ArrowTopRightOnSquareIcon className="ml-1 w-4 h-4" />
               </a>
             </div>
           </BlockContent>

@@ -1,6 +1,6 @@
 import cx from 'classnames';
 import { defaults, keyBy, mapValues } from 'lodash';
-import Image from 'next/image';
+import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { useCallback, useState } from 'react';
@@ -85,16 +85,14 @@ export default function Subscribe({ data: block }: Props) {
     <Block>
       <div className="mb-6 flex justify-center">
         <Link href="/subscribe">
-          <a>
-            <Image
-              alt=""
-              className="h-full rounded-full object-cover"
-              height="80"
-              layout="fixed"
-              src={block.image.sourceUrl}
-              width="80"
-            />
-          </a>
+          <Image
+            alt=""
+            className="h-full rounded-full object-cover"
+            height="80"
+            layout="fixed"
+            src={block.image.sourceUrl}
+            width="80"
+          />
         </Link>
       </div>
       <BlockTitle>{block.title}</BlockTitle>

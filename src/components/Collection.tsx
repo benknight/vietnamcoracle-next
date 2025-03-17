@@ -1,8 +1,7 @@
 import cx from 'classnames';
 import _shuffle from 'lodash/shuffle';
-import { ReactNode, RefObject, useMemo } from 'react';
-import Link from 'next/link';
-import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/outline';
+import { ReactNode, RefObject } from 'react';
+import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import useCarousel from '../lib/useCarousel';
 
 interface Props {

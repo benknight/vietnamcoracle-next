@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const { ALGOLIA_APP_ID: appId, ALGOLIA_KEY_ADMIN: key } = process.env;
 
 export const config = {
-  runtime: 'experimental-edge',
+  runtime: 'edge',
   regions: ['sin1'],
 };
 

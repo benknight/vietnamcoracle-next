@@ -3,7 +3,7 @@ import _debounce from 'lodash/debounce';
 import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import { gaEvent } from '../services/GoogleAnalytics';
+import { gaEvent } from '../lib/GoogleAnalytics';
 
 export default function SearchInput({ className = '', ...inputProps }) {
   const inputRef = useRef<HTMLInputElement>(null);

@@ -3,7 +3,7 @@ import Post from '../components/Post';
 import { POST_QUERY } from '../config/queries';
 import getGQLClient from '../lib/getGQLClient';
 import { getPostPageProps } from '../lib/getPostPageProps';
-import { RestClientAdmin } from '../services/RestClient';
+import { RestClientAdmin } from '../lib/RestClient';
 
 export default function SSGPost(props) {
   return <Post data={props.data} html={props.html} postNav={props.postNav} />;

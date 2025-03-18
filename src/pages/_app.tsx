@@ -12,7 +12,7 @@ import {
   createTheme,
 } from '@mui/material/styles';
 import Header from '../components/Header';
-import { pageview } from '../services/GoogleAnalytics';
+import { pageview } from '../lib/GoogleAnalytics';
 import checkHomePath from '../lib/checkHomePath';
 import { NavCategory } from '../lib/useNavCategory';
 import useWaitCursor from '../lib/useWaitCursor';

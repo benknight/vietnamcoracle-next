@@ -14,7 +14,7 @@ import PostMediaBlock, {
 import SidebarDefault from '../components/SidebarDefault';
 import * as fragments from '../config/fragments';
 import getGQLClient from '../lib/getGQLClient';
-import { RestClientSubscriber } from '../services/RestClient';
+import { RestClientSubscriber } from '../lib/RestClient';
 import useWaitCursor from '../lib/useWaitCursor';
 
 const isBot = () =>

@@ -26,7 +26,7 @@ const PostCard = ({ ad, inGrid = false, post, showAdTag = false }: Props) => {
             image: post.featuredImage?.node,
             title: post.title,
           }
-        : null,
+        : {},
     [post, ad],
   );
 

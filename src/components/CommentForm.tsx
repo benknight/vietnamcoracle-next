@@ -1,3 +1,4 @@
+'use client';
 import cx from 'classnames';
 import { gql } from 'graphql-request';
 import { Formik, Field, Form } from 'formik';

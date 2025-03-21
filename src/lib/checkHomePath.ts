@@ -1,4 +1,4 @@
-export default function checkHomePath(path: string): boolean {
+export default function checkHomePath(path: string | null): boolean {
   return [
     '/',
     '/browse',

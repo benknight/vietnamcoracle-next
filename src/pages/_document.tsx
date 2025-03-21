@@ -16,6 +16,14 @@ class MyDocument extends Document {
     return (
       <Html lang="en">
         <Head>
+          <link
+            href="https://cms.vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.css"
+            rel="stylesheet"
+          />
+          <link
+            href="https://cms.vietnamcoracle.com/wp-includes/css/dist/block-library/style.css?v=1"
+            rel="stylesheet"
+          />
           {/* Global Site Tag (gtag.js) - Google Analytics */}
           <script
             async

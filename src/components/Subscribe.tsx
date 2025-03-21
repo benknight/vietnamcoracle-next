@@ -1,16 +1,17 @@
+'use client';
 import cx from 'classnames';
 import { defaults, keyBy, mapValues } from 'lodash';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
-import Block, { BlockContent, BlockTitle, BlockType } from './Block';
+import Block, { BlockContent, BlockTitle, BlockData } from './Block';
 import ElsewhereLinks from './ElsewhereLinks';
 
 interface Props {
-  data: BlockType;
+  data: BlockData;
 }
 
 interface HookOptions {
@@ -47,7 +48,7 @@ export function useSubscribeForm(opts?: HookOptions) {
     })
       .then(res => res.json())
       .then(data => {
-        let message: string;
+        let message = '';
         if (data.success) {
           if (opts?.successRedirectUrl) {
             router.push(internalizeUrl(opts.successRedirectUrl));

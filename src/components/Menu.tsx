@@ -1,3 +1,4 @@
+'use client';
 import cx from 'classnames';
 import _groupBy from 'lodash/groupBy';
 import _keyBy from 'lodash/keyBy';
@@ -79,11 +80,23 @@ export default function Menu({ children, className = '', fullWidth }: Props) {
 
 const speed = 300;
 
-function MenuNav({ close = () => {}, items = [], open = false }) {
+interface MenuNavProps {
+  close?: () => void;
+  items: {
+    id: string;
+    label: string;
+    parentId: string;
+    path: string;
+    url: string;
+  }[];
+  open?: boolean;
+}
+
+function MenuNav({ close = () => {}, items = [], open = false }: MenuNavProps) {
   const ref = useRef<HTMLElement>(null);
-  const [cursor, setCursor] = useState(null);
+  const [cursor, setCursor] = useState<string | null>(null);
   const [direction, setDirection] = useState('');
-  const [menuHeight, setMenuHeight] = useState<number>(null);
+  const [menuHeight, setMenuHeight] = useState<number | null>(null);
   const byId = useMemo(() => _keyBy(items, 'id'), [items]);
   const grouped = useMemo(() => _groupBy(items, 'parentId'), [items]);
 
@@ -91,7 +104,7 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
     if (open) {
       setCursor(null);
       // Initialize menu height
-      setMenuHeight(ref.current.offsetHeight);
+      setMenuHeight(ref.current!.offsetHeight);
     }
   }, [open]);
 
@@ -105,10 +118,10 @@ function MenuNav({ close = () => {}, items = [], open = false }) {
           as="ul"
           beforeEnter={() => {
             window.setTimeout(() => {
-              const ul: HTMLElement = ref.current.querySelector(
-                `[data-key="${key}"]`,
-              );
-              setMenuHeight(ul.offsetHeight);
+              const ul = ref.current!.querySelector(`[data-key="${key}"]`);
+              if (ul) {
+                setMenuHeight((ul as HTMLElement).offsetHeight);
+              }
             });
           }}
           className="p-2"

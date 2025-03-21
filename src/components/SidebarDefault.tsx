@@ -1,19 +1,32 @@
 import cx from 'classnames';
-import useAPI from '../lib/useAPI';
 import About from './About';
 import Subscribe from './Subscribe';
 import Support from './Support';
 import SlidingSticky from './SlidingSticky';
+import type { BlockData } from './Block';
 
-const SidebarDefault = ({ className = '' }) => {
-  const { data } = useAPI('/api/blocks/');
-  if (!data) return null;
+interface Props {
+  className?: string;
+  blocks: {
+    about: {
+      block: BlockData;
+    };
+    subscribe: {
+      block: BlockData;
+    };
+    support: {
+      block: BlockData;
+    };
+  };
+}
+
+const SidebarDefault = ({ className = '', blocks }: Props) => {
   return (
     <SlidingSticky>
       <div className={cx('py-10 xl:pt-0', className)}>
-        <About data={data.about.block} />
-        <Subscribe data={data.subscribe.block} />
-        <Support data={data.support.block} />
+        <About data={blocks.about.block} />
+        <Subscribe data={blocks.subscribe.block} />
+        <Support data={blocks.support.block} />
       </div>
     </SlidingSticky>
   );

@@ -1,8 +1,9 @@
+'use client';
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname } from 'next/navigation';
 import { useRef, useState, useEffect } from 'react';
 import Headroom from 'react-headroom';
 import { Bars3Icon } from '@heroicons/react/24/outline';
@@ -19,13 +20,14 @@ interface Props {
 export default function Header({ preview, fullWidth }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [searchFocused, setSearchFocused] = useState(false);
-  const router = useRouter();
-  const isHome = checkHomePath(router.asPath);
+  const pathname = usePathname();
+  const isHome = checkHomePath(pathname || '/');
   const [pinStart, setPinStart] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const calculatePinStart = () => {
+      if (!ref.current) return;
       const box = ref.current.getBoundingClientRect();
       setPinStart(window.scrollY + box.top);
     };
@@ -103,7 +105,7 @@ export default function Header({ preview, fullWidth }: Props) {
               <div className="absolute top-full left-0 w-full flex justify-center">
                 <Link
                   href={`/api/exit-preview/?redirect=${encodeURIComponent(
-                    isHome ? '/' : router.asPath,
+                    isHome ? '/' : pathname || '/',
                   )}`}
                   className="flex items-center justify-center h-5 mt-1 px-4 bg-yellow-300 dark:bg-opacity-75 hover:bg-opacity-100 text-black text-xs font-medium shadow rounded-full">
                   You are viewing in Preview Mode. Click here to exit.

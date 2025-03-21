@@ -1,3 +1,7 @@
+import '../styles/fonts.css';
+import '../styles/global.css';
+import '../styles/article.css';
+import '../custom-elements';
 import cx from 'classnames';
 import { AppProps } from 'next/app';
 import Head from 'next/head';
@@ -7,7 +11,6 @@ import smoothscroll from 'smoothscroll-polyfill';
 import CircularProgress from '@mui/material/CircularProgress';
 import {
   ThemeProvider,
-  Theme,
   StyledEngineProvider,
   createTheme,
 } from '@mui/material/styles';
@@ -16,9 +19,6 @@ import { pageview } from '../lib/GoogleAnalytics';
 import checkHomePath from '../lib/checkHomePath';
 import { NavCategory } from '../lib/useNavCategory';
 import useWaitCursor from '../lib/useWaitCursor';
-import '../styles/fonts.css';
-import '../styles/style.css';
-import '../custom-elements';
 
 const theme = createTheme();
 

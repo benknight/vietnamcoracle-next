@@ -23,7 +23,7 @@ export async function getPostPageProps(data: any, preview: boolean) {
 
   let html = cleanPostHTML(data.contentNode.content);
 
-  const $ = cheerio.load(html);
+  const $ = cheerio.load(html, null, false);
 
   const lastUpdated = $(
     "p:first-of-type:contains('Last updated'), p:first-of-type:contains('Last Updated'), p:first-of-type:contains('First published'), p:first-of-type:contains('First Published')",

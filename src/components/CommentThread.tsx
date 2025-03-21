@@ -1,3 +1,4 @@
+'use client';
 import format from 'date-fns/format';
 import parseJSON from 'date-fns/parseJSON';
 import { useState } from 'react';

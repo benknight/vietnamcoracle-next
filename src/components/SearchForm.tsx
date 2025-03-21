@@ -1,20 +1,23 @@
+'use client';
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
-import { useRouter } from 'next/router';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
 import { gaEvent } from '../lib/GoogleAnalytics';
 
 export default function SearchInput({ className = '', ...inputProps }) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const searchParams = useSearchParams();
   const router = useRouter();
   const [value, setValue] = useState('');
+  const query = searchParams?.get('query');
 
   useEffect(() => {
-    if (router.query?.query) {
-      setValue(router.query.query.toString());
+    if (query) {
+      setValue(query);
     }
-  }, [router.query.query]);
+  }, [query]);
 
   return (
     <form
@@ -28,10 +31,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
             query: value,
           },
         });
-        router.push({
-          pathname: '/search/',
-          query: { query: value },
-        });
+        router.push(`/search/?query=${value}`);
       }}
       role="search">
       <div className="absolute top-0 left-0 bottom-0 w-10 flex items-center justify-center pointer-events-none">

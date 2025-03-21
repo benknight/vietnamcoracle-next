@@ -1,3 +1,4 @@
+'use client';
 import cx from 'classnames';
 import Image from 'next/legacy/image';
 import { useState } from 'react';
@@ -5,14 +6,20 @@ import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
 import useAPI from '../lib/useAPI';
 import Block, { BlockContent, BlockTitle } from './Block';
 
+interface Props extends React.IframeHTMLAttributes<HTMLIFrameElement> {
+  className?: string;
+  iframeClassName?: string;
+}
+
 export default function MapOverlay({
   className = '',
   iframeClassName = 'w-full min-h-[400px]',
   ...iframeProps
-}) {
+}: Props) {
   const { data: blocks } = useAPI('/api/blocks/');
   const [mapInteractive, setMapInteractive] = useState(false);
   const [showSupport, setShowSupport] = useState(false);
+
   return (
     <>
       <div className={cx('relative', className)}>

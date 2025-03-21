@@ -30,8 +30,6 @@ export function Slider({ className = '', children }) {
       setPlay(false);
     }
 
-    console.log({ isMedium });
-
     parentRef.current?.scrollTo({
       left: (slides[destination] as HTMLElement).offsetLeft,
       behavior: isMedium ? 'auto' : 'smooth',

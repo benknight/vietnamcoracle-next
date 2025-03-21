@@ -3,12 +3,12 @@ import internalizeUrl from '../lib/internalizeUrl';
 import { CurrencyDollarIcon } from '@heroicons/react/24/outline';
 import FlightIcon from '@mui/icons-material/Flight';
 import HotelIcon from '@mui/icons-material/Hotel';
-import Block, { BlockContent, BlockTitle, BlockType } from './Block';
+import Block, { BlockContent, BlockTitle, BlockData } from './Block';
 import HeartIcon from './HeartIcon';
 import Image from 'next/legacy/image';
 
 interface Props {
-  data: BlockType;
+  data: BlockData;
 }
 
 const btnClassName = 'btn flex mt-2';

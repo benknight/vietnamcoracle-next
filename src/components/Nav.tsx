@@ -1,7 +1,8 @@
+'use client';
 import cx from 'classnames';
 import _defer from 'lodash/defer';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { cloneElement, useCallback } from 'react';
 import { HomeIcon } from '@heroicons/react/24/solid';
 import { HomeIcon as HomeOutlinedIcon } from '@heroicons/react/24/outline';
@@ -56,23 +57,29 @@ interface Props {
 }
 
 export default function NavBar({ navCategory }: Props) {
-  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const refParam = searchParams?.get('ref');
+
   const isCurrent = useCallback(
     uri => {
-      const path = router.asPath;
       if (uri === '/') {
-        return checkHomePath(path);
+        return checkHomePath(pathname);
       }
-      if (router.query.ref) {
-        return uri === `/browse/${router.query.ref}/`;
+
+      if (refParam) {
+        return uri === `/browse/${refParam}/`;
       }
+
       if (navCategory) {
         return uri === `/browse/${navCategory}/`;
       }
-      return path.startsWith(uri);
+
+      return pathname?.startsWith(uri);
     },
-    [navCategory, router.asPath, router.query.ref],
+    [navCategory, pathname, refParam],
   );
+
   return (
     <nav className="flex justify-around items-center flex-auto px-1 xl:px-16 font-sans font-medium tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">
       {links.map(link => {

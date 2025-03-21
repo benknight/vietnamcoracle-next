@@ -1,11 +1,7 @@
-import Link from 'next/link';
-import useAPI from '../lib/useAPI';
-// @ts-ignore
+// import Link from 'next/link';
 import LonelyPlanetLogo from '../../public/lp-logo.svg';
 
 export default function Footer() {
-  const { data } = useAPI('/api/footer/');
-  if (!data) return null;
   return (
     <footer>
       <div className="block lg:pt-8 pb-16 mx-auto text-center">
@@ -28,16 +24,14 @@ export default function Footer() {
       </div>
       <section className="px-2 pb-12 lg:px-0 max-w-md mx-auto">
         <nav className="flex flex-wrap justify-center uppercase text-xxxs tracking-widest">
-          {data.menu?.menuItems?.nodes.map(item => (
+          {/* {data.menu?.menuItems?.nodes.map(item => (
             <Link
               key={item.path}
               href={item.path}
               className="mx-2 my-3 xs:mx-3 lg:mx-3 opacity-75 hover:opacity-100">
-
               {item.label}
-
             </Link>
-          ))}
+          ))} */}
         </nav>
       </section>
     </footer>

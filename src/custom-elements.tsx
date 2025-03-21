@@ -1,3 +1,4 @@
+'use client';
 import { createRoot } from 'react-dom/client';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import { defineConfig } from '@twind/core';

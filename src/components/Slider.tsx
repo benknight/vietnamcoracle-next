@@ -1,8 +1,9 @@
+'use client';
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import _throttle from 'lodash/throttle';
-import { forwardRef, useRef, useState, useEffect } from 'react';
-import { RadioGroup } from '@headlessui/react';
+import { forwardRef, useRef, useState, useEffect, ReactNode } from 'react';
+import { RadioGroup, Radio } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import breakpoints from '../config/breakpoints';
@@ -18,13 +19,17 @@ export function Slider({ className = '', children }) {
   const timeoutRef = useRef<boolean>(null);
   const [play, setPlay] = useState(true);
   const [showNav, setShowNav] = useState(false);
-  const [slideCount, setSlideCount] = useState(null);
+  const [slideCount, setSlideCount] = useState<number | null>(null);
   const [cursor, setCursor] = useState(0);
   const [domLoaded, setDomLoaded] = useState(false);
   const isMedium = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
   const goTo = (destination: number, intent: 'auto' | 'manual' = 'auto') => {
     const slides = parentRef.current?.querySelectorAll(':scope > a');
+
+    if (!slides) {
+      return;
+    }
 
     if (intent === 'manual') {
       setPlay(false);
@@ -43,7 +48,7 @@ export function Slider({ className = '', children }) {
     if (play && !intervalRef.current) {
       intervalRef.current = window.setInterval(() => {
         busyRef.current = true;
-        advanceRef.current();
+        advanceRef.current!();
         window.setTimeout(() => (busyRef.current = false), 500);
       }, 8000);
     }
@@ -56,6 +61,7 @@ export function Slider({ className = '', children }) {
 
   // Update the advance callback
   useEffect(() => {
+    if (!slideCount) return;
     advanceRef.current = () => goTo((cursor + 1) % slideCount);
   }, [cursor, slideCount]);
 
@@ -75,9 +81,13 @@ export function Slider({ className = '', children }) {
   // Update cursor when user scrolls
   useEffect(() => {
     if (!domLoaded) return;
-    const slides = parentRef.current.querySelectorAll(':scope > a');
+
+    const slides = parentRef.current!.querySelectorAll(':scope > a');
+
     setSlideCount(slides.length);
+
     if (!('IntersectionObserver' in window)) return;
+
     const observer = new IntersectionObserver(
       entries => {
         entries.forEach(entry => {
@@ -145,7 +155,7 @@ export function Slider({ className = '', children }) {
   // Prevent slider from getting 'stuck' in an in-between position
   // (happens only in Chromium as of Nov 2022)
   useEffect(() => {
-    const listener = _debounce(() => goTo(cursorRef.current), 1500);
+    const listener = _debounce(() => goTo(cursorRef.current!), 1500);
     parentRef.current?.addEventListener('wheel', listener);
     parentRef.current?.addEventListener('touchend', listener);
     return () => {
@@ -158,6 +168,10 @@ export function Slider({ className = '', children }) {
   useEffect(() => {
     cursorRef.current = cursor;
   }, [cursor]);
+
+  if (!slideCount) {
+    return null;
+  }
 
   return (
     <div
@@ -215,10 +229,10 @@ export function Slider({ className = '', children }) {
       </div>
       {(() => {
         if (slideCount === 0) return null;
-        const buttons = [];
+        const buttons: ReactNode[] = [];
         for (let i = 0; i < slideCount; i++) {
           buttons.push(
-            <RadioGroup.Option
+            <Radio
               className="cursor-pointer pointer-only p-1"
               key={i}
               value={i}>
@@ -238,7 +252,7 @@ export function Slider({ className = '', children }) {
                   <span className="sr-only">{i}</span>
                 </>
               )}
-            </RadioGroup.Option>,
+            </Radio>,
           );
         }
         return (
@@ -246,9 +260,6 @@ export function Slider({ className = '', children }) {
             className="absolute py-2 w-full flex justify-center items-center cursor-default"
             value={cursor}
             onChange={i => goTo(i, 'manual')}>
-            <RadioGroup.Label className="sr-only">
-              Slider Image Index
-            </RadioGroup.Label>
             <div className="inline-flex scale-90">{buttons}</div>
           </RadioGroup>
         );

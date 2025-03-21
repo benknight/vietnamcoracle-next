@@ -1,10 +1,10 @@
 import Image from 'next/legacy/image';
 import Link from 'next/link';
 import internalizeUrl from '../lib/internalizeUrl';
-import Block, { BlockContent, BlockTitle, BlockType } from './Block';
+import Block, { BlockContent, BlockData, BlockTitle } from './Block';
 
 interface Props {
-  data: BlockType;
+  data: BlockData;
 }
 
 export default function About({ data: block }: Props) {

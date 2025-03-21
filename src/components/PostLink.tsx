@@ -1,11 +1,15 @@
-import useNavCategory from '../lib/useNavCategory';
+import { AnchorHTMLAttributes } from 'react';
 
-export default function PostLink({ slug, ...props }) {
-  const navCategory = useNavCategory();
+interface Props extends AnchorHTMLAttributes<HTMLAnchorElement> {
+  navCategory?: string;
+  slug: string;
+}
+
+export default function PostLink({ navCategory, slug, ...linkProps }: Props) {
   return (
     <a
       href={`/${slug}/${navCategory ? `?ref=${navCategory}` : ''}`}
-      {...props}
+      {...linkProps}
     />
   );
 }

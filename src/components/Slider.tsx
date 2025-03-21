@@ -1,9 +1,11 @@
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import _throttle from 'lodash/throttle';
-import { forwardRef, useCallback, useRef, useState, useEffect } from 'react';
+import { forwardRef, useRef, useState, useEffect } from 'react';
 import { RadioGroup } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import breakpoints from '../config/breakpoints';
 
 export function Slider({ className = '', children }) {
   const advanceRef = useRef<() => void>(null);
@@ -19,22 +21,22 @@ export function Slider({ className = '', children }) {
   const [slideCount, setSlideCount] = useState(null);
   const [cursor, setCursor] = useState(0);
   const [domLoaded, setDomLoaded] = useState(false);
+  const isMedium = useMediaQuery(`(min-width: ${breakpoints.md})`);
 
-  const goTo = useCallback(
-    (destination: number, intent: 'auto' | 'manual' = 'auto') => {
-      const slides = parentRef.current?.querySelectorAll(':scope > a');
+  const goTo = (destination: number, intent: 'auto' | 'manual' = 'auto') => {
+    const slides = parentRef.current?.querySelectorAll(':scope > a');
 
-      if (intent === 'manual') {
-        setPlay(false);
-      }
+    if (intent === 'manual') {
+      setPlay(false);
+    }
 
-      parentRef.current?.scrollTo({
-        left: (slides[destination] as HTMLElement).offsetLeft,
-        behavior: 'auto',
-      });
-    },
-    [],
-  );
+    console.log({ isMedium });
+
+    parentRef.current?.scrollTo({
+      left: (slides[destination] as HTMLElement).offsetLeft,
+      behavior: isMedium ? 'auto' : 'smooth',
+    });
+  };
 
   // Auto-play behavior
   useEffect(() => {

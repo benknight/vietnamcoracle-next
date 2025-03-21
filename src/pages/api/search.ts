@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { ipAddress } from '@vercel/functions';
 
 const { ALGOLIA_APP_ID: appId, ALGOLIA_KEY_ADMIN: key } = process.env;
 
@@ -19,7 +20,7 @@ export default async function handler(req: NextRequest) {
           attributesToHighlight: 'title',
           attributesToRetrieve: 'slug,thumbnail,title',
           attributesToSnippet: 'content:40,excerpt:40',
-          userToken: req.ip,
+          userToken: ipAddress(req),
         }),
       {
         headers: {

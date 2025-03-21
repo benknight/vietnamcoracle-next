@@ -1,4 +1,4 @@
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import resolveConfig from 'tailwindcss/resolveConfig';
 import { defineConfig } from '@twind/core';
 import install from '@twind/with-web-components';
@@ -54,7 +54,8 @@ if (typeof window !== 'undefined') {
       const root = document.createElement('div');
       this.attachShadow({ mode: 'open' }).appendChild(root);
       // const name = this.getAttribute('name');
-      render(<SubscribeForm />, root);
+      const reactDomRoot = createRoot(root);
+      reactDomRoot.render(<SubscribeForm />);
     }
   }
 
@@ -65,14 +66,15 @@ if (typeof window !== 'undefined') {
       const root = document.createElement('div');
       this.attachShadow({ mode: 'open' }).appendChild(root);
       const props = {
-        image: this.getAttribute('data-image'),
-        link: this.getAttribute('data-link'),
-        title: this.getAttribute('data-name'),
+        image: this.getAttribute('data-image') || '',
+        link: this.getAttribute('data-link') || '',
+        title: this.getAttribute('data-name') || '',
       };
       if (!props.link) {
         return;
       }
-      render(<ShareButtons {...props} />, root);
+      const reactDomRoot = createRoot(root);
+      reactDomRoot.render(<ShareButtons {...props} />);
     }
   }
 
@@ -84,12 +86,13 @@ if (typeof window !== 'undefined') {
       const root = document.createElement('div');
       this.attachShadow({ mode: 'open' }).appendChild(root);
       const props = {
-        height: this.getAttribute('data-height'),
-        src: this.getAttribute('data-src'),
-        title: this.getAttribute('data-title'),
-        width: this.getAttribute('data-width'),
+        height: this.getAttribute('data-height') || '',
+        src: this.getAttribute('data-src') || '',
+        title: this.getAttribute('data-title') || '',
+        width: this.getAttribute('data-width') || '',
       };
-      render(<MapOverlay {...props} />, root);
+      const reactDomRoot = createRoot(root);
+      reactDomRoot.render(<MapOverlay {...props} />);
     }
   }
 

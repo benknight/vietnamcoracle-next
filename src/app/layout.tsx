@@ -1,22 +1,16 @@
 import '../styles/wp-global.css';
 import '../styles/fonts.css';
 import '../styles/global.css';
-import '../styles/wp-blocks.css';
-import '../custom-elements';
 import type { Metadata } from 'next';
 import Script from 'next/script';
 import type { ReactNode } from 'react';
-import MuiProviders from '../components/MuiProviders';
-import Header from '../components/Header';
-import { draftMode } from 'next/headers';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 interface Props {
   children: ReactNode;
 }
 
 export default async function AppLayout({ children }: Props) {
-  const { isEnabled } = await draftMode();
-
   return (
     <html lang="en">
       <head>
@@ -49,12 +43,7 @@ export default async function AppLayout({ children }: Props) {
         />
       </head>
       <body>
-        <MuiProviders>
-          <div className="relative bg-white dark:bg-gray-950 min-h-screen">
-            <Header preview={isEnabled} fullWidth />
-            {children}
-          </div>
-        </MuiProviders>
+        <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
       </body>
     </html>
   );

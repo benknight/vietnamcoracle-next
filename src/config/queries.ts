@@ -133,3 +133,48 @@ export const POST_QUERY = gql`
   ${fragments.HeroImageData}
   ${fragments.PostCardData}
 `;
+
+export const POST_METADATA_QUERY = gql`
+  query PostMetadata($id: ID!) {
+    contentNode(id: $id, idType: DATABASE_ID) {
+      seo {
+        canonical
+        metaDesc
+        metaKeywords
+        metaRobotsNofollow
+        metaRobotsNoindex
+        opengraphAuthor
+        opengraphDescription
+        opengraphImage {
+          altText
+          sourceUrl
+          mediaDetails {
+            height
+            width
+          }
+          mimeType
+        }
+        opengraphModifiedTime
+        opengraphPublishedTime
+        opengraphPublisher
+        opengraphSiteName
+        opengraphTitle
+        opengraphType
+        opengraphUrl
+        title
+        twitterDescription
+        twitterImage {
+          id
+          altText
+          sourceUrl
+          mediaDetails {
+            height
+            width
+          }
+          mimeType
+        }
+        twitterTitle
+      }
+    }
+  }
+`;

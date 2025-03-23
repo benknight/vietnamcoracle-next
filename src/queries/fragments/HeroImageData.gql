@@ -1,0 +1,9 @@
+fragment HeroImageData on MediaItem {
+  altText
+  id
+  sourceUrl
+  mediaDetails {
+    height
+    width
+  }
+}

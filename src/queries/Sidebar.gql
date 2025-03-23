@@ -1,0 +1,28 @@
+query Sidebar {
+  about: block(id: "cG9zdDozNjExOA==") {
+    ...Block
+  }
+  subscribe: block(id: "cG9zdDozNzcwNQ==") {
+    ...Block
+  }
+  support: block(id: "cG9zdDozNzY4Nw==") {
+    ...Block
+  }
+}
+fragment Block on Block {
+  block {
+    description
+    title
+    image {
+      sourceUrl
+    }
+    link {
+      title
+      url
+    }
+    messages {
+      key
+      value
+    }
+  }
+}

@@ -1,0 +1,20 @@
+fragment PostCardData on ContentNode {
+  uri
+  slug
+  ... on NodeWithExcerpt {
+    excerpt
+  }
+  ... on NodeWithFeaturedImage {
+    featuredImage {
+      node {
+        altText
+        id
+        srcLarge: sourceUrl(size: LARGE)
+        slug
+      }
+    }
+  }
+  ... on NodeWithTitle {
+    title
+  }
+}

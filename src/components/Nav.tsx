@@ -2,8 +2,8 @@
 import cx from 'classnames';
 import _defer from 'lodash/defer';
 import Link from 'next/link';
-import { usePathname, useSearchParams } from 'next/navigation';
-import { cloneElement, useCallback } from 'react';
+import { useParams, usePathname, useSearchParams } from 'next/navigation';
+import { cloneElement, useMemo } from 'react';
 import { HomeIcon } from '@heroicons/react/24/solid';
 import { HomeIcon as HomeOutlinedIcon } from '@heroicons/react/24/outline';
 import HotelIcon from '@mui/icons-material/Hotel';
@@ -56,29 +56,36 @@ interface Props {
   navCategory?: string;
 }
 
-export default function NavBar({ navCategory }: Props) {
+export default function NavBar(props: Props) {
   const pathname = usePathname();
+  const params = useParams();
   const searchParams = useSearchParams();
   const refParam = searchParams?.get('ref');
 
-  const isCurrent = useCallback(
-    uri => {
-      if (uri === '/') {
-        return checkHomePath(pathname);
-      }
+  const navCategory = useMemo(() => {
+    if (refParam) return refParam;
+    if (props.navCategory) return props.navCategory;
+    if (params && 'browse' in params) {
+      return params.browse[0] || null;
+    }
+    return null;
+  }, [props.navCategory, refParam, params]);
 
-      if (refParam) {
-        return uri === `/browse/${refParam}/`;
-      }
+  const isCurrent = uri => {
+    if (uri === '/') {
+      return checkHomePath(pathname);
+    }
 
-      if (navCategory) {
-        return uri === `/browse/${navCategory}/`;
-      }
+    if (refParam) {
+      return uri === `/browse/${refParam}/`;
+    }
 
-      return pathname?.startsWith(uri);
-    },
-    [navCategory, pathname, refParam],
-  );
+    if (navCategory) {
+      return uri === `/browse/${navCategory}/`;
+    }
+
+    return pathname?.startsWith(uri);
+  };
 
   return (
     <nav className="flex justify-around items-center flex-auto px-1 xl:px-16 font-sans font-medium tracking-wide lg:tracking-normal leading-tight ring-1 ring-gray-300 dark:ring-gray-700 lg:ring-0">

@@ -17,6 +17,7 @@ export interface BlockData {
       value: string;
     },
   ];
+  mid?: string;
 }
 
 export const BlockTitle = (props: { children: ReactNode }) => (

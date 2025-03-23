@@ -1,3 +1,4 @@
+'use client';
 import cx from 'classnames';
 import _shuffle from 'lodash/shuffle';
 import { ReactNode, RefObject } from 'react';

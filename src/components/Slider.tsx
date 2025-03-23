@@ -19,7 +19,7 @@ export function Slider({ className = '', children }) {
   const timeoutRef = useRef<boolean>(null);
   const [play, setPlay] = useState(true);
   const [showNav, setShowNav] = useState(false);
-  const [slideCount, setSlideCount] = useState<number | null>(null);
+  const [slideCount, setSlideCount] = useState<number>(0);
   const [cursor, setCursor] = useState(0);
   const [domLoaded, setDomLoaded] = useState(false);
   const isMedium = useMediaQuery(`(min-width: ${breakpoints.md})`);
@@ -168,10 +168,6 @@ export function Slider({ className = '', children }) {
   useEffect(() => {
     cursorRef.current = cursor;
   }, [cursor]);
-
-  if (!slideCount) {
-    return null;
-  }
 
   return (
     <div

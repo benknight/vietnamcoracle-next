@@ -7,11 +7,18 @@ import PostLink from './PostLink';
 interface Props {
   ad?: any;
   inGrid?: boolean;
+  navCategory?: string;
   post?: any;
   showAdTag?: boolean;
 }
 
-const PostCard = ({ ad, inGrid = false, post, showAdTag = false }: Props) => {
+const PostCard = ({
+  ad,
+  inGrid = false,
+  navCategory,
+  post,
+  showAdTag = false,
+}: Props) => {
   const data = useMemo(
     () =>
       ad
@@ -108,7 +115,10 @@ const PostCard = ({ ad, inGrid = false, post, showAdTag = false }: Props) => {
   }
 
   return (
-    <PostLink className={parentClassName} slug={post.slug}>
+    <PostLink
+      className={parentClassName}
+      navCategory={navCategory}
+      slug={post.slug}>
       {inner}
     </PostLink>
   );

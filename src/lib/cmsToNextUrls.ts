@@ -7,5 +7,6 @@ export default function cmsToNextUrls(body: string): string {
     .replace(
       /cms\.vietnamcoracle\.com(?!\/wp-content)/g,
       'www.vietnamcoracle.com',
-    );
+    )
+    .replace(/\/category\/features-guides\//g, '/browse/');
 }

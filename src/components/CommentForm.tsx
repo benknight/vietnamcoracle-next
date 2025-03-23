@@ -1,57 +1,29 @@
 'use client';
 import cx from 'classnames';
-import { gql } from 'graphql-request';
 import { Formik, Field, Form } from 'formik';
 import _unescape from 'lodash/unescape';
 import { useState } from 'react';
 import getGQLClient from '../lib/getGQLClient';
 import useWaitCursor from '../lib/useWaitCursor';
-
-const CREATE_COMMENT_MUTATION = gql`
-  mutation CreateComment(
-    $comment: String!
-    $email: String!
-    $name: String!
-    $parent: ID
-    $post: Int!
-  ) {
-    createComment(
-      input: {
-        author: $name
-        authorEmail: $email
-        commentOn: $post
-        content: $comment
-        parent: $parent
-      }
-    ) {
-      success
-      comment {
-        id
-        content
-        author {
-          node {
-            name
-          }
-        }
-      }
-    }
-  }
-`;
+import CreateCommentQuery from '../queries/CreateComment.gql';
 
 type Props = {
   post: number;
-  parent?: number;
+  parent?: any;
 };
 
 export default function CommentForm({ parent, post }: Props) {
   const [busy, setBusy] = useState(false);
+  const [showForm, setShowForm] = useState(false);
+
   useWaitCursor(busy);
+
   const onSubmit = async values => {
     setBusy(true);
     try {
       const api = getGQLClient();
-      const response = await api.request(CREATE_COMMENT_MUTATION, {
-        parent,
+      const response = await api.request(CreateCommentQuery, {
+        parent: parent?.id ?? null,
         post,
         ...values,
       });
@@ -83,7 +55,8 @@ export default function CommentForm({ parent, post }: Props) {
     }
     setBusy(false);
   };
-  return (
+
+  const form = (
     <Formik
       initialValues={{
         comment: '',
@@ -138,5 +111,25 @@ export default function CommentForm({ parent, post }: Props) {
         </Form>
       )}
     </Formik>
+  );
+
+  if (!parent) {
+    return form;
+  }
+
+  return (
+    <>
+      <button className="link text-xs" onClick={() => setShowForm(x => !x)}>
+        {showForm ? 'Cancel Reply' : 'Reply'}
+      </button>
+      <div
+        className="mt-4 mb-8 border-t border-gray-200 dark:border-gray-700 pt-4"
+        hidden={!showForm}>
+        <div className="font-display text-sm mb-4">
+          Reply to <b>{parent.author.node.name}</b>:
+        </div>
+        {form}
+      </div>
+    </>
   );
 }

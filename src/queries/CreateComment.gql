@@ -1,0 +1,28 @@
+mutation CreateComment(
+  $comment: String!
+  $email: String!
+  $name: String!
+  $parent: ID
+  $post: Int!
+) {
+  createComment(
+    input: {
+      author: $name
+      authorEmail: $email
+      commentOn: $post
+      content: $comment
+      parent: $parent
+    }
+  ) {
+    success
+    comment {
+      id
+      content
+      author {
+        node {
+          name
+        }
+      }
+    }
+  }
+}

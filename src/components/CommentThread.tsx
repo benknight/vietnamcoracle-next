@@ -1,7 +1,5 @@
-'use client';
 import format from 'date-fns/format';
 import parseJSON from 'date-fns/parseJSON';
-import { useState } from 'react';
 import CommentForm from './CommentForm';
 
 function formatDate(value: string): string {
@@ -35,7 +33,6 @@ const CommentHeader = ({ comment, isReply = false }) => (
 );
 
 const CommentBody = ({ comment, post }) => {
-  const [showReplyForm, setShowReplyForm] = useState(false);
   return (
     <>
       <div
@@ -44,19 +41,7 @@ const CommentBody = ({ comment, post }) => {
           __html: comment.content,
         }}
       />
-      <button
-        className="link text-xs"
-        onClick={() => setShowReplyForm(x => !x)}>
-        {showReplyForm ? 'Cancel Reply' : 'Reply'}
-      </button>
-      <div
-        className="mt-4 mb-8 border-t border-gray-200 dark:border-gray-700 pt-4"
-        hidden={!showReplyForm}>
-        <div className="font-display text-sm mb-4">
-          Reply to <b>{comment.author.node.name}</b>:
-        </div>
-        <CommentForm parent={comment.id} post={post} />
-      </div>
+      <CommentForm parent={comment} post={post} />
     </>
   );
 };

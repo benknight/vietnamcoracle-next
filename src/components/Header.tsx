@@ -13,11 +13,12 @@ import Nav from './Nav';
 import SearchForm from './SearchForm';
 
 interface Props {
+  navCategory?: string;
   preview: boolean;
   fullWidth: boolean;
 }
 
-export default function Header({ preview, fullWidth }: Props) {
+export default function Header({ navCategory, preview, fullWidth }: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [searchFocused, setSearchFocused] = useState(false);
   const pathname = usePathname();
@@ -99,7 +100,7 @@ export default function Header({ preview, fullWidth }: Props) {
               />
             </div>
             <div className="hidden lg:block">
-              <Nav />
+              <Nav navCategory={navCategory} />
             </div>
             {preview && (
               <div className="absolute top-full left-0 w-full flex justify-center">
@@ -116,7 +117,7 @@ export default function Header({ preview, fullWidth }: Props) {
         </div>
       </Headroom>
       <div className="nav-bar fixed lg:hidden bottom-0 z-20 w-full h-16 bg-gray-100 md:bg-white dark:bg-gray-900 md:dark:bg-gray-900">
-        <Nav />
+        <Nav navCategory={navCategory} />
       </div>
     </div>
   );

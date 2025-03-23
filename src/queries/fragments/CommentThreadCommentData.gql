@@ -1,0 +1,18 @@
+fragment CommentThreadCommentData on Comment {
+  content
+  databaseId
+  dateGmt
+  parentId
+  id
+  author {
+    node {
+      id
+      name
+      ... on User {
+        avatar {
+          url
+        }
+      }
+    }
+  }
+}

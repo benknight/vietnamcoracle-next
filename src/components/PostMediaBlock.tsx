@@ -19,23 +19,28 @@ export type PostMediaBlockPost = {
 };
 
 type Props = {
+  navCategory?: string;
   post: PostMediaBlockPost;
 };
 
-function PostMediaBlock({ post }: Props) {
+function PostMediaBlock({ post, navCategory }: Props) {
   return (
     <div
       className="
         relative sm:flex mb-2 p-4 lg:px-0 lg:my-0 rounded overflow-hidden
         bg-white dark:bg-gray-900 lg:bg-transparent shadow lg:shadow-none"
       key={post.slug}>
-      <PostLink className="absolute inset-0 sm:hidden" slug={post.slug} />
+      <PostLink
+        className="absolute inset-0 sm:hidden"
+        navCategory={navCategory}
+        slug={post.slug}
+      />
       {post.image && (
         <div
           className="
             w-24 h-24 sm:w-auto sm:h-auto ml-4 mb-3 sm:mr-6 sm:ml-0 sm:mb-0
             float-right shrink-0">
-          <PostLink slug={post.slug}>
+          <PostLink navCategory={navCategory} slug={post.slug}>
             <Image
               alt={post.image.altText}
               className="rounded"
@@ -55,6 +60,7 @@ function PostMediaBlock({ post }: Props) {
             dangerouslySetInnerHTML={{
               __html: post.title,
             }}
+            navCategory={navCategory}
             slug={post.slug}
           />
         </div>

@@ -1,0 +1,182 @@
+#import "./fragments/HeroImageData.gql"
+#import "./fragments/PostCardData.gql"
+#import "./fragments/PostMediaBlockData.gql"
+
+fragment CategoryData on Category {
+  name
+  uri
+  cover {
+    small {
+      ...HeroImageData
+    }
+    large {
+      ...HeroImageData
+    }
+  }
+  seo {
+    canonical
+    metaDesc
+    metaKeywords
+    metaRobotsNofollow
+    metaRobotsNoindex
+    opengraphAuthor
+    opengraphDescription
+    opengraphImage {
+      altText
+      sourceUrl
+      mediaDetails {
+        height
+        width
+      }
+      mimeType
+    }
+    opengraphModifiedTime
+    opengraphPublishedTime
+    opengraphPublisher
+    opengraphSiteName
+    opengraphTitle
+    opengraphType
+    opengraphUrl
+    title
+    twitterDescription
+    twitterImage {
+      id
+      altText
+      sourceUrl
+      mediaDetails {
+        height
+        width
+      }
+      mimeType
+    }
+    twitterTitle
+  }
+}
+
+query BrowseCategory(
+  $categorySlug: ID!
+  $hasSubcategory: Boolean!
+  $skipCategoryPosts: Boolean!
+  $subcategorySlug: ID!
+) {
+  category(id: $categorySlug, idType: SLUG) {
+    slug
+    ads {
+      header {
+        enabled
+        html
+      }
+      collection {
+        body
+        code
+        enabled
+        heading
+        position
+        cta {
+          url
+          title
+        }
+        image {
+          altText
+          srcLarge: sourceUrl(size: LARGE)
+        }
+      }
+    }
+    children(first: 1000) {
+      nodes {
+        name
+        uri
+        posts {
+          nodes {
+            id
+          }
+        }
+      }
+    }
+    collections {
+      items {
+        title
+        category {
+          slug
+          uri
+        }
+        posts {
+          ... on Post {
+            slug
+            ...PostCardData
+          }
+          ... on Page {
+            slug
+            ...PostCardData
+          }
+        }
+      }
+    }
+    map {
+      description
+      title
+      mid
+    }
+    parent {
+      node {
+        ...CategoryData
+      }
+    }
+    posts(first: 1000) @skip(if: $skipCategoryPosts) {
+      nodes {
+        slug
+        ...PostCardData
+      }
+    }
+    slider {
+      posts {
+        ... on Post {
+          title
+          uri
+          thumbnails {
+            thumbnailSlideSquare {
+              ...HeroImageData
+            }
+            thumbnailSlideWidescreen {
+              ...HeroImageData
+            }
+          }
+        }
+        ... on Page {
+          title
+          uri
+          thumbnails {
+            thumbnailSlideSquare {
+              ...HeroImageData
+            }
+            thumbnailSlideWidescreen {
+              ...HeroImageData
+            }
+          }
+        }
+      }
+    }
+    ...CategoryData
+  }
+  subcategory: category(id: $subcategorySlug, idType: SLUG)
+    @include(if: $hasSubcategory) {
+    ...CategoryData
+    posts(first: 1000) {
+      nodes {
+        slug
+        ...PostMediaBlockData
+        ...PostCardData
+      }
+    }
+  }
+  defaultImages {
+    cover {
+      large {
+        ...HeroImageData
+      }
+      small {
+        ...HeroImageData
+      }
+    }
+  }
+}

@@ -1,11 +1,16 @@
 import cx from 'classnames';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
 import useNavCategory from '../lib/useNavCategory';
-import { BlockContent, BlockTitle } from './Block';
+import { BlockContent, BlockData, BlockTitle } from './Block';
 import MapOverlay from './MapOverlay';
 
-const CategoryMap = ({ data }) => {
-  const navCategory = useNavCategory();
+const CategoryMap = ({
+  blockData,
+  navCategory,
+}: {
+  blockData: BlockData;
+  navCategory: string;
+}) => {
   return (
     <div id="map">
       <div className="lg:rounded-lg overflow-hidden">
@@ -24,13 +29,13 @@ const CategoryMap = ({ data }) => {
                 navCategory === 'food-and-drink',
             },
           )}>
-          <BlockTitle>{data.title}</BlockTitle>
+          <BlockTitle>{blockData.title}</BlockTitle>
           <BlockContent>
-            {data.description}{' '}
+            {blockData.description}{' '}
             <div className="mt-3">
               <a
                 className="link inline-flex items-center hover:underline"
-                href={`https://www.google.com/maps/d/viewer?mid=${data.mid}`}>
+                href={`https://www.google.com/maps/d/viewer?mid=${blockData.mid}`}>
                 Open in Google Maps
                 <ArrowTopRightOnSquareIcon className="ml-1 w-4 h-4" />
               </a>
@@ -41,8 +46,8 @@ const CategoryMap = ({ data }) => {
           className="h-[80vh] mb-[-14px]"
           iframeClassName="absolute inset-0 w-full h-full"
           height={650}
-          src={`https://www.google.com/maps/d/embed?mid=${data.mid}&z=6&hl=en&ehbc=57534e`}
-          title={data.title}
+          src={`https://www.google.com/maps/d/embed?mid=${blockData.mid}&z=6&hl=en&ehbc=57534e`}
+          title={blockData.title}
           width={800}
         />
       </div>

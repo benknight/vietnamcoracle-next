@@ -1,0 +1,332 @@
+import cx from 'classnames';
+import _ from 'lodash';
+import type { Metadata } from 'next';
+import { draftMode } from 'next/headers';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { Fragment } from 'react';
+import getGQLClient from '../../../lib/getGQLClient';
+import getCategoryLink from '../../../lib/getCategoryLink';
+import previewAds from '../../../lib/previewAds';
+import BrowseCategoryQuery from '../../../queries/BrowseCategory.gql';
+import SidebarQuery from '../../../queries/Sidebar.gql';
+import Header from '../../../components/Header';
+import CategorySlider from '../../../components/CategorySlider';
+import Hero, { HeroContent } from '../../../components/Hero';
+import Layout, { LayoutMain, LayoutSidebar } from '../../../components/Layout';
+import Collection from '../../../components/Collection';
+import PostCard from '../../../components/PostCard';
+import CategoryMap from '../../../components/CategoryMap';
+import SidebarDefault from '../../../components/SidebarDefault';
+import Footer from '../../../components/Footer';
+import BrowseHero from './BrowseHero';
+import cmsToNextUrls from '../../../lib/cmsToNextUrls';
+
+// Set dynamic rendering strategy for app router
+export const dynamic = 'force-static';
+export const revalidate = false;
+
+async function getPageData(browse: string[], preview: Boolean) {
+  const api = getGQLClient(preview ? 'preview' : 'admin');
+  const categorySlug = browse?.[0] ?? 'features-guides';
+  const subcategorySlug = browse?.[1] ?? '';
+
+  return api.request(BrowseCategoryQuery, {
+    categorySlug,
+    subcategorySlug,
+    hasSubcategory: Boolean(subcategorySlug),
+    preview,
+    skipCategoryPosts:
+      Boolean(subcategorySlug) ||
+      [
+        'features-guides',
+        'motorbike-guides',
+        'food-and-drink',
+        'hotel-reviews',
+        'destinations',
+      ].includes(categorySlug),
+  });
+}
+
+interface Props {
+  params: Promise<{ browse: string[] }>;
+}
+
+export default async function Browse({ params }: Props) {
+  const { browse } = await params;
+  const { isEnabled: preview } = await draftMode();
+  const api = getGQLClient(preview ? 'preview' : 'admin');
+
+  const [pageData, blockData] = await Promise.all([
+    getPageData(browse, preview),
+    api.request(SidebarQuery),
+  ]);
+
+  if (!pageData?.category) {
+    return notFound();
+  }
+
+  const isHome = pageData.category.slug === 'features-guides';
+
+  const isMotorbikeGuides = pageData.category.slug === 'motorbike-guides';
+
+  const coverImgSm =
+    (pageData.subcategory
+      ? pageData.subcategory.cover.small
+      : pageData.category.cover.small) || pageData.defaultImages?.cover.small;
+
+  const coverImgLg =
+    (pageData.subcategory
+      ? pageData.subcategory.cover.large
+      : pageData.category.cover.large) || pageData.defaultImages?.cover.large;
+
+  const showCollections =
+    pageData.category &&
+    !pageData.subcategory &&
+    pageData.category.collections?.items;
+
+  const ads = preview ? previewAds : pageData.category.ads;
+
+  const archiveItems = (() => {
+    if (showCollections) return [];
+
+    const shuffledAds = _.shuffle(ads.collection?.filter(ad => ad.enabled));
+
+    const mapPosts = post => ({
+      type: 'post',
+      data: post,
+    });
+
+    const posts = (
+      pageData.subcategory || pageData.category
+    ).posts.nodes.filter(node => !!node.featuredImage);
+
+    const result = _.flatten(
+      _.chunk(posts, 2).map((chunk, i) => {
+        let result = chunk.map(mapPosts);
+        if (i % 2 === 0 && shuffledAds.length > 0 && !isMotorbikeGuides) {
+          result.push({ type: 'ad', data: shuffledAds.pop() });
+        }
+        return result;
+      }),
+    );
+
+    return result;
+  })();
+
+  const navCategory = browse[0] === 'features-guides' ? undefined : browse[0];
+
+  return (
+    <div className="relative bg-white dark:bg-gray-950 min-h-screen">
+      <Header navCategory={navCategory} preview={preview} fullWidth />
+      {isHome ? (
+        <CategorySlider data={pageData.category.slider} />
+      ) : (
+        <Hero imgSm={coverImgSm} imgLg={coverImgLg} priority theme="dark">
+          <HeroContent theme="dark">
+            <BrowseHero pageData={pageData} />
+          </HeroContent>
+        </Hero>
+      )}
+      <Layout className="py-px pb-14 xl:pb-0">
+        <LayoutMain
+          className={cx('overflow-hidden', isHome ? 'pt-8 md:pt-0' : 'pt-4')}>
+          {showCollections ? (
+            <>
+              {isHome && ads.collection && (
+                <Collection
+                  heading="Offline Guides &amp; Maps"
+                  items={ads.collection
+                    .filter(ad => ad.enabled)
+                    .map((ad, index) => (
+                      <PostCard key={index} navCategory={navCategory} ad={ad} />
+                    ))}
+                />
+              )}
+              {isMotorbikeGuides && ads.collection && (
+                <Collection
+                  heading="Offline Guides &amp; Maps"
+                  items={ads.collection
+                    .filter(ad => ad.enabled)
+                    .map((ad, index) => (
+                      <PostCard key={index} navCategory={navCategory} ad={ad} />
+                    ))}
+                />
+              )}
+              {pageData.category.collections.items.map((item, index) => {
+                const ad =
+                  ads.collection?.length === 1 && index % 2 === 1
+                    ? null
+                    : ads?.collection?.[index % ads.collection.length];
+
+                const posts = item.posts.filter(post => !!post.featuredImage);
+
+                const mapPosts = post => ({
+                  type: 'post',
+                  data: post,
+                });
+
+                const items =
+                  isHome || isMotorbikeGuides || !ad?.enabled
+                    ? item.posts.map(mapPosts)
+                    : [
+                        ...posts.slice(0, ad.position - 1).map(mapPosts),
+                        { type: 'ad', data: ad },
+                        ...posts.slice(ad.position - 1).map(mapPosts),
+                      ];
+
+                return (
+                  <Fragment key={index}>
+                    <Collection
+                      heading={
+                        item.category ? (
+                          <Link
+                            href={getCategoryLink(item.category?.uri ?? '')}
+                            className="block group-hover:link">
+                            {item.title}&gt;
+                          </Link>
+                        ) : (
+                          item.title
+                        )
+                      }
+                      items={items.map((item, index) =>
+                        item.type === 'ad' ? (
+                          <PostCard
+                            key={index}
+                            ad={item.data}
+                            navCategory={navCategory}
+                          />
+                        ) : (
+                          <PostCard
+                            key={index}
+                            post={item.data}
+                            navCategory={navCategory}
+                          />
+                        ),
+                      )}
+                    />
+                  </Fragment>
+                );
+              })}
+            </>
+          ) : archiveItems.length > 0 ? (
+            <div className="px-2 md:px-4 lg:px-8 py-6 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
+              {archiveItems.map((item, index) => (
+                <PostCard
+                  inGrid
+                  key={index}
+                  navCategory={navCategory}
+                  {...(item.type === 'ad'
+                    ? { ad: item.data }
+                    : { post: item.data })}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="py-48 font-display text-center">
+              <h1 className="text-3xl mb-2 text-center">No posts to show</h1>
+              This category is currently empty.
+            </div>
+          )}
+          {navCategory && pageData.category.map?.mid && (
+            <section className="lg:mb-8 lg:px-8">
+              <CategoryMap
+                blockData={pageData.category.map}
+                navCategory={navCategory}
+              />
+            </section>
+          )}
+        </LayoutMain>
+        <LayoutSidebar className="xl:pt-14 xl:shadow-xl">
+          <SidebarDefault blocks={blockData} />
+          <Footer />
+        </LayoutSidebar>
+      </Layout>
+    </div>
+  );
+}
+
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const { browse } = await params;
+  const { isEnabled: preview } = await draftMode();
+
+  try {
+    const pageData = await getPageData(browse, preview);
+
+    const {
+      canonical,
+      metaDesc: description,
+      metaKeywords: keywords,
+      metaRobotsNofollow,
+      metaRobotsNoindex,
+      opengraphAuthor,
+      opengraphDescription,
+      opengraphImage,
+      opengraphModifiedTime,
+      opengraphPublishedTime,
+      opengraphSiteName,
+      opengraphTitle,
+      opengraphType,
+      opengraphUrl,
+      title,
+      twitterDescription,
+      twitterImage,
+      twitterTitle,
+    } = (pageData.subcategory || pageData.category).seo;
+
+    return {
+      alternates: { canonical: cmsToNextUrls(canonical) },
+      authors: [
+        { url: 'https://www.vietnamcoracle.com', name: 'Vietnam Coracle' },
+      ],
+      description,
+      keywords,
+      title,
+      robots: {
+        noindex: metaRobotsNoindex,
+        nofollow: metaRobotsNofollow,
+      },
+      openGraph: {
+        title: opengraphTitle,
+        description: opengraphDescription,
+        url: cmsToNextUrls(opengraphUrl),
+        type: opengraphType,
+        siteName: opengraphSiteName,
+        publishedTime: opengraphPublishedTime,
+        modifiedTime: opengraphModifiedTime,
+        authors: [opengraphAuthor],
+        images: opengraphImage
+          ? [
+              {
+                url: opengraphImage.sourceUrl,
+                alt: opengraphImage.altText,
+                width: opengraphImage.mediaDetails.width,
+                height: opengraphImage.mediaDetails.height,
+                type: opengraphImage.mimeType,
+              },
+            ]
+          : [],
+      },
+      twitter: {
+        title: twitterTitle,
+        description: twitterDescription,
+        images: opengraphImage
+          ? [
+              {
+                url: twitterImage.sourceUrl,
+                alt: twitterImage.altText,
+                width: twitterImage.mediaDetails.width,
+                height: twitterImage.mediaDetails.height,
+                type: twitterImage.mimeType,
+              },
+            ]
+          : [],
+      },
+    };
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    return {
+      title: 'Error',
+    };
+  }
+}

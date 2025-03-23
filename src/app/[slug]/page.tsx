@@ -21,6 +21,10 @@ import PostQuery from '../../queries/Post.gql';
 import PostMetadataQuery from '../../queries/PostMetadata.gql';
 import SidebarQuery from '../../queries/Sidebar.gql';
 import Header from '../../components/Header';
+import cmsToNextUrls from '../../lib/cmsToNextUrls';
+
+export const dynamic = 'force-static';
+export const revalidate = false;
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -125,7 +129,12 @@ export default async function Post({ params }: Props) {
                   className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
                   id="related-posts">
                   {postData.contentNode.customRelatedPosts.nodes.map(post => (
-                    <PostCard key={post.slug} inGrid post={post} />
+                    <PostCard
+                      key={post.slug}
+                      inGrid
+                      navCategory={postProps.navCategory}
+                      post={post}
+                    />
                   ))}
                 </div>
               )}
@@ -225,32 +234,28 @@ export async function generateMetadata({ params }): Promise<Metadata> {
     });
 
     const {
-      contentNode: {
-        seo: {
-          canonical,
-          metaDesc: description,
-          metaKeywords: keywords,
-          metaRobotsNofollow,
-          metaRobotsNoindex,
-          opengraphAuthor,
-          opengraphDescription,
-          opengraphImage,
-          opengraphModifiedTime,
-          opengraphPublishedTime,
-          opengraphSiteName,
-          opengraphTitle,
-          opengraphType,
-          opengraphUrl,
-          title,
-          twitterDescription,
-          twitterImage,
-          twitterTitle,
-        },
-      },
-    } = data;
+      canonical,
+      metaDesc: description,
+      metaKeywords: keywords,
+      metaRobotsNofollow,
+      metaRobotsNoindex,
+      opengraphAuthor,
+      opengraphDescription,
+      opengraphImage,
+      opengraphModifiedTime,
+      opengraphPublishedTime,
+      opengraphSiteName,
+      opengraphTitle,
+      opengraphType,
+      opengraphUrl,
+      title,
+      twitterDescription,
+      twitterImage,
+      twitterTitle,
+    } = data.contentNode.seo;
 
     return {
-      alternates: { canonical },
+      alternates: { canonical: cmsToNextUrls(canonical) },
       authors: [
         { url: 'https://www.vietnamcoracle.com', name: 'Vietnam Coracle' },
       ],
@@ -264,7 +269,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       openGraph: {
         title: opengraphTitle,
         description: opengraphDescription,
-        url: opengraphUrl,
+        url: cmsToNextUrls(opengraphUrl),
         type: opengraphType,
         siteName: opengraphSiteName,
         publishedTime: opengraphPublishedTime,
@@ -321,9 +326,3 @@ export async function generateStaticParams() {
     slug: node.uri.split('/').filter(token => Boolean(token))[0],
   }));
 }
-
-// Set dynamic rendering strategy for app router
-export const dynamic = 'force-static';
-
-// Revalidate every hour
-export const revalidate = 3600;

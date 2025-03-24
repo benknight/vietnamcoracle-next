@@ -14,8 +14,8 @@ import SearchForm from './SearchForm';
 
 interface Props {
   navCategory?: string;
-  preview: boolean;
-  fullWidth: boolean;
+  preview?: boolean;
+  fullWidth?: boolean;
 }
 
 export default function Header({ navCategory, preview, fullWidth }: Props) {

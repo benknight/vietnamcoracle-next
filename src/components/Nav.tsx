@@ -72,7 +72,7 @@ export default function NavBar(props: Props) {
   }, [props.navCategory, refParam, params]);
 
   const isCurrent = uri => {
-    if (uri === '/') {
+    if (pathname && uri === '/') {
       return checkHomePath(pathname);
     }
 

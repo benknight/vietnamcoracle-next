@@ -8,6 +8,7 @@ import { Fragment } from 'react';
 import getGQLClient from '../../../lib/getGQLClient';
 import getCategoryLink from '../../../lib/getCategoryLink';
 import previewAds from '../../../lib/previewAds';
+import cmsToNextUrls from '../../../lib/cmsToNextUrls';
 import BrowseCategoryQuery from '../../../queries/BrowseCategory.gql';
 import SidebarQuery from '../../../queries/Sidebar.gql';
 import Header from '../../../components/Header';
@@ -19,12 +20,21 @@ import PostCard from '../../../components/PostCard';
 import CategoryMap from '../../../components/CategoryMap';
 import SidebarDefault from '../../../components/SidebarDefault';
 import Footer from '../../../components/Footer';
-import BrowseHero from './BrowseHero';
-import cmsToNextUrls from '../../../lib/cmsToNextUrls';
+import BrowseHero from './components/BrowseHero';
 
 // Set dynamic rendering strategy for app router
 export const dynamic = 'force-static';
 export const revalidate = false;
+
+export async function generateStaticParams() {
+  return [
+    [],
+    ['motorbike-guides'],
+    ['food-and-drink'],
+    ['hotel-reviews'],
+    ['destinations'],
+  ];
+}
 
 async function getPageData(browse: string[], preview: Boolean) {
   const api = getGQLClient(preview ? 'preview' : 'admin');

@@ -1,10 +1,10 @@
 'use client';
 import cx from 'classnames';
 import Link from 'next/link';
+import { useState } from 'react';
 import { MapIcon } from '@heroicons/react/24/outline';
 import { ChevronDownIcon } from '@heroicons/react/24/solid';
-import getCategoryLink from '../../../lib/getCategoryLink';
-import { useState } from 'react';
+import getCategoryLink from '../../../../lib/getCategoryLink';
 
 export default function BrowseHero({ pageData }) {
   const [showSubcats, setShowSubcats] = useState(true);

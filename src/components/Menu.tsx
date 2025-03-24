@@ -19,7 +19,7 @@ import useAPI from '../lib/useAPI';
 interface Props {
   children: React.ReactNode;
   className?: string;
-  fullWidth: boolean;
+  fullWidth?: boolean;
 }
 
 export default function Menu({ children, className = '', fullWidth }: Props) {

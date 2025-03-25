@@ -1,0 +1,13 @@
+#import "./fragments/PostMediaBlockData.gql"
+
+query SearchResults($in: [ID]) {
+  contentNodes(where: { in: $in }) {
+    nodes {
+      ...PostMediaBlockData
+    }
+    pageInfo {
+      endCursor
+      hasNextPage
+    }
+  }
+}

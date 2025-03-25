@@ -22,20 +22,6 @@ import SidebarDefault from '../../../components/SidebarDefault';
 import Footer from '../../../components/Footer';
 import BrowseHero from './components/BrowseHero';
 
-// Set dynamic rendering strategy for app router
-export const dynamic = 'force-static';
-export const revalidate = false;
-
-export async function generateStaticParams() {
-  return [
-    [],
-    ['motorbike-guides'],
-    ['food-and-drink'],
-    ['hotel-reviews'],
-    ['destinations'],
-  ];
-}
-
 async function getPageData(browse: string[], preview: Boolean) {
   const api = getGQLClient(preview ? 'preview' : 'admin');
   const categorySlug = browse?.[0] ?? 'features-guides';
@@ -56,6 +42,21 @@ async function getPageData(browse: string[], preview: Boolean) {
         'destinations',
       ].includes(categorySlug),
   });
+}
+
+// Set dynamic rendering strategy for app router
+export const dynamic = 'force-static';
+
+export const revalidate = false;
+
+export async function generateStaticParams() {
+  return [
+    [],
+    ['motorbike-guides'],
+    ['food-and-drink'],
+    ['hotel-reviews'],
+    ['destinations'],
+  ];
 }
 
 interface Props {

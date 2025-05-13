@@ -5,9 +5,9 @@ import nodeCookie from 'node-cookie';
 import { useEffect } from 'react';
 import PatronOnlyContentGate from '../components/PatronOnlyContentGate';
 import Post from '../components/Post';
-import { POST_QUERY } from '../config/queries';
 import getGQLClient from '../lib/getGQLClient';
 import { getPostPageProps } from '../lib/getPostPageProps';
+import PostQuery from '../queries/Post.gql';
 
 // This is a server-rendered page for posts for when logic is necessary in order to display the post or redirect
 export default function SSRPost({
@@ -20,7 +20,7 @@ export default function SSRPost({
     if (!preview && post) {
       window.history.replaceState(
         null,
-        null,
+        '',
         `${window.location.origin}${post.data.contentNode.uri}`,
       );
     }
@@ -152,7 +152,7 @@ export async function getServerSideProps({
 
   if (isRestricted) {
     if (userCanView) {
-      const postData = await api.request(POST_QUERY, {
+      const postData = await api.request(PostQuery, {
         preview: Boolean(preview),
         id: postId,
         idType: 'DATABASE_ID',

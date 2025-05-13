@@ -1,0 +1,40 @@
+#import "./fragments/HeroImageData.gql"
+#import "./fragments/HeroImageData.gql"
+#import "./fragments/PostCardData.gql"
+#import "./fragments/PostMediaBlockData.gql"
+#import "./fragments/TaxonomySEOData.gql"
+
+query Tag($slug: ID!) {
+  tag(id: $slug, idType: SLUG) {
+    name
+    slug
+    cover {
+      small {
+        ...HeroImageData
+      }
+      large {
+        ...HeroImageData
+      }
+    }
+    posts(first: 1000) {
+      nodes {
+        slug
+        ...PostCardData
+        ...PostMediaBlockData
+      }
+    }
+    seo {
+      ...TaxonomySEOData
+    }
+  }
+  defaultImages {
+    cover {
+      large {
+        ...HeroImageData
+      }
+      small {
+        ...HeroImageData
+      }
+    }
+  }
+}

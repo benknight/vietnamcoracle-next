@@ -28,7 +28,7 @@ function PostMediaBlock({ post, navCategory }: Props) {
     <div
       className="
         relative sm:flex mb-2 p-4 lg:px-0 lg:my-0 rounded overflow-hidden
-        bg-white dark:bg-gray-900 lg:bg-transparent shadow lg:shadow-none"
+        bg-white dark:bg-gray-900 lg:dark:bg-transparent shadow lg:shadow-none"
       key={post.slug}>
       <PostLink
         className="absolute inset-0 sm:hidden"

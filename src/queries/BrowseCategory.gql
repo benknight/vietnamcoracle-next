@@ -1,6 +1,7 @@
 #import "./fragments/HeroImageData.gql"
 #import "./fragments/PostCardData.gql"
 #import "./fragments/PostMediaBlockData.gql"
+#import "./fragments/TaxonomySEOData.gql"
 
 fragment CategoryData on Category {
   name
@@ -14,42 +15,7 @@ fragment CategoryData on Category {
     }
   }
   seo {
-    canonical
-    metaDesc
-    metaKeywords
-    metaRobotsNofollow
-    metaRobotsNoindex
-    opengraphAuthor
-    opengraphDescription
-    opengraphImage {
-      altText
-      sourceUrl
-      mediaDetails {
-        height
-        width
-      }
-      mimeType
-    }
-    opengraphModifiedTime
-    opengraphPublishedTime
-    opengraphPublisher
-    opengraphSiteName
-    opengraphTitle
-    opengraphType
-    opengraphUrl
-    title
-    twitterDescription
-    twitterImage {
-      id
-      altText
-      sourceUrl
-      mediaDetails {
-        height
-        width
-      }
-      mimeType
-    }
-    twitterTitle
+    ...TaxonomySEOData
   }
 }
 

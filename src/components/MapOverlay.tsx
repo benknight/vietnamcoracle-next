@@ -1,10 +1,10 @@
 'use client';
 import cx from 'classnames';
 import Image from 'next/legacy/image';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
-import useAPI from '../lib/useAPI';
-import Block, { BlockContent, BlockTitle } from './Block';
+import Block, { BlockContent, BlockData, BlockTitle } from './Block';
+import fetchSidebarBlocks from '../app/actions';
 
 interface Props extends React.IframeHTMLAttributes<HTMLIFrameElement> {
   className?: string;
@@ -16,9 +16,25 @@ export default function MapOverlay({
   iframeClassName = 'w-full min-h-[400px]',
   ...iframeProps
 }: Props) {
-  const { data: blocks } = useAPI('/api/blocks/');
+  const [blockData, setBlockData] = useState<{
+    about: BlockData;
+    support: BlockData;
+  } | null>(null);
   const [mapInteractive, setMapInteractive] = useState(false);
   const [showSupport, setShowSupport] = useState(false);
+
+  useEffect(() => {
+    if (!blockData) {
+      fetchSidebarBlocks().then(blocks =>
+        setBlockData({
+          about: blocks.about.block,
+          support: blocks.support.block,
+        }),
+      );
+    }
+  }, []);
+
+  if (!blockData) return null;
 
   return (
     <>
@@ -44,12 +60,12 @@ export default function MapOverlay({
                     className="h-full rounded-full object-cover"
                     height="100"
                     layout="fixed"
-                    src={blocks.about.block.image.sourceUrl}
+                    src={blockData.about.image.sourceUrl}
                     width="100"
                   />
                 </div>
-                <BlockTitle>{blocks.support.block.title}</BlockTitle>
-                <BlockContent>{blocks.support.block.description}</BlockContent>
+                <BlockTitle>{blockData.support.title}</BlockTitle>
+                <BlockContent>{blockData.support.description}</BlockContent>
                 <div className="flex justify-center gap-2">
                   <a
                     className="btn !text-white !bg-primary-500 !hover:bg-primary-600"

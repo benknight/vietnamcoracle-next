@@ -8,7 +8,6 @@ import { Fragment } from 'react';
 import getGQLClient from '../../../lib/getGQLClient';
 import getCategoryLink from '../../../lib/getCategoryLink';
 import previewAds from '../../../lib/previewAds';
-import cmsToNextUrls from '../../../lib/cmsToNextUrls';
 import BrowseCategoryQuery from '../../../queries/BrowseCategory.gql';
 import SidebarQuery from '../../../queries/Sidebar.gql';
 import Header from '../../../components/Header';
@@ -21,6 +20,7 @@ import CategoryMap from '../../../components/CategoryMap';
 import SidebarDefault from '../../../components/SidebarDefault';
 import Footer from '../../../components/Footer';
 import BrowseHero from './components/BrowseHero';
+import getSEOMetadata from '../../../lib/getSEOMetadata';
 
 async function getPageData(browse: string[], preview: Boolean) {
   const api = getGQLClient(preview ? 'preview' : 'admin');
@@ -263,77 +263,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
   try {
     const pageData = await getPageData(browse, preview);
-
-    const {
-      canonical,
-      metaDesc: description,
-      metaKeywords: keywords,
-      metaRobotsNofollow,
-      metaRobotsNoindex,
-      opengraphAuthor,
-      opengraphDescription,
-      opengraphImage,
-      opengraphModifiedTime,
-      opengraphPublishedTime,
-      opengraphSiteName,
-      opengraphTitle,
-      opengraphType,
-      opengraphUrl,
-      title,
-      twitterDescription,
-      twitterImage,
-      twitterTitle,
-    } = (pageData.subcategory || pageData.category).seo;
-
-    return {
-      alternates: { canonical: cmsToNextUrls(canonical) },
-      authors: [
-        { url: 'https://www.vietnamcoracle.com', name: 'Vietnam Coracle' },
-      ],
-      description,
-      keywords,
-      title,
-      robots: {
-        noindex: metaRobotsNoindex,
-        nofollow: metaRobotsNofollow,
-      },
-      openGraph: {
-        title: opengraphTitle,
-        description: opengraphDescription,
-        url: cmsToNextUrls(opengraphUrl),
-        type: opengraphType,
-        siteName: opengraphSiteName,
-        publishedTime: opengraphPublishedTime,
-        modifiedTime: opengraphModifiedTime,
-        authors: [opengraphAuthor],
-        images: opengraphImage
-          ? [
-              {
-                url: opengraphImage.sourceUrl,
-                alt: opengraphImage.altText,
-                width: opengraphImage.mediaDetails.width,
-                height: opengraphImage.mediaDetails.height,
-                type: opengraphImage.mimeType,
-              },
-            ]
-          : [],
-      },
-      twitter: {
-        title: twitterTitle,
-        description: twitterDescription,
-        images: opengraphImage
-          ? [
-              {
-                url: twitterImage.sourceUrl,
-                alt: twitterImage.altText,
-                width: twitterImage.mediaDetails.width,
-                height: twitterImage.mediaDetails.height,
-                type: twitterImage.mimeType,
-              },
-            ]
-          : [],
-      },
-    };
+    return getSEOMetadata((pageData.subcategory || pageData.category).seo);
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {

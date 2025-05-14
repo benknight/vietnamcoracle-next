@@ -4,7 +4,7 @@ import cleanPostHTML from './cleanPostHTML';
 import cmsToNextUrls from './cmsToNextUrls';
 import getOldPostAlertHtml from './getOldPostAlertHtml';
 
-export async function getPostPageProps(data: any, preview: boolean) {
+export default async function preparePostData(data: any, preview: boolean) {
   if (preview) {
     if (data.contentNode) {
       data.contentNode = {
@@ -148,11 +148,22 @@ export async function getPostPageProps(data: any, preview: boolean) {
               node => node.ads?.header?.enabled,
             )?.ads.header ?? null,
         },
-    data,
+    contentNode: data.contentNode,
+    contentType: data.contentNode.contentType.name,
+    heroImage: {
+      small:
+        data.contentNode.thumbnails?.thumbnailHeaderSquare ??
+        data.contentNode.featuredImage?.node ??
+        data.defaultImages?.cover.small,
+      large:
+        data.contentNode.thumbnails?.thumbnailHeader ??
+        data.defaultImages?.cover.large,
+    },
     html,
     monthsOld,
     navCategory: data.contentNode?.navCategory?.nodes?.[0]?.slug ?? null,
     postNav,
     preview,
+    title: data.contentNode.title.replace(/\s+(\S*)$/, '\u00A0$1'),
   };
 }

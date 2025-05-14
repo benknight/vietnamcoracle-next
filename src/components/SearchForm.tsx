@@ -4,9 +4,9 @@ import _debounce from 'lodash/debounce';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/solid';
-import { gaEvent } from '../lib/GoogleAnalytics';
+import { sendGAEvent } from '@next/third-parties/google';
 
-export default function SearchInput({ className = '', ...inputProps }) {
+export default function SearchForm({ className = '', ...inputProps }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -25,7 +25,7 @@ export default function SearchInput({ className = '', ...inputProps }) {
       onSubmit={event => {
         event.preventDefault();
         inputRef.current?.blur();
-        gaEvent({
+        sendGAEvent({
           action: 'search',
           params: {
             query: value,

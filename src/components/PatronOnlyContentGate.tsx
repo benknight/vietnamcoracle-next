@@ -1,6 +1,3 @@
-import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useMemo } from 'react';
 import { oauthRedirect } from '../config/patreon';
 
 type Props = {
@@ -9,31 +6,26 @@ type Props = {
     name: string;
   };
   patreonLevel?: number;
+  returnTo: string;
 };
 
-export default function PatronOnlyContentGate({ patron, patreonLevel }: Props) {
-  const router = useRouter();
+export default function PatronOnlyContentGate({
+  patron,
+  patreonLevel,
+  returnTo,
+}: Props) {
+  const oauthParams = new URLSearchParams({
+    response_type: 'code',
+    client_id: String(process.env.NEXT_PUBLIC_PATREON_OAUTH_CLIENT_ID),
+    redirect_uri: oauthRedirect,
+    scope: 'identity',
+    state: returnTo,
+  });
 
-  const oauthParams = useMemo(
-    () =>
-      new URLSearchParams({
-        response_type: 'code',
-        client_id: process.env.NEXT_PUBLIC_PATREON_OAUTH_CLIENT_ID,
-        redirect_uri: oauthRedirect,
-        scope: 'identity',
-        state: router.asPath,
-      }),
-    [router.asPath],
-  );
-
-  const signOutParams = useMemo(
-    () =>
-      new URLSearchParams({
-        redirect: router.asPath,
-        signout: '1',
-      }),
-    [router.asPath],
-  );
+  const signOutParams = new URLSearchParams({
+    redirect: returnTo,
+    signout: '1',
+  });
 
   return (
     <div className="page-wrap page-wrap--center text-center font-display pt-48 pb-12">

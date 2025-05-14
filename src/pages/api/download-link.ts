@@ -25,9 +25,15 @@ export default async function handler(
       .send(getErrorMessage('Payment Intent ID is required'));
   }
 
-  const stripe = new Stripe(
-    isTest ? process.env.STRIPE_SECRET_KEY_TEST : process.env.STRIPE_SECRET_KEY,
-  );
+  const key = isTest
+    ? process.env.STRIPE_SECRET_KEY_TEST
+    : process.env.STRIPE_SECRET_KEY;
+
+  if (!key) {
+    throw new Error('Stripe secret key is not defined');
+  }
+
+  const stripe = new Stripe(key);
 
   try {
     // Retrieve the Payment Intent to get the current download count
@@ -47,8 +53,9 @@ export default async function handler(
     } else {
       const url = getSignedUrl({
         url: `${distributionUrl}/${fileKey.trim()}`,
-        keyPairId: process.env.CLOUDFRONT_KEY_PAIR_ID,
-        privateKey: process.env.CLOUDFRONT_PRIVATE_KEY.replace(/\\n/g, '\n'),
+        keyPairId: process.env.CLOUDFRONT_KEY_PAIR_ID || '',
+        privateKey:
+          process.env.CLOUDFRONT_PRIVATE_KEY?.replace(/\\n/g, '\n') || '',
         dateLessThan: new Date(Date.now() + expiresMs).toISOString(),
       });
       res.redirect(url);

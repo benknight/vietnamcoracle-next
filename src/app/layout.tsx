@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import type { ReactNode } from 'react';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { GoogleAnalytics } from '@next/third-parties/google';
 
 interface Props {
   children: ReactNode;
@@ -14,29 +15,10 @@ export default async function AppLayout({ children }: Props) {
   return (
     <html lang="en">
       <head>
-        {/* Global Site Tag (gtag.js) - Google Analytics */}
-        <Script
-          async
-          src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
-        />
-        <Script
-          dangerouslySetInnerHTML={{
-            __html: `
-                window.dataLayer = window.dataLayer || [];
-                function gtag(){dataLayer.push(arguments);}
-                gtag('js', new Date());
-                gtag('config', '${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}', {
-                  page_path: window.location.pathname,
-                });
-              `,
-          }}
-        />
-        {/* Goat Counter */}
         <Script
           data-goatcounter="https://coracle.goatcounter.com/count"
           async
           src="//gc.zgo.at/count.js"></Script>
-        {/* Handle global scripts for posts here */}
         <Script
           src="https://cms.vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
           strategy="afterInteractive"
@@ -45,6 +27,9 @@ export default async function AppLayout({ children }: Props) {
       <body>
         <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
       </body>
+      {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (
+        <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS} />
+      )}
     </html>
   );
 }

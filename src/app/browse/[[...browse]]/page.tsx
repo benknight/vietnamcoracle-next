@@ -194,7 +194,7 @@ export default async function Browse({ params }: Props) {
                           <Link
                             href={getCategoryLink(item.category?.uri ?? '')}
                             className="block group-hover:link">
-                            {item.title}&gt;
+                            {item.title} &gt;
                           </Link>
                         ) : (
                           item.title
@@ -239,7 +239,7 @@ export default async function Browse({ params }: Props) {
               This category is currently empty.
             </div>
           )}
-          {navCategory && pageData.category.map?.mid && (
+          {pageData.category.map?.mid && (
             <section className="lg:mb-8 lg:px-8">
               <CategoryMap
                 blockData={pageData.category.map}

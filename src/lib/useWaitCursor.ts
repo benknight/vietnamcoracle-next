@@ -2,11 +2,14 @@ import { useEffect } from 'react';
 
 export default function useWaitCursor(isLoading?: boolean) {
   useEffect(() => {
-    window.document.querySelector('html').style.cursor = isLoading
-      ? 'wait'
-      : '';
+    const root = window.document.querySelector('html');
+
+    if (!root) return;
+
+    root.style.cursor = isLoading ? 'wait' : '';
+
     return () => {
-      window.document.querySelector('html').style.cursor = '';
+      root.style.cursor = '';
     };
   }, [isLoading]);
 }

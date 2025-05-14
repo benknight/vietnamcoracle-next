@@ -1,6 +1,7 @@
+import { Metadata } from 'next';
 import cmsToNextUrls from './cmsToNextUrls';
 
-export default function getSEOMetadata(data: any) {
+export default function getSEOMetadata(data: any): Metadata {
   const {
     canonical,
     metaDesc: description,
@@ -57,7 +58,7 @@ export default function getSEOMetadata(data: any) {
     twitter: {
       title: twitterTitle,
       description: twitterDescription,
-      images: opengraphImage
+      images: twitterImage
         ? [
             {
               url: twitterImage.sourceUrl,

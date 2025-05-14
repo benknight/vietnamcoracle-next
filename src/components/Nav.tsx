@@ -56,7 +56,7 @@ interface Props {
   navCategory?: string;
 }
 
-export default function NavBar(props: Props) {
+export default function Nav(props: Props) {
   const pathname = usePathname();
   const params = useParams();
   const searchParams = useSearchParams();

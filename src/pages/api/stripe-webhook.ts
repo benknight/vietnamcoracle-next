@@ -23,17 +23,29 @@ export default async function handler(
 
   let event: Stripe.Event;
 
-  const stripe = new Stripe(
-    isTest ? process.env.STRIPE_SECRET_KEY_TEST : process.env.STRIPE_SECRET_KEY,
-  );
+  const key = isTest
+    ? process.env.STRIPE_SECRET_KEY_TEST
+    : process.env.STRIPE_SECRET_KEY;
+
+  if (!key) {
+    throw new Error('Stripe secret key is not defined');
+  }
+
+  const webhookSecret = isTest
+    ? process.env.STRIPE_WEBHOOK_SECRET_TEST
+    : process.env.STRIPE_WEBHOOK_SECRET;
+
+  if (!webhookSecret) {
+    throw new Error('Stripe webhook secret is not defined');
+  }
+
+  const stripe = new Stripe(key);
 
   try {
     event = stripe.webhooks.constructEvent(
       await getRawBody(req),
-      req.headers['stripe-signature'],
-      isTest
-        ? process.env.STRIPE_WEBHOOK_SECRET_TEST
-        : process.env.STRIPE_WEBHOOK_SECRET,
+      req.headers['stripe-signature'] ?? '',
+      webhookSecret,
     );
   } catch (error) {
     console.error(error.toString());
@@ -45,7 +57,7 @@ export default async function handler(
     case 'checkout.session.completed':
       const session = event.data.object;
 
-      const customerEmail = session.customer_details.email;
+      const customerEmail = session.customer_details?.email;
 
       if (!customerEmail) {
         console.log('No customer email found');
@@ -69,7 +81,7 @@ export default async function handler(
         break;
       }
 
-      const { description } = paymentLink.line_items.data[0];
+      const { description } = paymentLink.line_items?.data[0] || {};
 
       const params: AWS.SES.SendEmailRequest = {
         Source: '"Vietnam Coracle" <admin@vietnamcoracle.com>', // sender email

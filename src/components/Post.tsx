@@ -1,74 +1,35 @@
-import cx from 'classnames';
-import htmlToReact from 'html-react-parser';
-import Head from 'next/head';
+import '../styles/wp-blocks.css';
+import '../custom-elements';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useMemo, useRef, Fragment } from 'react';
-import Headroom from 'react-headroom';
-import { Menu } from '@headlessui/react';
-import { Bars3CenterLeftIcon } from '@heroicons/react/24/outline';
-import useMediaQuery from '@mui/material/useMediaQuery';
-import breakpoints from '../config/breakpoints';
-import cmsToNextUrls from '../lib/cmsToNextUrls';
-import useWaitCursor from '../lib/useWaitCursor';
-import CommentForm from './CommentForm';
-import CommentThread from './CommentThread';
-import Footer from './Footer';
+import { Fragment } from 'react';
+import preparePostData from '../lib/preparePostData';
 import Hero, { HeroContent } from './Hero';
 import Layout, { LayoutMain, LayoutSidebar } from './Layout';
+import PostArticle from './PostArticle';
 import PostCard from './PostCard';
+import CommentForm from './CommentForm';
+import CommentThread from './CommentThread';
 import SidebarDefault from './SidebarDefault';
+import Footer from './Footer';
+import Header from './Header';
 
-export default function Post({ data, html, postNav }) {
-  const articleRef = useRef<HTMLDivElement>(null);
-  const relatedPostsRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
-  const isLG = useMediaQuery(`(min-width: ${breakpoints.lg})`);
+interface Props {
+  post: Awaited<ReturnType<typeof preparePostData>>;
+  preview: boolean;
+  sidebarBlocks: React.ComponentProps<typeof SidebarDefault>['blocks'];
+}
 
-  // Combine server data with client data
-  const content = useMemo(() => {
-    return data
-      ? {
-          ...data?.contentNode,
-          type: data.contentNode.contentType?.node.name,
-        }
-      : null;
-  }, [data]);
-
-  useWaitCursor(router.isFallback);
-
-  if (router.isFallback) {
-    return null;
-  }
-
-  if (!content) {
-    return;
-  }
+export default function Post(props: Props) {
+  const { post, preview, sidebarBlocks } = props;
 
   return (
-    <>
-      <Head>
-        {htmlToReact(cmsToNextUrls(content.seo.fullHead))}
-        <meta name="twitter:label1" content="Written by" />
-        <meta name="twitter:data1" content="Vietnam Coracle" />
-        <script
-          async
-          src="https://cms.vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
-        />
-        <style dangerouslySetInnerHTML={{ __html: data.globalStylesheet }} />
-      </Head>
+    <div className="relative bg-white dark:bg-gray-950 min-h-screen">
+      <Header navCategory={post.navCategory} preview={preview} fullWidth />
       <div className="bg-gray-100 dark:bg-black">
         <Hero
           className="max-w-screen-2xl mx-auto"
-          imgSm={
-            content.thumbnails?.thumbnailHeaderSquare ??
-            content.featuredImage?.node ??
-            data.defaultImages?.cover.small
-          }
-          imgLg={
-            content.thumbnails?.thumbnailHeader ??
-            data.defaultImages?.cover.large
-          }
+          imgSm={post.heroImage.small}
+          imgLg={post.heroImage.large}
           priority>
           <HeroContent>
             <div className="grid grid-rows-[0.5fr] pt-0">
@@ -79,7 +40,7 @@ export default function Post({ data, html, postNav }) {
                       <div className="max-w-[52rem] mx-auto">
                         <div className="xl:w-[120%]">
                           <h1 className="text-3xl sm:text-4xl xl:text-5xl leading-tight xl:leading-tight font-display tracking-tight">
-                            {content.title.replace(/\s+(\S*)$/, '\u00A0$1')}
+                            {post.title}
                           </h1>
                         </div>
                       </div>
@@ -91,77 +52,37 @@ export default function Post({ data, html, postNav }) {
             </div>
           </HeroContent>
         </Hero>
-
-        {postNav?.length > 0 && (
-          <Headroom
-            className={cx(
-              'z-10 absolute lg:fixed top-[-9999px] lg:top-auto lg:bottom-0 lg:left-0 w-full lg:w-auto',
-            )}
-            disable={isLG}
-            downTolerance={10}
-            pinStart={1000}>
-            <div className="h-14" />
-            <div className="absolute top-14 lg:top-auto lg:left-0 lg:bottom-0 w-full lg:w-auto">
-              <Menu
-                as="nav"
-                className="text-sm lg:text-base tracking-widest ring-1 ring-gray-300 dark:ring-gray-800 shadow-xl lg:rounded-tr-xl overflow-hidden">
-                <Menu.Button className="flex items-center justify-center lg:justify-start w-full p-3 lg:px-8 lg:h-10 lg:text-sm font-medium bg-gradient-to-b from-gray-200 to-gray-300 dark:from-gray-700 dark:to-gray-800 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500">
-                  <Bars3CenterLeftIcon className="w-4 h-4" />
-                  <span className="pl-2 pr-2">Contents</span>
-                </Menu.Button>
-                <Menu.Items
-                  as="ul"
-                  className="px-8 py-4 lg:pr-12 font-display text-center lg:text-left bg-gray-200 dark:bg-gray-700">
-                  {postNav.map(link => (
-                    <Menu.Item as="li" className="my-3" key={link[0]}>
-                      {({ active }) => (
-                        <a
-                          className={cx(
-                            'block -mx-4 -my-2 px-4 py-2 rounded whitespace-nowrap uppercase',
-                            {
-                              'bg-gray-300 dark:bg-gray-600': active,
-                            },
-                          )}
-                          href={link[0]}>
-                          {link[1]}
-                        </a>
-                      )}
-                    </Menu.Item>
-                  ))}
-                </Menu.Items>
-              </Menu>
-            </div>
-          </Headroom>
-        )}
         <Layout className="relative max-w-screen-2xl bg-white dark:bg-gray-950 pb-14 xl:pb-0">
           <LayoutMain className="px-3 sm:px-4 md:px-8 text-lg">
             <div className="max-w-[52rem] mx-auto">
-              <article
-                className={cx(
-                  'post break-words py-px',
-                  content.settings?.useNextStyles ? 'post-next' : 'post-legacy',
-                )}
-                dangerouslySetInnerHTML={{
-                  __html: html,
-                }}
-                ref={articleRef}
+              <PostArticle
+                className={
+                  post.contentNode.settings?.useNextStyles
+                    ? 'post-next'
+                    : 'post-legacy'
+                }
+                html={post.html}
               />
-              {data?.contentNode.customRelatedPosts && (
+              {post.contentNode.customRelatedPosts && (
                 <div
                   className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
-                  id="related-posts"
-                  ref={relatedPostsRef}>
-                  {content.customRelatedPosts.nodes.map(post => (
-                    <PostCard key={post.slug} inGrid post={post} />
+                  id="related-posts">
+                  {post.contentNode.customRelatedPosts.nodes.map(post => (
+                    <PostCard
+                      key={post.slug}
+                      inGrid
+                      navCategory={post.navCategory}
+                      post={post}
+                    />
                   ))}
                 </div>
               )}
-              {content.type === 'post' && (
+              {post.contentType === 'post' && (
                 <div className="text-sm italic font-serif">
-                  {content.categories.nodes.length > 0 && (
+                  {post.contentNode.categories.nodes.length > 0 && (
                     <>
                       Posted in{' '}
-                      {content.categories.nodes.map((cat, index) => (
+                      {post.contentNode.categories.nodes.map((cat, index) => (
                         <Fragment key={cat.uri}>
                           {index > 0 && ', '}
                           <Link
@@ -175,11 +96,11 @@ export default function Post({ data, html, postNav }) {
                       .
                     </>
                   )}
-                  {content.tags.nodes.length > 0 && (
+                  {post.contentNode.tags.nodes.length > 0 && (
                     <>
                       {' '}
                       Tagged{' '}
-                      {content.tags.nodes.map((tag, index) => (
+                      {post.contentNode.tags.nodes.map((tag, index) => (
                         <Fragment key={tag.uri}>
                           {index > 0 && ', '}
                           <Link
@@ -194,7 +115,7 @@ export default function Post({ data, html, postNav }) {
                   )}
                 </div>
               )}
-              {html && data?.contentNode.commentStatus === 'open' && (
+              {post.html && post.contentNode.commentStatus === 'open' && (
                 <>
                   <div className="page-heading mt-8 md:mt-12 mb-4">
                     Leave a Comment
@@ -208,13 +129,13 @@ export default function Post({ data, html, postNav }) {
                     for details.
                   </p>
                   <div className="mb-12">
-                    <CommentForm post={content.databaseId} />
+                    <CommentForm post={post.contentNode.databaseId} />
                   </div>
                   <div id="comments">
-                    {content.comments.nodes.length > 0 && (
+                    {post.contentNode.comments.nodes.length > 0 && (
                       <CommentThread
-                        comments={content.comments.nodes}
-                        post={content.databaseId}
+                        comments={post.contentNode.comments.nodes}
+                        post={post.contentNode.databaseId}
                       />
                     )}
                   </div>
@@ -223,11 +144,11 @@ export default function Post({ data, html, postNav }) {
             </div>
           </LayoutMain>
           <LayoutSidebar>
-            <SidebarDefault />
+            <SidebarDefault blocks={sidebarBlocks} />
             <Footer />
           </LayoutSidebar>
         </Layout>
       </div>
-    </>
+    </div>
   );
 }

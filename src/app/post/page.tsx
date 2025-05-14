@@ -1,0 +1,158 @@
+import { gql } from 'graphql-request';
+import { notFound, permanentRedirect } from 'next/navigation';
+import { cookies, draftMode } from 'next/headers';
+import { SearchParams } from 'next/dist/server/request/search-params';
+import PatronOnlyContentGate from '../../components/PatronOnlyContentGate';
+import Header from '../../components/Header';
+import Post from '../../components/Post';
+import getGQLClient from '../../lib/getGQLClient';
+import preparePostData from '../../lib/preparePostData';
+import PostQuery from '../../queries/Post.gql';
+import SidebarQuery from '../../queries/Sidebar.gql';
+
+interface Props {
+  searchParams: Promise<SearchParams>;
+}
+
+// This is a server-rendered page for posts for when logic is necessary in order to display the post or redirect
+export default async function SSRPost({ searchParams }: Props) {
+  const { p, state } = await searchParams;
+  const { isEnabled: preview } = await draftMode();
+
+  const postId = p || state;
+
+  if (!postId) {
+    return permanentRedirect('/');
+  }
+
+  const api = getGQLClient(preview ? 'preview' : 'admin');
+
+  const data = await api.request(
+    gql`
+      query PostById($id: ID!) {
+        contentNode(id: $id, idType: DATABASE_ID) {
+          patreonLevel
+          isRestricted
+          uri
+          status
+        }
+      }
+    `,
+    {
+      id: postId,
+    },
+  );
+
+  // No such post exists, return 404
+  if (!data.contentNode) {
+    return notFound();
+  }
+
+  // useEffect(() => {
+  //   if (!preview && post) {
+  //     window.history.replaceState(
+  //       null,
+  //       '',
+  //       `${window.location.origin}${post.data.contentNode.uri}`,
+  //     );
+  //   }
+  // }, [post]);
+
+  let isRestricted =
+    data.contentNode.status !== 'publish' ||
+    data.contentNode.isRestricted ||
+    data.contentNode.patreonLevel > 0;
+
+  let userCanView = process.env.NODE_ENV === 'development' || preview;
+
+  let renderPatreonButton = false;
+
+  const minPatreonLevel = data.contentNode.patreonLevel;
+
+  const gateProps: React.ComponentProps<typeof PatronOnlyContentGate> = {
+    patreonLevel: minPatreonLevel,
+    returnTo: `/post/?p=${postId}`,
+  };
+
+  if (minPatreonLevel > 0) {
+    const cookieStore = await cookies();
+    const token = cookieStore.get('patreon_token');
+
+    if (token) {
+      try {
+        const response = await fetch(
+          'https://www.patreon.com/api/oauth2/v2/identity?include=memberships' +
+            '&fields%5Bmember%5D=currently_entitled_amount_cents,patron_status' +
+            '&fields%5Buser%5D=full_name,email',
+          {
+            headers: { Authorization: `Bearer ${token.value}` },
+          },
+        );
+
+        const result = await response.json();
+
+        console.log(
+          'Response received from Patreon API',
+          JSON.stringify(result),
+        );
+
+        if (!response.ok) {
+          throw new Error('Error fetching Patreon identity');
+        }
+
+        const membership = result.included?.[0]?.attributes;
+
+        if (
+          membership &&
+          membership.patron_status === 'active_patron' &&
+          membership.currently_entitled_amount_cents >= minPatreonLevel * 100
+        ) {
+          userCanView = true;
+        } else {
+          renderPatreonButton = true;
+
+          gateProps.patron = {
+            email: result.data.attributes?.email ?? null,
+            name: result.data.attributes?.full_name ?? null,
+          };
+        }
+      } catch (error) {
+        console.error(error);
+        renderPatreonButton = true;
+      }
+    } else {
+      renderPatreonButton = true;
+    }
+  }
+
+  if (renderPatreonButton) {
+    return (
+      <>
+        <Header preview={preview} fullWidth />
+        <PatronOnlyContentGate {...gateProps} />
+      </>
+    );
+  }
+
+  // TODO: this could create a redirect loop
+  if (!isRestricted) {
+    return permanentRedirect(data.contentNode?.uri);
+  }
+
+  if (isRestricted && !userCanView) {
+    return notFound();
+  }
+
+  const [postData, sidebarBlocks] = await Promise.all([
+    api.request(PostQuery, {
+      preview: Boolean(preview),
+      id: postId,
+      idType: 'DATABASE_ID',
+    }),
+    api.request(SidebarQuery),
+  ]);
+
+  const post = await preparePostData(postData, preview);
+
+  return <Post post={post} preview={preview} sidebarBlocks={sidebarBlocks} />;
+}

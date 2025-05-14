@@ -14,7 +14,6 @@ interface Props {
   searchParams: Promise<SearchParams>;
 }
 
-// This is a server-rendered page for posts for when logic is necessary in order to display the post or redirect
 export default async function SSRPost({ searchParams }: Props) {
   const { p, state } = await searchParams;
   const { isEnabled: preview } = await draftMode();

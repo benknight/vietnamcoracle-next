@@ -6,7 +6,7 @@ import { forwardRef, useRef, useState, useEffect, ReactNode } from 'react';
 import { RadioGroup, Radio } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import breakpoints from '../config/breakpoints';
+import breakpoints from '../../../../config/breakpoints';
 
 export function Slider({ className = '', children }) {
   const advanceRef = useRef<() => void>(null);

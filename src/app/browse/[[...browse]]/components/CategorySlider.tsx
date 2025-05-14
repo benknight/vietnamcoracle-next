@@ -1,6 +1,6 @@
 import Link from 'next/link';
+import Hero from '../../../../components/Hero';
 import { Slider, SliderSlide } from './Slider';
-import Hero from './Hero';
 
 const CategorySlider = ({ data }) => {
   return (

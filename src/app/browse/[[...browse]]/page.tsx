@@ -11,16 +11,16 @@ import previewAds from '../../../lib/previewAds';
 import BrowseCategoryQuery from '../../../queries/BrowseCategory.gql';
 import SidebarQuery from '../../../queries/Sidebar.gql';
 import Header from '../../../components/Header';
-import CategorySlider from '../../../components/CategorySlider';
 import Hero, { HeroContent } from '../../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../../components/Layout';
-import Collection from '../../../components/Collection';
 import PostCard from '../../../components/PostCard';
-import CategoryMap from '../../../components/CategoryMap';
 import SidebarDefault from '../../../components/SidebarDefault';
 import Footer from '../../../components/Footer';
-import BrowseHero from './components/BrowseHero';
 import getSEOMetadata from '../../../lib/getSEOMetadata';
+import BrowseHero from './components/BrowseHero';
+import CategoryMap from './components/CategoryMap';
+import CategorySlider from './components/CategorySlider';
+import Collection from './components/Collection';
 
 async function getPageData(browse: string[], preview: Boolean) {
   const api = getGQLClient(preview ? 'preview' : 'admin');

@@ -3,22 +3,27 @@ import { useRef, useState, useCallback, useEffect } from 'react';
 
 export default function useCarousel() {
   const scrollArea = useRef<HTMLElement>(null);
-  const [isTouchDevice, setIsTouchDevice] = useState(null);
-  const [scrollBy, setScrollBy] = useState(null);
-  const [scrollPosition, setScrollPosition] = useState(null);
-  const [showNav, setShowNav] = useState(null);
+  const [isTouchDevice, setIsTouchDevice] = useState<boolean | null>(null);
+  const [scrollBy, setScrollBy] = useState<number | null>(null);
+  const [showNav, setShowNav] = useState<boolean | null>(null);
+
+  const [scrollPosition, setScrollPosition] = useState<
+    'start' | 'end' | 'between' | null
+  >(null);
 
   const getSlideWidth = useCallback(() => {
-    const childNode = scrollArea.current.querySelector(':scope > *');
+    const childNode = scrollArea.current?.querySelector(':scope > *');
     return childNode?.getBoundingClientRect()?.width ?? null;
   }, []);
 
   const navigate = useCallback(
     delta => {
-      const { scrollLeft } = scrollArea.current;
+      if (!scrollArea.current) return;
+      if (!scrollBy) return;
+
       scrollArea.current.scroll({
         behavior: 'smooth',
-        left: scrollLeft + scrollBy * delta,
+        left: scrollArea.current.scrollLeft + scrollBy * delta,
       });
     },
     [scrollBy],
@@ -31,6 +36,9 @@ export default function useCarousel() {
       if (!scrollAreaNode) return;
       const { width } = scrollAreaNode.getBoundingClientRect();
       const slideWidth = getSlideWidth();
+
+      if (!slideWidth) return;
+
       if (scrollAreaNode.scrollLeft < slideWidth / 2) {
         setScrollPosition('start');
       } else if (
@@ -46,13 +54,18 @@ export default function useCarousel() {
     // Calculate scrollBy offset
     const calculateScrollBy = () => {
       if (!scrollAreaNode) return;
+
       const computedStyle = getComputedStyle(scrollAreaNode);
+
       const containerWidth =
         scrollAreaNode.clientWidth -
         parseFloat(computedStyle['padding-right']) -
         parseFloat(computedStyle['padding-left']);
+
       setShowNav(scrollAreaNode.scrollWidth > containerWidth);
+
       const slideWidth = getSlideWidth();
+
       if (slideWidth) {
         setScrollBy(slideWidth * Math.floor(containerWidth / slideWidth));
       }
@@ -61,14 +74,20 @@ export default function useCarousel() {
     const observer = new MutationObserver(calculateScrollBy);
 
     const attachListeners = () => {
-      if (scrollAreaNode) observer.observe(scrollAreaNode, { childList: true });
+      if (!scrollAreaNode) return;
+
+      observer.observe(scrollAreaNode, { childList: true });
+
       scrollAreaNode.addEventListener('scroll', calculateScrollPosition);
+
       window.addEventListener('resize', calculateScrollBy);
     };
 
     const detachListeners = () => {
       observer.disconnect();
-      scrollAreaNode.removeEventListener('scroll', calculateScrollPosition);
+
+      scrollAreaNode?.removeEventListener('scroll', calculateScrollPosition);
+
       window.removeEventListener('resize', calculateScrollBy);
     };
 

@@ -10,6 +10,7 @@ import getGQLClient from '../../../lib/getGQLClient';
 import getSEOMetadata from '../../../lib/getSEOMetadata';
 import TagQuery from '../../../queries/Tag.gql';
 import SidebarQuery from '../../../queries/Sidebar.gql';
+import { Suspense } from 'react';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -44,7 +45,9 @@ export default async function Tag({ params }: Props) {
       </Hero>
       <Layout className="bg-white dark:bg-gray-950 pb-14 xl:pb-0">
         <LayoutMain>
-          <GridListTabGroup posts={data.tag.posts.nodes} />
+          <Suspense>
+            <GridListTabGroup posts={data.tag.posts.nodes} />
+          </Suspense>
         </LayoutMain>
         <LayoutSidebar>
           <SidebarDefault blocks={blockData} />

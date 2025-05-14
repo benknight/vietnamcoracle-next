@@ -4,7 +4,7 @@ import _debounce from 'lodash/debounce';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, Suspense } from 'react';
 import Headroom from 'react-headroom';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 import checkHomePath from '../lib/checkHomePath';
@@ -84,23 +84,27 @@ export default function Header({ navCategory, preview, fullWidth }: Props) {
                 },
                 'flex items-center h-14 lg:h-16 px-2 lg:px-4',
               )}>
-              <SearchForm
-                className={cx(
-                  'ring-2 ring-white md:ring-0 dark:ring-gray-900',
-                  {
-                    'w-28 xs:w-32': !searchFocused,
-                    'md:w-40': !searchFocused && !searchQuery,
-                    'md:w-60': !searchFocused && searchQuery,
-                    'w-full md:w-60 2xl:w-60': searchFocused,
-                  },
-                )}
-                onChange={event => setSearchQuery(event.target.value)}
-                onBlur={() => setSearchFocused(false)}
-                onFocus={() => setSearchFocused(true)}
-              />
+              <Suspense>
+                <SearchForm
+                  className={cx(
+                    'ring-2 ring-white md:ring-0 dark:ring-gray-900',
+                    {
+                      'w-28 xs:w-32': !searchFocused,
+                      'md:w-40': !searchFocused && !searchQuery,
+                      'md:w-60': !searchFocused && searchQuery,
+                      'w-full md:w-60 2xl:w-60': searchFocused,
+                    },
+                  )}
+                  onChange={event => setSearchQuery(event.target.value)}
+                  onBlur={() => setSearchFocused(false)}
+                  onFocus={() => setSearchFocused(true)}
+                />
+              </Suspense>
             </div>
             <div className="hidden lg:block">
-              <Nav navCategory={navCategory} />
+              <Suspense>
+                <Nav navCategory={navCategory} />
+              </Suspense>
             </div>
             {preview && (
               <div className="absolute top-full left-0 w-full flex justify-center">
@@ -117,7 +121,9 @@ export default function Header({ navCategory, preview, fullWidth }: Props) {
         </div>
       </Headroom>
       <div className="nav-bar fixed lg:hidden bottom-0 z-20 w-full h-16 bg-gray-100 md:bg-white dark:bg-gray-900 md:dark:bg-gray-900">
-        <Nav navCategory={navCategory} />
+        <Suspense>
+          <Nav navCategory={navCategory} />
+        </Suspense>
       </div>
     </div>
   );

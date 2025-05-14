@@ -1,27 +1,16 @@
-import '../../styles/wp-blocks.css';
-import '../../custom-elements';
 import { gql } from 'graphql-request';
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
-import Link from 'next/link';
-import { notFound, redirect } from 'next/navigation';
-import { Fragment } from 'react';
+import { notFound } from 'next/navigation';
+import Post from '../../components/Post';
 import getGQLClient from '../../lib/getGQLClient';
 import fetchFirstValidId from '../../lib/fetchFirstValidId';
-import { getPostPageProps } from '../../lib/getPostPageProps';
-import Hero, { HeroContent } from '../../components/Hero';
-import Layout, { LayoutMain, LayoutSidebar } from '../../components/Layout';
-import PostArticle from '../../components/PostArticle';
-import PostCard from '../../components/PostCard';
-import CommentForm from '../../components/CommentForm';
-import CommentThread from '../../components/CommentThread';
-import SidebarDefault from '../../components/SidebarDefault';
-import Footer from '../../components/Footer';
+import getSEOMetadata from '../../lib/getSEOMetadata';
+import preparePostData from '../../lib/preparePostData';
 import PostQuery from '../../queries/Post.gql';
 import PostMetadataQuery from '../../queries/PostMetadata.gql';
 import SidebarQuery from '../../queries/Sidebar.gql';
-import Header from '../../components/Header';
-import cmsToNextUrls from '../../lib/cmsToNextUrls';
+import { redirect } from 'next/navigation';
 
 export const dynamic = 'force-static';
 export const revalidate = false;
@@ -30,7 +19,7 @@ interface Props {
   params: Promise<{ slug: string }>;
 }
 
-export default async function Post({ params }: Props) {
+export default async function SSGPost({ params }: Props) {
   const { slug } = await params;
   const databaseId = await fetchFirstValidId(slug, ['posts', 'pages']);
 
@@ -64,157 +53,15 @@ export default async function Post({ params }: Props) {
     !['post', 'page'].includes(postData.contentNode.contentType?.node.name)
   ) {
     console.warn(
-      'contentNode not found for database id, or not a post or page:',
+      'contentNode not found for database id, or contentType is not a post or page:',
       postData.contentNode,
     );
     return notFound();
   }
 
-  const contentType = postData.contentNode.contentType?.node.name;
-  const postProps = await getPostPageProps(postData, preview);
+  const post = await preparePostData(postData, preview);
 
-  return (
-    <div className="relative bg-white dark:bg-gray-950 min-h-screen">
-      <Header navCategory={postProps.navCategory} preview={preview} fullWidth />
-      <div className="bg-gray-100 dark:bg-black">
-        <Hero
-          className="max-w-screen-2xl mx-auto"
-          imgSm={
-            postData.contentNode.thumbnails?.thumbnailHeaderSquare ??
-            postData.contentNode.featuredImage?.node ??
-            postData.defaultImages?.cover.small
-          }
-          imgLg={
-            postData.contentNode.thumbnails?.thumbnailHeader ??
-            postData.defaultImages?.cover.large
-          }
-          priority>
-          <HeroContent>
-            <div className="grid grid-rows-[0.5fr] pt-0">
-              <div className="min-h-0">
-                <div className="-translate-y-1/2">
-                  <Layout>
-                    <LayoutMain className="px-3 sm:px-4 md:px-8">
-                      <div className="max-w-[52rem] mx-auto">
-                        <div className="xl:w-[120%]">
-                          <h1 className="text-3xl sm:text-4xl xl:text-5xl leading-tight xl:leading-tight font-display tracking-tight">
-                            {postData.contentNode.title.replace(
-                              /\s+(\S*)$/,
-                              '\u00A0$1',
-                            )}
-                          </h1>
-                        </div>
-                      </div>
-                    </LayoutMain>
-                    <LayoutSidebar showBorder={false} />
-                  </Layout>
-                </div>
-              </div>
-            </div>
-          </HeroContent>
-        </Hero>
-        <Layout className="relative max-w-screen-2xl bg-white dark:bg-gray-950 pb-14 xl:pb-0">
-          <LayoutMain className="px-3 sm:px-4 md:px-8 text-lg">
-            <div className="max-w-[52rem] mx-auto">
-              <PostArticle
-                className={
-                  postData.contentNode.settings?.useNextStyles
-                    ? 'post-next'
-                    : 'post-legacy'
-                }
-                html={postProps.html}
-              />
-              {postData.contentNode.customRelatedPosts && (
-                <div
-                  className="pb-8 grid gap-4 xl:gap-6 md:grid-cols-2 lg:grid-cols-2"
-                  id="related-posts">
-                  {postData.contentNode.customRelatedPosts.nodes.map(post => (
-                    <PostCard
-                      key={post.slug}
-                      inGrid
-                      navCategory={postProps.navCategory}
-                      post={post}
-                    />
-                  ))}
-                </div>
-              )}
-              {contentType === 'post' && (
-                <div className="text-sm italic font-serif">
-                  {postData.contentNode.categories.nodes.length > 0 && (
-                    <>
-                      Posted in{' '}
-                      {postData.contentNode.categories.nodes.map(
-                        (cat, index) => (
-                          <Fragment key={cat.uri}>
-                            {index > 0 && ', '}
-                            <Link
-                              href={cat.uri}
-                              className="link"
-                              dangerouslySetInnerHTML={{
-                                __html: cat.name,
-                              }}></Link>
-                          </Fragment>
-                        ),
-                      )}
-                      .
-                    </>
-                  )}
-                  {postData.contentNode.tags.nodes.length > 0 && (
-                    <>
-                      {' '}
-                      Tagged{' '}
-                      {postData.contentNode.tags.nodes.map((tag, index) => (
-                        <Fragment key={tag.uri}>
-                          {index > 0 && ', '}
-                          <Link
-                            href={tag.uri}
-                            className="link"
-                            dangerouslySetInnerHTML={{
-                              __html: tag.name,
-                            }}></Link>
-                        </Fragment>
-                      ))}
-                    </>
-                  )}
-                </div>
-              )}
-              {postProps.html &&
-                postData.contentNode.commentStatus === 'open' && (
-                  <>
-                    <div className="page-heading mt-8 md:mt-12 mb-4">
-                      Leave a Comment
-                    </div>
-                    <p className="mb-4 font-serif text-sm xl:text-base">
-                      Questions, updates and trip reports are all welcome.
-                      However, please keep comments polite and on-topic. See{' '}
-                      <a className="link" href="/updates-accuracy#howtohelp2">
-                        commenting etiquette
-                      </a>{' '}
-                      for details.
-                    </p>
-                    <div className="mb-12">
-                      <CommentForm post={postData.contentNode.databaseId} />
-                    </div>
-                    <div id="comments">
-                      {postData.contentNode.comments.nodes.length > 0 && (
-                        <CommentThread
-                          comments={postData.contentNode.comments.nodes}
-                          post={postData.contentNode.databaseId}
-                        />
-                      )}
-                    </div>
-                  </>
-                )}
-            </div>
-          </LayoutMain>
-          <LayoutSidebar>
-            <SidebarDefault blocks={blockData} />
-            <Footer />
-          </LayoutSidebar>
-        </Layout>
-      </div>
-    </div>
-  );
+  return <Post post={post} preview={preview} sidebarBlocks={blockData} />;
 }
 
 export async function generateMetadata({ params }): Promise<Metadata> {
@@ -233,72 +80,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
       idType: 'DATABASE_ID',
     });
 
-    const {
-      canonical,
-      metaDesc: description,
-      metaKeywords: keywords,
-      metaRobotsNofollow,
-      metaRobotsNoindex,
-      opengraphAuthor,
-      opengraphDescription,
-      opengraphImage,
-      opengraphModifiedTime,
-      opengraphPublishedTime,
-      opengraphSiteName,
-      opengraphTitle,
-      opengraphType,
-      opengraphUrl,
-      title,
-      twitterDescription,
-      twitterImage,
-      twitterTitle,
-    } = data.contentNode.seo;
-
-    return {
-      alternates: { canonical: cmsToNextUrls(canonical) },
-      authors: [
-        { url: 'https://www.vietnamcoracle.com', name: 'Vietnam Coracle' },
-      ],
-      description,
-      keywords,
-      title,
-      robots: {
-        noindex: metaRobotsNoindex,
-        nofollow: metaRobotsNofollow,
-      },
-      openGraph: {
-        title: opengraphTitle,
-        description: opengraphDescription,
-        url: cmsToNextUrls(opengraphUrl),
-        type: opengraphType,
-        siteName: opengraphSiteName,
-        publishedTime: opengraphPublishedTime,
-        modifiedTime: opengraphModifiedTime,
-        authors: [opengraphAuthor],
-        images: [
-          {
-            url: opengraphImage.sourceUrl,
-            alt: opengraphImage.altText,
-            width: opengraphImage.mediaDetails.width,
-            height: opengraphImage.mediaDetails.height,
-            type: opengraphImage.mimeType,
-          },
-        ],
-      },
-      twitter: {
-        title: twitterTitle,
-        description: twitterDescription,
-        images: [
-          {
-            url: twitterImage.sourceUrl,
-            alt: twitterImage.altText,
-            width: twitterImage.mediaDetails.width,
-            height: twitterImage.mediaDetails.height,
-            type: twitterImage.mimeType,
-          },
-        ],
-      },
-    };
+    return getSEOMetadata(data.contentNode.seo);
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
@@ -308,7 +90,9 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const query = gql`
+  const api = getGQLClient('admin');
+
+  const data = await api.request(gql`
     {
       contentNodes(first: 1000, where: { contentTypes: [PAGE, POST] }) {
         nodes {
@@ -318,9 +102,7 @@ export async function generateStaticParams() {
         }
       }
     }
-  `;
-  const api = getGQLClient('admin');
-  const data = await api.request(query);
+  `);
 
   return data.contentNodes.nodes.map(node => ({
     slug: node.uri.split('/').filter(token => Boolean(token))[0],

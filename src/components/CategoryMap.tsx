@@ -1,16 +1,14 @@
 import cx from 'classnames';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import useNavCategory from '../lib/useNavCategory';
 import { BlockContent, BlockData, BlockTitle } from './Block';
 import MapOverlay from './MapOverlay';
 
-const CategoryMap = ({
-  blockData,
-  navCategory,
-}: {
+interface Props {
   blockData: BlockData;
-  navCategory: string;
-}) => {
+  navCategory?: string;
+}
+
+const CategoryMap = ({ blockData, navCategory }: Props) => {
   return (
     <div id="map">
       <div className="lg:rounded-lg overflow-hidden">
@@ -18,7 +16,7 @@ const CategoryMap = ({
           className={cx(
             'relative pt-8 pb-2 md:pt-10 text-center dark:text-white lg:rounded-t-lg font-display',
             {
-              'bg-blue-100 dark:bg-blue-500/10': navCategory === null,
+              'bg-blue-100 dark:bg-blue-500/10': !navCategory,
               'bg-amber-500/40 dark:bg-amber-500/10':
                 navCategory === 'hotel-reviews',
               'bg-emerald-700/40 dark:bg-emerald-500/20':

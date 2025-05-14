@@ -7,13 +7,28 @@ export const config = {
 export default async function handler(req: NextRequest) {
   try {
     const params = new URL(req.url).searchParams;
+    const url = params.get('link');
+
+    if (!url) {
+      return new NextResponse(null, {
+        status: 400,
+      });
+    }
+
+    const token = process.env.FACEBOOK_ACCESS_TOKEN;
+
+    if (!token) {
+      return new NextResponse('Facebook access token not defined', {
+        status: 500,
+      });
+    }
 
     const result = await fetch(
       `https://graph.facebook.com/v20.0/?` +
         new URLSearchParams({
-          access_token: process.env.FACEBOOK_ACCESS_TOKEN,
+          access_token: token,
           fields: 'engagement',
-          id: params.get('link'),
+          id: url,
         }),
     ).then(res => res.json());
 

@@ -1,7 +1,14 @@
-const axios = require('axios');
+import type { NextConfig } from 'next';
+import axios from 'axios';
 
-const nextConfig = {
-  headers() {
+const nextConfig: NextConfig = {
+  trailingSlash: true,
+  // experimental: {
+  //   staticGenerationRetryCount: 1,
+  //   staticGenerationMaxConcurrency: 8,
+  //   staticGenerationMinPagesPerWorker: 25,
+  // },
+  async headers() {
     return [
       {
         source: '/search/',
@@ -30,12 +37,11 @@ const nextConfig = {
       'via.placeholder.com',
     ],
   },
-  trailingSlash: true,
   async redirects() {
     const api = axios.create({
       auth: {
-        username: process.env.WORDPRESS_API_USERNAME_ADMIN,
-        password: process.env.WORDPRESS_API_PASSWORD_ADMIN,
+        username: process.env.WORDPRESS_API_USERNAME_ADMIN || '',
+        password: process.env.WORDPRESS_API_PASSWORD_ADMIN || '',
       },
       baseURL: 'https://cms.vietnamcoracle.com/wp-json/redirection/v1',
     });

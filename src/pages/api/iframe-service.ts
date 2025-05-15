@@ -1,18 +1,29 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { NextRequest, NextResponse } from 'next/server';
 
-export default async function iframeService(
-  req: NextApiRequest,
-  res: NextApiResponse,
-) {
-  let html: string;
-  try {
-    html = decodeURIComponent(String(req.query.html));
-  } catch (error) {
-    res.status(400).send('Failed to parse HTML');
-    return;
+export const config = {
+  runtime: 'edge',
+};
+
+export default async function handler(req: NextRequest) {
+  const params = new URL(req.url).searchParams;
+
+  let html = params.get('html');
+
+  if (!html) {
+    return new NextResponse(null, {
+      status: 400,
+    });
   }
-  res.setHeader('Content-Type', 'text/html');
-  res.send(
+
+  try {
+    html = decodeURIComponent(html);
+  } catch (error) {
+    return new NextResponse('Failed to parse HTML', {
+      status: 400,
+    });
+  }
+
+  return new NextResponse(
     `<!DOCTYPE html>
 <html>
   <head>
@@ -31,5 +42,11 @@ export default async function iframeService(
     ${html}
   </body>
 </html>`,
+    {
+      status: 200,
+      headers: {
+        'Content-Type': 'text/html',
+      },
+    },
   );
 }

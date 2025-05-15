@@ -17,6 +17,7 @@ interface Props {
 export default async function SSRPost({ searchParams }: Props) {
   const { p, state } = await searchParams;
   const { isEnabled: preview } = await draftMode();
+  const cookieStore = await cookies();
 
   const postId = p || state;
 
@@ -57,12 +58,15 @@ export default async function SSRPost({ searchParams }: Props) {
   //   }
   // }, [post]);
 
+  const isAdminPreview =
+    preview && cookieStore.get('isAdminPreview')?.value === '1';
+
   let isRestricted =
     data.contentNode.status !== 'publish' ||
     data.contentNode.isRestricted ||
     data.contentNode.patreonLevel > 0;
 
-  let userCanView = process.env.NODE_ENV === 'development' || preview;
+  let userCanView = process.env.NODE_ENV === 'development' || isAdminPreview;
 
   let renderPatreonButton = false;
 
@@ -74,7 +78,6 @@ export default async function SSRPost({ searchParams }: Props) {
   };
 
   if (minPatreonLevel > 0) {
-    const cookieStore = await cookies();
     const token = cookieStore.get('patreon_token');
 
     if (token) {

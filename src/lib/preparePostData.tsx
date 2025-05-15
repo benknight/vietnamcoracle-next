@@ -31,14 +31,17 @@ export default async function preparePostData(data: any, preview: boolean) {
 
   if (lastUpdated.length > 0) {
     lastUpdated.addClass('!font-display text-sm !my-4 !m-0 !text-left');
+
     const date = lastUpdated
       .text()
       .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]
       ?.trim()
       .replace(/\s+/g, ' ');
+
     if (date) {
       const parsed = parse(date, 'LLLL yyyy', new Date());
       monthsOld = differenceInMonths(new Date(), parsed);
+
       if (monthsOld > 36) {
         $(getOldPostAlertHtml(monthsOld)).insertAfter(lastUpdated);
       }
@@ -47,6 +50,7 @@ export default async function preparePostData(data: any, preview: boolean) {
 
   if (data.contentNode.status === 'publish') {
     const html = '<div class="mt-4 mb-8"><share-buttons /></div>';
+
     if (lastUpdated.length > 0) {
       $(html).insertAfter(lastUpdated);
     } else {
@@ -128,6 +132,7 @@ export default async function preparePostData(data: any, preview: boolean) {
     if (!element.parent) {
       return;
     }
+
     $(element.parent).addClass('text-sm text-center legacy-caption mb-8');
     $(element).addClass('post-image').insertBefore(element.parent);
   });

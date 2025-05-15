@@ -55,7 +55,7 @@ export default async function Tag({ params }: Props) {
         imgLg={data.tag.cover?.large || data.defaultImages?.cover.large}
         priority
         theme="dark">
-        <HeroContent>
+        <HeroContent theme="dark">
           <div className="page-wrap">
             <h1 className="font-display text-2xl md:text-3xl lg:text-3xl leading-tight pb-4 dark:pb-0">
               Posts tagged <i>“{data.tag.name}”</i>

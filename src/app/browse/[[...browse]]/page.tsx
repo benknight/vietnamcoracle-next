@@ -144,7 +144,7 @@ export default async function Browse({ params }: Props) {
           className={cx('overflow-hidden', isHome ? 'pt-8 md:pt-0' : 'pt-4')}>
           {showCollections ? (
             <>
-              {isHome && ads.collection && (
+              {isHome && ads.collection && !preview && (
                 <Collection
                   heading="Offline Guides &amp; Maps"
                   items={ads.collection
@@ -154,7 +154,7 @@ export default async function Browse({ params }: Props) {
                     ))}
                 />
               )}
-              {isMotorbikeGuides && ads.collection && (
+              {isMotorbikeGuides && ads.collection && !preview && (
                 <Collection
                   heading="Offline Guides &amp; Maps"
                   items={ads.collection
@@ -164,13 +164,17 @@ export default async function Browse({ params }: Props) {
                     ))}
                 />
               )}
-              {pageData.category.collections.items.map((item, index) => {
+              {pageData.category.collections.items.map((collection, index) => {
+                // Pick one ad to show for each collection, rotating through if there are more than one
+                // If there is only one ad, show it every other row
                 const ad =
                   ads.collection?.length === 1 && index % 2 === 1
                     ? null
                     : ads?.collection?.[index % ads.collection.length];
 
-                const posts = item.posts.filter(post => !!post.featuredImage);
+                const posts = collection.posts.filter(
+                  post => !!post.featuredImage,
+                );
 
                 const mapPosts = post => ({
                   type: 'post',
@@ -178,8 +182,8 @@ export default async function Browse({ params }: Props) {
                 });
 
                 const items =
-                  isHome || isMotorbikeGuides || !ad?.enabled
-                    ? item.posts.map(mapPosts)
+                  (isHome || isMotorbikeGuides || !ad?.enabled) && !preview
+                    ? collection.posts.map(mapPosts)
                     : [
                         ...posts.slice(0, ad.position - 1).map(mapPosts),
                         { type: 'ad', data: ad },
@@ -190,14 +194,16 @@ export default async function Browse({ params }: Props) {
                   <Fragment key={index}>
                     <Collection
                       heading={
-                        item.category ? (
+                        collection.category ? (
                           <Link
-                            href={getCategoryLink(item.category?.uri ?? '')}
+                            href={getCategoryLink(
+                              collection.category?.uri ?? '',
+                            )}
                             className="block group-hover:link">
-                            {item.title} &gt;
+                            {collection.title} &gt;
                           </Link>
                         ) : (
-                          item.title
+                          collection.title
                         )
                       }
                       items={items.map((item, index) =>

@@ -154,7 +154,7 @@ export default async function preparePostData(data: any, preview: boolean) {
             )?.ads.header ?? null,
         },
     contentNode: data.contentNode,
-    contentType: data.contentNode.contentType.name,
+    contentType: data.contentNode.contentType.node.name,
     heroImage: {
       small:
         data.contentNode.thumbnails?.thumbnailHeaderSquare ??

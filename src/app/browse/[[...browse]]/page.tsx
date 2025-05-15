@@ -8,7 +8,6 @@ import { Fragment } from 'react';
 import getGQLClient from '../../../lib/getGQLClient';
 import getCategoryLink from '../../../lib/getCategoryLink';
 import previewAds from '../../../lib/previewAds';
-import BrowseCategoryQuery from '../../../queries/BrowseCategory.gql';
 import SidebarQuery from '../../../queries/Sidebar.gql';
 import Header from '../../../components/Header';
 import Hero, { HeroContent } from '../../../components/Hero';
@@ -21,30 +20,23 @@ import BrowseHero from './components/BrowseHero';
 import CategoryMap from './components/CategoryMap';
 import CategorySlider from './components/CategorySlider';
 import Collection from './components/Collection';
+import getPageData from './lib/getPageData';
 
-async function getPageData(browse: string[], preview: Boolean) {
-  const api = getGQLClient(preview ? 'preview' : 'admin');
-  const categorySlug = browse?.[0] ?? 'features-guides';
-  const subcategorySlug = browse?.[1] ?? '';
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const { browse } = await params;
+  const { isEnabled: preview } = await draftMode();
 
-  return api.request(BrowseCategoryQuery, {
-    categorySlug,
-    subcategorySlug,
-    hasSubcategory: Boolean(subcategorySlug),
-    preview,
-    skipCategoryPosts:
-      Boolean(subcategorySlug) ||
-      [
-        'features-guides',
-        'motorbike-guides',
-        'food-and-drink',
-        'hotel-reviews',
-        'destinations',
-      ].includes(categorySlug),
-  });
+  try {
+    const pageData = await getPageData(browse, preview);
+    return getSEOMetadata((pageData.subcategory || pageData.category).seo);
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    return {
+      title: 'Error',
+    };
+  }
 }
 
-// Set dynamic rendering strategy for app router
 export const dynamic = 'force-static';
 
 export const revalidate = false;
@@ -261,19 +253,4 @@ export default async function Browse({ params }: Props) {
       </Layout>
     </div>
   );
-}
-
-export async function generateMetadata({ params }): Promise<Metadata> {
-  const { browse } = await params;
-  const { isEnabled: preview } = await draftMode();
-
-  try {
-    const pageData = await getPageData(browse, preview);
-    return getSEOMetadata((pageData.subcategory || pageData.category).seo);
-  } catch (error) {
-    console.error('Error generating metadata:', error);
-    return {
-      title: 'Error',
-    };
-  }
 }

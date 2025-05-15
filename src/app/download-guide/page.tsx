@@ -190,9 +190,9 @@ export default async function DownloadGuide({ searchParams }: Props) {
     <div className="page-wrap flex justify-center items-center py-24">
       <div className="max-w-screen-sm w-full">
         <h2 className="text-2xl font-bold mb-4 text-center">Your Downloads</h2>
-        <p className="text-center">
+        <p className="text-center text-sm text-red-500">
           Note: You can always get back to this page by clicking the link in the
-          email you received.
+          email you received after making your purchase.
         </p>
         {Object.keys(groups).map(prefix => {
           const sortedFiles = groups[prefix].sort(sortFiles);
@@ -201,7 +201,7 @@ export default async function DownloadGuide({ searchParams }: Props) {
               <h3 className="text-lg mt-8 mb-4 font-medium text-center">
                 {groups[prefix].sort(sortFiles)[0].name.replace('.pdf', '')}
               </h3>
-              <ul className="space-y-2 border border-opacity-10 p-2 rounded-xl">
+              <ul className="space-y-2 border border-opacity-10 p-2 rounded-xl mb-16">
                 {sortedFiles.map(file => {
                   const urlParams = new URLSearchParams({
                     file_key: file.key,
@@ -211,7 +211,7 @@ export default async function DownloadGuide({ searchParams }: Props) {
                   return (
                     <li key={file.name}>
                       <a
-                        className="btn w-full"
+                        className="btn w-full text-wrap h-auto min-h-8 text-center py-2"
                         href={`/api/download-link?${urlParams.toString()}`}
                         target="_blank"
                         rel="noopener noreferrer">

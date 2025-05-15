@@ -12,6 +12,26 @@ import TagQuery from '../../../queries/Tag.gql';
 import SidebarQuery from '../../../queries/Sidebar.gql';
 import { Suspense } from 'react';
 
+export async function generateMetadata({ params }): Promise<Metadata> {
+  const { slug } = await params;
+  const { isEnabled: preview } = await draftMode();
+
+  try {
+    const api = getGQLClient(preview ? 'preview' : 'admin');
+    const data = await api.request(TagQuery, { slug });
+
+    return getSEOMetadata(data.tag.seo);
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+
+    return {
+      title: 'Error',
+    };
+  }
+}
+
+export const dynamic = 'force-static';
+
 interface Props {
   params: Promise<{ slug: string }>;
 }
@@ -56,22 +76,4 @@ export default async function Tag({ params }: Props) {
       </Layout>
     </div>
   );
-}
-
-export async function generateMetadata({ params }): Promise<Metadata> {
-  const { slug } = await params;
-  const { isEnabled: preview } = await draftMode();
-
-  try {
-    const api = getGQLClient(preview ? 'preview' : 'admin');
-    const data = await api.request(TagQuery, { slug });
-
-    return getSEOMetadata(data.tag.seo);
-  } catch (error) {
-    console.error('Error generating metadata:', error);
-
-    return {
-      title: 'Error',
-    };
-  }
 }

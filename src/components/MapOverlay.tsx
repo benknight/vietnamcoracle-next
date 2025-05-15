@@ -24,14 +24,21 @@ export default function MapOverlay({
   const [showSupport, setShowSupport] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
+
     if (!blockData) {
-      fetchSidebarBlocks().then(blocks =>
-        setBlockData({
-          about: blocks.about.block,
-          support: blocks.support.block,
-        }),
+      fetchSidebarBlocks().then(
+        blocks =>
+          isMounted &&
+          setBlockData({
+            about: blocks.about.block,
+            support: blocks.support.block,
+          }),
       );
     }
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   if (!blockData) return null;

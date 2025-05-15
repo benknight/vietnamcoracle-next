@@ -24,7 +24,7 @@ export function GridListTabGroup({ hideList = false, posts }) {
   return (
     <TabGroup
       as="div"
-      className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent"
+      className="pb-8 min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent lg:dark:bg-transparent"
       defaultIndex={
         searchParams ? parseInt(searchParams.get('tabIndex') ?? '0') || 0 : 0
       }

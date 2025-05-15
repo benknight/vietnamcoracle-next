@@ -6,7 +6,7 @@ import Layout, { LayoutMain, LayoutSidebar } from '../../../components/Layout';
 import { GridListTabGroup } from '../../../components/GridListTab';
 import SidebarDefault from '../../../components/SidebarDefault';
 import Footer from '../../../components/Footer';
-import getGQLClient from '../../../lib/getGQLClient';
+import GraphQLClient from '../../../lib/WPGraphQLClient';
 import getSEOMetadata from '../../../lib/getSEOMetadata';
 import TagQuery from '../../../queries/Tag.gql';
 import SidebarQuery from '../../../queries/Sidebar.gql';
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   const { isEnabled: preview } = await draftMode();
 
   try {
-    const api = getGQLClient(preview ? 'preview' : 'admin');
+    const api = new GraphQLClient(preview ? 'preview' : 'admin');
     const data = await api.request(TagQuery, { slug });
 
     return getSEOMetadata(data.tag.seo);
@@ -40,7 +40,7 @@ export default async function Tag({ params }: Props) {
   const { slug } = await params;
   const { isEnabled: preview } = await draftMode();
 
-  const api = getGQLClient(preview ? 'preview' : 'admin');
+  const api = new GraphQLClient(preview ? 'preview' : 'admin');
 
   const [data, blockData] = await Promise.all([
     api.request(TagQuery, { slug }),

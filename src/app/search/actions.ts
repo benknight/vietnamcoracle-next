@@ -1,8 +1,8 @@
 'use server';
 import { headers } from 'next/headers';
 import { PostMediaBlockPost } from '../../components/PostMediaBlock';
-import { RestClientSubscriber } from '../../lib/RestClient';
-import getGQLClient from '../../lib/getGQLClient';
+import WPRestClient from '../../lib/WPRestClient';
+import GraphQLClient from '../../lib/WPGraphQLClient';
 import SearchResultsQuery from '../../queries/SearchResults.gql';
 
 const { ALGOLIA_APP_ID: appId, ALGOLIA_KEY_ADMIN: key } = process.env;
@@ -71,17 +71,19 @@ export const fetchAlgoliaResults: fetcherFn = async params => {
 export const fetchWpResults: fetcherFn = async params => {
   const [query, page, pageSize] = params;
 
-  const { data: results } = await RestClientSubscriber.get(
-    `/search?search=${query}&page=${page}&pageSize=${pageSize}`,
+  const restClient = new WPRestClient('subscriber');
+
+  const { results } = await restClient.get(
+    `/wp/v2/search?search=${query}&page=${page}&pageSize=${pageSize}`,
   );
 
   if (results.length === 0) {
     return [];
   }
 
-  const api = getGQLClient();
+  const gqlClient = new GraphQLClient();
 
-  const data = await api.request(SearchResultsQuery, {
+  const data = await gqlClient.request(SearchResultsQuery, {
     in: results.map(r => r.id),
   });
 

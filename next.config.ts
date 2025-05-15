@@ -1,5 +1,5 @@
 import type { NextConfig } from 'next';
-import axios from 'axios';
+import WPRestClient from './src/lib/WPRestClient';
 
 const nextConfig: NextConfig = {
   trailingSlash: true,
@@ -38,15 +38,10 @@ const nextConfig: NextConfig = {
     ],
   },
   async redirects() {
-    const api = axios.create({
-      auth: {
-        username: process.env.WORDPRESS_API_USERNAME_ADMIN || '',
-        password: process.env.WORDPRESS_API_PASSWORD_ADMIN || '',
-      },
-      baseURL: 'https://cms.vietnamcoracle.com/wp-json/redirection/v1',
-    });
-    const response = await api.get('/export/all/json');
-    const cmsRedirects = JSON.parse(response.data.data)?.redirects;
+    const restClient = new WPRestClient('admin');
+    const { data } = await restClient.get('/redirection/v1/export/all/json');
+    const { redirects: cmsRedirects } = JSON.parse(data);
+
     const redirects = [
       ...cmsRedirects.map(config => ({
         destination: config.action_data.url.replace(

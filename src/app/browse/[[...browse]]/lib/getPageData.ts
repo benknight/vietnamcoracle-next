@@ -1,8 +1,8 @@
-import getGQLClient from '../../../../lib/getGQLClient';
+import GraphQLClient from '../../../../lib/WPGraphQLClient';
 import BrowseCategoryQuery from '../../../../queries/BrowseCategory.gql';
 
 export default async function getPageData(browse: string[], preview: Boolean) {
-  const api = getGQLClient(preview ? 'preview' : 'admin');
+  const api = new GraphQLClient(preview ? 'preview' : 'admin');
   const categorySlug = browse?.[0] ?? 'features-guides';
   const subcategorySlug = browse?.[1] ?? '';
 

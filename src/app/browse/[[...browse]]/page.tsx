@@ -5,7 +5,7 @@ import { draftMode } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Fragment } from 'react';
-import getGQLClient from '../../../lib/getGQLClient';
+import GraphQLClient from '../../../lib/WPGraphQLClient';
 import getCategoryLink from '../../../lib/getCategoryLink';
 import previewAds from '../../../lib/previewAds';
 import SidebarQuery from '../../../queries/Sidebar.gql';
@@ -58,7 +58,7 @@ interface Props {
 export default async function Browse({ params }: Props) {
   const { browse } = await params;
   const { isEnabled: preview } = await draftMode();
-  const api = getGQLClient(preview ? 'preview' : 'admin');
+  const api = new GraphQLClient(preview ? 'preview' : 'admin');
 
   const [pageData, blockData] = await Promise.all([
     getPageData(browse, preview),

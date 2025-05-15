@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import Post from '../../components/Post';
-import getGQLClient from '../../lib/getGQLClient';
+import GraphQLClient from '../../lib/WPGraphQLClient';
 import fetchFirstValidId from '../../lib/fetchFirstValidId';
 import getSEOMetadata from '../../lib/getSEOMetadata';
 import preparePostData from '../../lib/preparePostData';
@@ -30,7 +30,7 @@ export default async function SSGPost({ params }: Props) {
 
   const { isEnabled: preview } = await draftMode();
 
-  const api = getGQLClient(preview ? 'preview' : 'admin');
+  const api = new GraphQLClient(preview ? 'preview' : 'admin');
 
   const [postData, blockData] = await Promise.all([
     api.request(PostQuery, {
@@ -72,7 +72,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
     if (!databaseId) return { title: 'Not Found' };
 
-    const api = getGQLClient('admin');
+    const api = new GraphQLClient('admin');
 
     const data = await api.request(PostMetadataQuery, {
       preview: false,
@@ -90,7 +90,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const api = getGQLClient('admin');
+  const api = new GraphQLClient('admin');
 
   const data = await api.request(gql`
     {

@@ -26,7 +26,7 @@ export default function BrowseHero({ pageData }) {
               <span className="inline-block">{pageData.subcategory.name}</span>
             </div>
           ) : (
-            <div className="text-4xl md:text-3xl lg:text-5xl leading-tight">
+            <div className="text-white text-4xl md:text-3xl lg:text-5xl leading-tight">
               {pageData.category.name}
             </div>
           )}

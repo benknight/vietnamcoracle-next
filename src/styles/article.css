@@ -49,10 +49,6 @@ article figure {
   @apply mb-7 font-serif md:font-lora;
 }
 
-article > p {
-  @apply md:text-justify;
-}
-
 article p.has-background {
   @apply px-4 md:px-8;
 }

@@ -1,12 +1,12 @@
 import { gql } from 'graphql-request';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import getGQLClient from '../../lib/getGQLClient';
+import GraphQLClient from '../../lib/WPGraphQLClient';
 
 export default async function footer(
   _req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const api = getGQLClient();
+  const api = new GraphQLClient();
   const result = await api.request(gql`
     query Footer {
       menu(id: "dGVybTo0MDk=") {

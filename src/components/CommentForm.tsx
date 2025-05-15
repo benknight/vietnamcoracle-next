@@ -3,7 +3,7 @@ import cx from 'classnames';
 import { Formik, Field, Form } from 'formik';
 import _unescape from 'lodash/unescape';
 import { useState } from 'react';
-import getGQLClient from '../lib/getGQLClient';
+import GraphQLClient from '../lib/WPGraphQLClient';
 import useWaitCursor from '../lib/useWaitCursor';
 import CreateCommentQuery from '../queries/CreateComment.gql';
 
@@ -21,7 +21,7 @@ export default function CommentForm({ parent, post }: Props) {
   const onSubmit = async values => {
     setBusy(true);
     try {
-      const api = getGQLClient();
+      const api = new GraphQLClient();
       const response = await api.request(CreateCommentQuery, {
         parent: parent?.id ?? null,
         post,

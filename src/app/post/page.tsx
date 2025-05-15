@@ -5,7 +5,7 @@ import { SearchParams } from 'next/dist/server/request/search-params';
 import PatronOnlyContentGate from '../../components/PatronOnlyContentGate';
 import Header from '../../components/Header';
 import Post from '../../components/Post';
-import getGQLClient from '../../lib/getGQLClient';
+import GraphQLClient from '../../lib/WPGraphQLClient';
 import preparePostData from '../../lib/preparePostData';
 import PostQuery from '../../queries/Post.gql';
 import SidebarQuery from '../../queries/Sidebar.gql';
@@ -25,7 +25,7 @@ export default async function SSRPost({ searchParams }: Props) {
     return permanentRedirect('/');
   }
 
-  const api = getGQLClient(preview ? 'preview' : 'admin');
+  const api = new GraphQLClient(preview ? 'preview' : 'admin');
 
   const data = await api.request(
     gql`

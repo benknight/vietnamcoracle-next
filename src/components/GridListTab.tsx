@@ -43,7 +43,7 @@ export function GridListTabGroup({ hideList = false, posts }) {
       </div>
       <TabPanels>
         <TabPanel>
-          <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2">
+          <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
             {posts.map(post => (
               <PostCard key={post.slug} post={post} inGrid />
             ))}

@@ -49,7 +49,7 @@ export default async function Tag({ params }: Props) {
 
   return (
     <div className="relative bg-white dark:bg-gray-950 min-h-screen">
-      <Header preview={preview} />
+      <Header preview={preview} fullWidth />
       <Hero
         imgSm={data.tag.cover?.small || data.defaultImages?.cover.small}
         imgLg={data.tag.cover?.large || data.defaultImages?.cover.large}
@@ -69,7 +69,7 @@ export default async function Tag({ params }: Props) {
             <GridListTabGroup posts={data.tag.posts.nodes} />
           </Suspense>
         </LayoutMain>
-        <LayoutSidebar>
+        <LayoutSidebar className="xl:pt-14 xl:shadow-xl">
           <SidebarDefault blocks={blockData} />
           <Footer />
         </LayoutSidebar>

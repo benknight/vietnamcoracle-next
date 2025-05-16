@@ -43,13 +43,6 @@ export function GridListTabGroup({ hideList = false, posts }) {
       </div>
       <TabPanels>
         <TabPanel>
-          <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
-            {posts.map(post => (
-              <PostCard key={post.slug} post={post} inGrid />
-            ))}
-          </div>
-        </TabPanel>
-        <TabPanel>
           <div className="px-2 py-4 lg:px-8">
             {posts
               .map(post => ({
@@ -64,6 +57,13 @@ export function GridListTabGroup({ hideList = false, posts }) {
               ))}
           </div>
         </TabPanel>
+        <TabPanel>
+          <div className="px-2 lg:px-8 pt-6 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">
+            {posts.map(post => (
+              <PostCard key={post.slug} post={post} inGrid />
+            ))}
+          </div>
+        </TabPanel>
       </TabPanels>
     </TabGroup>
   );
@@ -73,15 +73,6 @@ export function GridListTabList({ hideLabels = false }) {
   return (
     <TabList className="flex p-1 -mx-1 bg-black dark:bg-white bg-opacity-5 dark:bg-opacity-10 rounded-xl">
       <Tab
-        className={({ selected }) => tabCx(selected)}
-        style={{ WebkitTapHighlightColor: 'transparent' }}>
-        <Squares2X2Icon className="w-5 h-5" />
-        <span className={cx('ml-1', { 'hidden md:inline-block': hideLabels })}>
-          {' '}
-          Grid
-        </span>
-      </Tab>
-      <Tab
         className={({ selected }) => tabCx(selected, 'ml-1')}
         style={{ WebkitTapHighlightColor: 'transparent' }}>
         <ViewListIcon className="w-5 h-5" />
@@ -89,6 +80,15 @@ export function GridListTabList({ hideLabels = false }) {
           className={cx('ml-1.5', { 'hidden md:inline-block': hideLabels })}>
           {' '}
           List
+        </span>
+      </Tab>
+      <Tab
+        className={({ selected }) => tabCx(selected)}
+        style={{ WebkitTapHighlightColor: 'transparent' }}>
+        <Squares2X2Icon className="w-5 h-5" />
+        <span className={cx('ml-1', { 'hidden md:inline-block': hideLabels })}>
+          {' '}
+          Grid
         </span>
       </Tab>
     </TabList>

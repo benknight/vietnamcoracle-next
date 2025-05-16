@@ -38,15 +38,13 @@ export const metadata: Metadata = {
   title: 'Vietnam Coracle',
   applicationName: 'Vietnam Coracle',
   icons: {
-    // Standard icons
     icon: [
-      { url: '/favicon-196x196.png', sizes: '196x196', type: 'image/png' },
-      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
       { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-128.png', sizes: '128x128', type: 'image/png' },
+      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/favicon-96x96.png', sizes: '96x96', type: 'image/png' },
+      { url: '/favicon-128x128.png', sizes: '128x128', type: 'image/png' },
+      { url: '/favicon-196x196.png', sizes: '196x196', type: 'image/png' },
     ],
-    // Apple touch icons with precomposed rel
     other: [
       {
         rel: 'apple-touch-icon-precomposed',
@@ -90,7 +88,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-  // Microsoft-specific configurations
   other: {
     'msapplication-TileColor': '#FFFFFF',
     'msapplication-TileImage': '/mstile-144x144.png',

@@ -32,6 +32,15 @@ export default async function preparePostData(data: any, preview: boolean) {
   if (lastUpdated.length > 0) {
     lastUpdated.addClass('!font-display text-sm !my-4 !m-0 !text-left');
 
+    const { commentCount } = data.contentNode;
+    if (commentCount > 0) {
+      lastUpdated.append(
+        ` | <a href="#comments">${commentCount} ${
+          commentCount > 1 ? 'comments' : 'comment'
+        }</a>`,
+      );
+    }
+
     const date = lastUpdated
       .text()
       .match(/(Last\s+updated|First\s+published)\s+([^|]+)/i)?.[2]

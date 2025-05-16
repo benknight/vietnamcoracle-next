@@ -50,7 +50,7 @@ export default function Post(props: Props) {
                       <LayoutMain className="px-3 sm:px-4 md:px-8">
                         <div className="max-w-[52rem] mx-auto">
                           <div className="xl:w-[120%]">
-                            <h1 className="text-3xl sm:text-4xl xl:text-5xl leading-tight xl:leading-tight font-display tracking-tight">
+                            <h1 className="text-3xl sm:text-4xl leading-tight xl:leading-tight font-display tracking-tight">
                               {post.title}
                             </h1>
                           </div>

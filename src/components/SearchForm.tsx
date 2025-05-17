@@ -31,7 +31,7 @@ export default function SearchForm({ className = '', ...inputProps }) {
             query: value,
           },
         });
-        router.push(`/search/?query=${value}`);
+        router.push(`/search/?query=${value}`, { scroll: true });
       }}
       role="search">
       <div className="absolute top-0 left-0 bottom-0 w-10 flex items-center justify-center pointer-events-none">

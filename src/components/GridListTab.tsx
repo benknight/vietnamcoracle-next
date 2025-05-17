@@ -47,10 +47,12 @@ export function GridListTabGroup({ hideList = false, posts }) {
             {posts
               .map(post => ({
                 ...post,
-                image: {
-                  altText: post.featuredImage.node.altText,
-                  src: post.featuredImage.node.srcMedium,
-                },
+                image: post.featuredImage
+                  ? {
+                      altText: post.featuredImage.node.altText,
+                      src: post.featuredImage.node.srcMedium,
+                    }
+                  : null,
               }))
               .map(post => (
                 <PostMediaBlock key={post.slug} post={post} />

@@ -11,10 +11,13 @@ export default async function fetchFirstValidId(
       slug,
     )}&_fields=id&status=private,publish`;
 
-    const response = await api.get(url);
-
-    if (response?.[0]?.id) {
-      return response[0].id;
+    try {
+      const response = await api.get(url);
+      if (response?.[0]?.id) {
+        return response[0].id;
+      }
+    } catch (error) {
+      // do nothing
     }
   }
 

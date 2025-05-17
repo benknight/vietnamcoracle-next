@@ -24,7 +24,6 @@ export default async function SSGPost({ params }: Props) {
   const databaseId = await fetchFirstValidId(slug, ['posts', 'pages']);
 
   if (!databaseId) {
-    console.warn('databaseId not found for slug:', slug);
     return notFound();
   }
 

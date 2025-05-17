@@ -23,7 +23,7 @@ export default function Post(props: Props) {
   const { post, preview, sidebarBlocks } = props;
 
   return (
-    <>
+    <div className="force-light-theme text-gray-800">
       {post.ads?.header?.enabled && (
         <div className="bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-[2]">
           <div
@@ -161,6 +161,6 @@ export default function Post(props: Props) {
           </Layout>
         </div>
       </div>
-    </>
+    </div>
   );
 }

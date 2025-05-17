@@ -96,7 +96,7 @@ export default function ShareButtons({ image, link, title }: Props) {
           background-color: ${backgroundColor.gray['500']} !important;
           border-color: ${backgroundColor.gray['500']} !important;
         }
-        @media (prefers-color-scheme: dark) {
+        /* @media (prefers-color-scheme: dark) {
           .fb {
             background-color: #1877f280 !important;
             border-color: #1877f2 !important;
@@ -117,7 +117,7 @@ export default function ShareButtons({ image, link, title }: Props) {
             background-color: ${backgroundColor.gray['500']}80 !important;
             border-color: ${backgroundColor.gray['500']} !important;
           }
-        }
+        } */
         @media (min-width: ${breakpoints.sm}) {
           button {
             flex: none;

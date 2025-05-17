@@ -3,6 +3,10 @@ const defaultTheme = require('tailwindcss/defaultTheme');
 const breakpoints = require('./src/config/breakpoints');
 
 module.exports = {
+  darkMode: [
+    'variant',
+    ['@media (prefers-color-scheme: dark) { &:not(.force-light-theme *) }'],
+  ],
   plugins: [],
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
   theme: {

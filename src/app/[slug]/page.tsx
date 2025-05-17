@@ -58,7 +58,7 @@ export default async function SSGPost({ params }: Props) {
     return notFound();
   }
 
-  const post = await preparePostData(postData, preview);
+  const post = await preparePostData(postData, blockData, preview);
 
   return <Post post={post} preview={preview} sidebarBlocks={blockData} />;
 }

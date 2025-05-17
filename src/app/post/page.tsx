@@ -145,7 +145,7 @@ export default async function SSRPost({ searchParams }: Props) {
     return notFound();
   }
 
-  const [postData, sidebarBlocks] = await Promise.all([
+  const [postData, blockData] = await Promise.all([
     api.request(PostQuery, {
       preview: Boolean(preview),
       id: postId,
@@ -154,7 +154,7 @@ export default async function SSRPost({ searchParams }: Props) {
     api.request(SidebarQuery),
   ]);
 
-  const post = await preparePostData(postData, preview);
+  const post = await preparePostData(postData, blockData, preview);
 
-  return <Post post={post} preview={preview} sidebarBlocks={sidebarBlocks} />;
+  return <Post post={post} preview={preview} sidebarBlocks={blockData} />;
 }

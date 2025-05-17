@@ -3,8 +3,13 @@ import { differenceInMonths, parse } from 'date-fns';
 import cleanPostHTML from './cleanPostHTML';
 import cmsToNextUrls from './cmsToNextUrls';
 import getOldPostAlertHtml from './getOldPostAlertHtml';
+import SidebarDefault from '../components/SidebarDefault';
 
-export default async function preparePostData(data: any, preview: boolean) {
+export default async function preparePostData(
+  data: any,
+  blockData: React.ComponentProps<typeof SidebarDefault>['blocks'],
+  preview: boolean,
+) {
   if (preview) {
     if (data.contentNode) {
       data.contentNode = {
@@ -90,6 +95,9 @@ export default async function preparePostData(data: any, preview: boolean) {
         'data-src': $(this).attr('src') || '',
         'data-title': $(this).attr('title') || '',
         'data-width': $(this).attr('width') || '',
+        'data-blockDescription': blockData.support.block.description,
+        'data-blockImage': blockData.about.block.image.sourceUrl,
+        'data-blockTitle': blockData.support.block.title,
       });
     });
 

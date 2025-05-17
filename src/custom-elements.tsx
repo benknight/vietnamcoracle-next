@@ -91,6 +91,9 @@ if (typeof window !== 'undefined') {
         src: this.getAttribute('data-src') || '',
         title: this.getAttribute('data-title') || '',
         width: this.getAttribute('data-width') || '',
+        blockImage: this.getAttribute('data-blockImage') || '',
+        blockTitle: this.getAttribute('data-blockTitle') || '',
+        blockDescription: this.getAttribute('data-blockDescription') || '',
       };
       const reactDomRoot = createRoot(root);
       reactDomRoot.render(<MapOverlay {...props} />);

@@ -1,47 +1,28 @@
 'use client';
 import cx from 'classnames';
 import Image from 'next/legacy/image';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
-import Block, { BlockContent, BlockData, BlockTitle } from './Block';
-import { fetchSidebarBlocks } from '../app/actions';
+import Block, { BlockContent, BlockTitle } from './Block';
 
 interface Props extends React.IframeHTMLAttributes<HTMLIFrameElement> {
   className?: string;
   iframeClassName?: string;
+  blockImage: string;
+  blockTitle: string;
+  blockDescription: string;
 }
 
 export default function MapOverlay({
+  blockImage,
+  blockTitle,
+  blockDescription,
   className = '',
   iframeClassName = 'w-full min-h-[400px]',
   ...iframeProps
 }: Props) {
-  const [blockData, setBlockData] = useState<{
-    about: BlockData;
-    support: BlockData;
-  } | null>(null);
   const [mapInteractive, setMapInteractive] = useState(false);
   const [showSupport, setShowSupport] = useState(false);
-
-  useEffect(() => {
-    let isMounted = true;
-
-    if (!blockData) {
-      fetchSidebarBlocks().then(
-        blocks =>
-          isMounted &&
-          setBlockData({
-            about: blocks.about.block,
-            support: blocks.support.block,
-          }),
-      );
-    }
-    return () => {
-      isMounted = false;
-    };
-  }, []);
-
-  if (!blockData) return null;
 
   return (
     <>
@@ -53,7 +34,7 @@ export default function MapOverlay({
           {...iframeProps}></iframe>
         <div
           className={cx(
-            'group absolute inset-0 transition-all duration-300 flex items-center justify-center backdrop-blur-0',
+            'group absolute inset-0 transition-all duration-300 flex items-center justify-center backdrop-blur-0 dark:text-white',
             showSupport ? 'backdrop-blur-md' : '',
             mapInteractive ? 'hidden' : 'flex',
           )}
@@ -67,12 +48,12 @@ export default function MapOverlay({
                     className="h-full rounded-full object-cover"
                     height="100"
                     layout="fixed"
-                    src={blockData.about.image.sourceUrl}
+                    src={blockImage}
                     width="100"
                   />
                 </div>
-                <BlockTitle>{blockData.support.title}</BlockTitle>
-                <BlockContent>{blockData.support.description}</BlockContent>
+                <BlockTitle>{blockTitle}</BlockTitle>
+                <BlockContent>{blockDescription}</BlockContent>
                 <div className="flex justify-center gap-2">
                   <a
                     className="btn !text-white !bg-primary-500 !hover:bg-primary-600"

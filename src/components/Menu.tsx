@@ -13,8 +13,8 @@ import {
 import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { HomeIcon } from '@heroicons/react/24/outline';
 import { CircularProgress } from '@mui/material';
+import { fetchMenu } from '../app/actions';
 import getCategoryLink from '../lib/getCategoryLink';
-import useAPI from '../lib/useAPI';
 
 interface Props {
   children: React.ReactNode;
@@ -23,7 +23,12 @@ interface Props {
 }
 
 export default function Menu({ children, className = '', fullWidth }: Props) {
-  const { data } = useAPI('/api/menu/');
+  const [data, setData] = useState<Awaited<ReturnType<typeof fetchMenu>>>();
+
+  useEffect(() => {
+    fetchMenu().then(data => setData(data));
+  }, []);
+
   return (
     <Popover>
       {({ open }) => (
@@ -85,7 +90,7 @@ interface MenuNavProps {
   items: {
     id: string;
     label: string;
-    parentId: string;
+    parentId: string | null;
     path: string;
     url: string;
   }[];

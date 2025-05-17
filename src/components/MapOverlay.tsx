@@ -4,7 +4,7 @@ import Image from 'next/legacy/image';
 import { useEffect, useState } from 'react';
 import { CursorArrowRaysIcon } from '@heroicons/react/24/outline';
 import Block, { BlockContent, BlockData, BlockTitle } from './Block';
-import fetchSidebarBlocks from '../app/actions';
+import { fetchSidebarBlocks } from '../app/actions';
 
 interface Props extends React.IframeHTMLAttributes<HTMLIFrameElement> {
   className?: string;

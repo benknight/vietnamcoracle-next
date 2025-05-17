@@ -8,11 +8,18 @@ import {
 import MapOverlay from '../../../../components/MapOverlay';
 
 interface Props {
-  blockData: BlockData;
+  mapBlock: BlockData;
   navCategory?: string;
+  aboutBlock: BlockData;
+  supportBlock: BlockData;
 }
 
-const CategoryMap = ({ blockData, navCategory }: Props) => {
+const CategoryMap = ({
+  aboutBlock,
+  mapBlock,
+  navCategory,
+  supportBlock,
+}: Props) => {
   return (
     <div id="map">
       <div className="lg:rounded-lg overflow-hidden">
@@ -31,13 +38,13 @@ const CategoryMap = ({ blockData, navCategory }: Props) => {
                 navCategory === 'food-and-drink',
             },
           )}>
-          <BlockTitle>{blockData.title}</BlockTitle>
+          <BlockTitle>{mapBlock.title}</BlockTitle>
           <BlockContent>
-            {blockData.description}{' '}
+            {mapBlock.description}{' '}
             <div className="mt-3">
               <a
                 className="link inline-flex items-center hover:underline"
-                href={`https://www.google.com/maps/d/viewer?mid=${blockData.mid}`}>
+                href={`https://www.google.com/maps/d/viewer?mid=${mapBlock.mid}`}>
                 Open in Google Maps
                 <ArrowTopRightOnSquareIcon className="ml-1 w-4 h-4" />
               </a>
@@ -48,9 +55,12 @@ const CategoryMap = ({ blockData, navCategory }: Props) => {
           className="h-[80vh] mb-[-14px]"
           iframeClassName="absolute inset-0 w-full h-full"
           height={650}
-          src={`https://www.google.com/maps/d/embed?mid=${blockData.mid}&z=6&hl=en&ehbc=57534e`}
-          title={blockData.title}
+          src={`https://www.google.com/maps/d/embed?mid=${mapBlock.mid}&z=6&hl=en&ehbc=57534e`}
+          title={mapBlock.title}
           width={800}
+          blockDescription={supportBlock.description}
+          blockImage={aboutBlock.image.sourceUrl}
+          blockTitle={supportBlock.title}
         />
       </div>
     </div>

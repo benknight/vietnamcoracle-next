@@ -240,7 +240,9 @@ export default async function Browse({ params }: Props) {
           {pageData.category.map?.mid && (
             <section className="lg:mb-8 lg:px-8">
               <CategoryMap
-                blockData={pageData.category.map}
+                aboutBlock={blockData.about.block}
+                supportBlock={blockData.support.block}
+                mapBlock={pageData.category.map}
                 navCategory={navCategory}
               />
             </section>

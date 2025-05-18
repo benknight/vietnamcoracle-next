@@ -1,14 +1,13 @@
 import '../styles/wp-global.css';
 import '../styles/fonts.css';
 import '../styles/global.css';
-import type { Metadata } from 'next';
+import { Metadata } from 'next';
 import Script from 'next/script';
-import type { ReactNode } from 'react';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
 
 interface Props {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export default async function AppLayout({ children }: Props) {

@@ -23,6 +23,11 @@ export default async function AppLayout({ children }: Props) {
           src="https://cms.vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
           strategy="afterInteractive"
         />
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3199185439433337"
+          crossOrigin="anonymous"
+        />
       </head>
       <body>
         <AppRouterCacheProvider>{children}</AppRouterCacheProvider>

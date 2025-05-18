@@ -10,7 +10,9 @@ import preparePostData from '../../lib/preparePostData';
 import PostQuery from '../../queries/Post.gql';
 import PostMetadataQuery from '../../queries/PostMetadata.gql';
 import SidebarQuery from '../../queries/Sidebar.gql';
+import MenuQuery from '../../queries/Menu.gql';
 import { redirect } from 'next/navigation';
+import Menu from '../../components/Menu';
 
 export const dynamic = 'force-static';
 export const revalidate = false;
@@ -31,13 +33,14 @@ export default async function SSGPost({ params }: Props) {
 
   const api = new GraphQLClient(preview ? 'preview' : 'admin');
 
-  const [postData, blockData] = await Promise.all([
+  const [postData, blockData, menuData] = await Promise.all([
     api.request(PostQuery, {
       preview,
       id: databaseId,
       idType: 'DATABASE_ID',
     }),
     api.request(SidebarQuery),
+    api.request(MenuQuery),
   ]);
 
   if (
@@ -60,7 +63,14 @@ export default async function SSGPost({ params }: Props) {
 
   const post = await preparePostData(postData, blockData, preview);
 
-  return <Post post={post} preview={preview} sidebarBlocks={blockData} />;
+  return (
+    <Post
+      menu={<Menu data={menuData} fullWidth />}
+      post={post}
+      preview={preview}
+      sidebarBlocks={blockData}
+    />
+  );
 }
 
 export async function generateMetadata({ params }): Promise<Metadata> {

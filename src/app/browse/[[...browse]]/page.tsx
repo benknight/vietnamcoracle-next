@@ -72,6 +72,10 @@ export default async function Browse({ params }: Props) {
     return notFound();
   }
 
+  if (browse[1] && !pageData.subcategory) {
+    return notFound();
+  }
+
   const isHome = pageData.category.slug === 'features-guides';
 
   const isMotorbikeGuides = pageData.category.slug === 'motorbike-guides';

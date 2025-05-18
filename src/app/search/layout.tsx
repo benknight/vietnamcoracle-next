@@ -1,6 +1,9 @@
 import { draftMode } from 'next/headers';
 import Header from '../../components/Header';
 import Layout, { LayoutMain } from '../../components/Layout';
+import WPGraphQLClient from '../../lib/WPGraphQLClient';
+import MenuQuery from '../../queries/Menu.gql';
+import Menu from '../../components/Menu';
 
 interface Props {
   children: React.ReactNode;
@@ -8,10 +11,15 @@ interface Props {
 
 export default async function SearchLayout({ children }: Props) {
   const { isEnabled: preview } = await draftMode();
+  const api = new WPGraphQLClient('admin', {
+    next: { revalidate: 60 * 60 * 1 }, // 1 hour
+  });
+
+  const menuData = await api.request(MenuQuery);
 
   return (
     <>
-      <Header preview={preview} />
+      <Header menu={<Menu data={menuData} />} preview={preview} />
       <div className="bg-gray-100 dark:bg-transparent">
         <Layout className="max-w-screen-2xl pb-14 xl:pb-0 bg-white dark:bg-transparent">
           <LayoutMain className="min-h-screen bg-gray-100 dark:bg-black lg:bg-transparent">

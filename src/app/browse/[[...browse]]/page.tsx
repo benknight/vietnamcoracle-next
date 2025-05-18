@@ -9,6 +9,7 @@ import GraphQLClient from '../../../lib/WPGraphQLClient';
 import getCategoryLink from '../../../lib/getCategoryLink';
 import previewAds from '../../../lib/previewAds';
 import SidebarQuery from '../../../queries/Sidebar.gql';
+import MenuQuery from '../../../queries/Menu.gql';
 import Header from '../../../components/Header';
 import Hero, { HeroContent } from '../../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../../components/Layout';
@@ -21,6 +22,7 @@ import CategoryMap from './components/CategoryMap';
 import CategorySlider from './components/CategorySlider';
 import Collection from './components/Collection';
 import getPageData from './lib/getPageData';
+import Menu from '../../../components/Menu';
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { browse } = await params;
@@ -60,9 +62,10 @@ export default async function Browse({ params }: Props) {
   const { isEnabled: preview } = await draftMode();
   const api = new GraphQLClient(preview ? 'preview' : 'admin');
 
-  const [pageData, blockData] = await Promise.all([
+  const [pageData, blockData, menuData] = await Promise.all([
     getPageData(browse, preview),
     api.request(SidebarQuery),
+    api.request(MenuQuery),
   ]);
 
   if (!pageData?.category) {
@@ -121,7 +124,12 @@ export default async function Browse({ params }: Props) {
 
   return (
     <div className="relative bg-white dark:bg-gray-950 min-h-screen">
-      <Header navCategory={navCategory} preview={preview} fullWidth />
+      <Header
+        menu={<Menu data={menuData} fullWidth />}
+        navCategory={navCategory}
+        preview={preview}
+        fullWidth
+      />
       {isHome ? (
         <CategorySlider data={pageData.category.slider} />
       ) : (

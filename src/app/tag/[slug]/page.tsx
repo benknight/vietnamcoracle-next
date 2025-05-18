@@ -10,7 +10,9 @@ import GraphQLClient from '../../../lib/WPGraphQLClient';
 import getSEOMetadata from '../../../lib/getSEOMetadata';
 import TagQuery from '../../../queries/Tag.gql';
 import SidebarQuery from '../../../queries/Sidebar.gql';
+import MenuQuery from '../../../queries/Menu.gql';
 import { Suspense } from 'react';
+import Menu from '../../../components/Menu';
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { slug } = await params;
@@ -42,23 +44,28 @@ export default async function Tag({ params }: Props) {
 
   const api = new GraphQLClient(preview ? 'preview' : 'admin');
 
-  const [data, blockData] = await Promise.all([
+  const [pageData, blockData, menuData] = await Promise.all([
     api.request(TagQuery, { slug }),
     api.request(SidebarQuery),
+    api.request(MenuQuery),
   ]);
 
   return (
     <div className="relative bg-white dark:bg-gray-950 min-h-screen">
-      <Header preview={preview} fullWidth />
+      <Header
+        menu={<Menu data={menuData} fullWidth />}
+        preview={preview}
+        fullWidth
+      />
       <Hero
-        imgSm={data.tag.cover?.small || data.defaultImages?.cover.small}
-        imgLg={data.tag.cover?.large || data.defaultImages?.cover.large}
+        imgSm={pageData.tag.cover?.small || pageData.defaultImages?.cover.small}
+        imgLg={pageData.tag.cover?.large || pageData.defaultImages?.cover.large}
         priority
         theme="dark">
         <HeroContent theme="dark">
           <div className="page-wrap">
             <h1 className="font-display text-2xl md:text-3xl lg:text-3xl leading-tight pb-4 dark:pb-0">
-              Posts tagged <i>“{data.tag.name}”</i>
+              Posts tagged <i>“{pageData.tag.name}”</i>
             </h1>
           </div>
         </HeroContent>
@@ -66,7 +73,7 @@ export default async function Tag({ params }: Props) {
       <Layout className="bg-white dark:bg-gray-950 pb-14 xl:pb-0">
         <LayoutMain>
           <Suspense>
-            <GridListTabGroup posts={data.tag.posts.nodes} />
+            <GridListTabGroup posts={pageData.tag.posts.nodes} />
           </Suspense>
         </LayoutMain>
         <LayoutSidebar className="xl:pt-14 xl:shadow-xl">

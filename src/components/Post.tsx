@@ -14,13 +14,14 @@ import Footer from './Footer';
 import Header from './Header';
 
 interface Props {
+  menu: React.ReactNode;
   post: Awaited<ReturnType<typeof preparePostData>>;
   preview: boolean;
   sidebarBlocks: React.ComponentProps<typeof SidebarDefault>['blocks'];
 }
 
 export default function Post(props: Props) {
-  const { post, preview, sidebarBlocks } = props;
+  const { menu, post, preview, sidebarBlocks } = props;
 
   return (
     <div className="force-light-theme text-gray-800">
@@ -35,7 +36,12 @@ export default function Post(props: Props) {
         </div>
       )}
       <div className="relative bg-white dark:bg-gray-950 min-h-screen">
-        <Header navCategory={post.navCategory} preview={preview} fullWidth />
+        <Header
+          menu={menu}
+          navCategory={post.navCategory}
+          preview={preview}
+          fullWidth
+        />
         <div className="bg-gray-100 dark:bg-black">
           <Hero
             className="max-w-screen-2xl mx-auto"

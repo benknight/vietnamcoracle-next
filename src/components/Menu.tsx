@@ -2,6 +2,7 @@
 import cx from 'classnames';
 import _groupBy from 'lodash/groupBy';
 import _keyBy from 'lodash/keyBy';
+import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react';
 import {
@@ -11,35 +12,44 @@ import {
   Transition,
 } from '@headlessui/react';
 import { ArrowLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
-import { HomeIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, HomeIcon } from '@heroicons/react/24/outline';
 import { CircularProgress } from '@mui/material';
-import { fetchMenu } from '../app/actions';
 import getCategoryLink from '../lib/getCategoryLink';
 
 interface Props {
-  children: React.ReactNode;
-  className?: string;
+  data: {
+    menuItems: {
+      nodes: {
+        id: string;
+        label: string;
+        parentId: string | null;
+        path: string;
+        url: string;
+      }[];
+    };
+  };
   fullWidth?: boolean;
 }
 
-export default function Menu({ children, className = '', fullWidth }: Props) {
-  const [data, setData] = useState<Awaited<ReturnType<typeof fetchMenu>>>();
-
-  useEffect(() => {
-    fetchMenu().then(data => setData(data));
-  }, []);
-
+export default function Menu({ data, fullWidth }: Props) {
   return (
     <Popover>
       {({ open }) => (
         <>
           <PopoverButton
-            className={cx(
-              className,
-              'flex items-center justify-center h-11 min-w-[2.5rem] uppercase text-xs rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 active:bg-gray-300 dark:active:bg-gray-600 focus:outline-none focus-visible:bg-gray-200 dark:focus-visible:bg-gray-700',
-            )}
+            className="scale-90 lg:scale-100 origin-left flex items-center justify-center h-11 min-w-[2.5rem] uppercase text-xs rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 active:bg-gray-300 dark:active:bg-gray-600 focus:outline-none focus-visible:bg-gray-200 dark:focus-visible:bg-gray-700"
             id="menu-button">
-            {children}
+            <Bars3Icon className="w-5 h-5 mx-3" />
+            <div className="flex -ml-1">
+              <Image
+                alt="Vietnam Coracle logo"
+                className="rounded-full"
+                height={44}
+                loading="eager"
+                src="/logo.svg"
+                width={44}
+              />
+            </div>
           </PopoverButton>
           <Transition
             show={open}

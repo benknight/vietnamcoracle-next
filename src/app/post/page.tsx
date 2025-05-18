@@ -5,10 +5,12 @@ import { SearchParams } from 'next/dist/server/request/search-params';
 import PatronOnlyContentGate from '../../components/PatronOnlyContentGate';
 import Header from '../../components/Header';
 import Post from '../../components/Post';
-import GraphQLClient from '../../lib/WPGraphQLClient';
+import WPGraphQLClient from '../../lib/WPGraphQLClient';
 import preparePostData from '../../lib/preparePostData';
 import PostQuery from '../../queries/Post.gql';
 import SidebarQuery from '../../queries/Sidebar.gql';
+import MenuQuery from '../../queries/Menu.gql';
+import Menu from '../../components/Menu';
 
 interface Props {
   searchParams: Promise<SearchParams>;
@@ -25,7 +27,10 @@ export default async function SSRPost({ searchParams }: Props) {
     return permanentRedirect('/');
   }
 
-  const api = new GraphQLClient(preview ? 'preview' : 'admin');
+  const api = new WPGraphQLClient(
+    preview ? 'preview' : 'admin',
+    preview ? {} : { next: { revalidate: 60 * 60 * 1 } },
+  );
 
   const data = await api.request(
     gql`
@@ -127,10 +132,16 @@ export default async function SSRPost({ searchParams }: Props) {
     }
   }
 
+  const menuPromise = api.request(MenuQuery);
+
   if (renderPatreonButton) {
     return (
       <>
-        <Header preview={preview} fullWidth />
+        <Header
+          menu={<Menu data={await menuPromise} fullWidth />}
+          preview={preview}
+          fullWidth
+        />
         <PatronOnlyContentGate {...gateProps} />
       </>
     );
@@ -145,16 +156,24 @@ export default async function SSRPost({ searchParams }: Props) {
     return notFound();
   }
 
-  const [postData, blockData] = await Promise.all([
+  const [postData, blockData, menuData] = await Promise.all([
     api.request(PostQuery, {
       preview: Boolean(preview),
       id: postId,
       idType: 'DATABASE_ID',
     }),
     api.request(SidebarQuery),
+    menuPromise,
   ]);
 
   const post = await preparePostData(postData, blockData, preview);
 
-  return <Post post={post} preview={preview} sidebarBlocks={blockData} />;
+  return (
+    <Post
+      menu={<Menu data={menuData} fullWidth />}
+      post={post}
+      preview={preview}
+      sidebarBlocks={blockData}
+    />
+  );
 }

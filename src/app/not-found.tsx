@@ -1,23 +1,19 @@
-'use client';
-import cx from 'classnames';
-import { usePathname } from 'next/navigation';
 import Header from '../components/Header';
+import Menu from '../components/Menu';
+import WPGraphQLClient from '../lib/WPGraphQLClient';
+import MenuQuery from '../queries/Menu.gql';
+import NotFound from '../components/NotFound';
 
-export default function NotFoundPage() {
-  const pathname = usePathname();
-  const emojiClassName = 'pl-4 sm:pl-16 text-4xl leading-normal text-gray-300';
+export default async function NotFoundPage() {
+  const api = new WPGraphQLClient('admin', {
+    next: { revalidate: 60 * 60 * 1 }, // 1 hour
+  });
+  const menuData = await api.request(MenuQuery);
 
   return (
     <>
-      <Header fullWidth />
-      <div className="page-wrap page-wrap--center font-display">
-        <div className={emojiClassName}>👀…</div>
-        <div className="py-4 text-center">
-          <h1 className="text-3xl mb-2 text-center">Page Not Found</h1>
-          Sorry, the resource requested at <em>{pathname}</em> was not found.
-        </div>
-        <div className={cx(emojiClassName, 'scale-x-[-1]')}>👀…</div>
-      </div>
+      <Header menu={<Menu data={menuData} fullWidth />} fullWidth />
+      <NotFound />
     </>
   );
 }

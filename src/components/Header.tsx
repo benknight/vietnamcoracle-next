@@ -1,23 +1,26 @@
 'use client';
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
-import Image from 'next/legacy/image';
 import Link from 'next/link';
 import { useRef, useState, useEffect, Suspense } from 'react';
 import Headroom from 'react-headroom';
-import { Bars3Icon } from '@heroicons/react/24/outline';
-import Menu from './Menu';
 import Nav from './Nav';
 import SearchForm from './SearchForm';
 import ExitPreviewLink from './ExitPreviewLink';
 
 interface Props {
+  menu?: React.ReactNode;
   navCategory?: string;
   preview?: boolean;
   fullWidth?: boolean;
 }
 
-export default function Header({ navCategory, preview, fullWidth }: Props) {
+export default function Header({
+  menu,
+  navCategory,
+  preview,
+  fullWidth,
+}: Props) {
   const ref = useRef<HTMLDivElement>(null);
   const [searchFocused, setSearchFocused] = useState(false);
   const [pinStart, setPinStart] = useState(0);
@@ -49,21 +52,7 @@ export default function Header({ navCategory, preview, fullWidth }: Props) {
               fullWidth ? '' : 'max-w-screen-2xl mx-auto',
             )}>
             <div className="z-20 absolute top-0 left-0 flex items-center h-14 lg:h-16 px-1 sm:pl-2">
-              <Menu
-                className="scale-90 lg:scale-100 origin-left"
-                fullWidth={fullWidth}>
-                <Bars3Icon className="w-5 h-5 mx-3" />
-                <div className="flex -ml-1">
-                  <Image
-                    alt="Vietnam Coracle logo"
-                    className="rounded-full"
-                    height={44}
-                    loading="eager"
-                    src="/logo.svg"
-                    width={44}
-                  />
-                </div>
-              </Menu>
+              {menu}
               <Link
                 href="/"
                 className="flex items-center hover:text-black dark:hover:text-white">

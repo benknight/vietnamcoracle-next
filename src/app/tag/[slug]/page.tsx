@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import Header from '../../../components/Header';
 import Hero, { HeroContent } from '../../../components/Hero';

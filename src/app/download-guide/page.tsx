@@ -1,5 +1,4 @@
 import { groupBy } from 'lodash';
-import { SearchParams } from 'next/dist/server/request/search-params';
 import { Fragment } from 'react';
 import Stripe from 'stripe';
 import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
@@ -12,7 +11,10 @@ interface File {
 }
 
 interface Props {
-  searchParams: Promise<SearchParams>;
+  searchParams: Promise<{
+    checkout_session_id?: string;
+    guides_choice?: string;
+  }>;
 }
 
 export default async function DownloadGuide({ searchParams }: Props) {

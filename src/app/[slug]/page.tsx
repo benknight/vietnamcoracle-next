@@ -1,5 +1,5 @@
 import { gql } from 'graphql-request';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
 import Post from '../../components/Post';

@@ -1,7 +1,7 @@
 import '../styles/wp-global.css';
 import '../styles/fonts.css';
 import '../styles/global.css';
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import Script from 'next/script';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';

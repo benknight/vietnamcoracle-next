@@ -1,7 +1,6 @@
 import { gql } from 'graphql-request';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { cookies, draftMode } from 'next/headers';
-import { SearchParams } from 'next/dist/server/request/search-params';
 import PatronOnlyContentGate from '../../components/PatronOnlyContentGate';
 import Header from '../../components/Header';
 import Post from '../../components/Post';
@@ -13,7 +12,7 @@ import MenuQuery from '../../queries/Menu.gql';
 import Menu from '../../components/Menu';
 
 interface Props {
-  searchParams: Promise<SearchParams>;
+  searchParams: Promise<{ p?: string; state?: string }>;
 }
 
 export default async function SSRPost({ searchParams }: Props) {

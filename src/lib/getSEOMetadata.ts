@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import cmsToNextUrls from './cmsToNextUrls';
 
 export default function getSEOMetadata(data: any): Metadata {

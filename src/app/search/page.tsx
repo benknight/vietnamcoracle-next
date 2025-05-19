@@ -1,13 +1,12 @@
 import _flatten from 'lodash/flatten';
 import _upperFirst from 'lodash/upperFirst';
-import { Metadata } from 'next';
-import { SearchParams } from 'next/dist/server/request/search-params';
+import type { Metadata } from 'next';
 import { headers } from 'next/headers';
 import { userAgent } from 'next/server';
 import SearchResults from './components/SearchResults';
 
 interface Props {
-  searchParams: Promise<SearchParams>;
+  searchParams: Promise<{ query?: string }>;
 }
 
 export default async function Search(props: Props) {

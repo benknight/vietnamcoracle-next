@@ -51,9 +51,6 @@ query Post($preview: Boolean!, $id: ID!, $idType: ContentNodeIdTypeEnum!) {
           title
         }
       }
-      seo {
-        fullHead
-      }
       thumbnails {
         thumbnailHeader {
           ...HeroImageData
@@ -94,9 +91,6 @@ query Post($preview: Boolean!, $id: ID!, $idType: ContentNodeIdTypeEnum!) {
           content
           title
         }
-      }
-      seo {
-        fullHead
       }
       settings {
         useNextStyles

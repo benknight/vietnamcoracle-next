@@ -1,13 +1,12 @@
 'use client';
 import cx from 'classnames';
 import _shuffle from 'lodash/shuffle';
-import { ReactNode, RefObject } from 'react';
 import { ArrowLeftIcon, ArrowRightIcon } from '@heroicons/react/24/outline';
 import useCarousel from '../lib/useCarousel';
 
 interface Props {
-  items: ReactNode[];
-  heading: ReactNode;
+  items: React.ReactNode[];
+  heading: React.ReactNode;
 }
 
 const Collection = ({ items, heading }: Props) => {
@@ -59,7 +58,7 @@ const Collection = ({ items, heading }: Props) => {
         <div className="overflow-hidden">
           <ol
             className="sm:snap-x xl:snap-none flex pb-8 -mb-8 pr-4 md:pr-8 overflow-y-auto"
-            ref={scrollAreaRef as RefObject<HTMLOListElement>}>
+            ref={scrollAreaRef as React.RefObject<HTMLOListElement>}>
             {items.map((item, index) => (
               <li
                 className="snap-start flex shrink-0 w-4/5 sm:w-3/7 lg:w-1/3 xl:min-w-[20rem] xl:max-w-[25rem] py-1 pl-3 lg:pl-4 xl:pl-3 2xl:pl-6 md:first:pl-8"

@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import { ReactNode } from 'react';
 
 export interface BlockData {
   description: string;
@@ -20,7 +19,7 @@ export interface BlockData {
   mid?: string;
 }
 
-export const BlockTitle = (props: { children: ReactNode }) => (
+export const BlockTitle = (props: { children: React.ReactNode }) => (
   <h3 className="text-base font-bold xs:text-xl lg:text-2xl xl:text-xl 2xl:text-[22px] mb-3">
     {props.children}
   </h3>
@@ -28,7 +27,7 @@ export const BlockTitle = (props: { children: ReactNode }) => (
 
 export const BlockContent = (props: {
   className?: string;
-  children: ReactNode;
+  children: React.ReactNode;
 }) => (
   <div
     className={cx(
@@ -42,7 +41,7 @@ export const BlockContent = (props: {
   </div>
 );
 
-const Block = (props: { className?: string; children: ReactNode }) => (
+const Block = (props: { className?: string; children: React.ReactNode }) => (
   <aside className={cx(props.className, 'c-block text-center font-display')}>
     {props.children}
   </aside>

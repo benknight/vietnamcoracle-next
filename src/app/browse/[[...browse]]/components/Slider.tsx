@@ -2,7 +2,7 @@
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import _throttle from 'lodash/throttle';
-import { forwardRef, useRef, useState, useEffect, ReactNode } from 'react';
+import { forwardRef, useRef, useState, useEffect } from 'react';
 import { RadioGroup, Radio } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import useMediaQuery from '@mui/material/useMediaQuery';
@@ -225,7 +225,7 @@ export function Slider({ className = '', children }) {
       </div>
       {(() => {
         if (slideCount === 0) return null;
-        const buttons: ReactNode[] = [];
+        const buttons: React.ReactNode[] = [];
         for (let i = 0; i < slideCount; i++) {
           buttons.push(
             <Radio

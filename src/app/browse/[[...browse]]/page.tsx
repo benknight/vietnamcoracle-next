@@ -8,6 +8,7 @@ import { Fragment } from 'react';
 import GraphQLClient from '../../../lib/WPGraphQLClient';
 import getCategoryLink from '../../../lib/getCategoryLink';
 import previewAds from '../../../lib/previewAds';
+import cmsToNextUrls from '../../../lib/cmsToNextUrls';
 import SidebarQuery from '../../../queries/Sidebar.gql';
 import MenuQuery from '../../../queries/Menu.gql';
 import Header from '../../../components/Header';
@@ -15,13 +16,13 @@ import Hero, { HeroContent } from '../../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../../components/Layout';
 import PostCard from '../../../components/PostCard';
 import SidebarDefault from '../../../components/SidebarDefault';
+import Menu from '../../../components/Menu';
 import getSEOMetadata from '../../../lib/getSEOMetadata';
 import BrowseHero from './components/BrowseHero';
 import CategoryMap from './components/CategoryMap';
 import CategorySlider from './components/CategorySlider';
 import Collection from './components/Collection';
 import getPageData from './lib/getPageData';
-import Menu from '../../../components/Menu';
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { browse } = await params;
@@ -128,6 +129,14 @@ export default async function Browse({ params }: Props) {
 
   return (
     <div className="relative bg-white dark:bg-gray-950 min-h-screen">
+      {pageData.category.seo?.schema?.raw && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: cmsToNextUrls(pageData.category.seo.schema.raw),
+          }}
+        />
+      )}
       <Header
         menu={<Menu data={menuData} fullWidth />}
         navCategory={navCategory}

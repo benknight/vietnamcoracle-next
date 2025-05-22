@@ -13,6 +13,7 @@ import SidebarQuery from '../../../queries/Sidebar.gql';
 import MenuQuery from '../../../queries/Menu.gql';
 import { Suspense } from 'react';
 import Menu from '../../../components/Menu';
+import cmsToNextUrls from '../../../lib/cmsToNextUrls';
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { slug } = await params;
@@ -52,6 +53,14 @@ export default async function Tag({ params }: Props) {
 
   return (
     <div className="relative bg-white dark:bg-gray-950 min-h-screen">
+      {pageData.tag.seo?.schema?.raw && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: cmsToNextUrls(pageData.tag.seo.schema.raw),
+          }}
+        />
+      )}
       <Header
         menu={<Menu data={menuData} fullWidth />}
         preview={preview}

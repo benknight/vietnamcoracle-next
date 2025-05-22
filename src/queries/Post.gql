@@ -92,6 +92,11 @@ query Post($preview: Boolean!, $id: ID!, $idType: ContentNodeIdTypeEnum!) {
           title
         }
       }
+      seo {
+        schema {
+          raw
+        }
+      }
       settings {
         useNextStyles
       }

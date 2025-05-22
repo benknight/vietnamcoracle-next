@@ -22,6 +22,9 @@ fragment TaxonomySEOData on TaxonomySEO {
   opengraphTitle
   opengraphType
   opengraphUrl
+  schema {
+    raw
+  }
   title
   twitterDescription
   twitterImage {

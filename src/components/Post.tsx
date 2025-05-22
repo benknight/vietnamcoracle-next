@@ -2,6 +2,7 @@ import '../styles/wp-blocks.css';
 import '../custom-elements';
 import Link from 'next/link';
 import { Fragment } from 'react';
+import cmsToNextUrls from '../lib/cmsToNextUrls';
 import preparePostData from '../lib/preparePostData';
 import Hero, { HeroContent } from './Hero';
 import Layout, { LayoutMain, LayoutSidebar } from './Layout';
@@ -24,6 +25,14 @@ export default function Post(props: Props) {
 
   return (
     <div className="force-light-theme text-gray-800">
+      {post.contentNode.seo?.schema?.raw && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: cmsToNextUrls(post.contentNode.seo.schema.raw),
+          }}
+        />
+      )}
       {post.ads?.header?.enabled && (
         <div className="bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-[2]">
           <div

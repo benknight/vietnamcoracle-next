@@ -150,10 +150,7 @@ export default async function SSRPost({ searchParams }: Props) {
   if (!isRestricted) {
     return permanentRedirect(
       // Encode any special characters in the URL
-      data.contentNode?.uri
-        .split('/')
-        .map(component => encodeURIComponent(component))
-        .join('/'),
+      data.contentNode?.uri.split('/').map(encodeURIComponent).join('/'),
     );
   }
 

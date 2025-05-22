@@ -62,6 +62,11 @@ const nextConfig: NextConfig = {
         source: '/browse/',
       },
       {
+        destination: '/about/',
+        permanent: true,
+        source: '/author/tomdivers/',
+      },
+      {
         destination: '/browse/:path*/',
         permanent: true,
         source: '/category/features-guides/:path*',

@@ -82,6 +82,11 @@ export default async function preparePostData(
   // Lazy load all iframes
   $('iframe').attr({ loading: 'lazy' });
 
+  // Add rel="sponsored noopener noreferrer" to any links with gofollow class
+  $('a.gofollow').attr({
+    rel: 'sponsored noopener noreferrer',
+  });
+
   // Add overlay to Google Maps embeds
   $('iframe')
     .filter(function () {

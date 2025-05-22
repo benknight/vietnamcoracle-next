@@ -103,11 +103,15 @@ const PostCard = ({
       ad.code?.match(
         /data-track=(?:(['"])(?<trackingCode>[\s\S]*?)\1|([^\s>]+))/,
       )?.groups.trackingCode ?? undefined;
+
+    const isExternalLink = ad.cta.url.indexOf('vietnamcoracle.com') === -1;
+
     return (
       <a
         className={cx(parentClassName, trackingCode ? 'gofollow' : '')}
         href={ad.cta.url}
-        target="_blank"
+        target={isExternalLink ? '_blank' : undefined}
+        rel={isExternalLink ? 'sponsored noopener noreferrer' : undefined}
         data-track={trackingCode}>
         {inner}
       </a>

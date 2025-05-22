@@ -62,12 +62,12 @@ const nextConfig: NextConfig = {
         source: '/browse/',
       },
       {
-        destination: '/browse/:path*',
+        destination: '/browse/:path*/',
         permanent: true,
         source: '/category/features-guides/:path*',
       },
       {
-        destination: '/browse/:path*',
+        destination: '/browse/:path*/',
         permanent: true,
         source: '/category/:path*',
       },

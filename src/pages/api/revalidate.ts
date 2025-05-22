@@ -13,6 +13,7 @@ export default async function handler(
     await Promise.all(paths.split(',').map(path => response.revalidate(path)));
     return response.send({ success: true });
   } catch (error) {
-    return response.status(500).send({ error, success: false });
+    console.log(error);
+    return response.status(200).send({ error: error.message, success: false });
   }
 }

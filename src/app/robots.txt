@@ -2,4 +2,5 @@ User-Agent: *
 Allow: /
 Disallow: /download-guide/
 Disallow: /search/
+Disallow: /api/
 Sitemap: https://www.vietnamcoracle.com/sitemap.xml

@@ -1,13 +1,13 @@
 import { oauthRedirect } from '../config/patreon';
 
-type Props = {
+interface Props {
   patron?: {
     email?: string;
     name: string;
   };
   patreonLevel?: number;
   returnTo: string;
-};
+}
 
 export default function PatronOnlyContentGate({
   patron,

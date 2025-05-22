@@ -18,10 +18,10 @@ export type PostMediaBlockPost = {
   title: string;
 };
 
-type Props = {
+interface Props {
   navCategory?: string;
   post: PostMediaBlockPost;
-};
+}
 
 function PostMediaBlock({ post, navCategory }: Props) {
   return (

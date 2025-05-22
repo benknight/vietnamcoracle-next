@@ -7,10 +7,10 @@ import GraphQLClient from '../lib/WPGraphQLClient';
 import useWaitCursor from '../lib/useWaitCursor';
 import CreateCommentQuery from '../queries/CreateComment.gql';
 
-type Props = {
+interface Props {
   post: number;
   parent?: any;
-};
+}
 
 export default function CommentForm({ parent, post }: Props) {
   const [busy, setBusy] = useState(false);

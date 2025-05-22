@@ -6,7 +6,6 @@ import Hero, { HeroContent } from '../../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../../components/Layout';
 import { GridListTabGroup } from '../../../components/GridListTab';
 import SidebarDefault from '../../../components/SidebarDefault';
-import Footer from '../../../components/Footer';
 import GraphQLClient from '../../../lib/WPGraphQLClient';
 import getSEOMetadata from '../../../lib/getSEOMetadata';
 import TagQuery from '../../../queries/Tag.gql';
@@ -79,7 +78,6 @@ export default async function Tag({ params }: Props) {
         </LayoutMain>
         <LayoutSidebar className="xl:pt-14 xl:shadow-xl">
           <SidebarDefault blocks={blockData} />
-          <Footer />
         </LayoutSidebar>
       </Layout>
     </div>

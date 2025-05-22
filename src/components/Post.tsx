@@ -10,7 +10,6 @@ import PostCard from './PostCard';
 import CommentForm from './CommentForm';
 import CommentThread from './CommentThread';
 import SidebarDefault from './SidebarDefault';
-import Footer from './Footer';
 import Header from './Header';
 
 interface Props {
@@ -162,7 +161,6 @@ export default function Post(props: Props) {
             </LayoutMain>
             <LayoutSidebar>
               <SidebarDefault blocks={sidebarBlocks} />
-              <Footer />
             </LayoutSidebar>
           </Layout>
         </div>

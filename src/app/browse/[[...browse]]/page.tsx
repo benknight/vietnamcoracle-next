@@ -15,7 +15,6 @@ import Hero, { HeroContent } from '../../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../../components/Layout';
 import PostCard from '../../../components/PostCard';
 import SidebarDefault from '../../../components/SidebarDefault';
-import Footer from '../../../components/Footer';
 import getSEOMetadata from '../../../lib/getSEOMetadata';
 import BrowseHero from './components/BrowseHero';
 import CategoryMap from './components/CategoryMap';
@@ -263,7 +262,6 @@ export default async function Browse({ params }: Props) {
         </LayoutMain>
         <LayoutSidebar className="xl:pt-14 xl:shadow-xl">
           <SidebarDefault blocks={blockData} />
-          <Footer />
         </LayoutSidebar>
       </Layout>
     </div>

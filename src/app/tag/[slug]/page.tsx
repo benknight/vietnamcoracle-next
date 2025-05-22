@@ -1,19 +1,19 @@
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { notFound } from 'next/navigation';
-import Header from '../../../components/Header';
-import Hero, { HeroContent } from '../../../components/Hero';
-import Layout, { LayoutMain, LayoutSidebar } from '../../../components/Layout';
-import { GridListTabGroup } from '../../../components/GridListTab';
-import SidebarDefault from '../../../components/SidebarDefault';
-import GraphQLClient from '../../../lib/WPGraphQLClient';
-import getSEOMetadata from '../../../lib/getSEOMetadata';
-import TagQuery from '../../../queries/Tag.gql';
-import SidebarQuery from '../../../queries/Sidebar.gql';
-import MenuQuery from '../../../queries/Menu.gql';
 import { Suspense } from 'react';
-import Menu from '../../../components/Menu';
-import cmsToNextUrls from '../../../lib/cmsToNextUrls';
+import Header from '@/components/Header';
+import Hero, { HeroContent } from '@/components/Hero';
+import Layout, { LayoutMain, LayoutSidebar } from '@/components/Layout';
+import { GridListTabGroup } from '@/components/GridListTab';
+import SidebarDefault from '@/components/SidebarDefault';
+import cmsToNextUrls from '@/lib/cmsToNextUrls';
+import getSEOMetadata from '@/lib/getSEOMetadata';
+import GraphQLClient from '@/lib/WPGraphQLClient';
+import TagQuery from '@/queries/Tag.gql';
+import SidebarQuery from '@/queries/Sidebar.gql';
+import MenuQuery from '@/queries/Menu.gql';
+import Menu from '@/components/Menu';
 
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { slug } = await params;

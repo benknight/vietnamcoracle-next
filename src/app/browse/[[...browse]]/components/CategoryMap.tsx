@@ -1,11 +1,7 @@
 import cx from 'classnames';
 import { ArrowTopRightOnSquareIcon } from '@heroicons/react/24/solid';
-import {
-  BlockContent,
-  BlockData,
-  BlockTitle,
-} from '../../../../components/Block';
-import MapOverlay from '../../../../components/MapOverlay';
+import { BlockContent, BlockData, BlockTitle } from '@/components/Block';
+import MapOverlay from '@/components/MapOverlay';
 
 interface Props {
   mapBlock: BlockData;

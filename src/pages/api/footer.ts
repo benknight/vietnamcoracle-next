@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request';
 import type { NextApiRequest, NextApiResponse } from 'next';
-import GraphQLClient from '../../lib/WPGraphQLClient';
+import GraphQLClient from '@/lib/WPGraphQLClient';
 
 export default async function footer(
   _req: NextApiRequest,

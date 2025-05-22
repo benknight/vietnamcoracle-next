@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { oauthRedirect } from '../../../config/patreon';
+import { oauthRedirect } from '@/config/patreon';
 
 const cookieKey = 'patreon_token';
 

@@ -1,9 +1,9 @@
 import { draftMode } from 'next/headers';
-import Header from '../../components/Header';
-import Layout, { LayoutMain } from '../../components/Layout';
-import WPGraphQLClient from '../../lib/WPGraphQLClient';
-import MenuQuery from '../../queries/Menu.gql';
-import Menu from '../../components/Menu';
+import WPGraphQLClient from '@/lib/WPGraphQLClient';
+import MenuQuery from '@/queries/Menu.gql';
+import Header from '@/components/Header';
+import Layout, { LayoutMain } from '@/components/Layout';
+import Menu from '@/components/Menu';
 
 interface Props {
   children: React.ReactNode;

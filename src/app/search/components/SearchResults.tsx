@@ -4,9 +4,9 @@ import _flatten from 'lodash/flatten';
 import _upperFirst from 'lodash/upperFirst';
 import { useState } from 'react';
 import useSWR from 'swr';
-import useWaitCursor from '../../../lib/useWaitCursor';
+import useWaitCursor from '@/lib/useWaitCursor';
+import PostMediaBlock from '@/components/PostMediaBlock';
 import { fetchAlgoliaResults, fetchWpResults } from '../actions';
-import PostMediaBlock from '../../../components/PostMediaBlock';
 
 export default function SearchResults({ query }: { query: String }) {
   const [pageCount, setPageCount] = useState(1);

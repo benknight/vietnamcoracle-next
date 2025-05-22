@@ -13,9 +13,9 @@ import FacebookIcon from '@mui/icons-material/Facebook';
 import PinterestIcon from '@mui/icons-material/Pinterest';
 import RedditIcon from '@mui/icons-material/Reddit';
 import TwitterIcon from '@mui/icons-material/Twitter';
+import breakpoints from '@/config/breakpoints';
+import cmsToNextUrls from '@/lib/cmsToNextUrls';
 import tailwindConfig from '../../tailwind.config.js';
-import breakpoints from '../config/breakpoints';
-import cmsToNextUrls from '../lib/cmsToNextUrls';
 
 const {
   theme: {

@@ -1,15 +1,15 @@
 import { gql } from 'graphql-request';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { cookies, draftMode } from 'next/headers';
-import PatronOnlyContentGate from '../../components/PatronOnlyContentGate';
-import Header from '../../components/Header';
-import Post from '../../components/Post';
-import WPGraphQLClient from '../../lib/WPGraphQLClient';
-import preparePostData from '../../lib/preparePostData';
-import PostQuery from '../../queries/Post.gql';
-import SidebarQuery from '../../queries/Sidebar.gql';
-import MenuQuery from '../../queries/Menu.gql';
-import Menu from '../../components/Menu';
+import WPGraphQLClient from '@/lib/WPGraphQLClient';
+import preparePostData from '@/lib/preparePostData';
+import PostQuery from '@/queries/Post.gql';
+import SidebarQuery from '@/queries/Sidebar.gql';
+import MenuQuery from '@/queries/Menu.gql';
+import PatronOnlyContentGate from '@/components/PatronOnlyContentGate';
+import Header from '@/components/Header';
+import Menu from '@/components/Menu';
+import Post from '@/components/Post';
 
 interface Props {
   searchParams: Promise<{ p?: string; state?: string }>;

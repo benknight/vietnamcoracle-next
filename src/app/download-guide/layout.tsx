@@ -1,7 +1,7 @@
-import Header from '../../components/Header';
-import Menu from '../../components/Menu';
-import WPGraphQLClient from '../../lib/WPGraphQLClient';
-import MenuQuery from '../../queries/Menu.gql';
+import Header from '@/components/Header';
+import Menu from '@/components/Menu';
+import WPGraphQLClient from '@/lib/WPGraphQLClient';
+import MenuQuery from '@/queries/Menu.gql';
 
 export default async function DownloadGuideLayout({
   children,

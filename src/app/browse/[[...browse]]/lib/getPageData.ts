@@ -1,5 +1,5 @@
-import GraphQLClient from '../../../../lib/WPGraphQLClient';
-import BrowseCategoryQuery from '../../../../queries/BrowseCategory.gql';
+import GraphQLClient from '@/lib/WPGraphQLClient';
+import BrowseCategoryQuery from '@/queries/BrowseCategory.gql';
 
 export default async function getPageData(browse: string[], preview: Boolean) {
   const api = new GraphQLClient(preview ? 'preview' : 'admin');

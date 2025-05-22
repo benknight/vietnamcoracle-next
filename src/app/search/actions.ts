@@ -1,9 +1,9 @@
 'use server';
 import { headers } from 'next/headers';
-import { PostMediaBlockPost } from '../../components/PostMediaBlock';
-import WPRestClient from '../../lib/WPRestClient';
-import GraphQLClient from '../../lib/WPGraphQLClient';
-import SearchResultsQuery from '../../queries/SearchResults.gql';
+import WPRestClient from '@/lib/WPRestClient';
+import GraphQLClient from '@/lib/WPGraphQLClient';
+import SearchResultsQuery from '@/queries/SearchResults.gql';
+import { PostMediaBlockPost } from '@/components/PostMediaBlock';
 
 const { ALGOLIA_APP_ID: appId, ALGOLIA_KEY_ADMIN: key } = process.env;
 

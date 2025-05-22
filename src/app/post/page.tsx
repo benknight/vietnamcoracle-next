@@ -148,7 +148,13 @@ export default async function SSRPost({ searchParams }: Props) {
 
   // TODO: this could create a redirect loop
   if (!isRestricted) {
-    return permanentRedirect(data.contentNode?.uri);
+    return permanentRedirect(
+      // Encode any special characters in the URL
+      data.contentNode?.uri
+        .split('/')
+        .map(component => encodeURIComponent(component))
+        .join('/'),
+    );
   }
 
   if (isRestricted && !userCanView) {

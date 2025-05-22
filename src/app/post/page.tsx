@@ -52,16 +52,6 @@ export default async function SSRPost({ searchParams }: Props) {
     return notFound();
   }
 
-  // useEffect(() => {
-  //   if (!preview && post) {
-  //     window.history.replaceState(
-  //       null,
-  //       '',
-  //       `${window.location.origin}${post.data.contentNode.uri}`,
-  //     );
-  //   }
-  // }, [post]);
-
   const isAdminPreview =
     preview && cookieStore.get('isAdminPreview')?.value === '1';
 

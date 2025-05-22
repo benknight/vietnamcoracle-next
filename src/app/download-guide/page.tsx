@@ -215,8 +215,7 @@ export default async function DownloadGuide({ searchParams }: Props) {
                       <a
                         className="btn w-full text-wrap h-auto min-h-8 text-center py-2"
                         href={`/api/download-link?${urlParams.toString()}`}
-                        target="_blank"
-                        rel="noopener noreferrer">
+                        target="_blank">
                         {file.name}
                       </a>
                     </li>

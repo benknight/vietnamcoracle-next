@@ -111,7 +111,7 @@ const PostCard = ({
         className={cx(parentClassName, trackingCode ? 'gofollow' : '')}
         href={ad.cta.url}
         target={isExternalLink ? '_blank' : undefined}
-        rel={isExternalLink ? 'sponsored noopener noreferrer' : undefined}
+        rel={isExternalLink ? 'sponsored noopener' : undefined}
         data-track={trackingCode}>
         {inner}
       </a>

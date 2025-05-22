@@ -27,16 +27,17 @@ import Menu from '../../../components/Menu';
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { browse } = await params;
   const { isEnabled: preview } = await draftMode();
+  const pageData = await getPageData(browse, preview);
 
-  try {
-    const pageData = await getPageData(browse, preview);
-    return getSEOMetadata((pageData.subcategory || pageData.category).seo);
-  } catch (error) {
-    console.error('Error generating metadata:', error);
-    return {
-      title: 'Error',
-    };
+  if (!pageData?.category) {
+    return notFound();
   }
+
+  if (browse[1] && !pageData.subcategory) {
+    return notFound();
+  }
+
+  return getSEOMetadata((pageData.subcategory || pageData.category).seo);
 }
 
 export const dynamic = 'force-static';

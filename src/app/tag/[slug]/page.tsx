@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
+import { notFound } from 'next/navigation';
 import Header from '../../../components/Header';
 import Hero, { HeroContent } from '../../../components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '../../../components/Layout';
@@ -18,18 +19,14 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   const { slug } = await params;
   const { isEnabled: preview } = await draftMode();
 
-  try {
-    const api = new GraphQLClient(preview ? 'preview' : 'admin');
-    const data = await api.request(TagQuery, { slug });
+  const api = new GraphQLClient(preview ? 'preview' : 'admin');
+  const data = await api.request(TagQuery, { slug });
 
-    return getSEOMetadata(data.tag.seo);
-  } catch (error) {
-    console.error('Error generating metadata:', error);
-
-    return {
-      title: 'Error',
-    };
+  if (!data?.tag) {
+    return notFound();
   }
+
+  return getSEOMetadata(data.tag.seo);
 }
 
 export const dynamic = 'force-static';
@@ -49,6 +46,10 @@ export default async function Tag({ params }: Props) {
     api.request(SidebarQuery),
     api.request(MenuQuery),
   ]);
+
+  if (!pageData?.tag) {
+    return notFound();
+  }
 
   return (
     <div className="relative bg-white dark:bg-gray-950 min-h-screen">

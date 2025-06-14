@@ -83,10 +83,6 @@ export default async function DownloadGuide({ searchParams }: Props) {
           link.line_items?.data[0].description || '',
         ]);
 
-      if (typeof guides_choice !== 'string') {
-        throw new Error('Unexpected guides choice format.');
-      }
-
       if (!guides_choice) {
         return (
           <DownloadGuideSelection
@@ -94,6 +90,10 @@ export default async function DownloadGuide({ searchParams }: Props) {
             maxSelection={maxSelection}
           />
         );
+      }
+
+      if (typeof guides_choice !== 'string') {
+        throw new Error('Unexpected guides choice format.');
       }
 
       const guidesChoice = guides_choice.split(',') ?? [];

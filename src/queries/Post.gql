@@ -40,7 +40,7 @@ query Post($preview: Boolean!, $id: ID!, $idType: ContentNodeIdTypeEnum!) {
     }
     ... on Page {
       commentStatus
-      comments(first: 1000) {
+      comments(first: 100) {
         nodes {
           ...CommentThreadCommentData
         }
@@ -81,7 +81,7 @@ query Post($preview: Boolean!, $id: ID!, $idType: ContentNodeIdTypeEnum!) {
           slug
         }
       }
-      comments(first: 1000) {
+      comments(first: 100) {
         nodes {
           ...CommentThreadCommentData
         }

@@ -1,0 +1,28 @@
+#import "./fragments/CommentThreadCommentData.gql"
+
+query AdditionalComments($id: ID!, $after: String!) {
+  contentNode(id: $id, idType: DATABASE_ID) {
+    ... on Page {
+      comments(first: 1000, after: $after) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        nodes {
+          ...CommentThreadCommentData
+        }
+      }
+    }
+    ... on Post {
+      comments(first: 1000, after: $after) {
+        pageInfo {
+          hasNextPage
+          endCursor
+        }
+        nodes {
+          ...CommentThreadCommentData
+        }
+      }
+    }
+  }
+}

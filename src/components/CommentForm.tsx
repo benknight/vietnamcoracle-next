@@ -8,11 +8,11 @@ import useWaitCursor from '../lib/useWaitCursor';
 import CreateCommentQuery from '../queries/CreateComment.gql';
 
 interface Props {
-  post: number;
+  postId: number;
   parent?: any;
 }
 
-export default function CommentForm({ parent, post }: Props) {
+export default function CommentForm({ parent, postId }: Props) {
   const [busy, setBusy] = useState(false);
   const [showForm, setShowForm] = useState(false);
 
@@ -24,7 +24,7 @@ export default function CommentForm({ parent, post }: Props) {
       const api = new GraphQLClient();
       const response = await api.request(CreateCommentQuery, {
         parent: parent?.id ?? null,
-        post,
+        postId,
         ...values,
       });
       if (response.createComment.success) {

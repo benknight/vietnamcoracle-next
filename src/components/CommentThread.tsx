@@ -32,7 +32,7 @@ const CommentHeader = ({ comment, isReply = false }) => (
   </div>
 );
 
-const CommentBody = ({ comment, post }) => {
+const CommentBody = ({ comment, postId }) => {
   return (
     <>
       <div
@@ -41,12 +41,17 @@ const CommentBody = ({ comment, post }) => {
           __html: comment.content,
         }}
       />
-      <CommentForm parent={comment} post={post} />
+      <CommentForm parent={comment} postId={postId} />
     </>
   );
 };
 
-export default function CommentThread({ comments, post }) {
+interface Props {
+  comments: any[];
+  postId: number;
+}
+
+export default function CommentThread({ comments, postId }: Props) {
   return (
     <ol>
       {comments
@@ -59,15 +64,15 @@ export default function CommentThread({ comments, post }) {
               bg-gray-100 dark:bg-gray-900 dark:text-gray-300 rounded-lg"
             key={comment.id}>
             <CommentHeader comment={comment} />
-            <CommentBody comment={comment} post={post} />
-            <CommentReplies all={comments} comment={comment} post={post} />
+            <CommentBody comment={comment} postId={postId} />
+            <CommentReplies all={comments} comment={comment} postId={postId} />
           </li>
         ))}
     </ol>
   );
 }
 
-const CommentReplies = ({ all, comment, post }) => {
+const CommentReplies = ({ all, comment, postId }) => {
   const replies = all
     .filter(reply => reply.parentId === comment.id)
     .sort((a, b) => a.databaseId - b.databaseId);
@@ -79,8 +84,8 @@ const CommentReplies = ({ all, comment, post }) => {
       {replies.map(reply => (
         <li className="mt-12 md:pl-8" key={reply.id}>
           <CommentHeader comment={reply} isReply />
-          <CommentBody comment={reply} post={post} />
-          <CommentReplies all={all} comment={reply} post={post} />
+          <CommentBody comment={reply} postId={postId} />
+          <CommentReplies all={all} comment={reply} postId={postId} />
         </li>
       ))}
     </ol>

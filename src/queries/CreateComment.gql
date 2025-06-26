@@ -3,13 +3,13 @@ mutation CreateComment(
   $email: String!
   $name: String!
   $parent: ID
-  $post: Int!
+  $postId: Int!
 ) {
   createComment(
     input: {
       author: $name
       authorEmail: $email
-      commentOn: $post
+      commentOn: $postId
       content: $comment
       parent: $parent
     }

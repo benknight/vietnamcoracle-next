@@ -8,6 +8,7 @@ import Layout, { LayoutMain, LayoutSidebar } from './Layout';
 import PostArticle from './PostArticle';
 import PostCard from './PostCard';
 import CommentForm from './CommentForm';
+import CommentLoader from './CommentLoader';
 import CommentThread from './CommentThread';
 import SidebarDefault from './SidebarDefault';
 import Header from './Header';
@@ -153,14 +154,25 @@ export default function Post(props: Props) {
                       for details.
                     </p>
                     <div className="mb-12">
-                      <CommentForm post={post.contentNode.databaseId} />
+                      <CommentForm postId={post.contentNode.databaseId} />
                     </div>
                     <div id="comments">
                       {post.contentNode.comments.nodes.length > 0 && (
-                        <CommentThread
-                          comments={post.contentNode.comments.nodes}
-                          post={post.contentNode.databaseId}
-                        />
+                        <>
+                          <CommentThread
+                            comments={post.contentNode.comments.nodes}
+                            postId={post.contentNode.databaseId}
+                          />
+                          <CommentLoader
+                            postId={post.contentNode.databaseId}
+                            hasNextPage={
+                              post.contentNode.comments.pageInfo.hasNextPage
+                            }
+                            endCursor={
+                              post.contentNode.comments.pageInfo.endCursor
+                            }
+                          />
+                        </>
                       )}
                     </div>
                   </>

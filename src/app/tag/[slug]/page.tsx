@@ -7,7 +7,6 @@ import Hero, { HeroContent } from '@/components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '@/components/Layout';
 import { GridListTabGroup } from '@/components/GridListTab';
 import SidebarDefault from '@/components/SidebarDefault';
-import cmsToNextUrls from '@/lib/cmsToNextUrls';
 import getSEOMetadata from '@/lib/getSEOMetadata';
 import GraphQLClient from '@/lib/WPGraphQLClient';
 import TagQuery from '@/queries/Tag.gql';
@@ -53,14 +52,14 @@ export default async function Tag({ params }: Props) {
 
   return (
     <div className="relative bg-white dark:bg-gray-950 min-h-screen">
-      {pageData.tag.seo?.schema?.raw && (
+      {/* {pageData.tag.seo?.schema?.raw && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: cmsToNextUrls(pageData.tag.seo.schema.raw),
           }}
         />
-      )}
+      )} */}
       <Header
         menu={<Menu data={menuData} fullWidth />}
         preview={preview}

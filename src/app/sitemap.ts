@@ -60,7 +60,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const sitemap: MetadataRoute.Sitemap = [
     {
-      url: 'https://www.vietnamcoracle.com',
+      url: 'https://www.vietnamcoracle.com/',
       changeFrequency: 'weekly',
       priority: 1,
     },

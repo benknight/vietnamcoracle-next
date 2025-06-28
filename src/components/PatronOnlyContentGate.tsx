@@ -35,7 +35,8 @@ export default function PatronOnlyContentGate({
         ) : (
           <>
             This content is for Patreon members only. If you are already a
-            Patron of Vietnam Coracle, please log in with the button below, or{' '}
+            Patron of <span translate="no">Vietnam Coracle</span>, please log in
+            with the button below, or{' '}
             <a
               className="link"
               href="https://www.patreon.com/vietnamcoracle/membership"

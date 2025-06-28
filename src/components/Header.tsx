@@ -56,7 +56,9 @@ export default function Header({
               <Link
                 href="/"
                 className="flex items-center hover:text-black dark:hover:text-white">
-                <h1 className="lg:ml-2 font-semibold font-display">
+                <h1
+                  className="lg:ml-2 font-semibold font-display"
+                  translate="no">
                   Vietnam Coracle
                 </h1>
               </Link>

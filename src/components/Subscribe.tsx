@@ -3,7 +3,6 @@ import cx from 'classnames';
 import { defaults, keyBy, mapValues } from 'lodash';
 import Image from 'next/legacy/image';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { useCallback, useState } from 'react';
 import internalizeUrl from '../lib/internalizeUrl';
 import useWaitCursor from '../lib/useWaitCursor';
@@ -32,7 +31,6 @@ const defaultMessages: Required<HookOptions['messages']> = {
 
 export function useSubscribeForm(opts?: HookOptions) {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const messages = defaults(opts?.messages, defaultMessages);
 
   useWaitCursor(loading);
@@ -51,7 +49,7 @@ export function useSubscribeForm(opts?: HookOptions) {
         let message = '';
         if (data.success) {
           if (opts?.successRedirectUrl) {
-            router.push(internalizeUrl(opts.successRedirectUrl));
+            window.location.href = internalizeUrl(opts.successRedirectUrl);
           } else {
             message = messages.success;
           }

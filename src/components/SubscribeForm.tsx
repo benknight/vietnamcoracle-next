@@ -8,7 +8,7 @@ const {
   theme: { borderRadius, colors, height, padding, width },
 } = resolveConfig(tailwindConfig) as any;
 
-export default function SubscribeFormElement() {
+export default function SubscribeForm() {
   const [email, setEmail] = useState('');
   const { isLoading, onSubmit } = useSubscribeForm();
   return (

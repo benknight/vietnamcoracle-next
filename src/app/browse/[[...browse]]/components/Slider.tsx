@@ -2,6 +2,7 @@
 import cx from 'classnames';
 import _debounce from 'lodash/debounce';
 import _throttle from 'lodash/throttle';
+import Link from 'next/link';
 import { forwardRef, useRef, useState, useEffect } from 'react';
 import { RadioGroup, Radio } from '@headlessui/react';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
@@ -265,12 +266,11 @@ export function Slider({ className = '', children }) {
 }
 
 export const SliderSlide = forwardRef<
-  HTMLElement,
-  { as: any; children: React.ReactNode; className?: string }
->(({ as, className = '', ...props }, ref) => {
-  const Component = as;
+  HTMLAnchorElement,
+  { children: React.ReactNode; className?: string; href: string }
+>(({ className = '', ...props }, ref) => {
   return (
-    <Component
+    <Link
       {...props}
       className={cx(className, 'snap-center snap-always')}
       ref={ref}

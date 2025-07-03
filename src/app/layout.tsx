@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import DatadogInit from '@/components/DatadogInit';
 
 interface Props {
   children: React.ReactNode;
@@ -24,6 +25,7 @@ export default async function AppLayout({ children }: Props) {
         />
       </head>
       <body>
+        <DatadogInit />
         <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
       </body>
       {process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS && (

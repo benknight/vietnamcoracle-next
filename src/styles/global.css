@@ -8,13 +8,17 @@
   }
 
   html {
-    @apply bg-gray-100 dark:bg-black;
     touch-action: manipulation;
   }
 
   body {
     @apply overscroll-x-none;
+    @apply bg-gray-100 dark:bg-black;
     @apply text-gray-800 dark:text-gray-200;
+  }
+
+  body:has(.force-light-theme) {
+    @apply bg-white;
   }
 
   a {

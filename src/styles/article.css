@@ -2,10 +2,6 @@ article {
   @apply text-base font-display leading-relaxed dark:text-gray-300;
 }
 
-article a {
-  @apply link;
-}
-
 article a[name] {
   scroll-margin-top: 6rem;
 }
@@ -260,11 +256,6 @@ article .wp-block-gallery a {
   .wp-block-buttons:nth-child(2) .wp-block-button:not(:last-child)::after {
     content: '';
   }
-}
-
-.wp-block-buttons:nth-child(2) .wp-block-button__link {
-  @apply link p-0 bg-transparent text-base tracking-widest leading-relaxed uppercase;
-  @apply text-lg font-bold;
 }
 
 .post-image,

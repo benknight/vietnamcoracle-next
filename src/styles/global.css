@@ -170,3 +170,12 @@
 .headroom--pinned > div {
   @apply shadow-xl;
 }
+
+article a {
+  @apply link;
+}
+
+.wp-block-buttons:nth-child(2) .wp-block-button__link {
+  @apply link p-0 bg-transparent text-base tracking-widest leading-relaxed uppercase;
+  @apply text-lg font-bold;
+}

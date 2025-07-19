@@ -158,7 +158,7 @@ export default async function Browse({ params }: Props) {
             <>
               {isHome && ads.collection && !preview && (
                 <Collection
-                  heading="Offline Guides &amp; Maps"
+                  heading="Guides &amp; Maps"
                   items={ads.collection
                     .filter(ad => ad.enabled)
                     .map((ad, index) => (
@@ -168,7 +168,7 @@ export default async function Browse({ params }: Props) {
               )}
               {isMotorbikeGuides && ads.collection && !preview && (
                 <Collection
-                  heading="Offline Guides &amp; Maps"
+                  heading="Guides &amp; Maps"
                   items={ads.collection
                     .filter(ad => ad.enabled)
                     .map((ad, index) => (

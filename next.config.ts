@@ -42,6 +42,41 @@ const nextConfig: NextConfig = {
     const { data } = await restClient.get('/redirection/v1/export/all/json');
     const { redirects: cmsRedirects } = JSON.parse(data);
 
+    // Fetch all categories from WP REST API
+    const categories = await restClient.get('/wp/v2/categories?per_page=100');
+
+    // Helper to get slug path for a category
+    function getCategoryPath(catId) {
+      const cat = categories.find(c => c.id === catId);
+
+      if (!cat) return null;
+
+      let path = cat.slug;
+      let parentId = cat.parent;
+
+      while (parentId) {
+        const parentCat = categories.find(c => c.id === parentId);
+        if (!parentCat) break;
+        path = parentCat.slug + '/' + path;
+        parentId = parentCat.parent;
+      }
+      return path;
+    }
+
+    // Build redirects for all categories
+    const categoryRedirects = categories.map(cat => ({
+      destination: `/category/${getCategoryPath(cat.id)}/`,
+      permanent: true,
+      source: '/',
+      has: [
+        {
+          type: 'query',
+          key: 'cat',
+          value: String(cat.id),
+        },
+      ],
+    }));
+
     const redirects = [
       ...cmsRedirects.map(config => ({
         destination: config.action_data.url.replace(
@@ -114,6 +149,7 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      ...categoryRedirects,
     ];
     return redirects;
   },

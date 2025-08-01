@@ -2,4 +2,3 @@ User-Agent: *
 Allow: /
 Disallow: /download-guide/
 Disallow: /search/
-Disallow: /api/

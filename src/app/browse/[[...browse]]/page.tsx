@@ -176,67 +176,69 @@ export default async function Browse({ params }: Props) {
                     ))}
                 />
               )}
-              {pageData.category.collections.items.map((collection, index) => {
-                // Pick one ad to show for each collection, rotating through if there are more than one
-                // If there is only one ad, show it every other row
-                const ad =
-                  ads.collection?.length === 1 && index % 2 === 1
-                    ? null
-                    : ads?.collection?.[index % ads.collection.length];
+              {pageData.category.collections.items
+                .slice(0, 12) // TODO: This is a temporary limit to see if fixes soft 404 issue
+                .map((collection, index) => {
+                  // Pick one ad to show for each collection, rotating through if there are more than one
+                  // If there is only one ad, show it every other row
+                  const ad =
+                    ads.collection?.length === 1 && index % 2 === 1
+                      ? null
+                      : ads?.collection?.[index % ads.collection.length];
 
-                const posts = collection.posts.filter(
-                  post => !!post.featuredImage,
-                );
+                  const posts = collection.posts.filter(
+                    post => !!post.featuredImage,
+                  );
 
-                const mapPosts = post => ({
-                  type: 'post',
-                  data: post,
-                });
+                  const mapPosts = post => ({
+                    type: 'post',
+                    data: post,
+                  });
 
-                const items =
-                  (isHome || isMotorbikeGuides || !ad?.enabled) && !preview
-                    ? collection.posts.map(mapPosts)
-                    : [
-                        ...posts.slice(0, ad.position - 1).map(mapPosts),
-                        { type: 'ad', data: ad },
-                        ...posts.slice(ad.position - 1).map(mapPosts),
-                      ];
+                  const items =
+                    (isHome || isMotorbikeGuides || !ad?.enabled) && !preview
+                      ? collection.posts.map(mapPosts)
+                      : [
+                          ...posts.slice(0, ad.position - 1).map(mapPosts),
+                          { type: 'ad', data: ad },
+                          ...posts.slice(ad.position - 1).map(mapPosts),
+                        ];
 
-                return (
-                  <Fragment key={index}>
-                    <Collection
-                      heading={
-                        collection.category ? (
-                          <Link
-                            href={getCategoryLink(
-                              collection.category?.uri ?? '',
-                            )}
-                            className="block group-hover:link">
-                            {collection.title} &gt;
-                          </Link>
-                        ) : (
-                          collection.title
-                        )
-                      }
-                      items={items.map((item, index) =>
-                        item.type === 'ad' ? (
-                          <PostCard
-                            key={index}
-                            ad={item.data}
-                            navCategory={navCategory}
-                          />
-                        ) : (
-                          <PostCard
-                            key={index}
-                            post={item.data}
-                            navCategory={navCategory}
-                          />
-                        ),
-                      )}
-                    />
-                  </Fragment>
-                );
-              })}
+                  return (
+                    <Fragment key={index}>
+                      <Collection
+                        heading={
+                          collection.category ? (
+                            <Link
+                              href={getCategoryLink(
+                                collection.category?.uri ?? '',
+                              )}
+                              className="block group-hover:link">
+                              {collection.title} &gt;
+                            </Link>
+                          ) : (
+                            collection.title
+                          )
+                        }
+                        items={items.map((item, index) =>
+                          item.type === 'ad' ? (
+                            <PostCard
+                              key={index}
+                              ad={item.data}
+                              navCategory={navCategory}
+                            />
+                          ) : (
+                            <PostCard
+                              key={index}
+                              post={item.data}
+                              navCategory={navCategory}
+                            />
+                          ),
+                        )}
+                      />
+                    </Fragment>
+                  );
+                })}
             </>
           ) : archiveItems.length > 0 ? (
             <div className="px-2 md:px-4 lg:px-8 py-6 grid gap-4 xl:gap-6 md:grid-cols-2 2xl:grid-cols-3">

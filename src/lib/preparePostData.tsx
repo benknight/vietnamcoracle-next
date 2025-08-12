@@ -92,7 +92,7 @@ export default async function preparePostData(
     const alt = $(this).attr('alt') || '';
     const imageUrl = $(this).attr('src');
     $(this).replaceWith(
-      `<video alt="${alt}" autoPlay controls loop muted playsInline src="/api/gif-to-video?url=${imageUrl}">Your browser does not support the video tag.</video>`,
+      `<video alt="${alt}" autoPlay loop muted playsInline src="/api/gif-to-video?url=${imageUrl}">Your browser does not support the video tag.</video>`,
     );
   });
 

@@ -157,8 +157,10 @@ export function Slider({ className = '', children }) {
   // (happens only in Chromium as of Nov 2022)
   useEffect(() => {
     const listener = _debounce(() => goTo(cursorRef.current!), 1500);
-    parentRef.current?.addEventListener('wheel', listener);
-    parentRef.current?.addEventListener('touchend', listener);
+    parentRef.current?.addEventListener('wheel', listener, { passive: true });
+    parentRef.current?.addEventListener('touchend', listener, {
+      passive: true,
+    });
     return () => {
       parentRef.current?.removeEventListener('wheel', listener);
       parentRef.current?.removeEventListener('touchend', listener);

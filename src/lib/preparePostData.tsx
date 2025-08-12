@@ -87,6 +87,15 @@ export default async function preparePostData(
     rel: 'sponsored noopener',
   });
 
+  // Replace any .gif img tags with videos
+  $('img[src$=".gif"]').each(function () {
+    const alt = $(this).attr('alt') || '';
+    const imageUrl = $(this).attr('src');
+    $(this).replaceWith(
+      `<video alt="${alt}" autoPlay controls loop muted playsInline src="/api/gif-to-video?url=${imageUrl}">Your browser does not support the video tag.</video>`,
+    );
+  });
+
   // Add overlay to Google Maps embeds
   $('iframe')
     .filter(function () {

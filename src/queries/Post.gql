@@ -65,7 +65,10 @@ query Post($preview: Boolean!, $id: ID!, $idType: ContentNodeIdTypeEnum!) {
       }
     }
     ... on Post {
-      categories(where: { exclude: 154, orderby: COUNT, order: ASC }) {
+      categories(
+        first: 100
+        where: { exclude: 154, orderby: COUNT, order: ASC }
+      ) {
         nodes {
           name
           uri
@@ -78,6 +81,7 @@ query Post($preview: Boolean!, $id: ID!, $idType: ContentNodeIdTypeEnum!) {
         }
       }
       navCategory: categories(
+        first: 100
         where: { parent: 154, orderby: COUNT, order: DESC } # Pick first category with most posts
       ) {
         nodes {

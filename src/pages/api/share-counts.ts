@@ -32,6 +32,8 @@ export default async function handler(req: NextRequest) {
         }),
     ).then(res => res.json());
 
+    console.log('Facebook API response:', result);
+
     return new NextResponse(
       JSON.stringify({
         facebook:

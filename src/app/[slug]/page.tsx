@@ -1,7 +1,7 @@
-import { gql } from 'graphql-request';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
+import pLimit from 'p-limit';
 import Post from '@/components/Post';
 import GraphQLClient from '@/lib/WPGraphQLClient';
 import fetchFirstValidId from '@/lib/fetchFirstValidId';
@@ -15,6 +15,8 @@ import Menu from '@/components/Menu';
 
 export const dynamic = 'force-static';
 export const revalidate = false;
+
+const limit = pLimit(5);
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -32,15 +34,17 @@ export default async function SSGPost({ params }: Props) {
 
   const api = new GraphQLClient(preview ? 'preview' : 'admin');
 
-  const [postData, blockData, menuData] = await Promise.all([
-    api.request(PostQuery, {
-      preview,
-      id: databaseId,
-      idType: 'DATABASE_ID',
-    }),
-    api.request(SidebarQuery),
-    api.request(MenuQuery),
-  ]);
+  const [postData, blockData, menuData] = await limit(() =>
+    Promise.all([
+      api.request(PostQuery, {
+        preview,
+        id: databaseId,
+        idType: 'DATABASE_ID',
+      }),
+      api.request(SidebarQuery),
+      api.request(MenuQuery),
+    ]),
+  );
 
   if (
     postData.contentNode?.status === 'private' ||
@@ -97,28 +101,28 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   }
 }
 
-export async function generateStaticParams() {
-  const api = new GraphQLClient('admin');
+// export async function generateStaticParams() {
+//   const api = new GraphQLClient('admin');
 
-  const data = await api.request(gql`
-    {
-      contentNodes(
-        first: 10
-        where: {
-          contentTypes: [PAGE, POST]
-          orderby: { field: COMMENT_COUNT, order: DESC }
-        }
-      ) {
-        nodes {
-          ... on ContentNode {
-            uri
-          }
-        }
-      }
-    }
-  `);
+//   const data = await api.request(gql`
+//     {
+//       contentNodes(
+//         first: 200
+//         where: {
+//           contentTypes: [PAGE, POST]
+//           orderby: { field: COMMENT_COUNT, order: DESC }
+//         }
+//       ) {
+//         nodes {
+//           ... on ContentNode {
+//             uri
+//           }
+//         }
+//       }
+//     }
+//   `);
 
-  return data.contentNodes.nodes.map(node => ({
-    slug: node.uri.split('/').filter(token => Boolean(token))[0],
-  }));
-}
+//   return data.contentNodes.nodes.map(node => ({
+//     slug: node.uri.split('/').filter(token => Boolean(token))[0],
+//   }));
+// }

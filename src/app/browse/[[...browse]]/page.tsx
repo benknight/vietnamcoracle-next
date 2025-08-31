@@ -45,7 +45,7 @@ export const revalidate = false;
 
 export async function generateStaticParams() {
   return [
-    [],
+    ['features-guides'],
     ['motorbike-guides'],
     ['food-and-drink'],
     ['hotel-reviews'],

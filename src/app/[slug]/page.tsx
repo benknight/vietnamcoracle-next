@@ -102,7 +102,13 @@ export async function generateStaticParams() {
 
   const data = await api.request(gql`
     {
-      contentNodes(first: 1000, where: { contentTypes: [PAGE, POST] }) {
+      contentNodes(
+        first: 10
+        where: {
+          contentTypes: [PAGE, POST]
+          orderby: { field: COMMENT_COUNT, order: DESC }
+        }
+      ) {
         nodes {
           ... on ContentNode {
             uri

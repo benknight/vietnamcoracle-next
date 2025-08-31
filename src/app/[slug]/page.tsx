@@ -1,3 +1,4 @@
+import { gql } from 'graphql-request';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
@@ -101,28 +102,28 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   }
 }
 
-// export async function generateStaticParams() {
-//   const api = new GraphQLClient('admin');
+export async function generateStaticParams() {
+  const api = new GraphQLClient('admin');
 
-//   const data = await api.request(gql`
-//     {
-//       contentNodes(
-//         first: 200
-//         where: {
-//           contentTypes: [PAGE, POST]
-//           orderby: { field: COMMENT_COUNT, order: DESC }
-//         }
-//       ) {
-//         nodes {
-//           ... on ContentNode {
-//             uri
-//           }
-//         }
-//       }
-//     }
-//   `);
+  const data = await api.request(gql`
+    {
+      contentNodes(
+        first: 200
+        where: {
+          contentTypes: [PAGE, POST]
+          orderby: { field: COMMENT_COUNT, order: DESC }
+        }
+      ) {
+        nodes {
+          ... on ContentNode {
+            uri
+          }
+        }
+      }
+    }
+  `);
 
-//   return data.contentNodes.nodes.map(node => ({
-//     slug: node.uri.split('/').filter(token => Boolean(token))[0],
-//   }));
-// }
+  return data.contentNodes.nodes.map(node => ({
+    slug: node.uri.split('/').filter(token => Boolean(token))[0],
+  }));
+}

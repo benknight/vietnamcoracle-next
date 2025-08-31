@@ -23,6 +23,9 @@ import CategorySlider from './components/CategorySlider';
 import Collection from './components/Collection';
 import getPageData from './lib/getPageData';
 
+export const dynamic = 'force-static';
+export const revalidate = false;
+
 export async function generateMetadata({ params }): Promise<Metadata> {
   const { browse } = await params;
   const { isEnabled: preview } = await draftMode();
@@ -39,17 +42,13 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   return getSEOMetadata((pageData.subcategory || pageData.category).seo);
 }
 
-export const dynamic = 'force-static';
-
-export const revalidate = false;
-
-export async function generateStaticParams() {
+export function generateStaticParams() {
   return [
-    ['features-guides'],
-    ['motorbike-guides'],
-    ['food-and-drink'],
-    ['hotel-reviews'],
-    ['destinations'],
+    { browse: ['features-guides'] },
+    { browse: ['motorbike-guides'] },
+    { browse: ['food-and-drink'] },
+    { browse: ['hotel-reviews'] },
+    { browse: ['destinations'] },
   ];
 }
 

@@ -6,7 +6,7 @@ import { createHash } from 'crypto';
 
 export const runtime = 'nodejs';
 
-const CLOUDINARY_CLOUD_NAME = 'dbyqqtb34';
+const CLOUDINARY_CLOUD_NAME = 'do6frqzl2';
 const ALLOWED_DOMAIN = 'cms.vietnamcoracle.com';
 
 function keyFromUrl(url: string) {

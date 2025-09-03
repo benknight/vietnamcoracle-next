@@ -176,7 +176,7 @@ export default async function Browse({ params }: Props) {
                 />
               )}
               {pageData.category.collections.items
-                .slice(0, 48)
+                .slice(0, 12)
                 .map((collection, index) => {
                   // Pick one ad to show for each collection, rotating through if there are more than one
                   // If there is only one ad, show it every other row

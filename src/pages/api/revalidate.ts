@@ -10,10 +10,19 @@ export default async function handler(
 
   try {
     const paths = request.query.paths as string;
+    const ip =
+      request.headers['x-forwarded-for'] || request.socket.remoteAddress;
+
     await Promise.all(paths.split(',').map(path => response.revalidate(path)));
+
+    console.log(`Revalidated paths: ${paths} | IP: ${ip}`);
+
     return response.send({ success: true });
-  } catch (error) {
-    console.log(error);
-    return response.status(200).send({ error: error.message, success: false });
+  } catch (error: any) {
+    console.error('Revalidation error:', error);
+
+    return response
+      .status(500)
+      .send({ error: error?.message || 'Unknown error', success: false });
   }
 }

@@ -155,6 +155,12 @@ export default async function DownloadGuide({ searchParams }: Props) {
 
   const files: File[] = [];
 
+  // Always include the offline maps guide at the beginning
+  files.push({
+    name: 'Offline Maps How-to Guide.pdf',
+    key: 'Offline Maps How-to Guide.pdf',
+  });
+
   for (const prefix of s3Prefixes) {
     const listCommand = new ListObjectsV2Command({
       Bucket: 'coracle',
@@ -180,11 +186,6 @@ export default async function DownloadGuide({ searchParams }: Props) {
         })),
     );
   }
-
-  files.push({
-    name: 'Offline Maps How-to Guide.pdf',
-    key: 'Offline Maps How-to Guide.pdf',
-  });
 
   const groups = groupBy(files, file => file.key.split('/')[0]);
 

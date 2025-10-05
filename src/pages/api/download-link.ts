@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
 
 const distributionUrl = 'https://d2gs0ocb6y9y9p.cloudfront.net';
-const downloadLimit = Number(process.env.OFFLINE_GUIDE_DOWNLOAD_LIMIT || 100);
+const downloadLimit = 1000;
 const expiresMs = 60 * 1000; // 1 minutes
 
 const getErrorMessage = (message: string): string => {

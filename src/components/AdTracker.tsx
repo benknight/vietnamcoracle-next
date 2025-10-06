@@ -10,28 +10,16 @@ export default function TrackingScript() {
       const link = event.currentTarget;
       const trackingData = link.getAttribute('data-track');
 
-      // Use navigator.sendBeacon (Recommended for reliability)
-      // It sends a non-blocking request that is reliable even on page unload.
-      const payload = JSON.stringify({
-        action: 'adrotate_click',
-        track: trackingData,
-      });
+      const formData = new FormData();
 
-      // Ensure sendBeacon receives a Blob or similar data type
-      if (navigator.sendBeacon) {
-        navigator.sendBeacon(
-          adminAjaxUrl,
-          new Blob([payload], { type: 'application/json' }),
-        );
-      } else {
-        // Fallback for older browsers
-        fetch(adminAjaxUrl, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: payload,
-          keepalive: true, // Helps the request survive navigation
-        });
-      }
+      formData.append('action', 'adrotate_click');
+      formData.append('track', trackingData);
+
+      fetch(adminAjaxUrl, {
+        method: 'POST',
+        body: formData,
+        keepalive: true,
+      });
 
       console.log('Tracking requested for:', trackingData);
       // DO NOT prevent default if using sendBeacon, let navigation proceed immediately.

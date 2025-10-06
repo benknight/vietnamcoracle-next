@@ -5,6 +5,7 @@ import type { Metadata } from 'next';
 import Script from 'next/script';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { GoogleAnalytics } from '@next/third-parties/google';
+import AdTracker from '@/components/AdTracker';
 import DatadogInit from '@/components/DatadogInit';
 
 interface Props {
@@ -25,6 +26,7 @@ export default async function AppLayout({ children }: Props) {
         />
       </head>
       <body>
+        <AdTracker />
         <DatadogInit />
         <AppRouterCacheProvider>{children}</AppRouterCacheProvider>
       </body>

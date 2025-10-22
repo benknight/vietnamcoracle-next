@@ -148,7 +148,7 @@
   }
 
   .header-ad-container img {
-    @apply mx-auto my-0;
+    @apply mx-auto my-0 xl:my-4;
   }
 }
 

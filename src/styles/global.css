@@ -146,6 +146,10 @@
   .postcard-excerpt div {
     @apply inline;
   }
+
+  .header-ad-container img {
+    @apply mx-auto my-0;
+  }
 }
 
 @layer utilities {

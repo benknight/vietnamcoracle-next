@@ -34,9 +34,9 @@ export default function Post(props: Props) {
         />
       )} */}
       {post.ads?.header?.enabled && (
-        <div className="bg-gray-300 dark:bg-gray-800 overflow-hidden aspect-[2]">
+        <div className="bg-gray-300 dark:bg-gray-800 overflow-hidden">
           <div
-            className="w-full h-full"
+            className="w-full h-full header-ad-container"
             dangerouslySetInnerHTML={{
               __html: post.ads.header.html,
             }}

@@ -235,15 +235,29 @@ function isPdf(name: string) {
   return name.toLowerCase().endsWith('.pdf');
 }
 
+function isKmz(name: string) {
+  return name.toLowerCase().endsWith('.kmz');
+}
+
+function isGpx(name: string) {
+  return name.toLowerCase().endsWith('.gpx');
+}
+
 function sortFiles(a: File, b: File) {
   const aPrefix = a.key.split('/')[0];
   const bPrefix = b.key.split('/')[0];
 
-  if (aPrefix === bPrefix) {
-    if (isPdf(a.name) && !isPdf(b.name)) return -1;
-    if (!isPdf(a.name) && isPdf(b.name)) return 1;
-    return a.name.localeCompare(b.name);
+  if (aPrefix !== bPrefix) {
+    return aPrefix.localeCompare(bPrefix);
   }
 
-  return aPrefix.localeCompare(bPrefix);
+  // Assign a priority to each file type: PDF (0), KMZ (1), GPX (2), others (3)
+  const getPriority = (name: string) =>
+    isPdf(name) ? 0 : isKmz(name) ? 1 : isGpx(name) ? 2 : 3;
+
+  const priorityDiff = getPriority(a.name) - getPriority(b.name);
+
+  if (priorityDiff !== 0) return priorityDiff;
+
+  return a.name.localeCompare(b.name);
 }

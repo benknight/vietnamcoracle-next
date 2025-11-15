@@ -28,6 +28,7 @@
     "@mui/material": "^6.4.7",
     "@mui/material-nextjs": "^6.4.3",
     "@mui/styles": "^6.4.7",
+    "@mui/x-tree-view": "^8.18.0",
     "@next/bundle-analyzer": "^13.4.19",
     "@next/third-parties": "^15.3.2",
     "@svgr/webpack": "^6.1.2",

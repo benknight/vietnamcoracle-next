@@ -20,7 +20,7 @@ export default function DownloadGuideTreeView({
 }: DownloadGuideTreeViewProps) {
   return (
     <SimpleTreeView
-      className="bg-black/5 dark:bg-white/5 rounded py-2"
+      className="bg-black/5 dark:bg-white/5 rounded py-2 from-black/0 to-black/0 bg-[length:100%_4rem] bg-[repeating-linear-gradient(transparent,transparent_2rem,theme(colors.black/5%)_2rem,theme(colors.black/5%)_4rem)] dark:bg-[repeating-linear-gradient(transparent,transparent_2rem,theme(colors.white/5%)_2rem,theme(colors.white/5%)_4rem)]"
       aria-label="file system navigator">
       {Object.keys(groups).map(prefix => {
         const sortedFiles = groups[prefix].sort(sortFiles);
@@ -41,7 +41,7 @@ export default function DownloadGuideTreeView({
             key={prefix}
             itemId={prefix}
             label={guideName}
-            className="text-lg mt-4 mb-2 font-medium !font-sans">
+            className="text-lg font-medium !font-sans">
             {pdfFiles.map(file => {
               const urlParams = new URLSearchParams({
                 file_key: file.key,
@@ -68,14 +68,13 @@ export default function DownloadGuideTreeView({
               <TreeItem
                 key={`${prefix}-map-files`}
                 itemId={`${prefix}-map-files`}
-                label="Map Files"
-                className="!font-sans">
-                {gpxFiles.length > 0 && (
+                label="Map Files">
+                {kmzFiles.length > 0 && (
                   <TreeItem
-                    key={`${prefix}-map-files-gpx`}
-                    itemId={`${prefix}-map-files-gpx`}
-                    label="GPX">
-                    {gpxFiles.map(file => {
+                    key={`${prefix}-map-files-kmz`}
+                    itemId={`${prefix}-map-files-kmz`}
+                    label="KMZ">
+                    {kmzFiles.map(file => {
                       const urlParams = new URLSearchParams({
                         file_key: file.key,
                         is_test: isTest ? '1' : '0',
@@ -99,12 +98,12 @@ export default function DownloadGuideTreeView({
                     })}
                   </TreeItem>
                 )}
-                {kmzFiles.length > 0 && (
+                {gpxFiles.length > 0 && (
                   <TreeItem
-                    key={`${prefix}-map-files-kmz`}
-                    itemId={`${prefix}-map-files-kmz`}
-                    label="KMZ">
-                    {kmzFiles.map(file => {
+                    key={`${prefix}-map-files-gpx`}
+                    itemId={`${prefix}-map-files-gpx`}
+                    label="GPX">
+                    {gpxFiles.map(file => {
                       const urlParams = new URLSearchParams({
                         file_key: file.key,
                         is_test: isTest ? '1' : '0',
@@ -112,7 +111,6 @@ export default function DownloadGuideTreeView({
                       });
                       return (
                         <TreeItem
-                          className="even:bg-black/5 even:dark:bg-white/5"
                           key={file.name}
                           itemId={`${file.key}-item`} // Unique itemId
                           label={

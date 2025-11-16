@@ -186,9 +186,11 @@ export default async function DownloadGuide({ searchParams }: Props) {
   const groups = groupBy(files, file => file.key.split('/')[0]);
 
   return (
-    <div className="page-wrap flex justify-center items-center py-24">
+    <div className="page-wrap flex justify-center items-center pb-48">
       <div className="max-w-screen-sm w-full">
-        <h2 className="text-2xl font-bold mb-4 text-center">Your Downloads</h2>
+        <h2 className="text-2xl font-bold mb-4 text-center mt-12">
+          Your Downloads
+        </h2>
         <p className="text-center text-sm mb-8">
           Thank you for your support! You can always get back to this page by
           clicking the link in the email you received after making your

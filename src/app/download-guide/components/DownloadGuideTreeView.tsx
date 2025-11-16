@@ -1,6 +1,7 @@
 'use client';
 import { SimpleTreeView } from '@mui/x-tree-view/SimpleTreeView';
 import { TreeItem } from '@mui/x-tree-view/TreeItem';
+import FolderIcon from '@mui/icons-material/Folder';
 
 interface File {
   name: string;
@@ -40,7 +41,12 @@ export default function DownloadGuideTreeView({
           <TreeItem
             key={prefix}
             itemId={prefix}
-            label={guideName}
+            label={
+              <div className="flex items-center gap-2">
+                <FolderIcon />
+                {guideName}
+              </div>
+            }
             className="text-lg font-medium !font-sans">
             {pdfFiles.map(file => {
               const urlParams = new URLSearchParams({
@@ -68,12 +74,22 @@ export default function DownloadGuideTreeView({
               <TreeItem
                 key={`${prefix}-map-files`}
                 itemId={`${prefix}-map-files`}
-                label="Map Files">
+                label={
+                  <div className="flex items-center gap-2">
+                    <FolderIcon />
+                    Map Files
+                  </div>
+                }>
                 {kmzFiles.length > 0 && (
                   <TreeItem
                     key={`${prefix}-map-files-kmz`}
                     itemId={`${prefix}-map-files-kmz`}
-                    label="KMZ">
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FolderIcon />
+                        KMZ
+                      </div>
+                    }>
                     {kmzFiles.map(file => {
                       const urlParams = new URLSearchParams({
                         file_key: file.key,
@@ -102,7 +118,12 @@ export default function DownloadGuideTreeView({
                   <TreeItem
                     key={`${prefix}-map-files-gpx`}
                     itemId={`${prefix}-map-files-gpx`}
-                    label="GPX">
+                    label={
+                      <div className="flex items-center gap-2">
+                        <FolderIcon />
+                        GPX
+                      </div>
+                    }>
                     {gpxFiles.map(file => {
                       const urlParams = new URLSearchParams({
                         file_key: file.key,

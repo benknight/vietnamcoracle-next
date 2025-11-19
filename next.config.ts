@@ -36,6 +36,7 @@ const nextConfig: NextConfig = {
       'res.cloudinary.com',
       'via.placeholder.com',
     ],
+    minimumCacheTTL: 2678400,
   },
   async redirects() {
     const restClient = new WPRestClient('admin');

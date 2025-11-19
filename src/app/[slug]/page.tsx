@@ -17,7 +17,7 @@ import Menu from '@/components/Menu';
 export const dynamic = 'force-static';
 export const revalidate = false;
 
-const limit = pLimit(5);
+const limit = pLimit(1);
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -108,7 +108,7 @@ export async function generateStaticParams() {
   const data = await api.request(gql`
     {
       contentNodes(
-        first: 200
+        first: 50
         where: {
           contentTypes: [PAGE, POST]
           orderby: { field: COMMENT_COUNT, order: DESC }

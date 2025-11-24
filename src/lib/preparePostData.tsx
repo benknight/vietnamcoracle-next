@@ -175,7 +175,7 @@ export default async function preparePostData(
       ? {
           header: {
             enabled: true,
-            html: `<a class="preview-placement" href="https://www.vietnamcoracle.com/" title="Header Banner [$500/month] [2:1]"><img alt="" src="https://cms.vietnamcoracle.com/wp-content/uploads/2022/08/placeholder200x100.png"></a>`,
+            html: `<a class="preview-placement w-[1200px] h-[310px] mx-auto" href="https://www.vietnamcoracle.com/" title="Header Banner [$450/month] [1200x310]"><img alt="" src="https://cms.vietnamcoracle.com/wp-content/uploads/2025/11/pixel.png" width="1200" height="310"></a>`,
           },
         }
       : {

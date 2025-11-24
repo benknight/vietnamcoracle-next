@@ -13,7 +13,7 @@ export default {
     image: {
       altText: '',
       srcLarge:
-        'https://cms.vietnamcoracle.com/wp-content/uploads/2022/09/placeholder-tile.png',
+        'https://cms.vietnamcoracle.com/wp-content/uploads/2025/11/youradherebg.png',
     },
   }),
 };

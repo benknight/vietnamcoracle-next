@@ -148,7 +148,11 @@
   }
 
   .header-ad-container img {
-    @apply mx-auto my-0 xl:my-4;
+    @apply mx-auto;
+  }
+
+  .header-ad-container {
+    @apply xl:py-4;
   }
 }
 

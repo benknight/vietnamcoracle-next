@@ -231,13 +231,18 @@ article .wp-block-gallery a {
   @apply relative block;
 }
 
+.preview-placement-bg {
+  @apply bg-[url('https://cms.vietnamcoracle.com/wp-content/uploads/2025/11/youradherebg.png')];
+  @apply bg-cover;
+}
+
 .preview-placement::after {
   content: attr(title);
-  @apply absolute inset-0 flex items-center justify-center text-black text-2xl text-center opacity-30 font-sans font-bold;
+  @apply absolute inset-0 flex items-center justify-center text-black text-2xl text-center font-sans font-bold preview-placement-bg;
 }
 
 .preview-placement img {
-  @apply w-full;
+  @apply w-full h-full;
 }
 
 .wp-block-buttons:nth-child(2) {

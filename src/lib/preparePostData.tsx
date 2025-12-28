@@ -88,13 +88,15 @@ export default async function preparePostData(
   });
 
   // Replace any .gif img tags with videos
-  $('img[src$=".gif"]').each(function () {
-    const alt = $(this).attr('alt') || '';
-    const imageUrl = $(this).attr('src');
-    $(this).replaceWith(
-      `<video alt="${alt}" autoPlay loop muted playsInline src="/api/gif-to-video?url=${imageUrl}">Your browser does not support the video tag.</video>`,
-    );
-  });
+  // NOTE(2025-12-28): Disabling due to high function duration usage
+
+  // $('img[src$=".gif"]').each(function () {
+  //   const alt = $(this).attr('alt') || '';
+  //   const imageUrl = $(this).attr('src');
+  //   $(this).replaceWith(
+  //     `<video alt="${alt}" autoPlay loop muted playsInline src="/api/gif-to-video?url=${imageUrl}">Your browser does not support the video tag.</video>`,
+  //   );
+  // });
 
   // Add overlay to Google Maps embeds
   $('iframe')

@@ -1,9 +1,14 @@
-import { groupBy } from 'lodash';
+import dynamic from 'next/dynamic';
+import groupBy from 'lodash/groupBy';
 import Stripe from 'stripe';
 import { S3Client, ListObjectsV2Command } from '@aws-sdk/client-s3';
 import DownloadGuideError from './components/DownloadGuideError';
 import DownloadGuideSelection from './components/DownloadGuideSelection';
-import DownloadGuideTreeView from './components/DownloadGuideTreeView';
+
+const DownloadGuideTreeView = dynamic(
+  () => import('./components/DownloadGuideTreeView'),
+  { ssr: false }
+);
 
 interface File {
   name: string;

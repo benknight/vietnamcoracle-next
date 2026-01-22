@@ -18,11 +18,12 @@ export default async function AppLayout({ children }: Props) {
       <head>
         <Script
           data-goatcounter="https://coracle.goatcounter.com/count"
-          async
-          src="//gc.zgo.at/count.js"></Script>
+          src="//gc.zgo.at/count.js"
+          strategy="lazyOnload"
+        />
         <Script
           src="https://cms.vietnamcoracle.com/wp-content/plugins/stackable-ultimate-gutenberg-blocks/dist/frontend_blocks.js"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
       </head>
       <body>

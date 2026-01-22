@@ -8,7 +8,7 @@ import Layout, { LayoutMain, LayoutSidebar } from '@/components/Layout';
 import { GridListTabGroup } from '@/components/GridListTab';
 import SidebarDefault from '@/components/SidebarDefault';
 import getSEOMetadata from '@/lib/getSEOMetadata';
-import GraphQLClient from '@/lib/WPGraphQLClient';
+import { getGraphQLClient } from '@/lib/WPGraphQLClient';
 import TagQuery from '@/queries/Tag.gql';
 import SidebarQuery from '@/queries/Sidebar.gql';
 import MenuQuery from '@/queries/Menu.gql';
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
   const { slug } = await params;
   const { isEnabled: preview } = await draftMode();
 
-  const api = new GraphQLClient(preview ? 'preview' : 'admin');
+  const api = getGraphQLClient(preview ? 'preview' : 'admin');
   const data = await api.request(TagQuery, { slug });
 
   if (!data?.tag) {
@@ -38,7 +38,7 @@ export default async function Tag({ params }: Props) {
   const { slug } = await params;
   const { isEnabled: preview } = await draftMode();
 
-  const api = new GraphQLClient(preview ? 'preview' : 'admin');
+  const api = getGraphQLClient(preview ? 'preview' : 'admin');
 
   const [pageData, blockData, menuData] = await Promise.all([
     api.request(TagQuery, { slug }),

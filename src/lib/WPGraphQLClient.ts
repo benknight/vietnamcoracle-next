@@ -1,3 +1,4 @@
+import { cache } from 'react';
 import { GraphQLClient } from 'graphql-request';
 
 type Role = 'admin' | 'preview' | 'user';
@@ -17,7 +18,7 @@ const credentials: Record<Role, { username: string; password: string }> = {
   },
 };
 
-export default class WPGraphQLClient extends GraphQLClient {
+class WPGraphQLClient extends GraphQLClient {
   constructor(role?: Role, fetchOptions?: RequestInit) {
     if (role && typeof window !== 'undefined') {
       throw new Error(
@@ -43,3 +44,10 @@ export default class WPGraphQLClient extends GraphQLClient {
     super(endpoint, options);
   }
 }
+
+// Cached GraphQL client factory for server-side deduplication
+export const getGraphQLClient = cache((role?: Role, fetchOptions?: RequestInit) => {
+  return new WPGraphQLClient(role, fetchOptions);
+});
+
+export default WPGraphQLClient;

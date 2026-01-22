@@ -1,7 +1,7 @@
 'use server';
 import { headers } from 'next/headers';
 import WPRestClient from '@/lib/WPRestClient';
-import GraphQLClient from '@/lib/WPGraphQLClient';
+import { getGraphQLClient } from '@/lib/WPGraphQLClient';
 import SearchResultsQuery from '@/queries/SearchResults.gql';
 import { PostMediaBlockPost } from '@/components/PostMediaBlock';
 
@@ -81,7 +81,7 @@ export const fetchWpResults: fetcherFn = async params => {
     return [];
   }
 
-  const gqlClient = new GraphQLClient();
+  const gqlClient = getGraphQLClient();
 
   const data = await gqlClient.request(SearchResultsQuery, {
     in: results.map(r => r.id),

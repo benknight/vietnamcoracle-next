@@ -4,7 +4,7 @@ import { draftMode } from 'next/headers';
 import { notFound, redirect } from 'next/navigation';
 import pLimit from 'p-limit';
 import Post from '@/components/Post';
-import GraphQLClient from '@/lib/WPGraphQLClient';
+import { getGraphQLClient } from '@/lib/WPGraphQLClient';
 import fetchFirstValidId from '@/lib/fetchFirstValidId';
 import getSEOMetadata from '@/lib/getSEOMetadata';
 import preparePostData from '@/lib/preparePostData';
@@ -33,7 +33,7 @@ export default async function SSGPost({ params }: Props) {
 
   const { isEnabled: preview } = await draftMode();
 
-  const api = new GraphQLClient(preview ? 'preview' : 'admin');
+  const api = getGraphQLClient(preview ? 'preview' : 'admin');
 
   const [postData, blockData, menuData] = await limit(() =>
     Promise.all([
@@ -85,7 +85,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 
     if (!databaseId) return { title: 'Not Found' };
 
-    const api = new GraphQLClient('admin');
+    const api = getGraphQLClient('admin');
 
     const data = await api.request(PostMetadataQuery, {
       preview: false,
@@ -103,7 +103,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const api = new GraphQLClient('admin');
+  const api = getGraphQLClient('admin');
 
   const data = await api.request(gql`
     {

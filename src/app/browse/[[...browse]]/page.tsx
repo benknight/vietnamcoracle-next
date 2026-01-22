@@ -1,11 +1,13 @@
 import cx from 'classnames';
-import _ from 'lodash';
+import chunk from 'lodash/chunk';
+import flatten from 'lodash/flatten';
+import shuffle from 'lodash/shuffle';
 import type { Metadata } from 'next';
 import { draftMode } from 'next/headers';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Fragment } from 'react';
-import GraphQLClient from '@/lib/WPGraphQLClient';
+import { getGraphQLClient } from '@/lib/WPGraphQLClient';
 import getCategoryLink from '@/lib/getCategoryLink';
 import previewAds from '@/lib/previewAds';
 import SidebarQuery from '@/queries/Sidebar.gql';
@@ -59,7 +61,7 @@ interface Props {
 export default async function Browse({ params }: Props) {
   const { browse } = await params;
   const { isEnabled: preview } = await draftMode();
-  const api = new GraphQLClient(preview ? 'preview' : 'admin');
+  const api = getGraphQLClient(preview ? 'preview' : 'admin');
 
   const [pageData, blockData, menuData] = await Promise.all([
     getPageData(browse, preview),
@@ -99,7 +101,7 @@ export default async function Browse({ params }: Props) {
   const archiveItems = (() => {
     if (showCollections) return [];
 
-    const shuffledAds = _.shuffle(ads.collection?.filter(ad => ad.enabled));
+    const shuffledAds = shuffle(ads.collection?.filter(ad => ad.enabled));
 
     const mapPosts = post => ({
       type: 'post',
@@ -110,8 +112,8 @@ export default async function Browse({ params }: Props) {
       pageData.subcategory || pageData.category
     ).posts.nodes.filter(node => !!node.featuredImage);
 
-    const result = _.flatten(
-      _.chunk(posts, 2).map((chunk, i) => {
+    const result = flatten(
+      chunk(posts, 2).map((chunk, i) => {
         let result = chunk.map(mapPosts);
         if (i % 2 === 0 && shuffledAds.length > 0 && !isMotorbikeGuides) {
           result.push({ type: 'ad', data: shuffledAds.pop() });

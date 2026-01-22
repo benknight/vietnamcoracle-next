@@ -1,7 +1,6 @@
 'use client';
 import cx from 'classnames';
-import _flatten from 'lodash/flatten';
-import _upperFirst from 'lodash/upperFirst';
+import flatten from 'lodash/flatten';
 import { useState } from 'react';
 import useSWR from 'swr';
 import useWaitCursor from '@/lib/useWaitCursor';
@@ -59,7 +58,7 @@ function SearchResultsPage({
   );
   const { data, error } = request;
   const isLoading = typeof window === 'undefined' || request.isLoading;
-  const posts = data ? _flatten(data) : [];
+  const posts = data ? flatten(data) : [];
   const showSeaching = index === 0 && isLoading;
   const noResults = index === 0 && !isLoading && !error && posts.length === 0;
 

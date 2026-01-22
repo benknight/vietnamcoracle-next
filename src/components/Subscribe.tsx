@@ -1,7 +1,9 @@
 'use client';
 import cx from 'classnames';
-import { defaults, keyBy, mapValues } from 'lodash';
-import Image from 'next/legacy/image';
+import defaults from 'lodash/defaults';
+import keyBy from 'lodash/keyBy';
+import mapValues from 'lodash/mapValues';
+import Image from 'next/image';
 import Link from 'next/link';
 import { useCallback, useState } from 'react';
 import internalizeUrl from '../lib/internalizeUrl';
@@ -86,11 +88,10 @@ export default function Subscribe({ data: block }: Props) {
         <Link href="/subscribe">
           <Image
             alt=""
-            className="h-full rounded-full object-cover"
-            height="80"
-            layout="fixed"
+            className="rounded-full object-cover"
+            height={80}
             src={block.image.sourceUrl}
-            width="80"
+            width={80}
           />
         </Link>
       </div>

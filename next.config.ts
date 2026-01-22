@@ -40,11 +40,14 @@ const nextConfig: NextConfig = {
   },
   async redirects() {
     const restClient = new WPRestClient('admin');
-    const { data } = await restClient.get('/redirection/v1/export/all/json');
-    const { redirects: cmsRedirects } = JSON.parse(data);
 
-    // Fetch all categories from WP REST API
-    const categories = await restClient.get('/wp/v2/categories?per_page=100');
+    // Parallelize independent API calls
+    const [{ data }, categories] = await Promise.all([
+      restClient.get('/redirection/v1/export/all/json'),
+      restClient.get('/wp/v2/categories?per_page=100'),
+    ]);
+
+    const { redirects: cmsRedirects } = JSON.parse(data);
 
     // Helper to get slug path for a category
     function getCategoryPath(catId) {

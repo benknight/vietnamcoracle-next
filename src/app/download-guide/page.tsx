@@ -6,8 +6,7 @@ import DownloadGuideError from './components/DownloadGuideError';
 import DownloadGuideSelection from './components/DownloadGuideSelection';
 
 const DownloadGuideTreeView = dynamic(
-  () => import('./components/DownloadGuideTreeView'),
-  { ssr: false }
+  () => import('./components/DownloadGuideTreeView')
 );
 
 interface File {

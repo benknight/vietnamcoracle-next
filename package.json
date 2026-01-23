@@ -7,7 +7,7 @@
     "build": "next build",
     "export": "next export",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
-    "start": "next dev",
+    "dev": "next dev",
     "serve": "next start",
     "env:pull": "npx vercel env pull",
     "graphql:coverage": "graphql coverage",

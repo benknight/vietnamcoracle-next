@@ -70,5 +70,8 @@ yarn-error.log
 .next
 out
 
+# Claude Code local settings
+.claude/*.local.json
+
 TODO
 .vercel

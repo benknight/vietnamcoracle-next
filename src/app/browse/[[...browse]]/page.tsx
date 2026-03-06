@@ -12,6 +12,7 @@ import getCategoryLink from '@/lib/getCategoryLink';
 import previewAds from '@/lib/previewAds';
 import SidebarQuery from '@/queries/Sidebar.gql';
 import MenuQuery from '@/queries/Menu.gql';
+import OfflineGuideAdsQuery from '@/queries/OfflineGuideAds.gql';
 import Header from '@/components/Header';
 import Hero, { HeroContent } from '@/components/Hero';
 import Layout, { LayoutMain, LayoutSidebar } from '@/components/Layout';
@@ -63,11 +64,22 @@ export default async function Browse({ params }: Props) {
   const { isEnabled: preview } = await draftMode();
   const api = getGraphQLClient(preview ? 'preview' : 'admin');
 
-  const [pageData, blockData, menuData] = await Promise.all([
-    getPageData(browse, preview),
-    api.request(SidebarQuery),
-    api.request(MenuQuery),
-  ]);
+  const isTopLevelCollection =
+    !browse[1] &&
+    [
+      'motorbike-guides',
+      'food-and-drink',
+      'hotel-reviews',
+      'destinations',
+    ].includes(browse[0]);
+
+  const [pageData, blockData, menuData, offlineGuideAdsData] =
+    await Promise.all([
+      getPageData(browse, preview),
+      api.request(SidebarQuery),
+      api.request(MenuQuery),
+      isTopLevelCollection ? api.request(OfflineGuideAdsQuery) : null,
+    ]);
 
   if (!pageData?.category) {
     return notFound();
@@ -80,6 +92,9 @@ export default async function Browse({ params }: Props) {
   const isHome = pageData.category.slug === 'features-guides';
 
   const isMotorbikeGuides = pageData.category.slug === 'motorbike-guides';
+
+  const offlineGuideAds =
+    offlineGuideAdsData?.category?.ads?.collection ?? null;
 
   const coverImgSm =
     (pageData.subcategory
@@ -157,20 +172,10 @@ export default async function Browse({ params }: Props) {
           className={cx('overflow-hidden', isHome ? 'pt-8 md:pt-0' : 'pt-4')}>
           {showCollections ? (
             <>
-              {isHome && ads.collection && !preview && (
+              {(isHome ? ads.collection : offlineGuideAds) && !preview && (
                 <Collection
                   heading="Guides &amp; Maps"
-                  items={ads.collection
-                    .filter(ad => ad.enabled)
-                    .map((ad, index) => (
-                      <PostCard key={index} navCategory={navCategory} ad={ad} />
-                    ))}
-                />
-              )}
-              {isMotorbikeGuides && ads.collection && !preview && (
-                <Collection
-                  heading="Guides &amp; Maps"
-                  items={ads.collection
+                  items={(isHome ? ads.collection : offlineGuideAds)
                     .filter(ad => ad.enabled)
                     .map((ad, index) => (
                       <PostCard key={index} navCategory={navCategory} ad={ad} />

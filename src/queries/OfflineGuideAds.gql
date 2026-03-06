@@ -1,0 +1,21 @@
+query OfflineGuideAds {
+  category(id: "features-guides", idType: SLUG) {
+    ads {
+      collection {
+        body
+        code
+        enabled
+        heading
+        position
+        cta {
+          url
+          title
+        }
+        image {
+          altText
+          srcLarge: sourceUrl(size: LARGE)
+        }
+      }
+    }
+  }
+}

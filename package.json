@@ -4,6 +4,7 @@
   "name": "vietnamcoracle-next",
   "author": "Ben Knight <ben@benknight.me>",
   "scripts": {
+    "prebuild": "node scripts/fetch-baolau.mjs",
     "build": "next build",
     "export": "next export",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",

@@ -2,6 +2,7 @@ import cx from 'classnames';
 import About from './About';
 import Subscribe from './Subscribe';
 import Support from './Support';
+import BookingWidget from './BookingWidget';
 import SlidingSticky from './SlidingSticky';
 import type { BlockData } from './Block';
 
@@ -27,6 +28,7 @@ const SidebarDefault = ({ className = '', blocks }: Props) => {
         <About data={blocks.about.block} />
         <Subscribe data={blocks.subscribe.block} />
         <Support data={blocks.support.block} />
+        <BookingWidget />
       </div>
     </SlidingSticky>
   );

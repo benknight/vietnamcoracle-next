@@ -138,23 +138,24 @@ export default async function preparePostData(
   // Remove "Back Top" link after related posts
   $('related-posts')?.parent().next('p:has(a[href="#top"])').remove();
 
-  // Put agoda inside iframe
+  // Replace Agoda booking widgets with the BookingWidget custom element.
+  // The hotel ID is extracted from the div id (format: adgshp{HOTEL_ID}).
+  // NOTE: Agoda links to the specific hotel page; Booking.com/Airbnb fall back
+  // to a city-level search since there is no reliable way to auto-map an Agoda
+  // hotel ID to a Booking.com property ID at render time. To enable exact
+  // Booking.com property links, add a `data-booking-hotel-id` attribute
+  // manually in the WordPress post, or implement a server-side cross-reference
+  // using the Booking.com Affiliate API.
   $('div[id^="adgshp"]').each((_i, element) => {
     const scriptTags = [
       ...$(element).nextAll('script').toArray(),
       ...$(element).next('p').find('script').toArray(),
     ];
 
-    const html =
-      $('<div />')
-        .append($(element).clone(), $(scriptTags).clone())
-        .html()
-        ?.replace('<br />', '') ?? '';
+    const hotelId = ($(element).attr('id') ?? '').replace('adgshp', '');
 
     $(element).replaceWith(
-      `<iframe src="/api/iframe-service/?html=${encodeURIComponent(
-        html,
-      )}" height="500" title="Book your accommodation"></iframe>`,
+      `<booking-widget data-agoda-hotel-id="${hotelId}"></booking-widget>`,
     );
 
     $(scriptTags).remove();

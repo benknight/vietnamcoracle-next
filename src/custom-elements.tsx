@@ -9,12 +9,17 @@ import tailwindConfig from '../tailwind.config.js';
 import ShareButtons from './components/ShareButtons';
 import SubscribeForm from './components/SubscribeForm';
 import MapOverlay from './components/MapOverlay';
+import BookingWidget from './components/BookingWidget';
 
 const baseConfig = resolveConfig(tailwindConfig) as any;
 
 declare global {
   namespace JSX {
     interface IntrinsicElements {
+      'booking-widget': React.DetailedHTMLProps<
+        React.HTMLAttributes<HTMLElement>,
+        HTMLElement
+      >;
       'map-overlay': React.DetailedHTMLProps<
         React.HTMLAttributes<HTMLElement>,
         HTMLElement
@@ -101,4 +106,26 @@ if (typeof window !== 'undefined') {
   }
 
   customElements.define('map-overlay', MapOverlayCustomElement);
+
+  class BookingWidgetCustomElement extends withTwind(HTMLElement) {
+    constructor() {
+      super();
+      const root = document.createElement('div');
+      this.attachShadow({ mode: 'open' }).appendChild(root);
+      const props = {
+        agodaHotelId: this.getAttribute('data-agoda-hotel-id') || undefined,
+        initialTab:
+          (this.getAttribute('data-tab') as
+            | 'stay'
+            | 'flights'
+            | 'train'
+            | 'bus') || 'stay',
+        variant: 'inline' as const,
+      };
+      const reactDomRoot = createRoot(root);
+      reactDomRoot.render(<BookingWidget {...props} />);
+    }
+  }
+
+  customElements.define('booking-widget', BookingWidgetCustomElement);
 }

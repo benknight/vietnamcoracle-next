@@ -13,9 +13,11 @@ const AGODA_CID = '1723497';
 const BAOLAU_SOURCE = 'vietnamcoracle';
 
 // -- Vietnam cities for Stay tab
-// Mui Ne and Tam Coc have no standalone Agoda city IDs — Agoda classifies them
-// as areas within Phan Thiet and Ninh Binh respectively, so they alias there.
-const VIETNAM_AGODA_CITY_IDS: Record<string, number> = {
+// Ho Tram, Mui Ne, and Tam Coc have no standalone Agoda city IDs — Agoda
+// classifies them as areas within Vung Tau, Phan Thiet, and Ninh Binh
+// respectively. The search URL passes `city` + `area` to land on the area.
+type AgodaLocation = number | { city: number; area: number };
+const VIETNAM_AGODA_CITY_IDS: Record<string, AgodaLocation> = {
   'Ben Tre': 204056,
   'Buon Ma Thuot': 19603,
   'Can Tho': 16079,
@@ -35,7 +37,7 @@ const VIETNAM_AGODA_CITY_IDS: Record<string, number> = {
   'Hai Phong': 17161,
   Hanoi: 2758,
   'Ho Chi Minh City': 13170,
-  'Ho Tram': 17190,
+  'Ho Tram': { city: 17190, area: 281119 },
   'Hoi An': 16552,
   Hue: 3738,
   'Kon Tum': 204063,
@@ -43,7 +45,7 @@ const VIETNAM_AGODA_CITY_IDS: Record<string, number> = {
   'Ly Son': 720976,
   'Mai Chau': 226263,
   'Moc Chau': 226464,
-  'Mui Ne': 16264, // alias → Phan Thiet
+  'Mui Ne': { city: 16264, area: 502082 },
   'My Tho': 214967,
   'Nha Trang': 2679,
   'Ninh Binh': 17245,
@@ -54,7 +56,7 @@ const VIETNAM_AGODA_CITY_IDS: Record<string, number> = {
   Pleiku: 78906,
   'Quy Nhon': 17242,
   'Sa Pa': 17160,
-  'Tam Coc': 17245, // alias → Ninh Binh
+  'Tam Coc': { city: 17245, area: 482411 },
   'Tuy Hoa': 78908,
   Vinh: 115666,
   'Vung Tau': 17190,
@@ -133,10 +135,13 @@ function agodaCityUrl(
   checkout: string,
   nights: number,
 ) {
-  const cityId = VIETNAM_AGODA_CITY_IDS[city];
+  const entry = VIETNAM_AGODA_CITY_IDS[city];
+  const cityId = typeof entry === 'number' ? entry : entry?.city;
+  const areaId = typeof entry === 'object' ? entry.area : undefined;
   const p = new URLSearchParams({
     ...agodaCommonParams(checkin, checkout, nights),
     ...(cityId ? { city: String(cityId) } : { q: `${city} Vietnam` }),
+    ...(areaId ? { area: String(areaId) } : {}),
   });
   return `https://www.agoda.com/search?${p}`;
 }

@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import internalizeUrl from '../lib/internalizeUrl';
 import { CurrencyDollarIcon } from '@heroicons/react/24/outline';
-import FlightIcon from '@mui/icons-material/Flight';
-import HotelIcon from '@mui/icons-material/Hotel';
 import Block, { BlockContent, BlockTitle, BlockData } from './Block';
 import HeartIcon from './HeartIcon';
 import Image from 'next/legacy/image';
@@ -54,20 +52,6 @@ export default function Support({ data: block }: Props) {
           />
           Become a Patron
         </Link>
-        <div className="flex text-xs">
-          <Link
-            href="/book-your-accommodation"
-            className={`${btnClassName} border-white dark:border-black flex-auto hover:bg-blue-400 hover:bg-opacity-25 h-10`}>
-            <HotelIcon className="!w-[14px] !h-[14px] mr-2" />
-            Book Hotels
-          </Link>
-          <Link
-            href="/book-your-transportation"
-            className={`${btnClassName} border-white dark:border-black ml-1 flex-auto hover:bg-green-400 hover:bg-opacity-25 h-10`}>
-            <FlightIcon className="!w-[14px] !h-[14px] mr-2" />
-            Book Transport
-          </Link>
-        </div>
       </div>
     </Block>
   );

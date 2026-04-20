@@ -577,7 +577,13 @@ export default function BookingWidget({
           {agodaHotelId && tab === 'stay'
             ? 'Check rates on Agoda'
             : `Search ${
-                tab === 'stay' ? 'hotels' : activeTab.label.toLowerCase()
+                tab === 'stay'
+                  ? 'hotels'
+                  : tab === 'flights'
+                    ? 'flights'
+                    : tab === 'train'
+                      ? 'trains'
+                      : 'buses'
               }`}{' '}
           ›
         </button>

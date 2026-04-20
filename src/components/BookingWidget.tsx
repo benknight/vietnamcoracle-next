@@ -75,11 +75,16 @@ interface BaolauLocation {
   iata?: string;
 }
 
-const TABS: { id: Tab; label: string; Icon: React.ElementType }[] = [
-  { id: 'stay', label: 'Stay', Icon: HotelIcon },
-  { id: 'flights', label: 'Flight', Icon: FlightIcon },
-  { id: 'train', label: 'Train', Icon: TrainIcon },
-  { id: 'bus', label: 'Bus', Icon: DirectionsBusIcon },
+const TABS: {
+  id: Tab;
+  label: string;
+  tabLabel: string;
+  Icon: React.ElementType;
+}[] = [
+  { id: 'stay', label: 'Stay', tabLabel: 'Stays', Icon: HotelIcon },
+  { id: 'flights', label: 'Flight', tabLabel: 'Flights', Icon: FlightIcon },
+  { id: 'train', label: 'Train', tabLabel: 'Trains', Icon: TrainIcon },
+  { id: 'bus', label: 'Bus', tabLabel: 'Buses', Icon: DirectionsBusIcon },
 ];
 
 interface Props {
@@ -364,7 +369,7 @@ export default function BookingWidget({
       {/* Tab navigation */}
       {!forceLight && (
         <div className="flex justify-center gap-2 mb-4 flex-wrap">
-          {TABS.map(({ id, label, Icon }) => (
+          {TABS.map(({ id, tabLabel, Icon }) => (
             <button
               key={id}
               type="button"
@@ -377,7 +382,7 @@ export default function BookingWidget({
               )}
               onClick={() => handleTabChange(id)}>
               <Icon className="!w-5 !h-5" />
-              <span>{label}</span>
+              <span>{tabLabel}</span>
             </button>
           ))}
         </div>
@@ -576,15 +581,7 @@ export default function BookingWidget({
           onClick={handleSearch}>
           {agodaHotelId && tab === 'stay'
             ? 'Check rates on Agoda'
-            : `Search ${
-                tab === 'stay'
-                  ? 'hotels'
-                  : tab === 'flights'
-                    ? 'flights'
-                    : tab === 'train'
-                      ? 'trains'
-                      : 'buses'
-              }`}{' '}
+            : `Search ${activeTab.tabLabel}`}{' '}
           ›
         </button>
       </div>

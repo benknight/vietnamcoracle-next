@@ -139,24 +139,26 @@ export default async function preparePostData(
   $('related-posts')?.parent().next('p:has(a[href="#top"])').remove();
 
   // Replace Agoda booking widgets with the BookingWidget custom element.
-  // The hotel ID is extracted from the div id (format: adgshp{HOTEL_ID}).
-  // NOTE: Agoda links to the specific hotel page; Booking.com/Airbnb fall back
-  // to a city-level search since there is no reliable way to auto-map an Agoda
-  // hotel ID to a Booking.com property ID at render time. To enable exact
-  // Booking.com property links, add a `data-booking-hotel-id` attribute
-  // manually in the WordPress post, or implement a server-side cross-reference
-  // using the Booking.com Affiliate API.
+  // The number in the div id (adgshp{N}) is an internal widget-script ID, not
+  // the public Agoda property ID. The real ID lives in the sibling <script>
+  // tag as `stg.Hid="..."` — extract it from there.
   $('div[id^="adgshp"]').each((_i, element) => {
     const scriptTags = [
       ...$(element).nextAll('script').toArray(),
       ...$(element).next('p').find('script').toArray(),
     ];
 
-    const hotelId = ($(element).attr('id') ?? '').replace('adgshp', '');
+    const scriptSrc = scriptTags.map(t => $(t).html() ?? '').join('\n');
+    const hidMatch = scriptSrc.match(/stg\.Hid\s*=\s*["']([^"']+)["']/);
+    const hotelId = hidMatch?.[1];
 
-    $(element).replaceWith(
-      `<booking-widget data-agoda-hotel-id="${hotelId}"></booking-widget>`,
-    );
+    if (hotelId) {
+      $(element).replaceWith(
+        `<booking-widget data-agoda-hotel-id="${hotelId}"></booking-widget>`,
+      );
+    } else {
+      $(element).remove();
+    }
 
     $(scriptTags).remove();
   });

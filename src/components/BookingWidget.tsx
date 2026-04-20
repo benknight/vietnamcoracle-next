@@ -93,6 +93,7 @@ interface Props {
 
 function addDays(date: string, n: number): string {
   const d = new Date(date);
+  if (isNaN(d.getTime())) return '';
   d.setDate(d.getDate() + n);
   return d.toISOString().split('T')[0];
 }
@@ -139,13 +140,21 @@ function agodaHotelUrl(
   hotelId: string,
   checkin: string,
   checkout: string,
-  nights: number,
+  _nights: number,
 ) {
+  // partnersearch.aspx with pcs=1 is the format used by existing working links
+  // on the site — param names are case-sensitive per the Affiliate Lite spec.
   const p = new URLSearchParams({
-    ...agodaCommonParams(checkin, checkout, nights),
-    selectedproperty: hotelId,
+    pcs: '1',
+    cid: AGODA_CID,
+    hid: hotelId,
+    checkin,
+    checkout,
+    NumberofAdults: '2',
+    NumberofChildren: '0',
+    Rooms: '1',
   });
-  return `https://www.agoda.com/search?${p}`;
+  return `https://www.agoda.com/partners/partnersearch.aspx?${p}`;
 }
 
 function airbnbUrl(city: string, checkin: string, checkout: string) {
@@ -196,7 +205,7 @@ export default function BookingWidget({
   const [city, setCity] = useState(initialCity ?? VIETNAM_CITIES[11]); // Hanoi
   const [checkin, setCheckin] = useState(tomorrow);
   const [nights, setNights] = useState(2);
-  const [affiliate, setAffiliate] = useState<StayAffiliate>('booking');
+  const [affiliate, setAffiliate] = useState<StayAffiliate>('agoda');
   const [baolauLocations, setBaolauLocations] = useState<BaolauLocation[]>([]);
   const [planeFrom, setPlaneFrom] = useState<BaolauLocation | null>(null);
   const [planeTo, setPlaneTo] = useState<BaolauLocation | null>(null);
@@ -296,20 +305,50 @@ export default function BookingWidget({
 
   const activeTab = TABS.find(t => t.id === tab)!;
 
-  const fieldCls =
+  // Inline widgets live inside a shadow root where the parent page's
+  // `.force-light-theme` class cannot reach. Strip `dark:` variants so the
+  // widget matches the light-themed article it is embedded in.
+  const forceLight = variant === 'inline';
+  const tw = (cls: string) =>
+    forceLight
+      ? cls
+          .split(/\s+/)
+          .filter(t => !t.startsWith('dark:'))
+          .join(' ')
+      : cls;
+
+  const fieldCls = tw(
     'w-full rounded-lg px-3 py-2 text-sm font-sans outline-none ' +
-    'bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-700 ' +
-    'text-gray-700 dark:text-gray-200 ' +
-    'focus:border-gray-500 dark:focus:border-gray-500 ' +
-    'hover:border-gray-400 dark:hover:border-gray-600';
+      'bg-white dark:bg-gray-950 border border-gray-300 dark:border-gray-700 ' +
+      'text-gray-700 dark:text-gray-200 ' +
+      'focus:border-gray-500 dark:focus:border-gray-500 ' +
+      'hover:border-gray-400 dark:hover:border-gray-600',
+  );
   const selectCls = fieldCls + ' select-chevron pr-8';
 
-  const labelCls =
-    'block text-xs text-gray-500 dark:text-gray-400 mb-1 font-sans';
+  const labelCls = tw(
+    'block text-xs text-gray-500 dark:text-gray-400 mb-1 font-sans',
+  );
+
+  // Chevron background as inline style so it renders inside the custom
+  // element's shadow root (where `select-chevron` from global.css cannot
+  // reach). Also pushes the chevron away from the right edge.
+  const selectChevronStyle: React.CSSProperties | undefined = forceLight
+    ? {
+        appearance: 'none',
+        WebkitAppearance: 'none',
+        backgroundRepeat: 'no-repeat',
+        backgroundImage:
+          "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>\")",
+        backgroundPosition: 'right 1rem center',
+        backgroundSize: '12px 8px',
+      }
+    : undefined;
 
   const isBaolau = tab === 'flights' || tab === 'train' || tab === 'bus';
   const baolauReady = baolauLocations.length > 0;
   const searchDisabled =
+    (tab === 'stay' && !checkin) ||
     (tab === 'flights' && (!planeFrom || !planeTo)) ||
     (tab === 'train' && (!trainFrom || !trainTo)) ||
     (tab === 'bus' && (!busFrom || !busTo)) ||
@@ -323,35 +362,39 @@ export default function BookingWidget({
       </BlockTitle>
 
       {/* Tab navigation */}
-      <div className="flex justify-center gap-2 mb-4 flex-wrap">
-        {TABS.map(({ id, label, Icon }) => (
-          <button
-            key={id}
-            type="button"
-            className={cx(
-              'flex flex-col items-center justify-center gap-1 rounded-xl transition-colors',
-              'text-xs font-sans w-16 h-16',
-              tab === id
-                ? 'bg-primary-500 text-white'
-                : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500',
-            )}
-            onClick={() => handleTabChange(id)}>
-            <Icon className="!w-5 !h-5" />
-            <span>{label}</span>
-          </button>
-        ))}
-      </div>
+      {!forceLight && (
+        <div className="flex justify-center gap-2 mb-4 flex-wrap">
+          {TABS.map(({ id, label, Icon }) => (
+            <button
+              key={id}
+              type="button"
+              className={cx(
+                'flex flex-col items-center justify-center gap-1 rounded-xl transition-colors',
+                'text-xs font-sans w-16 h-16',
+                tab === id
+                  ? 'bg-primary-500 text-white'
+                  : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500',
+              )}
+              onClick={() => handleTabChange(id)}>
+              <Icon className="!w-5 !h-5" />
+              <span>{label}</span>
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* Form card */}
-      <div className="bg-gray-100 dark:bg-gray-900 rounded-xl p-4 text-left mx-auto max-w-xs">
+      <div
+        className={tw(
+          cx(
+            'bg-gray-100 dark:bg-gray-900 rounded-xl p-4 text-left',
+            forceLight ? 'w-full' : 'mx-auto max-w-xs',
+          ),
+        )}>
         {/* Stay */}
         {tab === 'stay' && (
           <>
-            {agodaHotelId ? (
-              <p className="text-sm font-sans font-medium text-gray-700 dark:text-gray-300 mb-3">
-                Book this hotel:
-              </p>
-            ) : (
+            {!agodaHotelId && (
               <div className="mb-3">
                 <label className={labelCls}>City:</label>
                 <select
@@ -367,21 +410,23 @@ export default function BookingWidget({
               </div>
             )}
 
-            <div className="flex gap-2 mb-3">
-              <div className="flex-1 min-w-0">
+            <div className={forceLight ? '' : 'flex gap-2 mb-3'}>
+              <div className={forceLight ? 'mb-3' : 'flex-1 min-w-0'}>
                 <label className={labelCls}>Check-in:</label>
                 <input
                   className={fieldCls}
                   type="date"
                   value={checkin}
                   min={today}
+                  style={forceLight ? { colorScheme: 'light' } : undefined}
                   onChange={e => setCheckin(e.target.value)}
                 />
               </div>
-              <div className="w-32 flex-shrink-0">
+              <div className={forceLight ? 'mb-3' : 'flex-1 min-w-0'}>
                 <label className={labelCls}>Nights:</label>
                 <select
                   className={selectCls}
+                  style={selectChevronStyle}
                   value={nights}
                   onChange={e => setNights(Number(e.target.value))}>
                   {Array.from({ length: 14 }, (_, i) => i + 1).map(n => (
@@ -393,17 +438,20 @@ export default function BookingWidget({
               </div>
             </div>
 
-            <div className="mb-4">
-              <label className={labelCls}>With:</label>
-              <select
-                className={selectCls}
-                value={affiliate}
-                onChange={e => setAffiliate(e.target.value as StayAffiliate)}>
-                <option value="booking">Booking.com</option>
-                <option value="agoda">Agoda</option>
-                <option value="airbnb">Airbnb</option>
-              </select>
-            </div>
+            {!agodaHotelId && (
+              <div className="mb-4">
+                <label className={labelCls}>With:</label>
+                <select
+                  className={selectCls}
+                  style={selectChevronStyle}
+                  value={affiliate}
+                  onChange={e => setAffiliate(e.target.value as StayAffiliate)}>
+                  <option value="agoda">Agoda</option>
+                  <option value="airbnb">Airbnb</option>
+                  <option value="booking">Booking.com</option>
+                </select>
+              </div>
+            )}
           </>
         )}
 
@@ -517,12 +565,21 @@ export default function BookingWidget({
         <button
           type="button"
           disabled={searchDisabled}
-          className={cx(
-            'btn btn-primary mt-1 w-full h-12 gap-1',
-            'disabled:bg-gray-400 disabled:cursor-not-allowed',
+          className={tw(
+            cx(
+              forceLight
+                ? 'mt-1 w-full h-12 gap-1 inline-flex items-center justify-center text-sm font-sans font-medium tracking-wider rounded-lg text-white bg-primary-500 border border-primary-500 hover:bg-primary-600 hover:border-primary-400 focus:outline-none transition-colors duration-100 ease-in-out whitespace-nowrap'
+                : 'btn btn-primary mt-1 w-full h-12 gap-1',
+              'disabled:bg-gray-400 disabled:cursor-not-allowed',
+            ),
           )}
           onClick={handleSearch}>
-          Search {tab === 'stay' ? 'hotels' : activeTab.label.toLowerCase()} ›
+          {agodaHotelId && tab === 'stay'
+            ? 'Check rates on Agoda'
+            : `Search ${
+                tab === 'stay' ? 'hotels' : activeTab.label.toLowerCase()
+              }`}{' '}
+          ›
         </button>
       </div>
     </>

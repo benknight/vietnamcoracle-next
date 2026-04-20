@@ -110,6 +110,7 @@ if (typeof window !== 'undefined') {
   class BookingWidgetCustomElement extends withTwind(HTMLElement) {
     constructor() {
       super();
+      this.style.display = 'block';
       const root = document.createElement('div');
       this.attachShadow({ mode: 'open' }).appendChild(root);
       const props = {

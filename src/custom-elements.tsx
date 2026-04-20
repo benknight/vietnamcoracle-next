@@ -48,7 +48,7 @@ if (typeof window !== 'undefined') {
     rules: [
       [
         'btn',
-        'h-8 px-4 inline-flex items-center justify-center text-sm font-sans font-medium tracking-wider bg-gray-500 dark:hover:bg-primary-500 bg-opacity-10 hover:bg-opacity-25 dark:bg-opacity-25 dark:hover:bg-opacity-25 focus:outline-none rounded-lg subpixel-antialiased font-sans transition-colors duration-100 ease-in-out whitespace-nowrap',
+        'h-8 px-4 inline-flex items-center justify-center text-sm font-sans font-medium tracking-wider bg-gray-500 bg-opacity-10 dark:bg-opacity-25 [&:not(:disabled)]:hover:bg-opacity-25 dark:[&:not(:disabled)]:hover:bg-primary-500 dark:[&:not(:disabled)]:hover:bg-opacity-25 focus:outline-none rounded-lg subpixel-antialiased font-sans transition-colors duration-100 ease-in-out whitespace-nowrap',
       ],
     ],
   });

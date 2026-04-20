@@ -39,21 +39,37 @@
     @apply h-8 px-4 inline-flex items-center justify-center;
     @apply text-sm font-sans font-medium tracking-wider bg-gray-500;
     @apply bg-opacity-10 dark:bg-opacity-25;
-    @apply hover:bg-opacity-25 dark:hover:bg-primary-500 dark:hover:bg-opacity-25;
     @apply focus-visible:ring-2 ring-primary-500;
     @apply focus:outline-none rounded-lg subpixel-antialiased font-sans;
     @apply transition-colors duration-100 ease-in-out;
     @apply whitespace-nowrap;
   }
 
+  .btn:not(:disabled) {
+    @apply hover:bg-opacity-25 dark:hover:bg-primary-500 dark:hover:bg-opacity-25;
+  }
+
   .btn-primary {
-    @apply text-white bg-primary-500 hover:bg-primary-600 hover:bg-opacity-100;
-    @apply dark:bg-primary-900 dark:hover:bg-primary-800;
-    @apply border-primary-500 hover:border-primary-400 dark:border-opacity-50;
+    @apply text-white bg-primary-500;
+    @apply dark:bg-primary-900;
+    @apply border-primary-500 dark:border-opacity-50;
+  }
+
+  .btn-primary:not(:disabled) {
+    @apply hover:bg-primary-600 hover:bg-opacity-100;
+    @apply dark:hover:bg-primary-800;
+    @apply hover:border-primary-400;
   }
 
   .btn-patreon {
     @apply hover:bg-[#FF424D] hover:bg-opacity-25;
+  }
+
+  .select-chevron {
+    @apply appearance-none bg-no-repeat;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'><path d='M1 1l5 5 5-5' stroke='%236b7280' stroke-width='1.5' fill='none' stroke-linecap='round'/></svg>");
+    background-position: right 0.625rem center;
+    background-size: 12px 8px;
   }
 
   .c-block::after {

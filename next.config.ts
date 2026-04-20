@@ -31,10 +31,10 @@ const nextConfig: NextConfig = {
     ];
   },
   images: {
-    domains: [
-      'cms.vietnamcoracle.com',
-      'res.cloudinary.com',
-      'via.placeholder.com',
+    remotePatterns: [
+      { protocol: 'https', hostname: 'cms.vietnamcoracle.com' },
+      { protocol: 'https', hostname: 'res.cloudinary.com' },
+      { protocol: 'https', hostname: 'via.placeholder.com' },
     ],
     minimumCacheTTL: 2678400,
   },

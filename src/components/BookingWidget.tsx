@@ -581,7 +581,7 @@ export default function BookingWidget({
           onClick={handleSearch}>
           {agodaHotelId && tab === 'stay'
             ? 'Check rates on Agoda'
-            : `Search ${activeTab.tabLabel}`}{' '}
+            : `Search ${tab === 'stay' ? 'Hotels' : activeTab.tabLabel}`}{' '}
           ›
         </button>
       </div>

@@ -72,6 +72,16 @@
     background-size: 12px 8px;
   }
 
+  @media (prefers-color-scheme: dark) {
+    input[type='date']:not(.force-light-theme *),
+    input[type='time']:not(.force-light-theme *),
+    input[type='datetime-local']:not(.force-light-theme *),
+    input[type='month']:not(.force-light-theme *),
+    input[type='week']:not(.force-light-theme *) {
+      color-scheme: dark;
+    }
+  }
+
   .comment {
     @apply text-sm leading-snug;
   }

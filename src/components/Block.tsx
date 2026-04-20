@@ -42,7 +42,11 @@ export const BlockContent = (props: {
 );
 
 const Block = (props: { className?: string; children: React.ReactNode }) => (
-  <aside className={cx(props.className, 'c-block text-center font-display')}>
+  <aside
+    className={cx(
+      props.className,
+      'text-center font-display mb-20 last:mb-0',
+    )}>
     {props.children}
   </aside>
 );

@@ -4,6 +4,7 @@ import cx from 'classnames';
 import HotelIcon from '@mui/icons-material/Hotel';
 import FlightIcon from '@mui/icons-material/Flight';
 import TrainIcon from '@mui/icons-material/Train';
+import DirectionsBoatIcon from '@mui/icons-material/DirectionsBoat';
 import DirectionsBusIcon from '@mui/icons-material/DirectionsBus';
 import Block, { BlockTitle } from './Block';
 
@@ -65,9 +66,9 @@ type VietnamCity = keyof typeof VIETNAM_AGODA_CITY_IDS;
 const VIETNAM_CITIES = Object.keys(VIETNAM_AGODA_CITY_IDS) as VietnamCity[];
 
 // Types
-type Tab = 'stay' | 'flights' | 'train' | 'bus';
+type Tab = 'stay' | 'flights' | 'train' | 'boat' | 'bus';
 type StayAffiliate = 'booking' | 'agoda' | 'airbnb';
-type BaolauType = 'town' | 'plane' | 'train' | 'bus';
+type BaolauType = 'town' | 'plane' | 'train' | 'boat' | 'bus';
 
 interface BaolauLocation {
   id: string;
@@ -86,6 +87,7 @@ const TABS: {
   { id: 'stay', label: 'Stay', tabLabel: 'Stays', Icon: HotelIcon },
   { id: 'flights', label: 'Flight', tabLabel: 'Flights', Icon: FlightIcon },
   { id: 'train', label: 'Train', tabLabel: 'Trains', Icon: TrainIcon },
+  { id: 'boat', label: 'Boat', tabLabel: 'Boats', Icon: DirectionsBoatIcon },
   { id: 'bus', label: 'Bus', tabLabel: 'Buses', Icon: DirectionsBusIcon },
 ];
 
@@ -177,7 +179,7 @@ function baolauUrl(
   origin: BaolauLocation,
   dest: BaolauLocation,
   date: string,
-  transport: 'train' | 'bus' | 'plane',
+  transport: 'train' | 'bus' | 'plane' | 'boat',
 ) {
   const [year, month, day] = date.split('-');
   const p = new URLSearchParams({
@@ -221,6 +223,8 @@ export default function BookingWidget({
   const [planeTo, setPlaneTo] = useState<BaolauLocation | null>(null);
   const [trainFrom, setTrainFrom] = useState<BaolauLocation | null>(null);
   const [trainTo, setTrainTo] = useState<BaolauLocation | null>(null);
+  const [boatFrom, setBoatFrom] = useState<BaolauLocation | null>(null);
+  const [boatTo, setBoatTo] = useState<BaolauLocation | null>(null);
   const [busFrom, setBusFrom] = useState<BaolauLocation | null>(null);
   const [busTo, setBusTo] = useState<BaolauLocation | null>(null);
   const [baolauDate, setBaolauDate] = useState(tomorrow);
@@ -241,6 +245,7 @@ export default function BookingWidget({
             loc.type === 'town' ||
             loc.type === 'plane' ||
             loc.type === 'train' ||
+            loc.type === 'boat' ||
             loc.type === 'bus',
         )
         .map((loc: any) => {
@@ -278,10 +283,15 @@ export default function BookingWidget({
     () => baolauLocations.filter(l => l.type === 'train'),
     [baolauLocations],
   );
+  const boatOptions = useMemo(
+    () => baolauLocations.filter(l => l.type === 'boat'),
+    [baolauLocations],
+  );
 
   const handleTabChange = (id: Tab) => {
     setTab(id);
-    if (id === 'train' || id === 'bus' || id === 'flights') loadBaolau();
+    if (id === 'train' || id === 'bus' || id === 'flights' || id === 'boat')
+      loadBaolau();
   };
 
   const checkout = addDays(checkin, nights);
@@ -307,6 +317,8 @@ export default function BookingWidget({
       url = baolauUrl(planeFrom, planeTo, baolauDate, 'plane');
     } else if (tab === 'train' && trainFrom && trainTo) {
       url = baolauUrl(trainFrom, trainTo, baolauDate, 'train');
+    } else if (tab === 'boat' && boatFrom && boatTo) {
+      url = baolauUrl(boatFrom, boatTo, baolauDate, 'boat');
     } else if (tab === 'bus' && busFrom && busTo) {
       url = baolauUrl(busFrom, busTo, baolauDate, 'bus');
     }
@@ -314,6 +326,12 @@ export default function BookingWidget({
   };
 
   const activeTab = TABS.find(t => t.id === tab)!;
+
+  const orderedTabs = useMemo(() => {
+    const first = TABS.find(t => t.id === initialTab);
+    if (!first) return TABS;
+    return [first, ...TABS.filter(t => t.id !== initialTab)];
+  }, [initialTab]);
 
   // Inline widgets live inside a shadow root where the parent page's
   // `.force-light-theme` class cannot reach. Strip `dark:` variants so the
@@ -355,12 +373,14 @@ export default function BookingWidget({
       }
     : undefined;
 
-  const isBaolau = tab === 'flights' || tab === 'train' || tab === 'bus';
+  const isBaolau =
+    tab === 'flights' || tab === 'train' || tab === 'boat' || tab === 'bus';
   const baolauReady = baolauLocations.length > 0;
   const searchDisabled =
     (tab === 'stay' && !checkin) ||
     (tab === 'flights' && (!planeFrom || !planeTo)) ||
     (tab === 'train' && (!trainFrom || !trainTo)) ||
+    (tab === 'boat' && (!boatFrom || !boatTo)) ||
     (tab === 'bus' && (!busFrom || !busTo)) ||
     (isBaolau && !baolauReady && !baolauError);
 
@@ -371,224 +391,250 @@ export default function BookingWidget({
         Book Your <span className="text-primary-500">{activeTab.label}</span>
       </BlockTitle>
 
-      {/* Tab navigation */}
-      {!forceLight && (
-        <div className="flex justify-center gap-2 mb-4 flex-wrap">
-          {TABS.map(({ id, tabLabel, Icon }) => (
-            <button
-              key={id}
-              type="button"
-              className={cx(
-                'flex flex-col items-center justify-center gap-1 rounded-xl transition-colors',
-                'text-xs font-sans w-16 h-16',
-                tab === id
-                  ? 'bg-primary-500 text-white'
-                  : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500',
-              )}
-              onClick={() => handleTabChange(id)}>
-              <Icon className="!w-5 !h-5" />
-              <span>{tabLabel}</span>
-            </button>
-          ))}
-        </div>
-      )}
-
-      {/* Form card */}
-      <div
-        className={tw(
-          cx(
-            'bg-gray-100 dark:bg-gray-900 rounded-xl p-4 text-left',
-            forceLight ? 'w-full' : 'mx-auto max-w-xs',
-          ),
-        )}>
-        {/* Stay */}
-        {tab === 'stay' && (
-          <>
-            {!agodaHotelId && (
-              <div className="mb-3">
-                <label className={labelCls}>City:</label>
-                <select
-                  className={selectCls}
-                  value={city}
-                  onChange={e => setCity(e.target.value as VietnamCity)}>
-                  {VIETNAM_CITIES.map(c => (
-                    <option key={c} value={c}>
-                      {c}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            )}
-
-            <div className={forceLight ? '' : 'flex gap-2 mb-3'}>
-              <div className={forceLight ? 'mb-3' : 'flex-1 min-w-0'}>
-                <label className={labelCls}>Check-in:</label>
-                <input
-                  className={fieldCls}
-                  type="date"
-                  value={checkin}
-                  min={today}
-                  style={forceLight ? { colorScheme: 'light' } : undefined}
-                  onChange={e => setCheckin(e.target.value)}
-                />
-              </div>
-              <div className={forceLight ? 'mb-3' : 'flex-1 min-w-0'}>
-                <label className={labelCls}>Nights:</label>
-                <select
-                  className={selectCls}
-                  style={selectChevronStyle}
-                  value={nights}
-                  onChange={e => setNights(Number(e.target.value))}>
-                  {Array.from({ length: 14 }, (_, i) => i + 1).map(n => (
-                    <option key={n} value={n}>
-                      {n} {n === 1 ? 'night' : 'nights'}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            {!agodaHotelId && (
-              <div className="mb-4">
-                <label className={labelCls}>With:</label>
-                <select
-                  className={selectCls}
-                  style={selectChevronStyle}
-                  value={affiliate}
-                  onChange={e => setAffiliate(e.target.value as StayAffiliate)}>
-                  <option value="agoda">Agoda</option>
-                  <option value="airbnb">Airbnb</option>
-                  <option value="booking">Booking.com</option>
-                </select>
-              </div>
-            )}
-          </>
+      <div className={cx(forceLight ? 'w-full' : 'mx-auto mt-4 max-w-xs')}>
+        {/* Tab navigation */}
+        {!forceLight && (
+          <div className="flex gap-2 mb-4 px-1 w-full">
+            {orderedTabs.map(({ id, tabLabel, Icon }) => (
+              <button
+                key={id}
+                type="button"
+                className={cx(
+                  'flex flex-col items-center justify-center gap-1 rounded-xl transition-colors',
+                  'text-xs font-sans flex-1 basis-0 min-w-0 aspect-square',
+                  tab === id
+                    ? 'bg-primary-500 text-white'
+                    : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500',
+                )}
+                onClick={() => handleTabChange(id)}>
+                <Icon className="!w-5 !h-5" />
+                <span>{tabLabel}</span>
+              </button>
+            ))}
+          </div>
         )}
 
-        {/* Baolau-backed tabs (flights / train / bus) */}
-        {isBaolau && (
-          <>
-            {baolauError ? (
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-sans mb-3">
-                Location data unavailable. Please run{' '}
-                <code className="text-xs">npm run build</code> first.
-              </p>
-            ) : baolauLoading && !baolauReady ? (
-              <p className="text-sm text-gray-500 dark:text-gray-400 font-sans mb-3">
-                Loading locations…
-              </p>
-            ) : baolauReady ? (
-              <>
-                {tab === 'flights' ? (
-                  <div className="flex gap-2 mb-3">
-                    <div className="flex-1 min-w-0">
-                      <BaolauAutocomplete
-                        label="From"
-                        placeholder="e.g. Hanoi"
-                        options={planeOptions}
-                        value={planeFrom}
-                        onChange={setPlaneFrom}
-                        fieldCls={fieldCls}
-                        labelCls={labelCls}
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <BaolauAutocomplete
-                        label="To"
-                        placeholder="e.g. Ho Chi Minh"
-                        options={planeOptions}
-                        value={planeTo}
-                        onChange={setPlaneTo}
-                        fieldCls={fieldCls}
-                        labelCls={labelCls}
-                      />
-                    </div>
-                  </div>
-                ) : tab === 'train' ? (
-                  <div className="flex gap-2 mb-3">
-                    <div className="flex-1 min-w-0">
-                      <BaolauAutocomplete
-                        label="From"
-                        placeholder="Type a station"
-                        options={trainOptions}
-                        value={trainFrom}
-                        onChange={setTrainFrom}
-                        fieldCls={fieldCls}
-                        labelCls={labelCls}
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <BaolauAutocomplete
-                        label="To"
-                        placeholder="Type a station"
-                        options={trainOptions}
-                        value={trainTo}
-                        onChange={setTrainTo}
-                        fieldCls={fieldCls}
-                        labelCls={labelCls}
-                      />
-                    </div>
-                  </div>
-                ) : (
-                  <div className="flex gap-2 mb-3">
-                    <div className="flex-1 min-w-0">
-                      <BaolauAutocomplete
-                        label="From"
-                        placeholder="Type a location"
-                        options={baolauLocations}
-                        value={busFrom}
-                        onChange={setBusFrom}
-                        fieldCls={fieldCls}
-                        labelCls={labelCls}
-                      />
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <BaolauAutocomplete
-                        label="To"
-                        placeholder="Type a location"
-                        options={baolauLocations}
-                        value={busTo}
-                        onChange={setBusTo}
-                        fieldCls={fieldCls}
-                        labelCls={labelCls}
-                      />
-                    </div>
-                  </div>
-                )}
+        {/* Form card */}
+        <div
+          className={tw(
+            'bg-gray-100 dark:bg-gray-900 rounded-xl p-4 text-left w-full',
+          )}>
+          {/* Stay */}
+          {tab === 'stay' && (
+            <>
+              {!agodaHotelId && (
                 <div className="mb-3">
-                  <label className={labelCls}>Date:</label>
+                  <label className={labelCls}>City:</label>
+                  <select
+                    className={selectCls}
+                    value={city}
+                    onChange={e => setCity(e.target.value as VietnamCity)}>
+                    {VIETNAM_CITIES.map(c => (
+                      <option key={c} value={c}>
+                        {c}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
+
+              <div className={forceLight ? '' : 'flex gap-2 mb-3'}>
+                <div className={forceLight ? 'mb-3' : 'flex-1 min-w-0'}>
+                  <label className={labelCls}>Check-in:</label>
                   <input
                     className={fieldCls}
                     type="date"
-                    value={baolauDate}
+                    value={checkin}
                     min={today}
-                    onChange={e => setBaolauDate(e.target.value)}
+                    style={forceLight ? { colorScheme: 'light' } : undefined}
+                    onChange={e => setCheckin(e.target.value)}
                   />
                 </div>
-              </>
-            ) : null}
-            <PoweredBy name="Baolau" href="https://booking.baolau.com" />
-          </>
-        )}
+                <div className={forceLight ? 'mb-3' : 'flex-1 min-w-0'}>
+                  <label className={labelCls}>Nights:</label>
+                  <select
+                    className={selectCls}
+                    style={selectChevronStyle}
+                    value={nights}
+                    onChange={e => setNights(Number(e.target.value))}>
+                    {Array.from({ length: 14 }, (_, i) => i + 1).map(n => (
+                      <option key={n} value={n}>
+                        {n} {n === 1 ? 'night' : 'nights'}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-        {/* Search button */}
-        <button
-          type="button"
-          disabled={searchDisabled}
-          className={tw(
-            cx(
-              forceLight
-                ? 'mt-1 w-full h-12 gap-1 inline-flex items-center justify-center text-sm font-sans font-medium tracking-wider rounded-lg text-white bg-primary-500 border border-primary-500 hover:bg-primary-600 hover:border-primary-400 focus:outline-none transition-colors duration-100 ease-in-out whitespace-nowrap'
-                : 'btn btn-primary mt-1 w-full h-12 gap-1',
-              'disabled:bg-gray-400 disabled:cursor-not-allowed',
-            ),
+              {!agodaHotelId && (
+                <div className="mb-4">
+                  <label className={labelCls}>With:</label>
+                  <select
+                    className={selectCls}
+                    style={selectChevronStyle}
+                    value={affiliate}
+                    onChange={e =>
+                      setAffiliate(e.target.value as StayAffiliate)
+                    }>
+                    <option value="agoda">Agoda</option>
+                    <option value="airbnb">Airbnb</option>
+                    <option value="booking">Booking.com</option>
+                  </select>
+                </div>
+              )}
+            </>
           )}
-          onClick={handleSearch}>
-          {agodaHotelId && tab === 'stay'
-            ? 'Check rates on Agoda'
-            : `Search ${tab === 'stay' ? 'Hotels' : activeTab.tabLabel}`}{' '}
-          ›
-        </button>
+
+          {/* Baolau-backed tabs (flights / train / bus) */}
+          {isBaolau && (
+            <>
+              {baolauError ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400 font-sans mb-3">
+                  Location data unavailable. Please run{' '}
+                  <code className="text-xs">npm run build</code> first.
+                </p>
+              ) : baolauLoading && !baolauReady ? (
+                <p className="text-sm text-gray-500 dark:text-gray-400 font-sans mb-3">
+                  Loading locations…
+                </p>
+              ) : baolauReady ? (
+                <>
+                  {tab === 'flights' ? (
+                    <div className="flex gap-2 mb-3">
+                      <div className="flex-1 min-w-0">
+                        <BaolauAutocomplete
+                          label="From"
+                          placeholder="Airport"
+                          options={planeOptions}
+                          value={planeFrom}
+                          onChange={setPlaneFrom}
+                          fieldCls={fieldCls}
+                          labelCls={labelCls}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <BaolauAutocomplete
+                          label="To"
+                          placeholder="Airport"
+                          options={planeOptions}
+                          value={planeTo}
+                          onChange={setPlaneTo}
+                          fieldCls={fieldCls}
+                          labelCls={labelCls}
+                        />
+                      </div>
+                    </div>
+                  ) : tab === 'train' ? (
+                    <div className="flex gap-2 mb-3">
+                      <div className="flex-1 min-w-0">
+                        <BaolauAutocomplete
+                          label="From"
+                          placeholder="Station"
+                          options={trainOptions}
+                          value={trainFrom}
+                          onChange={setTrainFrom}
+                          fieldCls={fieldCls}
+                          labelCls={labelCls}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <BaolauAutocomplete
+                          label="To"
+                          placeholder="Station"
+                          options={trainOptions}
+                          value={trainTo}
+                          onChange={setTrainTo}
+                          fieldCls={fieldCls}
+                          labelCls={labelCls}
+                        />
+                      </div>
+                    </div>
+                  ) : tab === 'boat' ? (
+                    <div className="flex gap-2 mb-3">
+                      <div className="flex-1 min-w-0">
+                        <BaolauAutocomplete
+                          label="From"
+                          placeholder="Port"
+                          options={boatOptions}
+                          value={boatFrom}
+                          onChange={setBoatFrom}
+                          fieldCls={fieldCls}
+                          labelCls={labelCls}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <BaolauAutocomplete
+                          label="To"
+                          placeholder="Port"
+                          options={boatOptions}
+                          value={boatTo}
+                          onChange={setBoatTo}
+                          fieldCls={fieldCls}
+                          labelCls={labelCls}
+                        />
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="flex gap-2 mb-3">
+                      <div className="flex-1 min-w-0">
+                        <BaolauAutocomplete
+                          label="From"
+                          placeholder="Location"
+                          options={baolauLocations}
+                          value={busFrom}
+                          onChange={setBusFrom}
+                          fieldCls={fieldCls}
+                          labelCls={labelCls}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <BaolauAutocomplete
+                          label="To"
+                          placeholder="Location"
+                          options={baolauLocations}
+                          value={busTo}
+                          onChange={setBusTo}
+                          fieldCls={fieldCls}
+                          labelCls={labelCls}
+                        />
+                      </div>
+                    </div>
+                  )}
+                  <div className="mb-3">
+                    <label className={labelCls}>Date:</label>
+                    <input
+                      className={fieldCls}
+                      type="date"
+                      value={baolauDate}
+                      min={today}
+                      onChange={e => setBaolauDate(e.target.value)}
+                    />
+                  </div>
+                </>
+              ) : null}
+              <PoweredBy name="Baolau" href="https://booking.baolau.com" />
+            </>
+          )}
+
+          {/* Search button */}
+          <button
+            type="button"
+            disabled={searchDisabled}
+            className={tw(
+              cx(
+                forceLight
+                  ? 'mt-1 w-full h-12 gap-1 inline-flex items-center justify-center text-sm font-sans font-medium tracking-wider rounded-lg text-white bg-primary-500 border border-primary-500 hover:bg-primary-600 hover:border-primary-400 focus:outline-none transition-colors duration-100 ease-in-out whitespace-nowrap'
+                  : 'btn btn-primary mt-1 w-full h-12 gap-1',
+                'disabled:bg-gray-400 disabled:cursor-not-allowed',
+              ),
+            )}
+            onClick={handleSearch}>
+            {agodaHotelId && tab === 'stay'
+              ? 'Check rates on Agoda'
+              : `Search ${tab === 'stay' ? 'Hotels' : activeTab.tabLabel}`}{' '}
+            ›
+          </button>
+        </div>
       </div>
     </>
   );

@@ -120,6 +120,7 @@ if (typeof window !== 'undefined') {
             | 'stay'
             | 'flights'
             | 'train'
+            | 'boat'
             | 'bus') || 'stay',
         variant: 'inline' as const,
       };

@@ -16,8 +16,7 @@ const BAOLAU_SOURCE = 'vietnamcoracle';
 // Ho Tram, Mui Ne, and Tam Coc have no standalone Agoda city IDs — Agoda
 // classifies them as areas within Vung Tau, Phan Thiet, and Ninh Binh
 // respectively. The search URL passes `city` + `area` to land on the area.
-type AgodaLocation = number | { city: number; area: number };
-const VIETNAM_AGODA_CITY_IDS: Record<string, AgodaLocation> = {
+const VIETNAM_AGODA_CITY_IDS = {
   'Ben Tre': 204056,
   'Buon Ma Thuot': 19603,
   'Can Tho': 16079,
@@ -62,7 +61,8 @@ const VIETNAM_AGODA_CITY_IDS: Record<string, AgodaLocation> = {
   'Vung Tau': 17190,
 };
 
-const VIETNAM_CITIES = Object.keys(VIETNAM_AGODA_CITY_IDS);
+type VietnamCity = keyof typeof VIETNAM_AGODA_CITY_IDS;
+const VIETNAM_CITIES = Object.keys(VIETNAM_AGODA_CITY_IDS) as VietnamCity[];
 
 // Types
 type Tab = 'stay' | 'flights' | 'train' | 'bus';
@@ -91,7 +91,7 @@ const TABS: {
 
 interface Props {
   agodaHotelId?: string;
-  initialCity?: string;
+  initialCity?: VietnamCity;
   initialTab?: Tab;
   variant?: 'sidebar' | 'inline';
 }
@@ -204,7 +204,7 @@ function baolauUrl(
 
 export default function BookingWidget({
   agodaHotelId,
-  initialCity,
+  initialCity = 'Hanoi',
   initialTab = 'stay',
   variant = 'sidebar',
 }: Props) {
@@ -212,7 +212,7 @@ export default function BookingWidget({
   const tomorrow = useMemo(() => addDays(today, 1), [today]);
 
   const [tab, setTab] = useState<Tab>(initialTab);
-  const [city, setCity] = useState(initialCity ?? VIETNAM_CITIES[11]); // Hanoi
+  const [city, setCity] = useState(initialCity);
   const [checkin, setCheckin] = useState(tomorrow);
   const [nights, setNights] = useState(2);
   const [affiliate, setAffiliate] = useState<StayAffiliate>('agoda');
@@ -410,7 +410,7 @@ export default function BookingWidget({
                 <select
                   className={selectCls}
                   value={city}
-                  onChange={e => setCity(e.target.value)}>
+                  onChange={e => setCity(e.target.value as VietnamCity)}>
                   {VIETNAM_CITIES.map(c => (
                     <option key={c} value={c}>
                       {c}

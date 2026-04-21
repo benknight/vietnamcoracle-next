@@ -73,7 +73,7 @@ export default function PatronOnlyContentGate({
             <img
               alt=""
               className="w-4 h-4 mr-2"
-              src="/Digital-Patreon-Logo_FieryCoral.png"
+              src="/patreon-symbol.svg"
             />
             Login with Patreon
           </a>

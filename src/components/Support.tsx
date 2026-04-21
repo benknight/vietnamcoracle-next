@@ -47,6 +47,7 @@ export default function Support({ data: block }: Props) {
           className={`${btnClassName} gap-2 btn-patreon border-white dark:border-black h-12`}>
           <Image
             alt=""
+            className="dark:invert"
             src="/patreon-symbol.svg"
             width={16}
             height={16}

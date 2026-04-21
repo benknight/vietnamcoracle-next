@@ -72,7 +72,7 @@ export default function PatronOnlyContentGate({
             href={`https://www.patreon.com/oauth2/authorize?${oauthParams.toString()}`}>
             <img
               alt=""
-              className="w-4 h-4 mr-2"
+              className="w-4 h-4 mr-2 dark:invert"
               src="/patreon-symbol.svg"
             />
             Login with Patreon

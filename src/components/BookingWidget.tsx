@@ -725,7 +725,20 @@ export default function BookingWidget({
   );
 
   if (variant === 'inline') {
-    return <div className="my-8 text-center font-display">{inner}</div>;
+    return (
+      <div className="my-8 text-center font-display">
+        {/* Scoped to the shadow root — global.css rules that hide the native
+            calendar indicator don't reach inside the custom element. */}
+        <style>{`
+          input[type='date']::-webkit-calendar-picker-indicator,
+          input[type='date']::-webkit-inner-spin-button {
+            display: none;
+            -webkit-appearance: none;
+          }
+        `}</style>
+        {inner}
+      </div>
+    );
   }
 
   return <Block>{inner}</Block>;

@@ -45,7 +45,7 @@ export default function About({ data: block }: Props) {
         </Link>
         <Link
           href="https://www.patreon.com/vietnamcoracle"
-          className={`${btnClassName} gap-2 btn-patreon border-white dark:border-black h-12`}>
+          className={`${btnClassName} gap-2 border-white dark:border-black h-12`}>
           <Image
             alt=""
             className="dark:invert"

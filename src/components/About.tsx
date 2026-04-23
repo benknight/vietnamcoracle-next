@@ -48,7 +48,8 @@ export default function About({ data: block }: Props) {
           className={`${btnClassName} gap-2 btn-patreon border-white dark:border-black h-12`}>
           <Image
             alt=""
-            src="/Digital-Patreon-Logo_FieryCoral.png"
+            className="dark:invert"
+            src="/patreon-symbol.svg"
             width={16}
             height={16}
           />

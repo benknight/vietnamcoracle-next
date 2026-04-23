@@ -1,5 +1,12 @@
 'use client';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import {
+  useCallback,
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import cx from 'classnames';
 import HotelIcon from '@mui/icons-material/Hotel';
 import FlightIcon from '@mui/icons-material/Flight';
@@ -69,6 +76,20 @@ const VIETNAM_CITIES = Object.keys(VIETNAM_AGODA_CITY_IDS) as VietnamCity[];
 type Tab = 'stay' | 'flights' | 'train' | 'boat' | 'bus';
 type StayAffiliate = 'booking' | 'agoda' | 'airbnb';
 type BaolauType = 'town' | 'plane' | 'train' | 'boat' | 'bus';
+
+interface StayProvider {
+  id: StayAffiliate;
+  label: string;
+  homepage: string;
+}
+
+// Only list providers whose affiliate credentials are in place. Booking.com
+// still has a placeholder AID and Airbnb has no affiliate program, so Agoda
+// is the only active provider for now. Add entries here to re-enable the
+// provider dropdown.
+const STAY_PROVIDERS: StayProvider[] = [
+  { id: 'agoda', label: 'Agoda', homepage: 'https://www.agoda.com' },
+];
 
 interface BaolauLocation {
   id: string;
@@ -213,11 +234,16 @@ export default function BookingWidget({
   const today = useMemo(() => new Date().toISOString().split('T')[0], []);
   const tomorrow = useMemo(() => addDays(today, 1), [today]);
 
+  const fieldIdPrefix = useId();
+  const fid = (name: string) => `${fieldIdPrefix}${name}`;
+
   const [tab, setTab] = useState<Tab>(initialTab);
   const [city, setCity] = useState(initialCity);
   const [checkin, setCheckin] = useState(tomorrow);
   const [nights, setNights] = useState(2);
-  const [affiliate, setAffiliate] = useState<StayAffiliate>('agoda');
+  const [affiliate, setAffiliate] = useState<StayAffiliate>(
+    STAY_PROVIDERS[0]?.id ?? 'agoda',
+  );
   const [baolauLocations, setBaolauLocations] = useState<BaolauLocation[]>([]);
   const [planeFrom, setPlaneFrom] = useState<BaolauLocation | null>(null);
   const [planeTo, setPlaneTo] = useState<BaolauLocation | null>(null);
@@ -353,14 +379,16 @@ export default function BookingWidget({
       'hover:border-gray-400 dark:hover:border-gray-600',
   );
   const selectCls = fieldCls + ' select-chevron pr-8';
+  // Tight left padding + right room for the calendar icon so the full date
+  // fits on narrow Android inputs.
+  const dateFieldCls = fieldCls.replace('px-3', 'pl-2 pr-6');
 
   const labelCls = tw(
     'block text-xs text-gray-500 dark:text-gray-400 mb-1 font-sans',
   );
 
-  // Chevron background as inline style so it renders inside the custom
-  // element's shadow root (where `select-chevron` from global.css cannot
-  // reach). Also pushes the chevron away from the right edge.
+  // Chevron and calendar-icon backgrounds as inline styles so they render
+  // inside the custom element's shadow root (where global.css cannot reach).
   const selectChevronStyle: React.CSSProperties | undefined = forceLight
     ? {
         appearance: 'none',
@@ -372,6 +400,31 @@ export default function BookingWidget({
         backgroundSize: '12px 8px',
       }
     : undefined;
+
+  const dateInputStyle: React.CSSProperties | undefined = forceLight
+    ? {
+        colorScheme: 'light',
+        appearance: 'none',
+        WebkitAppearance: 'none',
+        backgroundRepeat: 'no-repeat',
+        backgroundImage:
+          "url(\"data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%236b7280' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'><rect x='2.5' y='3.5' width='11' height='10' rx='1.5'/><path d='M2.5 6.5h11M5.5 2v2M10.5 2v2'/></svg>\")",
+        backgroundPosition: 'right 0.5rem center',
+        backgroundSize: '14px 14px',
+        paddingRight: '1.625rem',
+      }
+    : undefined;
+
+  const openDatePicker = (e: React.MouseEvent<HTMLInputElement>) => {
+    const el = e.currentTarget;
+    if (typeof el.showPicker === 'function') {
+      try {
+        el.showPicker();
+      } catch {
+        // showPicker throws when not triggered by user activation — ignore.
+      }
+    }
+  };
 
   const isBaolau =
     tab === 'flights' || tab === 'train' || tab === 'boat' || tab === 'bus';
@@ -424,9 +477,13 @@ export default function BookingWidget({
             <>
               {!agodaHotelId && (
                 <div className="mb-3">
-                  <label className={labelCls}>City:</label>
+                  <label className={labelCls} htmlFor={fid('city')}>
+                    City:
+                  </label>
                   <select
                     className={selectCls}
+                    id={fid('city')}
+                    name="city"
                     value={city}
                     onChange={e => setCity(e.target.value as VietnamCity)}>
                     {VIETNAM_CITIES.map(c => (
@@ -440,20 +497,29 @@ export default function BookingWidget({
 
               <div className={forceLight ? '' : 'flex gap-2 mb-3'}>
                 <div className={forceLight ? 'mb-3' : 'flex-1 min-w-0'}>
-                  <label className={labelCls}>Check-in:</label>
+                  <label className={labelCls} htmlFor={fid('checkin')}>
+                    Check-in:
+                  </label>
                   <input
-                    className={fieldCls}
+                    className={dateFieldCls}
+                    id={fid('checkin')}
+                    name="checkin"
                     type="date"
                     value={checkin}
                     min={today}
-                    style={forceLight ? { colorScheme: 'light' } : undefined}
+                    style={dateInputStyle}
+                    onClick={openDatePicker}
                     onChange={e => setCheckin(e.target.value)}
                   />
                 </div>
                 <div className={forceLight ? 'mb-3' : 'flex-1 min-w-0'}>
-                  <label className={labelCls}>Nights:</label>
+                  <label className={labelCls} htmlFor={fid('nights')}>
+                    Nights:
+                  </label>
                   <select
                     className={selectCls}
+                    id={fid('nights')}
+                    name="nights"
                     style={selectChevronStyle}
                     value={nights}
                     onChange={e => setNights(Number(e.target.value))}>
@@ -466,21 +532,34 @@ export default function BookingWidget({
                 </div>
               </div>
 
-              {!agodaHotelId && (
+              {!agodaHotelId && STAY_PROVIDERS.length > 1 && (
                 <div className="mb-4">
-                  <label className={labelCls}>With:</label>
+                  <label className={labelCls} htmlFor={fid('affiliate')}>
+                    With:
+                  </label>
                   <select
                     className={selectCls}
+                    id={fid('affiliate')}
+                    name="affiliate"
                     style={selectChevronStyle}
                     value={affiliate}
                     onChange={e =>
                       setAffiliate(e.target.value as StayAffiliate)
                     }>
-                    <option value="agoda">Agoda</option>
-                    <option value="airbnb">Airbnb</option>
-                    <option value="booking">Booking.com</option>
+                    {STAY_PROVIDERS.map(p => (
+                      <option key={p.id} value={p.id}>
+                        {p.label}
+                      </option>
+                    ))}
                   </select>
                 </div>
+              )}
+
+              {STAY_PROVIDERS.length === 1 && !agodaHotelId && (
+                <PoweredBy
+                  name={STAY_PROVIDERS[0].label}
+                  href={STAY_PROVIDERS[0].homepage}
+                />
               )}
             </>
           )}
@@ -601,12 +680,18 @@ export default function BookingWidget({
                     </div>
                   )}
                   <div className="mb-3">
-                    <label className={labelCls}>Date:</label>
+                    <label className={labelCls} htmlFor={fid('baolau-date')}>
+                      Date:
+                    </label>
                     <input
-                      className={fieldCls}
+                      className={dateFieldCls}
+                      id={fid('baolau-date')}
+                      name="baolau-date"
                       type="date"
                       value={baolauDate}
                       min={today}
+                      style={dateInputStyle}
+                      onClick={openDatePicker}
                       onChange={e => setBaolauDate(e.target.value)}
                     />
                   </div>
@@ -668,6 +753,8 @@ function BaolauAutocomplete({
   const [query, setQuery] = useState(value?.name ?? '');
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const inputId = useId();
+  const fieldName = label.toLowerCase().replace(/\s+/g, '-');
 
   useEffect(() => {
     if (!open) setQuery(value?.name ?? '');
@@ -703,10 +790,14 @@ function BaolauAutocomplete({
 
   return (
     <div ref={wrapperRef} className="relative">
-      <label className={labelCls}>{label}</label>
+      <label className={labelCls} htmlFor={inputId}>
+        {label}
+      </label>
       <input
         type="text"
         className={fieldCls}
+        id={inputId}
+        name={fieldName}
         value={query}
         placeholder={placeholder}
         onChange={e => {

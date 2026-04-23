@@ -106,11 +106,14 @@ export default function Subscribe({ data: block }: Props) {
           onSubmit(email);
         }}>
         <input
+          aria-label="Your Email"
           className="form-field flex-auto h-8 mr-2 p-2 text-sm rounded"
+          name="email"
           onChange={event => setEmail(event.target.value)}
           placeholder="Your Email"
           required
           type="email"
+          autoComplete="email"
           value={email}
         />
         <button

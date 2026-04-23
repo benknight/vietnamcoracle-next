@@ -24,10 +24,7 @@ const SidebarDefault = ({ className = '', blocks }: Props) => {
   return (
     <SlidingSticky>
       <div className={cx('py-10 xl:pt-0', className)}>
-        <About
-          data={blocks.about.block}
-          supportData={blocks.support.block}
-        />
+        <About data={blocks.about.block} />
         <BookingWidget />
         <Subscribe data={blocks.subscribe.block} />
       </div>

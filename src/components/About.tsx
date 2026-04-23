@@ -6,12 +6,11 @@ import Block, { BlockContent, BlockData, BlockTitle } from './Block';
 
 interface Props {
   data: BlockData;
-  supportData: BlockData;
 }
 
 const btnClassName = 'btn flex mt-2';
 
-export default function About({ data: block, supportData }: Props) {
+export default function About({ data: block }: Props) {
   return (
     <Block>
       <div className="mb-6 flex justify-center">
@@ -29,11 +28,9 @@ export default function About({ data: block, supportData }: Props) {
       <BlockTitle>{block.title}</BlockTitle>
       <BlockContent className="xl:max-w-[350px]">
         <p>
-          I'm the founder & creator of Vietnam Coracle: a free, independent
-          travel resource for Vietnam. There's no sponsored content whatsoever.
-          If you enjoy the site, please support it.{' '}
+          {block.description}{' '}
           <Link
-            href={internalizeUrl(supportData.link.url)}
+            href={internalizeUrl(block.link.url)}
             className="link whitespace-nowrap">
             Read more ›
           </Link>

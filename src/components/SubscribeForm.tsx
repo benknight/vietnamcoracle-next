@@ -41,6 +41,8 @@ export default function SubscribeForm() {
           onSubmit(email);
         }}>
         <input
+          aria-label="Email"
+          name="email"
           placeholder="Email"
           onChange={event => setEmail(event.target.value)}
           required

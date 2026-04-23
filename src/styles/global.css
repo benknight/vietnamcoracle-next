@@ -82,6 +82,39 @@
     }
   }
 
+  /* Strip Android Chrome's native dropdown arrow and render our own calendar
+     icon so date/time inputs look consistent across platforms. Clicking the
+     field opens the picker via HTMLInputElement.showPicker() (see JS). */
+  input[type='date'],
+  input[type='time'],
+  input[type='datetime-local'],
+  input[type='month'],
+  input[type='week'] {
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    background-repeat: no-repeat;
+    background-position: right 0.5rem center;
+    background-size: 14px 14px;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%236b7280' stroke-width='1.25' stroke-linecap='round' stroke-linejoin='round'><rect x='2.5' y='3.5' width='11' height='10' rx='1.5'/><path d='M2.5 6.5h11M5.5 2v2M10.5 2v2'/></svg>");
+    padding-right: 1.625rem;
+  }
+  input[type='date']::-webkit-calendar-picker-indicator,
+  input[type='time']::-webkit-calendar-picker-indicator,
+  input[type='datetime-local']::-webkit-calendar-picker-indicator,
+  input[type='month']::-webkit-calendar-picker-indicator,
+  input[type='week']::-webkit-calendar-picker-indicator {
+    display: none;
+  }
+  input[type='date']::-webkit-inner-spin-button,
+  input[type='time']::-webkit-inner-spin-button,
+  input[type='datetime-local']::-webkit-inner-spin-button,
+  input[type='month']::-webkit-inner-spin-button,
+  input[type='week']::-webkit-inner-spin-button {
+    display: none;
+    -webkit-appearance: none;
+  }
+
   .comment {
     @apply text-sm leading-snug;
   }

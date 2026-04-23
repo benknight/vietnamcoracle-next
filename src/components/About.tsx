@@ -14,7 +14,7 @@ export default function About({ data: block }: Props) {
   return (
     <Block>
       <div className="mb-6 flex justify-center">
-        <Link href={internalizeUrl(block.link.url)}>
+        <Link href={internalizeUrl('/about/')}>
           <Image
             alt=""
             className="h-full rounded-full object-cover"
@@ -30,7 +30,7 @@ export default function About({ data: block }: Props) {
         <p>
           {block.description}{' '}
           <Link
-            href={internalizeUrl(block.link.url)}
+            href={internalizeUrl('/support/')}
             className="link whitespace-nowrap">
             Read more ›
           </Link>

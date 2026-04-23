@@ -316,13 +316,13 @@ export default function BookingWidget({
 
   const handleTabChange = (id: Tab) => {
     setTab(id);
-    if (id === 'train' || id === 'bus' || id === 'flights' || id === 'boat')
-      loadBaolau();
+    if (id !== 'stay') loadBaolau();
   };
 
   const checkout = addDays(checkin, nights);
 
-  const handleSearch = () => {
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
     let url = '';
     if (tab === 'stay') {
       // When a specific hotel is pre-loaded (inline widget replacing Agoda embed),
@@ -428,14 +428,6 @@ export default function BookingWidget({
 
   const isBaolau =
     tab === 'flights' || tab === 'train' || tab === 'boat' || tab === 'bus';
-  const baolauReady = baolauLocations.length > 0;
-  const searchDisabled =
-    (tab === 'stay' && !checkin) ||
-    (tab === 'flights' && (!planeFrom || !planeTo)) ||
-    (tab === 'train' && (!trainFrom || !trainTo)) ||
-    (tab === 'boat' && (!boatFrom || !boatTo)) ||
-    (tab === 'bus' && (!busFrom || !busTo)) ||
-    (isBaolau && !baolauReady && !baolauError);
 
   const inner = (
     <>
@@ -459,6 +451,8 @@ export default function BookingWidget({
                     ? 'bg-primary-500 text-white'
                     : 'bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-500 dark:text-gray-400 hover:border-gray-400 dark:hover:border-gray-500',
                 )}
+                onPointerEnter={id !== 'stay' ? loadBaolau : undefined}
+                onFocus={id !== 'stay' ? loadBaolau : undefined}
                 onClick={() => handleTabChange(id)}>
                 <Icon className="!w-5 !h-5" />
                 <span>{tabLabel}</span>
@@ -468,7 +462,8 @@ export default function BookingWidget({
         )}
 
         {/* Form card */}
-        <div
+        <form
+          onSubmit={handleSearch}
           className={tw(
             'bg-gray-100 dark:bg-gray-900 rounded-xl p-4 text-left w-full',
           )}>
@@ -507,6 +502,7 @@ export default function BookingWidget({
                     type="date"
                     value={checkin}
                     min={today}
+                    required
                     style={dateInputStyle}
                     onClick={openDatePicker}
                     onChange={e => setCheckin(e.target.value)}
@@ -572,11 +568,7 @@ export default function BookingWidget({
                   Location data unavailable. Please run{' '}
                   <code className="text-xs">npm run build</code> first.
                 </p>
-              ) : baolauLoading && !baolauReady ? (
-                <p className="text-sm text-gray-500 dark:text-gray-400 font-sans mb-3">
-                  Loading locations…
-                </p>
-              ) : baolauReady ? (
+              ) : (
                 <>
                   {tab === 'flights' ? (
                     <div className="flex gap-2 mb-3">
@@ -690,36 +682,32 @@ export default function BookingWidget({
                       type="date"
                       value={baolauDate}
                       min={today}
+                      required
                       style={dateInputStyle}
                       onClick={openDatePicker}
                       onChange={e => setBaolauDate(e.target.value)}
                     />
                   </div>
                 </>
-              ) : null}
+              )}
               <PoweredBy name="Baolau" href="https://booking.baolau.com" />
             </>
           )}
 
           {/* Search button */}
           <button
-            type="button"
-            disabled={searchDisabled}
+            type="submit"
             className={tw(
-              cx(
-                forceLight
-                  ? 'mt-1 w-full h-12 gap-1 inline-flex items-center justify-center text-sm font-sans font-medium tracking-wider rounded-lg text-white bg-primary-500 border border-primary-500 hover:bg-primary-600 hover:border-primary-400 focus:outline-none transition-colors duration-100 ease-in-out whitespace-nowrap'
-                  : 'btn btn-primary mt-1 w-full h-12 gap-1',
-                'disabled:bg-gray-400 disabled:cursor-not-allowed',
-              ),
-            )}
-            onClick={handleSearch}>
+              forceLight
+                ? 'mt-1 w-full h-12 gap-1 inline-flex items-center justify-center text-sm font-sans font-medium tracking-wider rounded-lg text-white bg-primary-500 border border-primary-500 hover:bg-primary-600 hover:border-primary-400 focus:outline-none transition-colors duration-100 ease-in-out whitespace-nowrap'
+                : 'btn btn-primary mt-1 w-full h-12 gap-1',
+            )}>
             {agodaHotelId && tab === 'stay'
               ? 'Check rates on Agoda'
               : `Search ${tab === 'stay' ? 'Hotels' : activeTab.tabLabel}`}{' '}
             ›
           </button>
-        </div>
+        </form>
       </div>
     </>
   );
@@ -766,12 +754,23 @@ function BaolauAutocomplete({
   const [query, setQuery] = useState(value?.name ?? '');
   const [open, setOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
   const fieldName = label.toLowerCase().replace(/\s+/g, '-');
 
   useEffect(() => {
     if (!open) setQuery(value?.name ?? '');
   }, [value, open]);
+
+  // Keep native validity in sync so the surrounding form flags this field
+  // when the user typed a search term but never picked a suggestion.
+  useEffect(() => {
+    const el = inputRef.current;
+    if (!el) return;
+    el.setCustomValidity(
+      !value && query.trim() ? 'Please select a location from the list' : '',
+    );
+  }, [value, query]);
 
   useEffect(() => {
     function handleDown(e: MouseEvent) {
@@ -807,12 +806,14 @@ function BaolauAutocomplete({
         {label}
       </label>
       <input
+        ref={inputRef}
         type="text"
         className={fieldCls}
         id={inputId}
         name={fieldName}
         value={query}
         placeholder={placeholder}
+        required
         onChange={e => {
           setQuery(e.target.value);
           if (value) onChange(null);

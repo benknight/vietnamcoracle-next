@@ -1,0 +1,51 @@
+name: Refresh Baolau locations
+
+on:
+  schedule:
+    # Quarterly: 06:00 UTC on the 1st of Jan, Apr, Jul, Oct.
+    - cron: '0 6 1 1,4,7,10 *'
+  workflow_dispatch:
+  # Runs the probe + fetch (without committing) when this workflow or the
+  # script changes, so upstream reachability from Actions is visible in the
+  # PR's checks before we rely on the cron.
+  pull_request:
+    paths:
+      - '.github/workflows/refresh-baolau.yml'
+      - 'scripts/fetch-baolau.mjs'
+
+permissions:
+  contents: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Probe upstream
+        run: |
+          echo "Probing https://booking.baolau.com/en/ajax/nodes from Actions runner..."
+          curl -sS -o /dev/null -w "HTTP %{http_code} (bytes=%{size_download})\n" \
+            -H "Accept: application/json" \
+            -H "User-Agent: Mozilla/5.0 (compatible; vietnamcoracle/1.0)" \
+            https://booking.baolau.com/en/ajax/nodes
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Refresh locations JSON
+        run: node scripts/fetch-baolau.mjs
+
+      - name: Commit if changed
+        if: github.event_name != 'pull_request'
+        run: |
+          if git diff --quiet public/baolau_locations.json; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add public/baolau_locations.json
+          git commit -m "chore: refresh Baolau locations (automated)"
+          git push

@@ -78,6 +78,3 @@ out
 
 TODO
 .vercel
-
-# Generated at build time by scripts/fetch-baolau.mjs (prebuild)
-public/baolau_locations.json

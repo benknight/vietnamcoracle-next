@@ -28,6 +28,24 @@ const nextConfig: NextConfig = {
           },
         ],
       },
+      {
+        // Regenerated each deploy by scripts/fetch-baolau.mjs. The file is
+        // not content-hashed, so invalidation relies on:
+        //   1. new deploys regenerating the file (Vercel isolates edge cache
+        //      per deployment, so a new deploy ships the new file immediately);
+        //   2. stale-while-revalidate at the edge, which lets the CDN serve a
+        //      cached copy instantly and refresh in the background.
+        // Browser max-age is kept short (1h) so users see updated data within
+        // an hour of a deploy without hitting the origin on every page load.
+        source: '/baolau_locations.json',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value:
+              'public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800',
+          },
+        ],
+      },
     ];
   },
   images: {
